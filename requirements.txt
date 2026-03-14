@@ -1,0 +1,17 @@
+# Web Framework
+fastapi==0.109.0
+uvicorn==0.27.0
+python-multipart
+
+# Data Processing
+pandas==2.2.0
+numpy==1.26.3
+
+# NLP & ML
+scikit-learn==1.4.0
+sentence-transformers==2.3.1
+natasha==1.6.0 
+torch==2.1.2
+
+# UI
+streamlit==1.31.0

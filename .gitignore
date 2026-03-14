@@ -1,0 +1,19 @@
+# Data & Cache
+data/*.db
+data/*.sqlite
+data/*.csv
+.cache/
+__pycache__/
+*.pyc
+models
+parser
+ideas.md
+data/corpus_loader.py
+# Environments
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
