@@ -19,7 +19,9 @@ config = OmegaConf.create({
         "umap_metric": "cosine",
         "hdbscan_min_cluster_size": 3,
         "hdbscan_min_samples": 2,
-        "anchor_similarity_threshold": 0.02,  # Минимальный margin между top-1 и top-2 якорем
+        "anchor_similarity_threshold": 0.05,  # Минимальный margin best-2nd для макро-якорей (антиврун)
+        "anti_anchor_threshold": 0.01,  # Margin: отбросить если max_anti > max_anchor + margin
+        "cluster_merge_threshold": 0.94,  # Косинус порог для мержа близких кластеров
     },
     "sentiment": {
         "hypothesis_template": "Автор доволен {aspect}",

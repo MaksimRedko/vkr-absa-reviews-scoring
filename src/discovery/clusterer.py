@@ -25,6 +25,31 @@ MACRO_ANCHORS: Dict[str, List[str]] = {
     "Органолептика": ["вкус", "запах", "аромат", "звук"],
 }
 
+ANTI_ANCHORS: Dict[str, List[str]] = {
+    "_emotion": [
+        "радость", "восторг", "счастье", "доволен", "мечта", "кайф",
+        "разочарование", "ужас", "класс", "топ", "огонь", "пушка",
+        "бомба", "рад", "довольна", "восторге", "круто", "супер",
+    ],
+    "_buyer": [
+        "ребёнок", "дочь", "сын", "жена", "муж", "друг", "подарок",
+        "новичок", "подросток", "брат", "внук", "сестра", "племянник",
+        "дети", "ребенка", "дочери", "сыну", "мужу", "другу", "внуку",
+    ],
+    "_time": [
+        "год", "месяц", "день", "неделя", "раз", "первый", "второй",
+        "начало", "срок", "уже", "пока", "время",
+    ],
+    "_meta": [
+        "товар", "покупка", "заказ", "вещь", "штука", "вариант",
+        "покупкой", "заказом", "вещи",
+    ],
+    "_overall": [
+        "гитара", "инструмент", "телефон", "модель", "устройство",
+        "аппарат", "продукт", "изделие",
+    ],
+}
+
 
 @dataclass
 class AspectInfo:
@@ -38,6 +63,8 @@ class AspectClusterer:
         self.min_cluster_size: int = config.discovery.hdbscan_min_cluster_size
         self.min_samples: int = config.discovery.hdbscan_min_samples
         self.anchor_threshold: float = config.discovery.anchor_similarity_threshold
+        self.anti_anchor_threshold: float = config.discovery.anti_anchor_threshold
+        self.merge_threshold: float = config.discovery.cluster_merge_threshold
 
         self.umap_n_components: int = config.discovery.umap_n_components
         self.umap_n_neighbors: int = config.discovery.umap_n_neighbors
@@ -45,12 +72,19 @@ class AspectClusterer:
         self.umap_metric: str = config.discovery.umap_metric
 
         self._anchor_embeddings: dict[str, np.ndarray] = {}
+        self._anti_anchor_embeddings: dict[str, np.ndarray] = {}
         self._build_anchor_embeddings()
+        self._build_anti_anchor_embeddings()
 
     def _build_anchor_embeddings(self) -> None:
         for name, words in MACRO_ANCHORS.items():
             embs = self.model.encode(words, show_progress_bar=False)
             self._anchor_embeddings[name] = np.mean(embs, axis=0)
+
+    def _build_anti_anchor_embeddings(self) -> None:
+        for name, words in ANTI_ANCHORS.items():
+            embs = self.model.encode(words, show_progress_bar=False)
+            self._anti_anchor_embeddings[name] = np.mean(embs, axis=0)
 
     # ------------------------------------------------------------------
     # Публичный API
@@ -97,10 +131,15 @@ class AspectClusterer:
             return self._fallback_single_cluster(span_data)
 
         result: Dict[str, AspectInfo] = {}
+        original_centroids_map: Dict[str, np.ndarray] = {}
+        
         for label, indices in clusters.items():
             cluster_spans = [spans[i] for i in indices]
             cluster_embs = embeddings[indices]
             centroid = np.mean(cluster_embs, axis=0)
+
+            if self._is_junk_cluster(centroid):
+                continue
 
             name = self._name_cluster(centroid, cluster_spans, cluster_embs)
 
@@ -124,7 +163,9 @@ class AspectClusterer:
                     keywords=cluster_spans,
                     centroid_embedding=centroid,
                 )
+                original_centroids_map[name] = centroid
 
+        result = self._merge_similar_clusters(result, original_centroids_map)
         return result
 
     # ------------------------------------------------------------------
@@ -146,6 +187,80 @@ class AspectClusterer:
         if min_mentions > 1:
             agg = {s: d for s, d in agg.items() if d["count"] >= min_mentions}
         return agg
+
+    # ------------------------------------------------------------------
+    # Фильтрация мусорных кластеров через анти-якоря
+    # ------------------------------------------------------------------
+    def _is_junk_cluster(self, centroid: np.ndarray) -> bool:
+        centroid_norm = centroid.reshape(1, -1)
+        
+        # Max sim к анти-якорям
+        max_anti_sim = max(
+            cosine_similarity(centroid_norm, anti_emb.reshape(1, -1))[0, 0]
+            for anti_emb in self._anti_anchor_embeddings.values()
+        )
+        
+        # Max sim к макро-якорям
+        max_anchor_sim = max(
+            cosine_similarity(centroid_norm, anchor_emb.reshape(1, -1))[0, 0]
+            for anchor_emb in self._anchor_embeddings.values()
+        )
+        
+        # Отбросить, если анти-якорь ближе чем макро-якорь + margin
+        return max_anti_sim > max_anchor_sim + self.anti_anchor_threshold
+
+    # ------------------------------------------------------------------
+    # Пост-кластерный мерж близких кластеров
+    # ------------------------------------------------------------------
+    def _merge_similar_clusters(
+        self, clusters: Dict[str, AspectInfo], original_centroids: Dict[str, np.ndarray]
+    ) -> Dict[str, AspectInfo]:
+        if len(clusters) < 2:
+            return clusters
+
+        names = list(clusters.keys())
+
+        while True:
+            best_pair = None
+            best_sim = -1.0
+
+            for i in range(len(names)):
+                for j in range(i + 1, len(names)):
+                    name_i, name_j = names[i], names[j]
+                    sim = cosine_similarity(
+                        original_centroids[name_i].reshape(1, -1),
+                        original_centroids[name_j].reshape(1, -1),
+                    )[0, 0]
+                    if sim > best_sim:
+                        best_sim = sim
+                        best_pair = (name_i, name_j)
+
+            if best_sim < self.merge_threshold or best_pair is None:
+                break
+
+            name_i, name_j = best_pair
+            info_i, info_j = clusters[name_i], clusters[name_j]
+
+            if len(info_i.keywords) >= len(info_j.keywords):
+                keep_name, drop_name = name_i, name_j
+            else:
+                keep_name, drop_name = name_j, name_i
+
+            keep_info = clusters[keep_name]
+            drop_info = clusters[drop_name]
+
+            merged_kw = keep_info.keywords + drop_info.keywords
+
+            clusters[keep_name] = AspectInfo(
+                keywords=merged_kw,
+                centroid_embedding=keep_info.centroid_embedding,
+            )
+            del clusters[drop_name]
+            del original_centroids[drop_name]
+
+            names = list(clusters.keys())
+
+        return clusters
 
     # ------------------------------------------------------------------
     # Именование кластера
