@@ -127,18 +127,42 @@ class CandidateExtractor:
     # ------------------------------------------------------------------
     # 3. Морфологический фильтр
     # ------------------------------------------------------------------
+    _BIGRAM_POS_PATTERNS: set[tuple[str, str]] = {
+        ("ADJ", "NOUN"),
+        ("NOUN", "NOUN"),
+        ("NOUN", "ADJ"),
+    }
+
     def _pass_morph_filter(self, tokens: list[str]) -> bool:
-        for tok in tokens:
-            parses = _morph.parse(tok)
-            is_known = any(p.is_known for p in parses)
+        if len(tokens) == 1:
+            return self._is_noun_or_oov(tokens[0])
 
-            if not is_known:
-                return True
+        pos_tags = [self._best_pos(t) for t in tokens]
 
-            if any("NOUN" in p.tag for p in parses):
-                return True
+        if any(p == "OOV" for p in pos_tags):
+            return True
 
-        return False
+        return (pos_tags[0], pos_tags[1]) in self._BIGRAM_POS_PATTERNS
+
+    @staticmethod
+    def _best_pos(token: str) -> str:
+        parses = _morph.parse(token)
+        if not any(p.is_known for p in parses):
+            return "OOV"
+        for p in parses:
+            if "NOUN" in p.tag:
+                return "NOUN"
+        for p in parses:
+            if "ADJF" in p.tag or "ADJS" in p.tag:
+                return "ADJ"
+        return str(parses[0].tag.POS or "X")
+
+    @staticmethod
+    def _is_noun_or_oov(token: str) -> bool:
+        parses = _morph.parse(token)
+        if not any(p.is_known for p in parses):
+            return True
+        return any("NOUN" in p.tag for p in parses)
 
 
 if __name__ == "__main__":

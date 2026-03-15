@@ -5,6 +5,7 @@ from typing import Dict, List
 
 import hdbscan
 import numpy as np
+import umap
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -34,8 +35,14 @@ class AspectInfo:
 class AspectClusterer:
     def __init__(self, model: SentenceTransformer | None = None):
         self.model = model or SentenceTransformer(config.models.encoder_path)
-        self.min_cluster_size: int = config.discovery.cluster_min_size
+        self.min_cluster_size: int = config.discovery.hdbscan_min_cluster_size
+        self.min_samples: int = config.discovery.hdbscan_min_samples
         self.anchor_threshold: float = config.discovery.anchor_similarity_threshold
+
+        self.umap_n_components: int = config.discovery.umap_n_components
+        self.umap_n_neighbors: int = config.discovery.umap_n_neighbors
+        self.umap_min_dist: float = config.discovery.umap_min_dist
+        self.umap_metric: str = config.discovery.umap_metric
 
         self._anchor_embeddings: dict[str, np.ndarray] = {}
         self._build_anchor_embeddings()
@@ -61,12 +68,24 @@ class AspectClusterer:
         spans = list(span_data.keys())
         embeddings = np.stack([span_data[s]["embedding"] for s in spans])
 
+        n_neighbors = min(self.umap_n_neighbors, len(spans) - 1)
+        reducer = umap.UMAP(
+            n_components=min(self.umap_n_components, len(spans) - 2),
+            n_neighbors=max(2, n_neighbors),
+            min_dist=self.umap_min_dist,
+            metric=self.umap_metric,
+            n_jobs=1,
+            random_state=42,
+        )
+        reduced = reducer.fit_transform(embeddings)
+
         clusterer = hdbscan.HDBSCAN(
             min_cluster_size=self.min_cluster_size,
+            min_samples=self.min_samples,
             metric="euclidean",
             cluster_selection_method="eom",
         )
-        labels = clusterer.fit_predict(embeddings)
+        labels = clusterer.fit_predict(reduced)
 
         clusters: dict[int, list[int]] = {}
         for idx, label in enumerate(labels):

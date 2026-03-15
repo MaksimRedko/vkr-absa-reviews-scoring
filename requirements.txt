@@ -12,6 +12,7 @@ scikit-learn==1.4.0
 sentence-transformers==2.3.1
 torch==2.1.2
 hdbscan>=0.8.33
+umap-learn
 pymorphy3
 
 # Configs

@@ -13,7 +13,12 @@ config = OmegaConf.create({
         "mmr_top_k": 5,  # Сколько кандидатов после MMR на предложение
         "min_word_length": 3,  # Минимальная длина слова-кандидата
         "cosine_threshold": 0.45,  # Порог косинуса для KeyBERT-скоринга
-        "cluster_min_size": 3,  # Минимальный размер кластера HDBSCAN
+        "umap_n_components": 5,
+        "umap_n_neighbors": 15,
+        "umap_min_dist": 0.0,
+        "umap_metric": "cosine",
+        "hdbscan_min_cluster_size": 3,
+        "hdbscan_min_samples": 2,
         "anchor_similarity_threshold": 0.02,  # Минимальный margin между top-1 и top-2 якорем
     },
     "sentiment": {
