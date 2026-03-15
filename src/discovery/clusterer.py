@@ -60,14 +60,12 @@ class AspectInfo:
 class AspectClusterer:
     def __init__(self, model: SentenceTransformer | None = None):
         self.model = model or SentenceTransformer(config.models.encoder_path)
-        self.min_cluster_size: int = config.discovery.hdbscan_min_cluster_size
         self.min_samples: int = config.discovery.hdbscan_min_samples
         self.anchor_threshold: float = config.discovery.anchor_similarity_threshold
         self.anti_anchor_threshold: float = config.discovery.anti_anchor_threshold
         self.merge_threshold: float = config.discovery.cluster_merge_threshold
 
         self.umap_n_components: int = config.discovery.umap_n_components
-        self.umap_n_neighbors: int = config.discovery.umap_n_neighbors
         self.umap_min_dist: float = config.discovery.umap_min_dist
         self.umap_metric: str = config.discovery.umap_metric
 
@@ -96,15 +94,20 @@ class AspectClusterer:
             return {}
 
         span_data = self._aggregate_spans(candidates, min_mentions)
-        if len(span_data) < self.min_cluster_size:
+        N = len(span_data)
+
+        min_cluster_size = max(3, min(8, N // 300))
+        if N < min_cluster_size:
             return self._fallback_single_cluster(span_data)
+
+        adaptive_n_neighbors = max(5, min(25, N // 100))
 
         spans = list(span_data.keys())
         embeddings = np.stack([span_data[s]["embedding"] for s in spans])
 
-        n_neighbors = min(self.umap_n_neighbors, len(spans) - 1)
+        n_neighbors = min(adaptive_n_neighbors, N - 1)
         reducer = umap.UMAP(
-            n_components=min(self.umap_n_components, len(spans) - 2),
+            n_components=min(self.umap_n_components, N - 2),
             n_neighbors=max(2, n_neighbors),
             min_dist=self.umap_min_dist,
             metric=self.umap_metric,
@@ -114,7 +117,7 @@ class AspectClusterer:
         reduced = reducer.fit_transform(embeddings)
 
         clusterer = hdbscan.HDBSCAN(
-            min_cluster_size=self.min_cluster_size,
+            min_cluster_size=min_cluster_size,
             min_samples=self.min_samples,
             metric="euclidean",
             cluster_selection_method="eom",
@@ -131,26 +134,22 @@ class AspectClusterer:
             return self._fallback_single_cluster(span_data)
 
         result: Dict[str, AspectInfo] = {}
-        original_centroids_map: Dict[str, np.ndarray] = {}
+        umap_centroids: Dict[str, np.ndarray] = {}
         
+        # Первый проход: мержим HDBSCAN-кластеры с одинаковыми именами
         for label, indices in clusters.items():
             cluster_spans = [spans[i] for i in indices]
             cluster_embs = embeddings[indices]
             centroid = np.mean(cluster_embs, axis=0)
 
-            if self._is_junk_cluster(centroid):
-                continue
+            umap_embs = reduced[indices]
+            umap_centroid = np.mean(umap_embs, axis=0)
 
             name = self._name_cluster(centroid, cluster_spans, cluster_embs)
 
             if name in result:
                 existing = result[name]
                 merged_kw = existing.keywords + cluster_spans
-                merged_embs = np.vstack([
-                    existing.centroid_embedding.reshape(1, -1).repeat(len(existing.keywords), axis=0)
-                    if len(existing.keywords) > 0 else existing.centroid_embedding.reshape(1, -1),
-                    cluster_embs,
-                ])
                 result[name] = AspectInfo(
                     keywords=merged_kw,
                     centroid_embedding=np.mean(
@@ -158,15 +157,28 @@ class AspectClusterer:
                         axis=0,
                     ).flatten(),
                 )
+                umap_centroids[name] = np.mean(
+                    np.vstack([umap_centroids[name].reshape(1, -1), umap_centroid.reshape(1, -1)]),
+                    axis=0,
+                ).flatten()
             else:
                 result[name] = AspectInfo(
                     keywords=cluster_spans,
                     centroid_embedding=centroid,
                 )
-                original_centroids_map[name] = centroid
+                umap_centroids[name] = umap_centroid
 
-        result = self._merge_similar_clusters(result, original_centroids_map)
-        return result
+        # Второй проход: фильтруем мусорные кластеры через анти-якоря
+        filtered: Dict[str, AspectInfo] = {}
+        filtered_umap: Dict[str, np.ndarray] = {}
+        for name, info in result.items():
+            if not self._is_junk_cluster(info.centroid_embedding):
+                filtered[name] = info
+                filtered_umap[name] = umap_centroids[name]
+
+        # Третий проход: пост-кластерный мерж близких кластеров
+        filtered = self._merge_similar_clusters(filtered, filtered_umap)
+        return filtered
 
     # ------------------------------------------------------------------
     # Агрегация спанов
@@ -210,10 +222,10 @@ class AspectClusterer:
         return max_anti_sim > max_anchor_sim + self.anti_anchor_threshold
 
     # ------------------------------------------------------------------
-    # Пост-кластерный мерж близких кластеров
+    # Пост-кластерный мерж близких кластеров (евклид в UMAP R5)
     # ------------------------------------------------------------------
     def _merge_similar_clusters(
-        self, clusters: Dict[str, AspectInfo], original_centroids: Dict[str, np.ndarray]
+        self, clusters: Dict[str, AspectInfo], umap_centroids: Dict[str, np.ndarray]
     ) -> Dict[str, AspectInfo]:
         if len(clusters) < 2:
             return clusters
@@ -222,42 +234,44 @@ class AspectClusterer:
 
         while True:
             best_pair = None
-            best_sim = -1.0
+            best_dist = float("inf")
 
             for i in range(len(names)):
                 for j in range(i + 1, len(names)):
-                    name_i, name_j = names[i], names[j]
-                    sim = cosine_similarity(
-                        original_centroids[name_i].reshape(1, -1),
-                        original_centroids[name_j].reshape(1, -1),
-                    )[0, 0]
-                    if sim > best_sim:
-                        best_sim = sim
-                        best_pair = (name_i, name_j)
+                    dist = float(np.linalg.norm(
+                        umap_centroids[names[i]] - umap_centroids[names[j]]
+                    ))
+                    if dist < best_dist:
+                        best_dist = dist
+                        best_pair = (names[i], names[j])
 
-            if best_sim < self.merge_threshold or best_pair is None:
+            if best_dist > self.merge_threshold or best_pair is None:
                 break
 
             name_i, name_j = best_pair
-            info_i, info_j = clusters[name_i], clusters[name_j]
 
-            if len(info_i.keywords) >= len(info_j.keywords):
+            if len(clusters[name_i].keywords) >= len(clusters[name_j].keywords):
                 keep_name, drop_name = name_i, name_j
             else:
                 keep_name, drop_name = name_j, name_i
 
-            keep_info = clusters[keep_name]
-            drop_info = clusters[drop_name]
-
-            merged_kw = keep_info.keywords + drop_info.keywords
+            keep = clusters[keep_name]
+            drop = clusters[drop_name]
 
             clusters[keep_name] = AspectInfo(
-                keywords=merged_kw,
-                centroid_embedding=keep_info.centroid_embedding,
+                keywords=keep.keywords + drop.keywords,
+                centroid_embedding=keep.centroid_embedding,
             )
-            del clusters[drop_name]
-            del original_centroids[drop_name]
+            umap_centroids[keep_name] = np.mean(
+                np.vstack([
+                    umap_centroids[keep_name].reshape(1, -1),
+                    umap_centroids[drop_name].reshape(1, -1),
+                ]),
+                axis=0,
+            ).flatten()
 
+            del clusters[drop_name]
+            del umap_centroids[drop_name]
             names = list(clusters.keys())
 
         return clusters

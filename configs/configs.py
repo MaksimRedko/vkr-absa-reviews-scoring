@@ -14,14 +14,12 @@ config = OmegaConf.create({
         "min_word_length": 3,  # Минимальная длина слова-кандидата
         "cosine_threshold": 0.45,  # Порог косинуса для KeyBERT-скоринга
         "umap_n_components": 5,
-        "umap_n_neighbors": 15,
         "umap_min_dist": 0.0,
         "umap_metric": "cosine",
-        "hdbscan_min_cluster_size": 3,
-        "hdbscan_min_samples": 2,
+        "hdbscan_min_samples": 2,  # Фиксированный; min_cluster_size и umap_n_neighbors — адаптивные
         "anchor_similarity_threshold": 0.05,  # Минимальный margin best-2nd для макро-якорей (антиврун)
         "anti_anchor_threshold": 0.01,  # Margin: отбросить если max_anti > max_anchor + margin
-        "cluster_merge_threshold": 0.94,  # Косинус порог для мержа близких кластеров
+        "cluster_merge_threshold": 0.95,  # Евклидов порог мержа в UMAP R5 (меньше = ближе)
     },
     "sentiment": {
         "hypothesis_template": "Автор доволен {aspect}",
