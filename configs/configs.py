@@ -35,7 +35,8 @@ config = OmegaConf.create({
     "fraud": {
         "length_sigmoid_k": 0.8,
         "length_sigmoid_x0": 4,
-        "uniqueness_threshold": 0.95,
+        "uniqueness_threshold": 0.95,  # Порог для Union-Find кластеров ботов
+        "sim_noise_floor": 0.5,         # Фоновое сходство: ниже этого — штрафа нет
         "min_trust_weight": 0.01,
     },
 })
