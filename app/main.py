@@ -1,41 +1,40 @@
+"""
+FastAPI обёртка ABSA Pipeline v2.
+
+Эндпоинты:
+  GET  /products/top  — список популярных товаров
+  POST /analyze       — запуск полного ML-пайплайна
+  GET  /health        — проверка здоровья
+"""
+
 from contextlib import asynccontextmanager
+from typing import Dict, Optional
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Dict
 
-# Импортируем наш сервис
-from app.services.analyzer import ProductAnalyzerService
-from app.core.data_loader import DataLoader
+from src.pipeline import ABSAPipeline
 
-# Глобальная переменная для сервиса (синглтон)
-service: ProductAnalyzerService = None
+
+pipeline: Optional[ABSAPipeline] = None
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """
-    Событие запуска приложения.
-    Здесь мы загружаем тяжелые модели в память (Cold Start).
-    """
-    global service
+    global pipeline
     try:
-        print("🌍 ЗАПУСК API: Инициализация нейросетей...")
-        # Указываем путь к БД (убедись, что файл лежит в корне или укажи полный путь)
-        service = ProductAnalyzerService(db_path="dataset.db")
-        print("✅ API готов к приему запросов!")
+        print("[API] Инициализация пайплайна...")
+        pipeline = ABSAPipeline(db_path="data/dataset.db")
+        print("[API] Готов к приёму запросов")
     except Exception as e:
-        print(f"❌ Критическая ошибка запуска: {e}")
-
+        print(f"[API] Критическая ошибка запуска: {e}")
     yield
-
-    print("🛑 Остановка API...")
-    # Тут можно очистить память, если нужно
+    print("[API] Остановка")
 
 
-app = FastAPI(title="Aspect Sentiment API", lifespan=lifespan)
+app = FastAPI(title="Aspecta AI — ABSA Pipeline v2", lifespan=lifespan)
 
-# Разрешаем запросы с фронтенда (Streamlit обычно висит на 8501)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -45,20 +44,27 @@ app.add_middleware(
 )
 
 
-# --- Схемы данных для Swagger UI ---
 class AnalyzeRequest(BaseModel):
     nm_id: int
-    limit: int = 50
+    limit: int = 100
 
 
-# --- Эндпоинты ---
+class PersonalRatingRequest(BaseModel):
+    nm_id: int
+    weights: Dict[str, float]
+
+
+# ------------------------------------------------------------------
+# Эндпоинты
+# ------------------------------------------------------------------
 
 @app.get("/products/top")
 async def get_top_products():
-    """Возвращает список популярных товаров для выбора в UI"""
+    """Список популярных товаров для UI."""
+    if not pipeline:
+        raise HTTPException(status_code=503, detail="Service not initialized")
     try:
-        # Используем лоадер напрямую для быстрого списка
-        df = service.loader.get_top_products(limit=10)
+        df = pipeline.loader.get_top_products(limit=10)
         return df.to_dict(orient="records")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -66,17 +72,23 @@ async def get_top_products():
 
 @app.post("/analyze")
 async def analyze_product(request: AnalyzeRequest):
-    """Запускает тяжелый ML-пайплайн для товара"""
-    if not service:
+    """Запуск полного ML-пайплайна для товара."""
+    if not pipeline:
         raise HTTPException(status_code=503, detail="Service not initialized")
-
     try:
-        result = service.analyze_product(request.nm_id, limit=request.limit)
-        return result
+        result = pipeline.analyze_product(request.nm_id, limit=request.limit)
+
+        return {
+            "product_id": result.product_id,
+            "reviews_processed": result.reviews_processed,
+            "processing_time": result.processing_time,
+            "aspects": result.aspects,
+            "aspect_keywords": result.aspect_keywords,
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.get("/health")
 async def health_check():
-    return {"status": "ok", "models_loaded": service is not None}
+    return {"status": "ok", "models_loaded": pipeline is not None}

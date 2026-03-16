@@ -54,10 +54,7 @@ class AntiFraudEngine:
     """
 
     def __init__(self):
-        self.model = SentenceTransformer(
-            config.models.encoder_path,
-            local_files_only=True,
-        )
+        self.model = SentenceTransformer(config.models.encoder_path)
         self.uniqueness_threshold: float = config.fraud.uniqueness_threshold
         self.sim_noise_floor: float = config.fraud.sim_noise_floor
         self.min_trust_weight: float = config.fraud.min_trust_weight

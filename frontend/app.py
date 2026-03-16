@@ -1,123 +1,184 @@
+"""
+Streamlit UI для Aspecta AI — ABSA Pipeline v2.
+
+Улучшения:
+  - UI-алерт "Мнения расходятся" для аспектов с высоким controversy
+  - Аспекты с 0 упоминаний скрыты
+  - Ключевые слова кластера рядом с названием аспекта
+"""
+
 import streamlit as st
 import requests
 import pandas as pd
 import plotly.graph_objects as go
 
-# Конфигурация страницы
 st.set_page_config(page_title="Aspecta AI", layout="wide")
 API_URL = "http://127.0.0.1:8000"
 
-st.title("🛍️ Aspecta: Умный рейтинг товаров")
-st.markdown("Personzlized Aspect-Based Sentiment Analysis System")
+CONTROVERSY_THRESHOLD = 1.2
 
-# --- САЙДБАР (Настройки) ---
+st.title("Aspecta: Умный рейтинг товаров")
+st.markdown("Personalized Aspect-Based Sentiment Analysis System")
+
+# --- САЙДБАР ---
 with st.sidebar:
-    st.header("⚙️ Настройки анализа")
+    st.header("Настройки анализа")
 
-    # 1. Загрузка списка товаров
     try:
-        resp = requests.get(f"{API_URL}/products/top")
+        resp = requests.get(f"{API_URL}/products/top", timeout=5)
         if resp.status_code == 200:
             products = resp.json()
-            options = {f"ID: {p['nm_id']} ({p['review_count']} отзывов)": p['nm_id'] for p in products}
+            options = {
+                f"ID: {p['nm_id']} ({p['review_count']} отзывов)": p["nm_id"]
+                for p in products
+            }
             selected_label = st.selectbox("Выберите товар:", list(options.keys()))
             selected_nm_id = options[selected_label]
         else:
             st.error("Ошибка API. Бэкенд запущен?")
             selected_nm_id = None
     except Exception:
-        st.error("Не удалось соединиться с API. Запустите uvicorn.")
+        st.error("Не удалось соединиться с API. Запустите: uvicorn app.main:app")
         selected_nm_id = None
 
-    limit_reviews = st.slider("Сколько отзывов анализировать?", 10, 500, 50)
+    limit_reviews = st.slider("Сколько отзывов анализировать?", 10, 500, 100)
+    analyze_btn = st.button("Запустить анализ", type="primary")
 
-    analyze_btn = st.button("🚀 Запустить анализ", type="primary")
-
-# --- ОСНОВНАЯ ЧАСТЬ ---
+# --- ЗАПУСК АНАЛИЗА ---
 if analyze_btn and selected_nm_id:
-    with st.spinner(f"Анализируем отзывы (ID: {selected_nm_id})... Это может занять время."):
+    with st.spinner(f"Анализируем отзывы (ID: {selected_nm_id})..."):
         try:
-            # Отправляем запрос на Бэкенд
             payload = {"nm_id": selected_nm_id, "limit": limit_reviews}
-            response = requests.post(f"{API_URL}/analyze", json=payload)
-
+            response = requests.post(f"{API_URL}/analyze", json=payload, timeout=300)
             if response.status_code == 200:
-                data = response.json()
-                st.session_state['result'] = data  # Сохраняем в сессию
+                st.session_state["result"] = response.json()
             else:
                 st.error(f"Ошибка анализа: {response.text}")
-
         except Exception as e:
             st.error(f"Ошибка соединения: {e}")
 
-# Если есть результаты - показываем
-if 'result' in st.session_state:
-    res = st.session_state['result']
-    aspects = res.get("aspects", {})
+# --- ОТОБРАЖЕНИЕ РЕЗУЛЬТАТОВ ---
+if "result" in st.session_state:
+    res = st.session_state["result"]
+    all_aspects = res.get("aspects", {})
+    aspect_keywords = res.get("aspect_keywords", {})
+
+    # Фильтруем аспекты с 0 упоминаний
+    aspects = {
+        name: data for name, data in all_aspects.items()
+        if data.get("mentions", 0) > 0
+    }
 
     if not aspects:
         st.warning("Аспекты не найдены. Попробуйте увеличить количество отзывов.")
     else:
-        # --- БЛОК 1: Визуализация (Radar Chart) ---
+        # Метаданные
+        st.caption(
+            f"Товар: {res.get('product_id')} | "
+            f"Отзывов: {res.get('reviews_processed')} | "
+            f"Время: {res.get('processing_time', 0):.1f}s"
+        )
+
         col1, col2 = st.columns([2, 1])
 
+        # --- Radar Chart ---
         with col1:
-            st.subheader("📊 Лепестковая диаграмма качества")
+            st.subheader("Лепестковая диаграмма аспектов")
 
-            # Подготовка данных для графика
             categories = list(aspects.keys())
-            values = [d['score'] for d in aspects.values()]
+            values = [d["score"] for d in aspects.values()]
 
-            # Замыкаем круг графика
-            categories += [categories[0]]
-            values += [values[0]]
+            # Замыкаем круг
+            categories_closed = categories + [categories[0]]
+            values_closed = values + [values[0]]
 
             fig = go.Figure(
                 data=[
                     go.Scatterpolar(
-                        r=values,
-                        theta=categories,
-                        fill='toself',
-                        name='Aspects',
-                        line_color='deepskyblue'
+                        r=values_closed,
+                        theta=categories_closed,
+                        fill="toself",
+                        name="Аспекты",
+                        line_color="deepskyblue",
                     )
                 ],
                 layout=go.Layout(
-                    polar=dict(
-                        radialaxis=dict(visible=True, range=[0, 5])
-                    ),
-                    showlegend=False
-                )
+                    polar=dict(radialaxis=dict(visible=True, range=[1, 5])),
+                    showlegend=False,
+                ),
             )
             st.plotly_chart(fig, use_container_width=True)
 
-        # --- БЛОК 2: Персонализация (Ползунки) ---
+        # --- Персонализация ---
         with col2:
-            st.subheader("🎚️ Персонализация")
-            st.caption("Настройте важность аспектов для себя:")
+            st.subheader("Персонализация")
+            st.caption("Настройте важность аспектов:")
 
             user_weights = {}
-            for aspect in aspects.keys():
-                user_weights[aspect] = st.slider(f"{aspect}", 0.0, 1.0, 0.5, step=0.1)
+            for aspect_name, data in aspects.items():
+                kw_list = aspect_keywords.get(aspect_name, [])
+                kw_display = ", ".join(kw_list[:4]) if kw_list else ""
 
-            # Расчет персонального рейтинга (на лету в UI)
-            weighted_sum = sum(aspects[a]['score'] * w for a, w in user_weights.items())
+                label = aspect_name
+                if kw_display:
+                    label = f"{aspect_name}"
+
+                user_weights[aspect_name] = st.slider(
+                    label,
+                    0.0, 1.0, 0.5, step=0.1,
+                    help=f"Ключевые слова: {kw_display}" if kw_display else None,
+                )
+
+            # Персональный рейтинг
+            weighted_sum = sum(
+                aspects[a]["score"] * w for a, w in user_weights.items()
+            )
             total_weight = sum(user_weights.values())
-
             final_rating = weighted_sum / total_weight if total_weight > 0 else 0
 
             st.divider()
-            st.metric(label="⭐ Ваш Персональный Рейтинг", value=f"{final_rating:.2f} / 5.0")
+            st.metric(
+                label="Ваш персональный рейтинг",
+                value=f"{final_rating:.2f} / 5.0",
+            )
 
-        # --- БЛОК 3: Детализация (Таблица) ---
-        st.subheader("📋 Детальная статистика")
+        # --- Детальная таблица ---
+        st.subheader("Детальная статистика")
 
-        # Превращаем JSON в таблицу
-        df_stats = pd.DataFrame.from_dict(aspects, orient='index')
-        df_stats = df_stats.rename(columns={
-            "score": "Рейтинг",
-            "raw_mean": "Сырое среднее",
-            "controversy": "Индекс споров",
-            "mentions": "Упоминаний"
-        })
-        st.dataframe(df_stats.style.highlight_max(axis=0, color='lightgreen'))
+        rows = []
+        for name, data in aspects.items():
+            kw = aspect_keywords.get(name, [])[:5]
+            rows.append({
+                "Аспект": name,
+                "Рейтинг": data["score"],
+                "Сырое среднее": data.get("raw_mean", "-"),
+                "Споры": data.get("controversy", 0),
+                "Упоминаний": data.get("mentions", 0),
+                "Ключевые слова": ", ".join(kw),
+            })
+
+        df_stats = pd.DataFrame(rows).set_index("Аспект")
+        st.dataframe(
+            df_stats.style.highlight_max(
+                axis=0, subset=["Рейтинг"], color="lightgreen"
+            ).highlight_min(
+                axis=0, subset=["Рейтинг"], color="#ffcccc"
+            ),
+            use_container_width=True,
+        )
+
+        # --- Алерты "Мнения расходятся" ---
+        controversial = [
+            (name, data)
+            for name, data in aspects.items()
+            if data.get("controversy", 0) >= CONTROVERSY_THRESHOLD
+        ]
+        if controversial:
+            st.subheader("Мнения расходятся")
+            for name, data in controversial:
+                controversy_val = data["controversy"]
+                kw = ", ".join(aspect_keywords.get(name, [])[:5])
+                st.warning(
+                    f"**{name}** (разброс: {controversy_val:.2f}) — "
+                    f"отзывы противоречивы. Ключевые слова: {kw}"
+                )
