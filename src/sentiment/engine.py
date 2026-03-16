@@ -37,17 +37,18 @@ class SentimentResult:
 
 class SentimentEngine:
     """
-    NLI-based sentiment engine v2.
+    NLI-based sentiment engine v2.1.
     
-    Использует одну гипотезу: "Автор доволен {aspect}".
+    Использует модель rubert-base-cased-nli-threeway (3 класса).
+    Гипотеза: "Автор доволен {aspect}".
     
     Формула конвертации в скор [1, 5]:
-        Score = 1 + 4 · P(entailment)
+        Score = 1 + 4 · P(ent) / (P(ent) + P(contr) + ε)
     
     Интуиция:
-        - P(ent) ≈ 1.0 → Score ≈ 5 (автор явно доволен)
-        - P(ent) ≈ 0.5 → Score ≈ 3 (нейтрально)
-        - P(ent) ≈ 0.0 → Score ≈ 1 (автор недоволен)
+        - P(ent) >> P(contr) → Score близок к 5 (автор явно доволен)
+        - P(ent) ≈ P(contr) → Score ≈ 3 (нейтрально/неопределённо)
+        - P(contr) >> P(ent) → Score близок к 1 (автор недоволен)
     """
     
     def __init__(self):
@@ -66,8 +67,26 @@ class SentimentEngine:
         self.batch_size: int = config.sentiment.batch_size
         self.epsilon: float = config.sentiment.score_epsilon
         
-        # Модель rubert-base-cased-nli-twoway возвращает 2 класса: entailment, not_entailment
-        self.num_labels = 2
+        # Модель rubert-base-cased-nli-threeway возвращает 3 класса
+        # Проверяем порядок классов через id2label
+        self.num_labels = self.model.config.num_labels
+        self.id2label = self.model.config.id2label
+        
+        # Определяем индексы классов (обычно: 0=entailment, 1=contradiction, 2=neutral)
+        self.ent_idx = 0
+        self.contr_idx = 1
+        self.neutral_idx = 2
+        
+        # Проверка конфигурации
+        print(f"[SentimentEngine] Загружена модель с {self.num_labels} классами:")
+        for idx, label in self.id2label.items():
+            print(f"  {idx}: {label}")
+            if label == "entailment":
+                self.ent_idx = int(idx)
+            elif label == "contradiction":
+                self.contr_idx = int(idx)
+            elif label == "neutral":
+                self.neutral_idx = int(idx)
     
     def batch_analyze(
         self, pairs: List[Tuple[str, str, str]]
@@ -127,11 +146,13 @@ class SentimentEngine:
         for idx, (review_id, sentence, aspect) in enumerate(
             zip(review_ids, premises, aspects)
         ):
-            p_ent = float(probs[idx][0])
-            p_not_ent = float(probs[idx][1])
+            p_ent = float(probs[idx][self.ent_idx])
+            p_contr = float(probs[idx][self.contr_idx])
+            p_neutral = float(probs[idx][self.neutral_idx])
             
-            # Простая линейная конверсия: Score = 1 + 4 · P(ent)
-            score = 1.0 + 4.0 * p_ent
+            # Формула из плана: Score = 1 + 4 · P(ent) / (P(ent) + P(contr) + ε)
+            denominator = p_ent + p_contr + self.epsilon
+            score = 1.0 + 4.0 * (p_ent / denominator)
             score = max(1.0, min(5.0, score))
             
             results.append(
@@ -141,20 +162,21 @@ class SentimentEngine:
                     sentence=sentence,
                     score=score,
                     p_entailment=p_ent,
-                    p_contradiction=p_not_ent,
-                    p_neutral=0.0,
+                    p_contradiction=p_contr,
+                    p_neutral=p_neutral,
                 )
             )
         
         return results
     
-    def _convert_to_score(self, p_ent: float) -> float:
+    def _convert_to_score(self, p_ent: float, p_contr: float) -> float:
         """
-        Конвертация NLI-вероятности в скор [1, 5].
+        Конвертация NLI-вероятностей в скор [1, 5].
         
-        Формула: Score = 1 + 4 · P(entailment)
+        Формула: Score = 1 + 4 · P(ent) / (P(ent) + P(contr) + ε)
         """
-        score = 1.0 + 4.0 * p_ent
+        denominator = p_ent + p_contr + self.epsilon
+        score = 1.0 + 4.0 * (p_ent / denominator)
         return max(1.0, min(5.0, score))
 
 

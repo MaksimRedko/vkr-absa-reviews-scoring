@@ -7,7 +7,7 @@ from transformers import AutoModel, AutoTokenizer
 
 
 RUBERT_ENCODER_MODEL = "cointegrated/rubert-tiny2"
-RUBERT_NLI_MODEL = "cointegrated/rubert-base-cased-nli-twoway"
+RUBERT_NLI_MODEL = "cointegrated/rubert-base-cased-nli-threeway"
 
 
 def ensure_dir(path: Path) -> None:

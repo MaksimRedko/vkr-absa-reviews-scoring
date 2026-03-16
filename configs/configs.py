@@ -4,7 +4,7 @@ from omegaconf import OmegaConf
 config = OmegaConf.create({
     "models": {
         "encoder_path": "./scripts/models/models--cointegrated--rubert-tiny2/snapshots/e8ed3b0c8bbf4fb6984c3de043bf7d2f4e5969ae",
-        "nli_path": "./scripts/models/rubert-nli/models--cointegrated--rubert-base-cased-nli-twoway/snapshots/0ba52a76fdf6929b227cf0237f1bc3b2971cc8e6",
+        "nli_path": "./models/rubert-nli/models--cointegrated--rubert-base-cased-nli-threeway/snapshots/920cbb52ef830e94461bf141ec2119979b6049e2",
     },
     "discovery": {
         "ngram_range": [1, 2],  # Униграммы и биграммы
