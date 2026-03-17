@@ -72,21 +72,32 @@ if "result" in st.session_state:
     if not aspects:
         st.warning("Аспекты не найдены. Попробуйте увеличить количество отзывов.")
     else:
+        # Сортируем по mentions (по убыванию)
+        aspects_sorted = dict(
+            sorted(aspects.items(), key=lambda x: x[1].get("mentions", 0), reverse=True)
+        )
+
+        # Топ-8 для радара и ползунков
+        MAX_RADAR = 8
+        top_aspects = dict(list(aspects_sorted.items())[:MAX_RADAR])
+        other_aspects = dict(list(aspects_sorted.items())[MAX_RADAR:])
+
         # Метаданные
         st.caption(
             f"Товар: {res.get('product_id')} | "
             f"Отзывов: {res.get('reviews_processed')} | "
-            f"Время: {res.get('processing_time', 0):.1f}s"
+            f"Время: {res.get('processing_time', 0):.1f}s | "
+            f"Аспектов: {len(aspects)} (показано топ-{len(top_aspects)})"
         )
 
         col1, col2 = st.columns([2, 1])
 
-        # --- Radar Chart ---
+        # --- Radar Chart (только топ-8) ---
         with col1:
-            st.subheader("Лепестковая диаграмма аспектов")
+            st.subheader("Лепестковая диаграмма (топ-8)")
 
-            categories = list(aspects.keys())
-            values = [d["score"] for d in aspects.values()]
+            categories = list(top_aspects.keys())
+            values = [d["score"] for d in top_aspects.values()]
 
             # Замыкаем круг
             categories_closed = categories + [categories[0]]
@@ -109,19 +120,17 @@ if "result" in st.session_state:
             )
             st.plotly_chart(fig, use_container_width=True)
 
-        # --- Персонализация ---
+        # --- Персонализация (только топ-8) ---
         with col2:
             st.subheader("Персонализация")
-            st.caption("Настройте важность аспектов:")
+            st.caption("Настройте важность топ-аспектов:")
 
             user_weights = {}
-            for aspect_name, data in aspects.items():
+            for aspect_name, data in top_aspects.items():
                 kw_list = aspect_keywords.get(aspect_name, [])
                 kw_display = ", ".join(kw_list[:4]) if kw_list else ""
 
                 label = aspect_name
-                if kw_display:
-                    label = f"{aspect_name}"
 
                 user_weights[aspect_name] = st.slider(
                     label,
@@ -129,9 +138,9 @@ if "result" in st.session_state:
                     help=f"Ключевые слова: {kw_display}" if kw_display else None,
                 )
 
-            # Персональный рейтинг
+            # Персональный рейтинг (только по топ-8)
             weighted_sum = sum(
-                aspects[a]["score"] * w for a, w in user_weights.items()
+                top_aspects[a]["score"] * w for a, w in user_weights.items()
             )
             total_weight = sum(user_weights.values())
             final_rating = weighted_sum / total_weight if total_weight > 0 else 0
@@ -142,11 +151,11 @@ if "result" in st.session_state:
                 value=f"{final_rating:.2f} / 5.0",
             )
 
-        # --- Детальная таблица ---
-        st.subheader("Детальная статистика")
+        # --- Детальная таблица (ВСЕ аспекты) ---
+        st.subheader("Детальная статистика (все аспекты)")
 
         rows = []
-        for name, data in aspects.items():
+        for name, data in aspects_sorted.items():
             kw = aspect_keywords.get(name, [])[:5]
             rows.append({
                 "Аспект": name,

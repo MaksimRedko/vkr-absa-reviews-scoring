@@ -39,4 +39,7 @@ config = OmegaConf.create({
         "sim_noise_floor": 0.5,         # Фоновое сходство: ниже этого — штрафа нет
         "min_trust_weight": 0.01,
     },
+    "ui": {
+        "max_aspects_radar": 8,  # Максимум аспектов для радара и ползунков (топ по mentions)
+    },
 })
