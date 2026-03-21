@@ -11,7 +11,9 @@ Evaluation pipeline: разметка vs пайплайн.
 from __future__ import annotations
 
 import ast
+import argparse
 import json
+import random
 import sys
 from collections import defaultdict
 from typing import Dict, List, Optional, Tuple
@@ -20,6 +22,11 @@ import numpy as np
 import pandas as pd
 
 sys.stdout.reconfigure(encoding="utf-8")
+
+try:
+    import torch
+except Exception:  # pragma: no cover
+    torch = None
 
 
 # ── Шаг 1: Статистика по разметке ──────────────────────────────────────────
@@ -67,6 +74,33 @@ def markup_stats(df: pd.DataFrame) -> pd.DataFrame:
         })
 
     return pd.DataFrame(rows)
+
+
+def set_global_seed(seed: int) -> None:
+    random.seed(seed)
+    np.random.seed(seed)
+    if torch is not None:
+        torch.manual_seed(seed)
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed_all(seed)
+        torch.use_deterministic_algorithms(True, warn_only=True)
+
+
+def apply_config_overrides(overrides: Dict[str, object]) -> None:
+    from configs.configs import config
+    for section, values in overrides.items():
+        if not hasattr(config, section):
+            continue
+        if not isinstance(values, dict):
+            continue
+        for key, val in values.items():
+            setattr(getattr(config, section), key, val)
+
+
+def load_eval_config(config_path: str) -> Dict[str, object]:
+    with open(config_path, "r", encoding="utf-8") as f:
+        cfg = json.load(f)
+    return cfg if isinstance(cfg, dict) else {}
 
 
 # ── Шаг 2: Прогон пайплайна ────────────────────────────────────────────────
@@ -436,10 +470,41 @@ MAPPING: Dict[int, Dict[str, Optional[str]]] = {
 
 
 if __name__ == "__main__":
-    CSV_PATH = "parser/razmetka/checked_reviews.csv"
-    JSON_PATH = "parser/razmetka/longest_reviews.json"
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "mode",
+        nargs="?",
+        default="all",
+        choices=["all", "step12", "step4", "--step4"],
+    )
+    parser.add_argument("--config", type=str, default=None)
+    parser.add_argument("--seed", type=int, default=None)
+    parser.add_argument("--csv-path", type=str, default="parser/razmetka/checked_reviews.csv")
+    parser.add_argument("--json-path", type=str, default="parser/razmetka/longest_reviews.json")
+    parser.add_argument("--write-prefix", type=str, default="")
+    args = parser.parse_args()
 
-    mode = sys.argv[1] if len(sys.argv) > 1 else "all"
+    mode = args.mode
+    cfg = {}
+    if args.config:
+        cfg = load_eval_config(args.config)
+
+    seed = args.seed if args.seed is not None else int(cfg.get("seed", 42))
+    set_global_seed(seed)
+
+    overrides = cfg.get("overrides", {})
+    if isinstance(overrides, dict):
+        apply_config_overrides(overrides)
+
+    CSV_PATH = str(cfg.get("csv_path", args.csv_path))
+    JSON_PATH = str(cfg.get("json_path", args.json_path))
+    write_prefix = str(cfg.get("write_prefix", args.write_prefix or "")).strip()
+    if write_prefix and not write_prefix.endswith("_"):
+        write_prefix = f"{write_prefix}_"
+
+    print(f"[Eval] seed={seed}")
+    if args.config:
+        print(f"[Eval] config={args.config}")
 
     df = load_markup(CSV_PATH)
 
@@ -474,7 +539,7 @@ if __name__ == "__main__":
                     print(f"    {asp}: {kw[:5]}")
             print(f"  Отзывов с оценками: {len(data['per_review'])}")
 
-        with open("eval_results_step1_2.json", "w", encoding="utf-8") as f:
+        with open(f"{write_prefix}eval_results_step1_2.json", "w", encoding="utf-8") as f:
             json.dump({
                 "pipeline_results": {
                     str(k): {"aspects": v["aspects"], "aspect_keywords": v.get("aspect_keywords", {})}
@@ -483,7 +548,7 @@ if __name__ == "__main__":
             }, f, ensure_ascii=False, indent=2, default=str)
 
         per_review_dump = {str(k): v["per_review"] for k, v in pipeline_results.items()}
-        with open("eval_per_review.json", "w", encoding="utf-8") as f:
+        with open(f"{write_prefix}eval_per_review.json", "w", encoding="utf-8") as f:
             json.dump(per_review_dump, f, ensure_ascii=False, indent=2)
 
         print("\nРезультаты шагов 1-2 сохранены.")
@@ -493,9 +558,9 @@ if __name__ == "__main__":
         print("ШАГ 4: МЕТРИКИ (маппинг из MAPPING)")
         print("=" * 70)
 
-        with open("eval_per_review.json", "r", encoding="utf-8") as f:
+        with open(f"{write_prefix}eval_per_review.json", "r", encoding="utf-8") as f:
             per_review_loaded = json.load(f)
-        with open("eval_results_step1_2.json", "r", encoding="utf-8") as f:
+        with open(f"{write_prefix}eval_results_step1_2.json", "r", encoding="utf-8") as f:
             step12 = json.load(f)
 
         pipeline_results_for_eval = {}
@@ -528,6 +593,6 @@ if __name__ == "__main__":
         print(f"  Global MAE calibr:   {metrics['global_mae_calibrated']}")
         print(f"  Global calibration:  S_cal = {cal['a']}*S_raw + {cal['b']}")
 
-        with open("eval_metrics.json", "w", encoding="utf-8") as f:
+        with open(f"{write_prefix}eval_metrics.json", "w", encoding="utf-8") as f:
             json.dump(metrics, f, ensure_ascii=False, indent=2)
-        print("\nМетрики сохранены в eval_metrics.json")
+        print(f"\nМетрики сохранены в {write_prefix}eval_metrics.json")

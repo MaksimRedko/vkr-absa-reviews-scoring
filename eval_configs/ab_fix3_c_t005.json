@@ -1,0 +1,9 @@
+{
+  "seed": 42,
+  "write_prefix": "fix3_c_t005",
+  "overrides": {
+    "discovery": {
+      "anti_anchor_threshold": 0.05
+    }
+  }
+}

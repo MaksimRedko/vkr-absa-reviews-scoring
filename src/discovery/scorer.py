@@ -36,11 +36,12 @@ class KeyBERTScorer:
         if not candidates:
             return []
 
-        sentences_unique = list({c.sentence for c in candidates})
+        # Детерминированный порядок устраняет дрейф между запусками.
+        sentences_unique = sorted({c.sentence for c in candidates})
         sent_embs = self.model.encode(sentences_unique, show_progress_bar=False)
         sent_to_emb: dict[str, np.ndarray] = dict(zip(sentences_unique, sent_embs))
 
-        spans_unique = list({c.span for c in candidates})
+        spans_unique = sorted({c.span for c in candidates})
         span_embs = self.model.encode(spans_unique, show_progress_bar=False)
         span_to_emb: dict[str, np.ndarray] = dict(zip(spans_unique, span_embs))
 
