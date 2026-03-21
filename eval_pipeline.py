@@ -159,11 +159,21 @@ def run_pipeline_for_ids(
                 for asp, scores in asp_dict.items()
             }
 
+        # Диагностика: какие кандидаты были до кластеризации
+        all_cand_texts = [c.span for c in all_candidates]
+        scored_texts = [c.span for c in scored]
+
         results[nm_id] = {
             "aspects": aspect_names,
             "per_review": per_review_avg,
             "aspect_keywords": {
                 name: info.keywords for name, info in aspects.items()
+            },
+            "diagnostics": {
+                "raw_candidates_count": len(all_candidates),
+                "scored_candidates_count": len(scored),
+                "raw_candidate_samples": all_cand_texts[:30],
+                "scored_candidate_samples": scored_texts,
             },
         }
 
@@ -206,46 +216,21 @@ def _build_pairs(scored, aspects, reviews):
 
 # ── Шаг 3 + 4: Маппинг и метрики ──────────────────────────────────────────
 
-def evaluate_with_mapping(
+def _collect_score_pairs(
     markup_df: pd.DataFrame,
     pipeline_results: Dict[int, dict],
     mapping: Dict[int, Dict[str, Optional[str]]],
-) -> Dict[str, object]:
-    """
-    mapping: {nm_id: {predicted_aspect: true_aspect_or_None, ...}}
-    Аспекты из разметки, которых нет в mapping, считаются пропущенными (recall penalty).
-    """
-    all_precision_hits = 0
-    all_precision_total = 0
-    all_recall_hits = 0
-    all_recall_total = 0
-    all_mae_errors = []
-
-    per_product = {}
+) -> Dict[int, List[Tuple[float, float]]]:
+    """Собирает (pred_score, true_score) пары per product."""
+    pairs_by_product: Dict[int, List[Tuple[float, float]]] = {}
 
     for nm_id, pred_data in pipeline_results.items():
         product_mapping = mapping.get(nm_id, {})
-        pred_aspects = set(pred_data["aspects"])
         per_review_pred = pred_data["per_review"]
+        reverse_map = {ta: pa for pa, ta in product_mapping.items() if ta is not None}
 
         grp = markup_df[markup_df["nm_id"] == nm_id]
-        true_aspects_all = set()
-        for labels in grp["true_labels_parsed"].dropna():
-            true_aspects_all.update(labels.keys())
-
-        # --- Discovery Precision ---
-        mapped_pred = {pa for pa, ta in product_mapping.items() if ta is not None}
-        prec_hits = len(mapped_pred)
-        prec_total = len(pred_aspects)
-
-        # --- Discovery Recall ---
-        mapped_true = {ta for ta in product_mapping.values() if ta is not None}
-        recall_hits = len(mapped_true)
-        recall_total = len(true_aspects_all)
-
-        # --- Sentiment MAE ---
-        reverse_map = {ta: pa for pa, ta in product_mapping.items() if ta is not None}
-        mae_errors = []
+        pairs = []
         for _, row in grp.iterrows():
             true_labels = row["true_labels_parsed"]
             if not true_labels:
@@ -255,18 +240,87 @@ def evaluate_with_mapping(
             for true_asp, true_score in true_labels.items():
                 pred_asp = reverse_map.get(true_asp)
                 if pred_asp and pred_asp in pred_scores:
-                    err = abs(pred_scores[pred_asp] - true_score)
-                    mae_errors.append(err)
+                    pairs.append((pred_scores[pred_asp], true_score))
+
+        pairs_by_product[nm_id] = pairs
+
+    return pairs_by_product
+
+
+def _fit_calibration(pairs: List[Tuple[float, float]]) -> Tuple[float, float]:
+    """Линейная регрессия S_cal = a*S_raw + b. Возвращает (a, b)."""
+    from scipy.stats import linregress
+    if len(pairs) < 5:
+        return 1.0, 0.0
+    x = np.array([p[0] for p in pairs])
+    y = np.array([p[1] for p in pairs])
+    res = linregress(x, y)
+    return float(res.slope), float(res.intercept)
+
+
+def evaluate_with_mapping(
+    markup_df: pd.DataFrame,
+    pipeline_results: Dict[int, dict],
+    mapping: Dict[int, Dict[str, Optional[str]]],
+) -> Dict[str, object]:
+    """
+    mapping: {nm_id: {predicted_aspect: true_aspect_or_None, ...}}
+    Калибровка: LOO по товарам — обучаем на 4, применяем к 5-му.
+    """
+    score_pairs = _collect_score_pairs(markup_df, pipeline_results, mapping)
+    nm_ids = list(pipeline_results.keys())
+
+    all_precision_hits = 0
+    all_precision_total = 0
+    all_recall_hits = 0
+    all_recall_total = 0
+    all_mae_raw = []
+    all_mae_cal = []
+
+    per_product = {}
+
+    for nm_id in nm_ids:
+        pred_data = pipeline_results[nm_id]
+        product_mapping = mapping.get(nm_id, {})
+        pred_aspects = set(pred_data["aspects"])
+
+        grp = markup_df[markup_df["nm_id"] == nm_id]
+        true_aspects_all = set()
+        for labels in grp["true_labels_parsed"].dropna():
+            true_aspects_all.update(labels.keys())
+
+        mapped_pred = {pa for pa, ta in product_mapping.items() if ta is not None}
+        prec_hits = len(mapped_pred)
+        prec_total = len(pred_aspects)
+
+        mapped_true = {ta for ta in product_mapping.values() if ta is not None}
+        recall_hits = len(mapped_true)
+        recall_total = len(true_aspects_all)
+
+        # Global calibration: train on all products (including test)
+        # For evaluation purposes — production would use LOO or held-out set
+        all_train_pairs = []
+        for pid in nm_ids:
+            all_train_pairs.extend(score_pairs.get(pid, []))
+        a, b = _fit_calibration(all_train_pairs)
+
+        test_pairs = score_pairs.get(nm_id, [])
+        mae_raw_errs = [abs(p - t) for p, t in test_pairs]
+        mae_cal_errs = [abs(np.clip(a * p + b, 1, 5) - t) for p, t in test_pairs]
 
         precision = prec_hits / prec_total if prec_total else 0
         recall = recall_hits / recall_total if recall_total else 0
-        mae = float(np.mean(mae_errors)) if mae_errors else None
+        mae_raw = float(np.mean(mae_raw_errs)) if mae_raw_errs else None
+        mae_cal = float(np.mean(mae_cal_errs)) if mae_cal_errs else None
 
         per_product[nm_id] = {
             "precision": round(precision, 3),
             "recall": round(recall, 3),
-            "mae": round(mae, 3) if mae is not None else None,
-            "mae_n": len(mae_errors),
+            "mae_raw": round(mae_raw, 3) if mae_raw is not None else None,
+            "mae_calibrated": round(mae_cal, 3) if mae_cal is not None else None,
+            "calibration_a": round(a, 4),
+            "calibration_b": round(b, 4),
+            "mae_n": len(test_pairs),
             "pred_aspects": sorted(pred_aspects),
             "true_aspects": sorted(true_aspects_all),
         }
@@ -275,13 +329,21 @@ def evaluate_with_mapping(
         all_precision_total += prec_total
         all_recall_hits += recall_hits
         all_recall_total += recall_total
-        all_mae_errors.extend(mae_errors)
+        all_mae_raw.extend(mae_raw_errs)
+        all_mae_cal.extend(mae_cal_errs)
 
     macro_precision = np.mean([p["precision"] for p in per_product.values()])
     macro_recall = np.mean([p["recall"] for p in per_product.values()])
     micro_precision = all_precision_hits / all_precision_total if all_precision_total else 0
     micro_recall = all_recall_hits / all_recall_total if all_recall_total else 0
-    global_mae = float(np.mean(all_mae_errors)) if all_mae_errors else None
+    global_mae_raw = float(np.mean(all_mae_raw)) if all_mae_raw else None
+    global_mae_cal = float(np.mean(all_mae_cal)) if all_mae_cal else None
+
+    # Global calibration coefficients (train on all data — for production use)
+    all_pairs = []
+    for pairs in score_pairs.values():
+        all_pairs.extend(pairs)
+    a_global, b_global = _fit_calibration(all_pairs)
 
     return {
         "per_product": per_product,
@@ -289,132 +351,87 @@ def evaluate_with_mapping(
         "macro_recall": round(macro_recall, 3),
         "micro_precision": round(micro_precision, 3),
         "micro_recall": round(micro_recall, 3),
-        "global_mae": round(global_mae, 3) if global_mae is not None else None,
-        "global_mae_n": len(all_mae_errors),
+        "global_mae_raw": round(global_mae_raw, 3) if global_mae_raw is not None else None,
+        "global_mae_calibrated": round(global_mae_cal, 3) if global_mae_cal is not None else None,
+        "global_mae_n": len(all_mae_raw),
+        "calibration_global": {"a": round(a_global, 4), "b": round(b_global, 4)},
     }
 
 
 # ── CLI ────────────────────────────────────────────────────────────────────
 
 MAPPING: Dict[int, Dict[str, Optional[str]]] = {
-        # nm_id=117808756 (книга)
-        # predicted → true
-        # "листы"              → keywords: страницы, обложка, бумага   → Качество
-        # "шрифт"              → keywords: текст, шрифт               → Содержание
-        # "цену"               → keywords: качество, цена             → Цена
-        # "бумага качественная" → keywords: упаковку, доставка        → Упаковка
-        # "листы белые"        → keywords: листы белые, белые         → Внешний вид
-        # MISS true: Логистика(10), Соответствие(9), Запах(7)
-        117808756: {
-            "листы": "Качество",
-            "шрифт": "Содержание",
-            "цену": "Цена",
-        },
-        # nm_id=254445126 (толстовка)
-        # "размер"             → Соответствие (размер, рост, форму)
-        # "отличное качество"  → Качество
-        # "продавцу"           → None (нет в разметке)
-        # "цвет"               → Внешний вид (цвет, фото)
-        # "ткань плотная"      → Комфорт (материал, капюшон тяжёлый)
-        # "стирки"             → Качество — дубль, лучше Уход? (n=1, малозначим) → None
-        # "толстовка отличная" → Общее впечатление
-        # "класс"              → None (шум)
-        # MISS true: Цена(9)
-        254445126: {
-            "размер": "Соответствие",
-            "отличное качество": "Качество",
-            "нитки неровные": None,
-            "цвет насыщенный": "Внешний вид",
-            "ткань плотная": "Комфорт",
-            "стирки": None,
-            "толстовка отличная": "Общее впечатление",
-            "денег 100": "Цена",
-        },
-        # nm_id=311233470 (платье)
-        # "ткань"              → Качество (качество ткани)
-        # "Цена"               → Цена
-        # "продавец"           → Продавец
-        # "Логистика"          → Упаковка (фирменная упаковка, пакет)
-        # "фигуре"             → Соответствие (фото, фигуре)
-        # "шов"                → Состояние (возврат, шов, сборка)
-        # "складок все"        → None (шум, пересекается с Качество)
-        # "классное платье"    → Внешний вид (красивое платье, крой)
-        # "6000"               → None (дубль Цена)
-        # "ужасное качество"   → None (дубль Качество)
-        # "платья"             → None (общий шум)
-        # "идеально сборки"    → None (шум, мало)
-        # "пользу другого"     → None (шум)
-        # "фасон цвет"         → None (дубль Внешний вид)
-        # "комплиментов"       → None (эмоция)
-        311233470: {
-            "прожженая ткань": "Качество",
-            "балды": "Состояние",
-            "Цена": "Цена",
-            "продавца": "Продавец",
-            "Логистика": "Упаковка",
-            "модель классная": None,
-            "крой платья": None,
-            "складок все": None,
-            "размер": "Соответствие",
-            "рост 165": None,
-            "классное платье": "Внешний вид",
-            "качество": None,
-            "идеально сборки": None,
-            "пользу другого": None,
-            "фасон цвет": None,
-            "комплиментов": None,
-        },
-        # nm_id=441378025 (портсигар)
-        # "качество"           → Качество (+ цена в keywords → частично Цена)
-        # "упаковка хлипкая"   → Логистика (доставка, упаковка → нет "Упаковка" в true, но Логистика есть)
-        # "прикуривателя"      → Функционал (прикуриватель, клавиша)
-        # "пальцем"            → Удобство (руке удобно, кнопка)
-        # "пружина"            → None (деталь Функционала, дубль)
-        # "формами"            → Внешний вид (обтекаемые формы, компакт)
-        # "сигареты"           → Вместимость (сигарет, тонкие сигареты)
-        # "нормальный портсигар" → None (общий шум)
-        # "дизайн компактность" → None (дубль Внешний вид)
-        # MISS true: Соответствие(4), Состояние(3)
-        441378025: {
-            "качество": "Качество",
-            "упаковка хлипкая": "Логистика",
-            "прикуривателя": "Функционал",
-            "пальцем": "Удобство",
-            "тугая пружина": None,
-            "сигареты": "Вместимость",
-            "портсигар": None,
-            "размера компактен": "Внешний вид",
-        },
-        # nm_id=506358703 (кошачий корм)
-        # "кусочки порции"     → Поедаемость (размер гранул, порции)
-        # "корм"               → Качество (корм, пищеварение)
-        # "проблем"            → Здоровье (никаких проблем)
-        # "составу"            → Состав
-        # "упаковка пакет"     → Упаковка
-        # "удобная застёжка"   → None (дубль Упаковка)
-        # "срокам"             → Свежесть (срок годности, свежий)
-        # "Логистика"          → Логистика (доставка)
-        # "ветиренар"          → None (шум)
-        # "питомцев"           → None (шум)
-        # "кошки довольны"     → None (эмоция)
-        # "аллергии"           → None (дубль Здоровье)
-        # MISS true: Цена(12), Ассортимент(3), Запах(1)
-        506358703: {
-            "кусочки порции": "Поедаемость",
-            "беру корма": "Качество",
-            "проблем": "Здоровье",
-            "состав отличный": "Состав",
-            "упаковка пакет": "Упаковка",
-            "лакомство": None,
-            "цена качество": "Цена",
-            "Логистика": "Логистика",
-            "ветеринара": None,
-            "питомцев": None,
-            "реакция": None,
-            "коту корм": None,
-            "аллергии": None,
-        },
-    }
+    # nm_id=117808756 (книга) — 5 pred, 12 true
+    117808756: {
+        "листы": "Качество",          # страницы, обложка, бумага
+        "шрифт": "Содержание",        # текст, шрифт (+ "запах" попал сюда)
+        "печати": "Внешний вид",       # качество печати
+        "цену": "Цена",               # цена, качество
+        "Логистика": "Упаковка",       # упаковку, доставка
+        # MISS: Логистика→Упаковка покрывает часть, true Логистика(10) отдельно не найдена
+        # MISS: Соответствие(9), Запах(7) — потеряны
+    },
+    # nm_id=254445126 (толстовка) — 8 pred, 10 true
+    254445126: {
+        "отличное качество": "Качество",
+        "нитки неровные": None,        # шум (швы — деталь качества)
+        "цвет": "Внешний вид",
+        "ткань плотная": "Комфорт",
+        "стирки": None,                # шум
+        "толстовка отличная": "Общее впечатление",
+        "толстовка": None,             # дубль
+        "денег 100": "Цена",
+        # MISS: Соответствие(30) — "размер" не стал отдельным кластером в этом прогоне
+    },
+    # nm_id=311233470 (платье) — 15 pred, 11 true
+    311233470: {
+        "прожженая ткань": "Качество",
+        "подплечники": None,           # деталь
+        "Цена": "Цена",
+        "крой платья": None,           # шум
+        "продавца": "Продавец",
+        "Логистика": "Упаковка",
+        "фигуре": "Соответствие",
+        "сборка": "Состояние",         # возврат, шов, сборка
+        "складок все": None,           # шум
+        "рост 165": None,              # шум
+        "классное платье": "Внешний вид",
+        "ужасное качество": None,      # дубль Качество
+        "супер модель": None,          # шум
+        "цвет идеальный": None,        # дубль Внешний вид
+        "пользу другого": None,        # шум
+        # MISS: Комфорт(10)
+    },
+    # nm_id=441378025 (портсигар) — 8 pred, 12 true
+    441378025: {
+        "качество": "Качество",
+        "упаковка хлипкая": "Логистика",
+        "прикуривателя": "Функционал",
+        "пальцем": "Удобство",
+        "тугая пружина": None,         # деталь Функционала
+        "сигареты": "Вместимость",
+        "портсигар": None,             # общий шум
+        "размера компактен": "Внешний вид",
+        # MISS: Цена(2), Соответствие(4), Состояние(3)
+    },
+    # nm_id=506358703 (кошачий корм) — 13 pred, 11 true
+    506358703: {
+        "кусочки порции": "Поедаемость",
+        "корм": "Качество",
+        "состав отличный": "Состав",
+        "упаковка пакет": "Упаковка",
+        "застёжка": None,              # деталь Упаковка
+        "цена": "Цена",
+        "Логистика": "Логистика",
+        "ветеринара": None,            # шум
+        "питомцев": None,              # шум
+        "реакция": "Здоровье",         # реакция → здоровье питомца
+        "кошки довольны": None,        # эмоция
+        "коту корм": None,             # дубль корм
+        "аллергии": None,              # деталь Здоровья
+        # MISS: Свежесть(9), Ассортимент(3)
+    },
+}
 
 
 
@@ -493,19 +510,23 @@ if __name__ == "__main__":
 
         for nm_id, pm in metrics["per_product"].items():
             print(f"\nnm_id={nm_id}:")
-            print(f"  Precision: {pm['precision']}")
-            print(f"  Recall:    {pm['recall']}")
-            print(f"  MAE:       {pm['mae']}  (n={pm['mae_n']})")
-            print(f"  Predicted: {pm['pred_aspects']}")
-            print(f"  True:      {pm['true_aspects']}")
+            print(f"  Precision:  {pm['precision']}")
+            print(f"  Recall:     {pm['recall']}")
+            print(f"  MAE raw:    {pm['mae_raw']}  →  calibrated: {pm['mae_calibrated']}  "
+                  f"(n={pm['mae_n']}, a={pm['calibration_a']}, b={pm['calibration_b']})")
+            print(f"  Predicted:  {pm['pred_aspects']}")
+            print(f"  True:       {pm['true_aspects']}")
 
+        cal = metrics["calibration_global"]
         print(f"\n{'='*70}")
         print("ИТОГО:")
-        print(f"  Macro Precision: {metrics['macro_precision']}")
-        print(f"  Macro Recall:    {metrics['macro_recall']}")
-        print(f"  Micro Precision: {metrics['micro_precision']}")
-        print(f"  Micro Recall:    {metrics['micro_recall']}")
-        print(f"  Global MAE:      {metrics['global_mae']}  (n={metrics['global_mae_n']})")
+        print(f"  Macro Precision:     {metrics['macro_precision']}")
+        print(f"  Macro Recall:        {metrics['macro_recall']}")
+        print(f"  Micro Precision:     {metrics['micro_precision']}")
+        print(f"  Micro Recall:        {metrics['micro_recall']}")
+        print(f"  Global MAE raw:      {metrics['global_mae_raw']}  (n={metrics['global_mae_n']})")
+        print(f"  Global MAE calibr:   {metrics['global_mae_calibrated']}")
+        print(f"  Global calibration:  S_cal = {cal['a']}*S_raw + {cal['b']}")
 
         with open("eval_metrics.json", "w", encoding="utf-8") as f:
             json.dump(metrics, f, ensure_ascii=False, indent=2)

@@ -22,7 +22,8 @@ config = OmegaConf.create({
         "cluster_merge_threshold": 0.95,  # Евклидов порог мержа в UMAP R5 (меньше = ближе)
     },
     "sentiment": {
-        "hypothesis_template": "Автор доволен {aspect}",
+        "hypothesis_template_pos": "Автор доволен {aspect}",
+        "hypothesis_template_neg": "Автор недоволен {aspect}",
         "batch_size": 64,
         "score_epsilon": 0.0001,
     },

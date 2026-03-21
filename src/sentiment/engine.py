@@ -1,14 +1,18 @@
 """
-Модуль NLI Sentiment (v2)
+Модуль NLI Sentiment (v3 — dual hypothesis)
 
 Определяет полярность (позитив/негатив) каждого аспекта в каждом предложении
-через Natural Language Inference.
+через Natural Language Inference с двумя встречными гипотезами.
 
-Ключевые отличия от v1:
-- Убран этап Presence (его роль выполняет KeyBERT из Discovery)
-- Одна гипотеза вместо двух: "Автор доволен {aspect}"
-- Батчевый инференс вместо поштучного
-- Работа с целым предложением, без скользящего окна
+Две гипотезы для каждой пары (sentence, aspect):
+  H_pos = "Автор доволен {aspect}"
+  H_neg = "Автор недоволен {aspect}"
+
+Формула:
+  Score = 1 + 4 · P_ent_pos / (P_ent_pos + P_ent_neg + ε)
+
+Это устраняет однонаправленный bias модели: если модель склонна давать
+высокий entailment для любой гипотезы, это сокращается в числителе и знаменателе.
 """
 
 from __future__ import annotations
@@ -29,28 +33,19 @@ class SentimentResult:
     review_id: str
     aspect: str
     sentence: str
-    score: float  # [1.0, 5.0]
-    p_entailment: float
-    p_contradiction: float
-    p_neutral: float
+    score: float          # [1.0, 5.0]
+    p_ent_pos: float      # P(entailment | H_pos)
+    p_ent_neg: float      # P(entailment | H_neg)
 
 
 class SentimentEngine:
     """
-    NLI-based sentiment engine v2.1.
-    
-    Использует модель rubert-base-cased-nli-threeway (3 класса).
-    Гипотеза: "Автор доволен {aspect}".
-    
-    Формула конвертации в скор [1, 5]:
-        Score = 1 + 4 · P(ent) / (P(ent) + P(contr) + ε)
-    
-    Интуиция:
-        - P(ent) >> P(contr) → Score близок к 5 (автор явно доволен)
-        - P(ent) ≈ P(contr) → Score ≈ 3 (нейтрально/неопределённо)
-        - P(contr) >> P(ent) → Score близок к 1 (автор недоволен)
+    NLI-based sentiment engine v3 (dual hypothesis).
+
+    Два forward pass на батч: один для H_pos, один для H_neg.
+    Score = 1 + 4 · P_ent_pos / (P_ent_pos + P_ent_neg + ε)
     """
-    
+
     def __init__(self):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model = AutoModelForSequenceClassification.from_pretrained(
@@ -62,70 +57,41 @@ class SentimentEngine:
             local_files_only=True,
         )
         self.model.eval()
-        
-        self.hypothesis_template: str = config.sentiment.hypothesis_template
+
+        self.h_pos: str = config.sentiment.hypothesis_template_pos
+        self.h_neg: str = config.sentiment.hypothesis_template_neg
         self.batch_size: int = config.sentiment.batch_size
         self.epsilon: float = config.sentiment.score_epsilon
-        
-        # Модель rubert-base-cased-nli-threeway возвращает 3 класса
-        # Проверяем порядок классов через id2label
+
         self.num_labels = self.model.config.num_labels
         self.id2label = self.model.config.id2label
-        
-        # Определяем индексы классов (обычно: 0=entailment, 1=contradiction, 2=neutral)
+
         self.ent_idx = 0
-        self.contr_idx = 1
-        self.neutral_idx = 2
-        
-        # Проверка конфигурации
-        print(f"[SentimentEngine] Загружена модель с {self.num_labels} классами:")
         for idx, label in self.id2label.items():
-            print(f"  {idx}: {label}")
             if label == "entailment":
                 self.ent_idx = int(idx)
-            elif label == "contradiction":
-                self.contr_idx = int(idx)
-            elif label == "neutral":
-                self.neutral_idx = int(idx)
-    
+
+        print(f"[SentimentEngine v3] dual-hypothesis, {self.num_labels} classes, "
+              f"ent_idx={self.ent_idx}, device={self.device}")
+
     def batch_analyze(
         self, pairs: List[Tuple[str, str, str]]
     ) -> List[SentimentResult]:
-        """
-        Батчевый анализ пар (review_id, sentence, aspect).
-        
-        Args:
-            pairs: Список (review_id, sentence, aspect_name)
-        
-        Returns:
-            Список SentimentResult с оценками
-        """
         if not pairs:
             return []
-        
+
         results = []
-        
         for i in range(0, len(pairs), self.batch_size):
             batch = pairs[i : i + self.batch_size]
             batch_results = self._process_batch(batch)
             results.extend(batch_results)
-        
+
         return results
-    
-    def _process_batch(
-        self, batch: List[Tuple[str, str, str]]
-    ) -> List[SentimentResult]:
-        """Обработка одного батча пар"""
-        review_ids = [pair[0] for pair in batch]
-        premises = [pair[1] for pair in batch]
-        aspects = [pair[2] for pair in batch]
-        
-        # Формирование гипотез
-        hypotheses = [
-            self.hypothesis_template.format(aspect=aspect) for aspect in aspects
-        ]
-        
-        # Токенизация
+
+    def _infer_entailment(
+        self, premises: List[str], hypotheses: List[str]
+    ) -> np.ndarray:
+        """Возвращает P(entailment) для каждой пары premise-hypothesis."""
         inputs = self.tokenizer(
             premises,
             hypotheses,
@@ -134,50 +100,46 @@ class SentimentEngine:
             max_length=512,
             return_tensors="pt",
         ).to(self.device)
-        
-        # Инференс
+
         with torch.no_grad():
-            outputs = self.model(**inputs)
-            logits = outputs.logits
+            logits = self.model(**inputs).logits
             probs = torch.softmax(logits, dim=1).cpu().numpy()
-        
-        # Конвертация в результаты
+
+        return probs[:, self.ent_idx]
+
+    def _process_batch(
+        self, batch: List[Tuple[str, str, str]]
+    ) -> List[SentimentResult]:
+        review_ids = [p[0] for p in batch]
+        premises = [p[1] for p in batch]
+        aspects = [p[2] for p in batch]
+
+        hyp_pos = [self.h_pos.format(aspect=a) for a in aspects]
+        hyp_neg = [self.h_neg.format(aspect=a) for a in aspects]
+
+        p_ent_pos = self._infer_entailment(premises, hyp_pos)
+        p_ent_neg = self._infer_entailment(premises, hyp_neg)
+
         results = []
         for idx, (review_id, sentence, aspect) in enumerate(
             zip(review_ids, premises, aspects)
         ):
-            p_ent = float(probs[idx][self.ent_idx])
-            p_contr = float(probs[idx][self.contr_idx])
-            p_neutral = float(probs[idx][self.neutral_idx])
-            
-            # Формула из плана: Score = 1 + 4 · P(ent) / (P(ent) + P(contr) + ε)
-            denominator = p_ent + p_contr + self.epsilon
-            score = 1.0 + 4.0 * (p_ent / denominator)
+            pp = float(p_ent_pos[idx])
+            pn = float(p_ent_neg[idx])
+
+            score = 1.0 + 4.0 * pp / (pp + pn + self.epsilon)
             score = max(1.0, min(5.0, score))
-            
-            results.append(
-                SentimentResult(
-                    review_id=review_id,
-                    aspect=aspect,
-                    sentence=sentence,
-                    score=score,
-                    p_entailment=p_ent,
-                    p_contradiction=p_contr,
-                    p_neutral=p_neutral,
-                )
-            )
-        
+
+            results.append(SentimentResult(
+                review_id=review_id,
+                aspect=aspect,
+                sentence=sentence,
+                score=score,
+                p_ent_pos=pp,
+                p_ent_neg=pn,
+            ))
+
         return results
-    
-    def _convert_to_score(self, p_ent: float, p_contr: float) -> float:
-        """
-        Конвертация NLI-вероятностей в скор [1, 5].
-        
-        Формула: Score = 1 + 4 · P(ent) / (P(ent) + P(contr) + ε)
-        """
-        denominator = p_ent + p_contr + self.epsilon
-        score = 1.0 + 4.0 * (p_ent / denominator)
-        return max(1.0, min(5.0, score))
 
 
 if __name__ == "__main__":
@@ -214,7 +176,7 @@ if __name__ == "__main__":
         print(f"Аспект: {res.aspect}")
         print(f"Предложение: {res.sentence}")
         print(f"Score: {res.score:.2f}")
-        print(f"  P(ent)={res.p_entailment:.3f}, P(contr)={res.p_contradiction:.3f}, P(neut)={res.p_neutral:.3f}")
+        print(f"  P_ent_pos={res.p_ent_pos:.3f}, P_ent_neg={res.p_ent_neg:.3f}")
     
     print("\n" + "=" * 80)
     print("Тест завершён")
