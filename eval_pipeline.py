@@ -439,6 +439,8 @@ def evaluate_with_mapping(
     all_precision_total = 0
     all_recall_hits = 0
     all_recall_total = 0
+    all_mention_found = 0
+    all_mention_total = 0
     all_mae_raw = []
     all_mae_cal = []
 
@@ -462,6 +464,41 @@ def evaluate_with_mapping(
         recall_hits = len(mapped_true)
         recall_total = len(true_aspects_all)
 
+        # Reverse map for per-review coverage: true_asp → [pred_asp, ...]
+        reverse_map: Dict[str, List[str]] = defaultdict(list)
+        for pa, ta in product_mapping.items():
+            if ta is not None:
+                reverse_map[ta].append(pa)
+
+        per_review_pred = pred_data.get("per_review", {})
+
+        # 3-tier mention-level recall:
+        #   product_covered: true aspect TYPE exists in mapping (current, inflated)
+        #   review_covered:  this review has ANY pred score for mapped pred aspects
+        #   score_covered:   this review has pred score for THIS SPECIFIC true aspect's mapped pred
+        mention_total = 0
+        mention_product = 0   # tier 1: product-level (inflated)
+        mention_review = 0    # tier 2: per-review (honest)
+
+        for _, row in grp.iterrows():
+            true_labels = row["true_labels_parsed"]
+            if not true_labels:
+                continue
+            rid = row["id"]
+            pred_scores = per_review_pred.get(rid, {})
+
+            for true_asp in true_labels:
+                mention_total += 1
+
+                # Tier 1: product-level (is this true aspect type covered at all?)
+                if true_asp in mapped_true:
+                    mention_product += 1
+
+                # Tier 2: per-review (does THIS review have a score for a mapped pred?)
+                pred_asps = reverse_map.get(true_asp, [])
+                if any(pa in pred_scores for pa in pred_asps):
+                    mention_review += 1
+
         # FIX3: честный LOO — train на ВСЕХ КРОМЕ текущего товара
         loo_train_pairs = []
         for pid in nm_ids:
@@ -475,12 +512,16 @@ def evaluate_with_mapping(
 
         precision = prec_hits / prec_total if prec_total else 0
         recall = recall_hits / recall_total if recall_total else 0
+        mention_recall_product = mention_product / mention_total if mention_total else 0
+        mention_recall_review = mention_review / mention_total if mention_total else 0
         mae_raw = float(np.mean(mae_raw_errs)) if mae_raw_errs else None
         mae_cal = float(np.mean(mae_cal_errs)) if mae_cal_errs else None
 
         per_product[nm_id] = {
             "precision": round(precision, 3),
             "recall": round(recall, 3),
+            "mention_recall_product": round(mention_recall_product, 3),
+            "mention_recall_review": round(mention_recall_review, 3),
             "mae_raw": round(mae_raw, 3) if mae_raw is not None else None,
             "mae_calibrated": round(mae_cal, 3) if mae_cal is not None else None,
             "calibration_a": round(a, 4),
@@ -494,13 +535,18 @@ def evaluate_with_mapping(
         all_precision_total += prec_total
         all_recall_hits += recall_hits
         all_recall_total += recall_total
+        all_mention_found += mention_review       # use honest per-review metric
+        all_mention_total += mention_total
         all_mae_raw.extend(mae_raw_errs)
         all_mae_cal.extend(mae_cal_errs)
 
     macro_precision = np.mean([p["precision"] for p in per_product.values()])
     macro_recall = np.mean([p["recall"] for p in per_product.values()])
+    macro_mention_recall_product = np.mean([p["mention_recall_product"] for p in per_product.values()])
+    macro_mention_recall_review = np.mean([p["mention_recall_review"] for p in per_product.values()])
     micro_precision = all_precision_hits / all_precision_total if all_precision_total else 0
     micro_recall = all_recall_hits / all_recall_total if all_recall_total else 0
+    global_mention_recall = all_mention_found / all_mention_total if all_mention_total else 0
     global_mae_raw = float(np.mean(all_mae_raw)) if all_mae_raw else None
     global_mae_cal = float(np.mean(all_mae_cal)) if all_mae_cal else None
 
@@ -514,12 +560,135 @@ def evaluate_with_mapping(
         "per_product": per_product,
         "macro_precision": round(macro_precision, 3),
         "macro_recall": round(macro_recall, 3),
+        "macro_mention_recall_product": round(macro_mention_recall_product, 3),
+        "macro_mention_recall_review": round(macro_mention_recall_review, 3),
         "micro_precision": round(micro_precision, 3),
         "micro_recall": round(micro_recall, 3),
+        "global_mention_recall_review": round(global_mention_recall, 3),
         "global_mae_raw": round(global_mae_raw, 3) if global_mae_raw is not None else None,
         "global_mae_calibrated": round(global_mae_cal, 3) if global_mae_cal is not None else None,
         "global_mae_n": len(all_mae_raw),
         "calibration_global": {"a": round(a_global, 4), "b": round(b_global, 4)},
+    }
+
+
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │ PRODUCT-LEVEL ASPECT RATING COMPARISON                                 │
+# │                                                                         │
+# │ Сравниваем агрегированные рейтинги: true_avg vs pred_avg per aspect.   │
+# │ Это то, что реально видит пользователь в UI (radar chart).            │
+# │ Снимает проблему 32% per-review coverage — даже если пайплайн поймал  │
+# │ аспект в 20/55 reviews, агрегат может быть близок к правде.           │
+# └─────────────────────────────────────────────────────────────────────────┘
+
+def evaluate_product_ratings(
+    markup_df: pd.DataFrame,
+    pipeline_results: Dict[int, dict],
+    mapping: Dict[int, Dict[str, Optional[str]]],
+) -> Dict[str, object]:
+    """Product-level MAE: средняя оценка аспекта по разметке vs по пайплайну.
+
+    Для каждого товара, для каждого true аспекта с маппингом:
+      true_avg  = mean(true_scores[aspect] across all reviews)
+      pred_avg  = mean(pred_scores[mapped_pred_aspects] across all reviews)
+      error     = |true_avg - pred_avg|
+
+    Returns dict с per-product и global метриками.
+    """
+    print("\n" + "=" * 70)
+    print("PRODUCT-LEVEL ASPECT RATING COMPARISON")
+    print("=" * 70)
+
+    all_errors = []
+    per_product = {}
+
+    for nm_id, pred_data in pipeline_results.items():
+        product_mapping = mapping.get(nm_id, {})
+        per_review_pred = pred_data.get("per_review", {})
+
+        # Reverse map: true_asp → [pred_asp1, pred_asp2, ...]
+        reverse_map: Dict[str, List[str]] = defaultdict(list)
+        for pa, ta in product_mapping.items():
+            if ta is not None:
+                reverse_map[ta].append(pa)
+
+        # True avg scores per aspect
+        grp = markup_df[markup_df["nm_id"] == nm_id]
+        true_scores_by_aspect: Dict[str, List[float]] = defaultdict(list)
+        for _, row in grp.iterrows():
+            labels = row["true_labels_parsed"]
+            if not labels:
+                continue
+            for asp, score in labels.items():
+                true_scores_by_aspect[asp].append(score)
+
+        # Pred avg scores per mapped true aspect
+        pred_scores_by_true: Dict[str, List[float]] = defaultdict(list)
+        for rid, pred_scores in per_review_pred.items():
+            if rid == "unknown":
+                continue
+            for true_asp, pred_asps in reverse_map.items():
+                found = [pred_scores[pa] for pa in pred_asps if pa in pred_scores]
+                if found:
+                    pred_scores_by_true[true_asp].append(float(np.mean(found)))
+
+        # Compare
+        aspect_comparisons = []
+        print(f"\n  nm_id={nm_id}:")
+        print(f"    {'Aspect':25s} {'True':>6s} {'Pred':>6s} {'Δ':>6s}  {'n_true':>6s} {'n_pred':>6s}")
+        print(f"    {'-'*65}")
+
+        for true_asp in sorted(true_scores_by_aspect.keys()):
+            true_avg = float(np.mean(true_scores_by_aspect[true_asp]))
+            n_true = len(true_scores_by_aspect[true_asp])
+
+            if true_asp not in pred_scores_by_true or not pred_scores_by_true[true_asp]:
+                print(f"    {true_asp:25s} {true_avg:6.2f}    —      —    {n_true:6d}      0")
+                continue
+
+            pred_avg = float(np.mean(pred_scores_by_true[true_asp]))
+            n_pred = len(pred_scores_by_true[true_asp])
+            error = abs(true_avg - pred_avg)
+
+            aspect_comparisons.append({
+                "aspect": true_asp,
+                "true_avg": round(true_avg, 2),
+                "pred_avg": round(pred_avg, 2),
+                "error": round(error, 2),
+                "n_true": n_true,
+                "n_pred": n_pred,
+            })
+            all_errors.append(error)
+
+            delta_str = f"{error:6.2f}"
+            print(f"    {true_asp:25s} {true_avg:6.2f} {pred_avg:6.2f} {delta_str}  {n_true:6d} {n_pred:6d}")
+
+        product_mae = float(np.mean([c["error"] for c in aspect_comparisons])) if aspect_comparisons else None
+        per_product[nm_id] = {
+            "aspects": aspect_comparisons,
+            "product_mae": round(product_mae, 3) if product_mae is not None else None,
+            "n_aspects_compared": len(aspect_comparisons),
+        }
+
+        if product_mae is not None:
+            print(f"    {'':25s} {'':>6s} {'MAE':>6s} {product_mae:6.3f}")
+
+    global_mae = float(np.mean(all_errors)) if all_errors else None
+    macro_mae = float(np.mean([
+        p["product_mae"] for p in per_product.values() if p["product_mae"] is not None
+    ])) if per_product else None
+
+    print(f"\n{'='*70}")
+    print(f"  Product-Level MAE (global):  {round(global_mae, 3) if global_mae else 'N/A'}"
+          f"  (n={len(all_errors)} aspect-product pairs)")
+    print(f"  Product-Level MAE (macro):   {round(macro_mae, 3) if macro_mae else 'N/A'}")
+    print(f"{'='*70}\n")
+
+    return {
+        "per_product": per_product,
+        "global_product_mae": round(global_mae, 3) if global_mae is not None else None,
+        "macro_product_mae": round(macro_mae, 3) if macro_mae is not None else None,
+        "n_pairs": len(all_errors),
     }
 
 
@@ -761,114 +930,158 @@ def _build_auto_mapping(
 
 
 # ── MANUAL MAPPING ─────────────────────────────────────────────────────────
-# Пересобран по реальным predicted aspects из СВЕЖЕГО step12 (seed=42).
-# Каждый predicted aspect присутствует → валидация пройдёт чисто.
+# Пересобран для Anchor-First v2. Predicted aspects теперь = имена якорей.
+# Маппинг: identity где pred=true, семантический где pred≈true, None для мусора.
+# Мусор = якорь нерелевантный для данного товара ("Поедаемость" для книги).
 
 MANUAL_MAPPING: Dict[int, Dict[str, Optional[str]]] = {
 
     # ── nm_id=117808756 (книга) ──────────────────────────────────────
-    # pred: ['белые странички', 'шрифт', 'издание', 'печать', 'цену', 'Логистика']  (6)
-    # true: Внешний вид(12), Впечатление(1), Запах(7), Качество(55),
-    #       Логистика(10), Содержание(4), Соответствие(9), Текст(1),
-    #       Удобство(1), Упаковка(25), Цена(7)
+    # pred (15): Цена, Качество, Внешний вид, Удобство, Логистика, Упаковка,
+    #   Соответствие, Органолептика, Содержание, Состав, Свежесть, Комфорт,
+    #   Продавец, Состояние, Вместимость
+    # true (12): Внешний вид(12), Впечатление(1), Запах(7), Качество(55),
+    #   Логисика(1), Логистика(10), Содержание(4), Соответствие(9),
+    #   Текст(1), Удобство(1), Упаковка(25), Цена(7)
     117808756: {
-        "белые странички": "Качество",   # kw: страницы, странички, плотные страницы, листы белые
-        "шрифт": "Содержание",           # kw: текст, шрифт хороший, формат
-        "издание": "Соответствие",        # kw: издание, издание оригинальное, первое издание
-        "печать": "Внешний вид",          # kw: обложка, бумага, качество печати
-        "цену": "Цена",                  # kw: качество, цена, такую цену
-        "Логистика": "Упаковка",          # kw: упаковку, доставка быстрая, прозрачную упаковку
-        # MISS: Впечатление(1), Запах(7), Логистика(10 — true, отдельно от Упаковки),
-        #       Текст(1), Удобство(1)
+        # Identity
+        "Цена": "Цена",
+        "Качество": "Качество",
+        "Внешний вид": "Внешний вид",
+        "Удобство": "Удобство",
+        "Логистика": "Логистика",
+        "Упаковка": "Упаковка",
+        "Соответствие": "Соответствие",
+        "Содержание": "Содержание",
+        # Семантический
+        "Органолептика": "Запах",       # kw: запаха, запах, посторонних запахов
+        "Комфорт": "Текст",            # kw: шрифт хороший, шрифт приятный, мягкая обложка
+        "Состояние": "Качество",        # kw: отвратительная подделка, хлам → many-to-one
+        # Мусор (нерелевантный якорь для книги)
+        "Состав": None,                 # kw: часть франшизы, все целое
+        "Свежесть": None,               # kw: raincoast books
+        "Продавец": None,               # kw: продавцу, книжных магазинах (нет в true)
+        "Вместимость": None,            # kw: полям, kdp, преобрести
     },
 
     # ── nm_id=254445126 (толстовка) ──────────────────────────────────
-    # pred: ['размер', 'отличное качество', 'нитки неровные',
-    #        'цвет насыщенный', 'толстовка', 'плотная ткань',
-    #        'стирки', 'худак отличный', 'стоит 2000']  (9)
-    # true: Ассортимент(2), Внешний вид(27), Запах(1), Качество(63),
-    #       Комплектация(2), Комфорт(28), Общее впечатление(27),
-    #       Соответствие(30), Уход(1), Цена(9)
+    # pred (15): Цена, Качество, Внешний вид, Удобство, Логистика, Упаковка,
+    #   Соответствие, Состав, Здоровье, Поедаемость, Свежесть, Комфорт,
+    #   Продавец, Состояние, Вместимость
+    # true (10): Ассортимент(2), Внешний вид(27), Запах(1), Качество(63),
+    #   Комплектация(2), Комфорт(28), Общее впечатление(27),
+    #   Соответствие(30), Уход(1), Цена(9)
     254445126: {
-        "размер": "Соответствие",              # kw: размер, свой размер, рост, форму
-        "отличное качество": "Качество",       # kw: качество, бренд
-        "нитки неровные": None,                # шум (швы — деталь качества, n=3)
-        "цвет насыщенный": "Внешний вид",      # kw: цвет
-        "толстовка": None,                     # шум (общее слово, kw: капюшон, примерки, толстовка)
-        "плотная ткань": "Комфорт",            # kw: ткань, материал, плотная ткань
-        "стирки": None,                        # шум (kw: стирки, наклейки, продавцам)
-        "худак отличный": "Общее впечатление", # kw: толстовка отличная, кофта красивая, пошив хороший
-        "стоит 2000": "Цена",                 # kw: 2000 тысячи, денег 100, цена дорогая
-        # MISS: Ассортимент(2), Запах(1), Комплектация(2), Уход(1)
+        # Identity
+        "Цена": "Цена",
+        "Качество": "Качество",
+        "Внешний вид": "Внешний вид",
+        "Соответствие": "Соответствие",
+        "Комфорт": "Комфорт",
+        # Семантический
+        "Поедаемость": "Общее впечатление",  # kw: прекрасное худи, лучшая худи, отличное худи
+        "Свежесть": "Уход",                  # kw: после стирки
+        "Состояние": "Качество",              # kw: швы недоработки, нитки неровные → many-to-one
+        # Мусор
+        "Удобство": None,               # kw: при стирке, понятии рук — mixed мусор
+        "Логистика": None,               # kw: худи сразу (1 kw)
+        "Упаковка": None,                # kw: карточке товара, наклейки — мусор
+        "Состав": None,                  # kw: материала особенно (1 kw)
+        "Здоровье": None,                # kw: параметры ог-83, рост, обхват — мусор
+        "Продавец": None,                # kw: этот бренд (нет Продавец в true)
+        "Вместимость": None,             # kw: вся кофта, нитки — мусор
     },
 
     # ── nm_id=311233470 (платье) ─────────────────────────────────────
-    # pred: ['ткань', 'колготки', 'Цена', 'платья', 'продавец',
-    #        'Логистика', 'возврате', 'модель классная', 'брак',
-    #        'размер', 'красивое платье', '2500', 'качество',
-    #        'странные подплечники', 'пользу другого', 'фасон цвет',
-    #        'комплиментов']  (17)
-    # true: Внешний вид(67), Качество(71), Комфорт(10), Логистика(1),
-    #       Продавец(10), Соответствие(39), Состояние(13), Упаковка(10), Цена(43)
+    # pred (18): Цена, Качество, Внешний вид, Удобство, Функциональность,
+    #   Логистика, Упаковка, Соответствие, Органолептика, Содержание,
+    #   Состав, Здоровье, Поедаемость, Свежесть, Комфорт, Продавец,
+    #   Состояние, Вместимость
+    # true (11): Внешний вид(67), Качество(71), Комфорт(10), Кофморт(1),
+    #   Логистика(1), Продавец(10), Соответсвие(2), Соответствие(39),
+    #   Состояние(13), Упаковка(10), Цена(43)
     311233470: {
-        "ткань": "Качество",                   # kw: ткань, качество ткани, прожженая ткань
-        "качество": "Качество",                # kw: плохое качество — many-to-one с "ткань"
-        "Цена": "Цена",                        # kw: красная цена, цена, цену
-        "2500": "Цена",                        # kw: 6000, максимум 3000т — many-to-one
-        "продавец": "Продавец",                # kw: продавца, покупки, товар
-        "Логистика": "Упаковка",               # kw: пакет, фирменная упаковка, грязный пакет
-        "размер": "Соответствие",              # kw: размер, рост, мой размер
-        "красивое платье": "Внешний вид",      # kw: платье красивое, шикарное платье
-        "модель классная": "Внешний вид",      # kw: модель классная, модель идеально — many-to-one
-        "фасон цвет": "Внешний вид",           # kw: цвет хороший, цвет идеальный — many-to-one
-        "возврате": "Состояние",               # kw: возврат, сборка, идеально сборки
-        "брак": "Состояние",                   # kw: брак, браком — many-to-one с "возврате"
-        "платья": "Комфорт",                   # kw: платья неудобная, горловина платья
-        "колготки": None,                      # мусор (kw: нитки, девочки, пвз, подплечники)
-        "странные подплечники": None,          # деталь конструкции
-        "пользу другого": None,                # шум
-        "комплиментов": None,                  # шум (кучу комплиментов, отзывов)
-        # MISS: Логистика(1 — true, отдельно от Упаковки)
+        # Identity
+        "Цена": "Цена",
+        "Качество": "Качество",
+        "Внешний вид": "Внешний вид",
+        "Упаковка": "Упаковка",
+        "Соответствие": "Соответствие",
+        "Комфорт": "Комфорт",
+        "Продавец": "Продавец",
+        "Состояние": "Состояние",
+        "Логистика": "Логистика",
+        # Семантический
+        "Удобство": "Комфорт",          # kw: драпировки хорошо, задумка хорошая → many-to-one
+        "Состав": "Качество",            # kw: синтетики, чистая синтетика → many-to-one
+        # Мусор
+        "Функциональность": None,        # kw: пункте работник, сотрудник — мусор
+        "Органолептика": None,           # kw: горло, горла — мусор
+        "Содержание": None,              # kw: лживых отзывов, материал — мусор
+        "Здоровье": None,                # kw: шею, ягодицах, спине — мусор (части тела)
+        "Поедаемость": None,             # kw: навариться хотят — мусор
+        "Свежесть": None,                # kw: новогодним столом — мусор
+        "Вместимость": None,             # kw: сборок, нитки — мусор
     },
 
     # ── nm_id=441378025 (портсигар) ──────────────────────────────────
-    # pred: ['качество', 'упаковка хлипкая', 'прикуривателя',
-    #        'тугая пружина', 'формами', 'сигарет',
-    #        'нормальный портсигар', 'размера компактен']  (8)
-    # true: Вместимость(6), Внешний вид(13), Запах(1), Качество(29),
-    #       Комплектация(1), Логистика(3), Соответствие(4), Состояние(3),
-    #       Удобство(33), Упаковка(1), Функционал(6), Цена(2)
+    # pred (16): Цена, Качество, Внешний вид, Удобство, Функциональность,
+    #   Логистика, Упаковка, Соответствие, Органолептика, Содержание,
+    #   Здоровье, Свежесть, Комфорт, Продавец, Состояние, Вместимость
+    # true (12): Вместимость(6), Внешний вид(13), Запах(1), Качество(29),
+    #   Комплектация(1), Логистика(3), Соответствие(4), Состояние(3),
+    #   Удобство(33), Упаковка(1), Функционал(6), Цена(2)
     441378025: {
-        "качество": "Качество",                # kw: хорошее качество, цена
-        "упаковка хлипкая": "Логистика",       # kw: быстрая доставка, упаковка
-        "прикуривателя": "Функционал",         # kw: прикуриватель, клавиша
-        "сигарет": "Вместимость",              # kw: сигарет, сигареты
-        "размера компактен": "Внешний вид",    # kw: дизайн, компактность
-        "тугая пружина": None,                 # деталь Функционала
-        "формами": None,                       # мусор (kw: компакт, вещь, идея, часов, временем)
-        "нормальный портсигар": None,          # шум (kw: портсигар, отличный портсигар)
-        # MISS: Удобство(33!), Цена(2), Соответствие(4), Состояние(3), Запах(1)
+        # Identity
+        "Цена": "Цена",
+        "Качество": "Качество",
+        "Внешний вид": "Внешний вид",
+        "Удобство": "Удобство",
+        "Логистика": "Логистика",
+        "Упаковка": "Упаковка",
+        "Соответствие": "Соответствие",
+        "Состояние": "Состояние",
+        "Вместимость": "Вместимость",
+        # Семантический
+        "Функциональность": "Функционал",  # pred=Функциональность, true=Функционал
+        "Органолептика": "Вместимость",    # kw: сигарет, сигареты → many-to-one
+        # Мусор
+        "Содержание": None,              # kw: слова, описании
+        "Здоровье": None,                # kw: условиях сибири
+        "Свежесть": None,                # kw: нужна доработка, бесполезное
+        "Комфорт": None,                 # kw: скользкий материал — скорее Качество, но спорно
+        "Продавец": None,                # kw: клавиша прикуривателя — мусор
     },
 
     # ── nm_id=506358703 (кошачий корм) ───────────────────────────────
-    # pred: ['кусочки порции', 'корм', 'проблем', 'состав хороший',
-    #        'основе', 'застёжка', 'срокам', 'Логистика',
-    #        'питомцев', 'аллергии']  (10)
-    # true: Ассортимент(3), Запах(1), Здоровье(23), Качество(33),
-    #       Логистика(18), Поедаемость(82), Свежесть(9),
-    #       Состав(12), Упаковка(25), Цена(12)
+    # pred (17): Цена, Качество, Внешний вид, Удобство, Функциональность,
+    #   Логистика, Упаковка, Соответствие, Органолептика, Состав,
+    #   Здоровье, Поедаемость, Свежесть, Комфорт, Продавец,
+    #   Состояние, Вместимость
+    # true (11): Ассортимент(3), Запах(1), Здоровье(23), Качество(33),
+    #   Логистика(18), Поедаемость(82), Свеежсть(1), Свежесть(9),
+    #   Состав(12), Упаковка(25), Цена(12)
     506358703: {
-        "кусочки порции": "Поедаемость",       # kw: размер гранул, кусочки порции
-        "корм": "Качество",                    # kw: корм, беру корма, составу корм
-        "состав хороший": "Состав",            # kw: состав отличный, хороший состав, идеальный состав
-        "застёжка": "Упаковка",                # kw: замок, зип застежка, удобная застёжка
-        "срокам": "Свежесть",                  # kw: срок годности, срокам свежий
-        "Логистика": "Логистика",              # kw: быстрая доставка
-        "питомцев": "Здоровье",                # kw: питомцам, реакция питомцев
-        "аллергии": "Здоровье",                # kw: аллергии, аллергик — many-to-one
-        "проблем": None,                       # шум (kw: никаких проблем, недостатков — слишком общий)
-        "основе": None,                        # мусор (kw: состав, рекомендации, совету — разнородный)
-        # MISS: Ассортимент(3), Запах(1), Цена(12!)
+        # Identity
+        "Цена": "Цена",
+        "Качество": "Качество",
+        "Логистика": "Логистика",
+        "Упаковка": "Упаковка",
+        "Состав": "Состав",
+        "Здоровье": "Здоровье",
+        "Поедаемость": "Поедаемость",
+        "Свежесть": "Свежесть",
+        # Семантический
+        "Органолептика": "Поедаемость",  # kw: лакомство, вкус, вкусы → many-to-one
+        "Удобство": "Упаковка",          # kw: удобный замок → many-to-one
+        # Мусор
+        "Внешний вид": None,             # kw: бренды, цветом — мусор для корма
+        "Функциональность": None,        # kw: эффект, действии
+        "Соответствие": None,            # kw: количеству порции — слишком размытый
+        "Комфорт": None,                 # kw: гранул, застёжка-липучка — mixed мусор
+        "Продавец": None,                # kw: зоо магазинах
+        "Состояние": None,               # kw: хвостам, олениной — мусор
+        "Вместимость": None,             # kw: ели все — мусор
     },
 }
 
@@ -1017,26 +1230,41 @@ if __name__ == "__main__":
 
         for nm_id, pm in metrics["per_product"].items():
             print(f"\nnm_id={nm_id}:")
-            print(f"  Precision:  {pm['precision']}")
-            print(f"  Recall:     {pm['recall']}")
-            print(f"  MAE raw:    {pm['mae_raw']}  →  calibrated: {pm['mae_calibrated']}  "
-                  f"(n={pm['mae_n']}, a={pm['calibration_a']}, b={pm['calibration_b']})")
-            print(f"  Predicted:  {pm['pred_aspects']}")
-            print(f"  True:       {pm['true_aspects']}")
+            print(f"  Precision:              {pm['precision']}")
+            print(f"  Recall (aspect):        {pm['recall']}")
+            print(f"  Recall (mention/prod):  {pm['mention_recall_product']}")
+            print(f"  Recall (mention/review):{pm['mention_recall_review']}")
+            print(f"  MAE raw:                {pm['mae_raw']}  →  calibrated: {pm['mae_calibrated']}  "
+                  f"(n={pm['mae_n']})")
+            print(f"  Predicted:              {pm['pred_aspects']}")
+            print(f"  True:                   {pm['true_aspects']}")
 
         cal = metrics["calibration_global"]
         print(f"\n{'='*70}")
         print("ИТОГО:")
-        print(f"  Macro Precision:     {metrics['macro_precision']}")
-        print(f"  Macro Recall:        {metrics['macro_recall']}")
-        print(f"  Micro Precision:     {metrics['micro_precision']}")
-        print(f"  Micro Recall:        {metrics['micro_recall']}")
-        print(f"  Global MAE raw:      {metrics['global_mae_raw']}  (n={metrics['global_mae_n']})")
-        print(f"  Global MAE calibr:   {metrics['global_mae_calibrated']}")
-        print(f"  Global calibration:  S_cal = {cal['a']}*S_raw + {cal['b']}")
+        print(f"  Macro Precision:               {metrics['macro_precision']}")
+        print(f"  Macro Recall (aspect):         {metrics['macro_recall']}")
+        print(f"  Macro Recall (mention/product): {metrics['macro_mention_recall_product']}")
+        print(f"  Macro Recall (mention/review):  {metrics['macro_mention_recall_review']}")
+        print(f"  Micro Precision:               {metrics['micro_precision']}")
+        print(f"  Micro Recall (aspect):         {metrics['micro_recall']}")
+        print(f"  Global Mention Recall (review): {metrics['global_mention_recall_review']}")
+        print(f"  Global MAE raw:                {metrics['global_mae_raw']}  (n={metrics['global_mae_n']})")
+        print(f"  Global MAE calibr:             {metrics['global_mae_calibrated']}")
+        print(f"  Global calibration:            S_cal = {cal['a']}*S_raw + {cal['b']}")
 
         suffix = f"_{mapping_mode}" if mapping_mode != "manual" else ""
         metrics_path = f"{write_prefix}eval_metrics{suffix}.json"
         with open(metrics_path, "w", encoding="utf-8") as f:
             json.dump(metrics, f, ensure_ascii=False, indent=2)
         print(f"\nМетрики сохранены в {metrics_path}")
+
+        # Product-level aspect rating comparison
+        product_ratings = evaluate_product_ratings(
+            df, pipeline_results_for_eval, active_mapping,
+        )
+        metrics["product_ratings"] = product_ratings
+
+        # Перезаписываем с product_ratings
+        with open(metrics_path, "w", encoding="utf-8") as f:
+            json.dump(metrics, f, ensure_ascii=False, indent=2)

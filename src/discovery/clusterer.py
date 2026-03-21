@@ -1,3 +1,17 @@
+"""
+AspectClusterer v2: Anchor-First Assignment + Residual Discovery.
+
+Architecture (matched filter analogy):
+  Pass 1 — Anchor Assignment: каждый span → argmax cos(span, anchor).
+           Если cos ≥ τ_anchor И НЕ junk → назначаем на якорь.
+           Детерминированный, стабильный, ловит все стандартные аспекты.
+
+  Pass 2 — Residual Discovery: остатки → UMAP → HDBSCAN.
+           Находит новые аспекты, которых нет в якорях.
+
+  Pass 3 — Фильтрация: min_mentions + анти-якоря.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -15,14 +29,89 @@ from src.discovery.scorer import ScoredCandidate
 
 STOP_SPANS: set[str] = set()
 
+# ── Макро-якоря v2: расширенные описания для точного matching ────────────
+# Каждый якорь — 5-10 фраз из реального языка отзывов.
+# Больше фраз → плотнее облако в embedding space → точнее assignment.
+# "Логистика" и "Упаковка" РАЗДЕЛЕНЫ (раньше были слиты).
+
 MACRO_ANCHORS: Dict[str, List[str]] = {
-    "Цена": ["цена", "стоимость", "деньги", "дорого", "дешево"],
-    "Качество": ["качество", "надежность", "сборка", "материал", "брак"],
-    "Внешний вид": ["дизайн", "красота", "внешность", "стиль", "цвет"],
-    "Удобство": ["удобство", "комфорт", "эргономика", "размер"],
-    "Функциональность": ["мощность", "скорость", "производительность", "функция"],
-    "Логистика": ["доставка", "упаковка", "курьер", "срок"],
-    "Органолептика": ["вкус", "запах", "аромат", "звук"],
+    "Цена": [
+        "цена", "стоимость", "деньги", "дорого", "дешево",
+        "за такие деньги", "ценник", "переплата", "соотношение цена",
+    ],
+    "Качество": [
+        "качество", "надежность", "сборка", "материал", "брак",
+        "качество материала", "плохое качество", "хорошее качество",
+        "качество изготовления", "некачественный",
+    ],
+    "Внешний вид": [
+        "дизайн", "красота", "внешность", "стиль", "цвет",
+        "красивый", "выглядит", "смотрится", "внешний вид",
+    ],
+    "Удобство": [
+        "удобство", "комфорт", "эргономика", "удобно пользоваться",
+        "удобно держать", "удобный", "неудобный", "под рукой",
+        "удобно носить", "комфортно",
+    ],
+    "Функциональность": [
+        "мощность", "скорость", "производительность", "функция",
+        "работает", "механизм", "кнопка", "функционал",
+    ],
+    "Логистика": [
+        "доставка", "курьер", "доставили быстро", "пришло быстро",
+        "долго шло", "срок доставки", "транспортировка",
+    ],
+    "Упаковка": [
+        "упаковка", "пакет", "коробка", "упаковано",
+        "фирменная упаковка", "пришло в пакете", "целая упаковка",
+    ],
+    "Соответствие": [
+        "размер подошёл", "соответствует описанию", "как на фото",
+        "не соответствует", "размер", "маломерит",
+        "соответствие", "размер в размер",
+    ],
+    "Органолептика": [
+        "вкус", "запах", "аромат", "звук", "пахнет",
+        "неприятный запах", "вонь", "вкусный",
+    ],
+    "Содержание": [
+        "содержание", "текст", "шрифт", "сюжет", "интересно читать",
+        "информация", "контент",
+    ],
+    "Состав": [
+        "состав", "ингредиенты", "натуральный состав",
+        "хороший состав", "без добавок",
+    ],
+    "Здоровье": [
+        "здоровье", "аллергия", "реакция", "самочувствие",
+        "шерсть", "стул", "переносимость",
+    ],
+    "Поедаемость": [
+        "ест с удовольствием", "нравится коту", "не ест",
+        "привередливый", "вкусный корм", "поедаемость",
+    ],
+    "Свежесть": [
+        "срок годности", "свежий", "свежесть",
+        "не просроченный", "дата изготовления",
+    ],
+    "Комфорт": [
+        "удобно носить", "комфортно", "приятно к телу",
+        "неудобно", "натирает", "мягкий материал",
+        "приятная ткань", "ткань", "материал приятный",
+    ],
+    "Продавец": [
+        "продавец", "магазин", "обслуживание",
+        "ответ продавца", "отношение продавца",
+    ],
+    "Состояние": [
+        "пришло в плохом состоянии", "брак", "дефект",
+        "нитки торчат", "швы порваны", "повреждённый",
+        "возврат", "бракованный",
+    ],
+    "Вместимость": [
+        "вместимость", "помещается", "влезает",
+        "мало места", "ёмкость",
+    ],
 }
 
 ANTI_ANCHORS: Dict[str, List[str]] = {
@@ -72,6 +161,12 @@ class AspectClusterer:
         self.umap_min_dist: float = config.discovery.umap_min_dist
         self.umap_metric: str = config.discovery.umap_metric
 
+        # Порог для Pass 1 (anchor assignment).
+        # Читаем из конфига если есть, иначе дефолт 0.55
+        self.anchor_assign_threshold: float = getattr(
+            config.discovery, "anchor_assign_threshold", 0.55
+        )
+
         self._anchor_embeddings: dict[str, np.ndarray] = {}
         self._anti_anchor_embeddings: dict[str, np.ndarray] = {}
         self._build_anchor_embeddings()
@@ -93,25 +188,130 @@ class AspectClusterer:
     def cluster(
         self, candidates: List[ScoredCandidate], min_mentions: int = 2
     ) -> Dict[str, AspectInfo]:
+        """
+        Anchor-First Assignment + Residual Discovery.
+
+        Pass 1: каждый span → best anchor по cosine.
+                Если cos ≥ τ_anchor и не junk → назначаем.
+        Pass 2: остатки → UMAP → HDBSCAN → именование через якоря.
+        Pass 3: фильтрация min_mentions + анти-якоря.
+        """
         if not candidates:
             return {}
 
-        span_data = self._aggregate_spans(candidates, min_mentions)
-        N = len(span_data)
-
-        min_cluster_size = max(3, min(8, N // 300))
-        if N < min_cluster_size:
-            return self._fallback_single_cluster(span_data)
-
-        adaptive_n_neighbors = max(5, min(25, N // 100))
+        span_data = self._aggregate_spans(candidates, min_mentions=1)
+        if not span_data:
+            return {}
 
         spans = list(span_data.keys())
         embeddings = np.stack([span_data[s]["embedding"] for s in spans])
+        counts = np.array([span_data[s]["count"] for s in spans])
 
-        n_neighbors = min(adaptive_n_neighbors, N - 1)
+        # ── Pass 1: Anchor Assignment ────────────────────────────────
+        anchor_names = list(self._anchor_embeddings.keys())
+        anchor_matrix = np.stack([self._anchor_embeddings[n] for n in anchor_names])
+
+        # Cosine: |spans| × |anchors|
+        sim_matrix = cosine_similarity(embeddings, anchor_matrix)
+
+        assigned: Dict[str, List[int]] = {n: [] for n in anchor_names}
+        residual_indices: List[int] = []
+
+        for i in range(len(spans)):
+            best_j = int(np.argmax(sim_matrix[i]))
+            best_sim = float(sim_matrix[i, best_j])
+
+            if best_sim >= self.anchor_assign_threshold:
+                # Проверка анти-якорь: если span ближе к анти-якорю → residual
+                if self._is_junk_span(embeddings[i]):
+                    residual_indices.append(i)
+                else:
+                    assigned[anchor_names[best_j]].append(i)
+            else:
+                residual_indices.append(i)
+
+        # Собираем anchor-кластеры
+        result: Dict[str, AspectInfo] = {}
+        for anchor_name, indices in assigned.items():
+            if not indices:
+                continue
+            cluster_spans = [spans[i] for i in indices]
+            cluster_embs = embeddings[indices]
+            total_mentions = int(counts[indices].sum())
+
+            if total_mentions < min_mentions:
+                # Мало упоминаний — отправляем обратно в residual
+                residual_indices.extend(indices)
+                continue
+
+            centroid = np.mean(cluster_embs, axis=0)
+            result[anchor_name] = AspectInfo(
+                keywords=cluster_spans,
+                centroid_embedding=centroid,
+            )
+
+        # ── Pass 2: Residual Discovery (HDBSCAN) ────────────────────
+        if len(residual_indices) >= 5:
+            res_spans = [spans[i] for i in residual_indices]
+            res_embs = embeddings[residual_indices]
+            res_counts = counts[residual_indices]
+
+            residual_aspects = self._cluster_residuals(
+                res_spans, res_embs, res_counts, min_mentions
+            )
+
+            # Мержим residual aspects в result
+            for name, info in residual_aspects.items():
+                if name in result:
+                    # Residual кластер получил имя существующего якоря → мержим
+                    existing = result[name]
+                    result[name] = AspectInfo(
+                        keywords=existing.keywords + info.keywords,
+                        centroid_embedding=np.mean(
+                            np.vstack([
+                                existing.centroid_embedding.reshape(1, -1),
+                                info.centroid_embedding.reshape(1, -1),
+                            ]),
+                            axis=0,
+                        ).flatten(),
+                    )
+                else:
+                    result[name] = info
+
+        # ── Pass 3: Финальная фильтрация ────────────────────────────
+        # min_mentions фильтр (для якорных кластеров уже проверено,
+        # но residual мог добавить мелкие)
+        filtered: Dict[str, AspectInfo] = {}
+        for name, info in result.items():
+            total = sum(
+                span_data[s]["count"] for s in info.keywords if s in span_data
+            )
+            if total >= min_mentions:
+                filtered[name] = info
+
+        return filtered
+
+    # ------------------------------------------------------------------
+    # Pass 2: HDBSCAN на остатках (residuals)
+    # ------------------------------------------------------------------
+    def _cluster_residuals(
+        self,
+        spans: List[str],
+        embeddings: np.ndarray,
+        counts: np.ndarray,
+        min_mentions: int,
+    ) -> Dict[str, AspectInfo]:
+        """UMAP → HDBSCAN на residual spans. Именование через якоря."""
+        N = len(spans)
+        min_cluster_size = max(3, min(8, N // 50))
+        if N < min_cluster_size:
+            return {}
+
+        n_neighbors = max(2, min(15, N // 10))
+
         reducer = umap.UMAP(
             n_components=min(self.umap_n_components, N - 2),
-            n_neighbors=max(2, n_neighbors),
+            n_neighbors=min(n_neighbors, N - 1),
             min_dist=self.umap_min_dist,
             metric=self.umap_metric,
             n_jobs=1,
@@ -134,12 +334,11 @@ class AspectClusterer:
             clusters.setdefault(label, []).append(idx)
 
         if not clusters:
-            return self._fallback_single_cluster(span_data)
+            return {}
 
         result: Dict[str, AspectInfo] = {}
         umap_centroids: Dict[str, np.ndarray] = {}
-        
-        # Первый проход: мержим HDBSCAN-кластеры с одинаковыми именами
+
         for label, indices in clusters.items():
             cluster_spans = [spans[i] for i in indices]
             cluster_embs = embeddings[indices]
@@ -148,20 +347,33 @@ class AspectClusterer:
             umap_embs = reduced[indices]
             umap_centroid = np.mean(umap_embs, axis=0)
 
+            # Фильтрация мусорных кластеров
+            if self._is_junk_cluster(centroid):
+                continue
+
+            total_mentions = int(counts[indices].sum())
+            if total_mentions < min_mentions:
+                continue
+
             name = self._name_cluster(centroid, cluster_spans, cluster_embs)
 
             if name in result:
                 existing = result[name]
-                merged_kw = existing.keywords + cluster_spans
                 result[name] = AspectInfo(
-                    keywords=merged_kw,
+                    keywords=existing.keywords + cluster_spans,
                     centroid_embedding=np.mean(
-                        np.vstack([existing.centroid_embedding.reshape(1, -1), centroid.reshape(1, -1)]),
+                        np.vstack([
+                            existing.centroid_embedding.reshape(1, -1),
+                            centroid.reshape(1, -1),
+                        ]),
                         axis=0,
                     ).flatten(),
                 )
                 umap_centroids[name] = np.mean(
-                    np.vstack([umap_centroids[name].reshape(1, -1), umap_centroid.reshape(1, -1)]),
+                    np.vstack([
+                        umap_centroids[name].reshape(1, -1),
+                        umap_centroid.reshape(1, -1),
+                    ]),
                     axis=0,
                 ).flatten()
             else:
@@ -171,17 +383,42 @@ class AspectClusterer:
                 )
                 umap_centroids[name] = umap_centroid
 
-        # Второй проход: фильтруем мусорные кластеры через анти-якоря
-        filtered: Dict[str, AspectInfo] = {}
-        filtered_umap: Dict[str, np.ndarray] = {}
-        for name, info in result.items():
-            if not self._is_junk_cluster(info.centroid_embedding):
-                filtered[name] = info
-                filtered_umap[name] = umap_centroids[name]
+        # Пост-кластерный мерж
+        result = self._merge_similar_clusters(result, umap_centroids)
+        return result
 
-        # Третий проход: пост-кластерный мерж близких кластеров
-        filtered = self._merge_similar_clusters(filtered, filtered_umap)
-        return filtered
+    # ------------------------------------------------------------------
+    # Junk detection
+    # ------------------------------------------------------------------
+    def _is_junk_span(self, embedding: np.ndarray) -> bool:
+        """Проверяет один span: ближе к анти-якорю чем к любому якорю?"""
+        emb = embedding.reshape(1, -1)
+
+        max_anti_sim = max(
+            cosine_similarity(emb, anti_emb.reshape(1, -1))[0, 0]
+            for anti_emb in self._anti_anchor_embeddings.values()
+        )
+        max_anchor_sim = max(
+            cosine_similarity(emb, anchor_emb.reshape(1, -1))[0, 0]
+            for anchor_emb in self._anchor_embeddings.values()
+        )
+
+        return max_anti_sim > max_anchor_sim + self.anti_anchor_threshold
+
+    def _is_junk_cluster(self, centroid: np.ndarray) -> bool:
+        """Проверяет центроид кластера."""
+        centroid_norm = centroid.reshape(1, -1)
+
+        max_anti_sim = max(
+            cosine_similarity(centroid_norm, anti_emb.reshape(1, -1))[0, 0]
+            for anti_emb in self._anti_anchor_embeddings.values()
+        )
+        max_anchor_sim = max(
+            cosine_similarity(centroid_norm, anchor_emb.reshape(1, -1))[0, 0]
+            for anchor_emb in self._anchor_embeddings.values()
+        )
+
+        return max_anti_sim > max_anchor_sim + self.anti_anchor_threshold
 
     # ------------------------------------------------------------------
     # Агрегация спанов
@@ -204,27 +441,6 @@ class AspectClusterer:
         return agg
 
     # ------------------------------------------------------------------
-    # Фильтрация мусорных кластеров через анти-якоря
-    # ------------------------------------------------------------------
-    def _is_junk_cluster(self, centroid: np.ndarray) -> bool:
-        centroid_norm = centroid.reshape(1, -1)
-        
-        # Max sim к анти-якорям
-        max_anti_sim = max(
-            cosine_similarity(centroid_norm, anti_emb.reshape(1, -1))[0, 0]
-            for anti_emb in self._anti_anchor_embeddings.values()
-        )
-        
-        # Max sim к макро-якорям
-        max_anchor_sim = max(
-            cosine_similarity(centroid_norm, anchor_emb.reshape(1, -1))[0, 0]
-            for anchor_emb in self._anchor_embeddings.values()
-        )
-        
-        # Отбросить, если анти-якорь ближе чем макро-якорь + margin
-        return max_anti_sim > max_anchor_sim + self.anti_anchor_threshold
-
-    # ------------------------------------------------------------------
     # Пост-кластерный мерж близких кластеров (евклид в UMAP R5)
     # ------------------------------------------------------------------
     def _merge_similar_clusters(
@@ -241,6 +457,8 @@ class AspectClusterer:
 
             for i in range(len(names)):
                 for j in range(i + 1, len(names)):
+                    if names[i] not in umap_centroids or names[j] not in umap_centroids:
+                        continue
                     dist = float(np.linalg.norm(
                         umap_centroids[names[i]] - umap_centroids[names[j]]
                     ))
@@ -265,22 +483,24 @@ class AspectClusterer:
                 keywords=keep.keywords + drop.keywords,
                 centroid_embedding=keep.centroid_embedding,
             )
-            umap_centroids[keep_name] = np.mean(
-                np.vstack([
-                    umap_centroids[keep_name].reshape(1, -1),
-                    umap_centroids[drop_name].reshape(1, -1),
-                ]),
-                axis=0,
-            ).flatten()
+            if keep_name in umap_centroids and drop_name in umap_centroids:
+                umap_centroids[keep_name] = np.mean(
+                    np.vstack([
+                        umap_centroids[keep_name].reshape(1, -1),
+                        umap_centroids[drop_name].reshape(1, -1),
+                    ]),
+                    axis=0,
+                ).flatten()
 
             del clusters[drop_name]
-            del umap_centroids[drop_name]
+            if drop_name in umap_centroids:
+                del umap_centroids[drop_name]
             names = list(clusters.keys())
 
         return clusters
 
     # ------------------------------------------------------------------
-    # Именование кластера
+    # Именование кластера (для residual discovery)
     # ------------------------------------------------------------------
     def _name_cluster(
         self,
