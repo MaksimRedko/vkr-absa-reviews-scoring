@@ -29,7 +29,7 @@ config = OmegaConf.create({
     },
     "math": {
         "prior_mean": 3.0,  # Нейтральный априор (MaxEnt)
-        "prior_strength_max": 3,  # C_max для псевдо-выборки
+        "prior_strength_max": 1,  # C_max для псевдо-выборки
         "time_decay_days": 365,
         "variance_penalty": 0.0,  # Убран из скора, уходит в UI-алерт
     },
@@ -37,7 +37,7 @@ config = OmegaConf.create({
         "length_sigmoid_k": 0.8,
         "length_sigmoid_x0": 4,
         "uniqueness_threshold": 0.95,  # Порог для Union-Find кластеров ботов
-        "sim_noise_floor": 0.5,         # Фоновое сходство: ниже этого — штрафа нет
+        "sim_noise_floor": 0.75,        # Фоновое сходство: ниже этого — штрафа нет
         "min_trust_weight": 0.01,
     },
     "ui": {

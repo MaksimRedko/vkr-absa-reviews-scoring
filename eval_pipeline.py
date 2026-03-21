@@ -201,17 +201,25 @@ def run_pipeline_for_ids(
 
         per_review_avg = {}
         for rid, asp_dict in per_review.items():
-            per_review_avg[rid] = {
+            avg = {
                 asp: round(float(np.mean(scores)), 2)
                 for asp, scores in asp_dict.items()
             }
+            # Apply aliases: "Органолептика"→"Запах" etc.
+            # Добавляем aliased ключи чтобы identity match работал
+            for pred_name, true_name in ASPECT_ALIASES.items():
+                if pred_name in avg and true_name not in avg:
+                    avg[true_name] = avg[pred_name]
+            per_review_avg[rid] = avg
 
         # Диагностика: какие кандидаты были до кластеризации
         all_cand_texts = [c.span for c in all_candidates]
         scored_texts = [c.span for c in scored]
 
         results[nm_id] = {
-            "aspects": aspect_names,
+            "aspects": aspect_names + [
+                ASPECT_ALIASES[a] for a in aspect_names if a in ASPECT_ALIASES
+            ],
             "per_review": per_review_avg,
             "aspect_keywords": {
                 name: info.keywords for name, info in aspects.items()
@@ -724,6 +732,16 @@ def evaluate_product_ratings(
 # │ Predicted centroid = mean(encode(keywords)).                            │
 # │ True embedding = mean(encode(description_phrases)) — NOT bare name.    │
 # └─────────────────────────────────────────────────────────────────────────┘
+
+# ── ASPECT ALIASES: pred name → true name для identity matching ──────────
+# Решает проблему: якорь "Органолептика" → true "Запах", якорь
+# "Функциональность" → true "Функционал". Вместо переименования якорей
+# (что ломает кластеризацию) — alias map в eval.
+ASPECT_ALIASES: Dict[str, str] = {
+    "Органолептика": "Запах",
+    "Функциональность": "Функционал",
+}
+
 
 # Расширенные описания true aspects для домена e-commerce.
 # Один словарь на все товары — domain knowledge, не per-product хардкод.

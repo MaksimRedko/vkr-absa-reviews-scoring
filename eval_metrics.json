@@ -1,0 +1,620 @@
+{
+  "per_product": {
+    "117808756": {
+      "precision": 0.55,
+      "recall": 0.833,
+      "mention_recall_product": 0.985,
+      "mention_recall_review": 0.271,
+      "mae_raw": 0.615,
+      "mae_calibrated": 0.51,
+      "calibration_a": 0.801,
+      "calibration_b": 1.0278,
+      "mae_n": 36,
+      "pred_aspects": [
+        "Внешний вид",
+        "Качество",
+        "Комфорт",
+        "Логистика",
+        "Органолептика",
+        "Продавец",
+        "Содержание",
+        "Соответствие",
+        "Состояние",
+        "Упаковка",
+        "Цена",
+        "идеальном виде",
+        "красивая обложка",
+        "листы",
+        "листы белые",
+        "отличная книга",
+        "проверка",
+        "хлам",
+        "хороший шрифт",
+        "языка"
+      ],
+      "true_aspects": [
+        "Внешний вид",
+        "Впечатление",
+        "Запах",
+        "Качество",
+        "Логисика",
+        "Логистика",
+        "Содержание",
+        "Соответствие",
+        "Текст",
+        "Удобство",
+        "Упаковка",
+        "Цена"
+      ]
+    },
+    "254445126": {
+      "precision": 0.444,
+      "recall": 0.7,
+      "mention_recall_product": 0.974,
+      "mention_recall_review": 0.326,
+      "mae_raw": 1.111,
+      "mae_calibrated": 0.972,
+      "calibration_a": 0.849,
+      "calibration_b": 0.7714,
+      "mae_n": 62,
+      "pred_aspects": [
+        "Внешний вид",
+        "Качество",
+        "Комфорт",
+        "Поедаемость",
+        "Продавец",
+        "Соответствие",
+        "Состояние",
+        "Цена",
+        "бренд",
+        "классное худи",
+        "ношу",
+        "оверсайз",
+        "ог-83 от-62",
+        "стирке",
+        "стирки цвет",
+        "толстовка отличная",
+        "тяжести",
+        "швы"
+      ],
+      "true_aspects": [
+        "Ассортимент",
+        "Внешний вид",
+        "Запах",
+        "Качество",
+        "Комплектация",
+        "Комфорт",
+        "Общее впечатление",
+        "Соответствие",
+        "Уход",
+        "Цена"
+      ]
+    },
+    "311233470": {
+      "precision": 0.524,
+      "recall": 0.818,
+      "mention_recall_product": 0.989,
+      "mention_recall_review": 0.318,
+      "mae_raw": 0.664,
+      "mae_calibrated": 1.862,
+      "calibration_a": 0.3995,
+      "calibration_b": 2.9603,
+      "mae_n": 85,
+      "pred_aspects": [
+        "1000",
+        "Вместимость",
+        "Внешний вид",
+        "Качество",
+        "Комфорт",
+        "Продавец",
+        "Свежесть",
+        "Содержание",
+        "Соответствие",
+        "Состояние",
+        "Упаковка",
+        "Цена",
+        "идеальную фигуру",
+        "классное платье",
+        "колготки",
+        "комментарии",
+        "рост 168",
+        "сборка",
+        "сотрудник",
+        "фигуре хорошо",
+        "шее"
+      ],
+      "true_aspects": [
+        "Внешний вид",
+        "Качество",
+        "Комфорт",
+        "Кофморт",
+        "Логистика",
+        "Продавец",
+        "Соответсвие",
+        "Соответствие",
+        "Состояние",
+        "Упаковка",
+        "Цена"
+      ]
+    },
+    "441378025": {
+      "precision": 0.5,
+      "recall": 0.833,
+      "mention_recall_product": 0.98,
+      "mention_recall_review": 0.186,
+      "mae_raw": 1.282,
+      "mae_calibrated": 1.075,
+      "calibration_a": 0.8137,
+      "calibration_b": 0.9601,
+      "mae_n": 19,
+      "pred_aspects": [
+        "Вместимость",
+        "Внешний вид",
+        "Качество",
+        "Комфорт",
+        "Логистика",
+        "Органолептика",
+        "Продавец",
+        "Соответствие",
+        "Состояние",
+        "Удобство",
+        "Упаковка",
+        "Функциональность",
+        "Цена",
+        "зажигалка",
+        "закрытие",
+        "зарядке",
+        "классный портсигар",
+        "компактность",
+        "пальцем",
+        "сигареты",
+        "тугая пружина",
+        "удобная вещь"
+      ],
+      "true_aspects": [
+        "Вместимость",
+        "Внешний вид",
+        "Запах",
+        "Качество",
+        "Комплектация",
+        "Логистика",
+        "Соответствие",
+        "Состояние",
+        "Удобство",
+        "Упаковка",
+        "Функционал",
+        "Цена"
+      ]
+    },
+    "506358703": {
+      "precision": 0.417,
+      "recall": 0.727,
+      "mention_recall_product": 0.977,
+      "mention_recall_review": 0.493,
+      "mae_raw": 0.466,
+      "mae_calibrated": 0.544,
+      "calibration_a": 0.7695,
+      "calibration_b": 0.965,
+      "mae_n": 108,
+      "pred_aspects": [
+        "Здоровье",
+        "Качество",
+        "Логистика",
+        "Органолептика",
+        "Поедаемость",
+        "Продавец",
+        "Свежесть",
+        "Соответствие",
+        "Состав",
+        "Упаковка",
+        "Функциональность",
+        "Цена",
+        "ветеринара",
+        "годности хороший",
+        "гранулы",
+        "застежка",
+        "калорийности",
+        "корма",
+        "котам",
+        "порции",
+        "рыг",
+        "удовольствием быстрая",
+        "целое",
+        "шерсть"
+      ],
+      "true_aspects": [
+        "Ассортимент",
+        "Запах",
+        "Здоровье",
+        "Качество",
+        "Логистика",
+        "Поедаемость",
+        "Свеежсть",
+        "Свежесть",
+        "Состав",
+        "Упаковка",
+        "Цена"
+      ]
+    }
+  },
+  "macro_precision": 0.487,
+  "macro_recall": 0.782,
+  "macro_mention_recall_product": 0.981,
+  "macro_mention_recall_review": 0.319,
+  "micro_precision": 0.486,
+  "micro_recall": 0.786,
+  "global_mention_recall_review": 0.34,
+  "global_mae_raw": 0.717,
+  "global_mae_calibrated": 1.019,
+  "global_mae_n": 310,
+  "calibration_global": {
+    "a": 0.7773,
+    "b": 1.1156
+  },
+  "mapping_mode": "manual",
+  "product_ratings": {
+    "per_product": {
+      "117808756": {
+        "aspects": [
+          {
+            "aspect": "Внешний вид",
+            "true_avg": 4.83,
+            "pred_avg": 2.72,
+            "error": 2.11,
+            "n_true": 12,
+            "n_pred": 3
+          },
+          {
+            "aspect": "Запах",
+            "true_avg": 4.14,
+            "pred_avg": 3.85,
+            "error": 0.29,
+            "n_true": 7,
+            "n_pred": 4
+          },
+          {
+            "aspect": "Качество",
+            "true_avg": 4.58,
+            "pred_avg": 4.04,
+            "error": 0.54,
+            "n_true": 55,
+            "n_pred": 13
+          },
+          {
+            "aspect": "Логистика",
+            "true_avg": 4.8,
+            "pred_avg": 4.71,
+            "error": 0.09,
+            "n_true": 10,
+            "n_pred": 5
+          },
+          {
+            "aspect": "Содержание",
+            "true_avg": 3.75,
+            "pred_avg": 4.07,
+            "error": 0.32,
+            "n_true": 4,
+            "n_pred": 32
+          },
+          {
+            "aspect": "Соответствие",
+            "true_avg": 3.22,
+            "pred_avg": 3.69,
+            "error": 0.47,
+            "n_true": 9,
+            "n_pred": 2
+          },
+          {
+            "aspect": "Текст",
+            "true_avg": 1.0,
+            "pred_avg": 4.04,
+            "error": 3.04,
+            "n_true": 1,
+            "n_pred": 7
+          },
+          {
+            "aspect": "Упаковка",
+            "true_avg": 4.56,
+            "pred_avg": 3.95,
+            "error": 0.61,
+            "n_true": 25,
+            "n_pred": 8
+          },
+          {
+            "aspect": "Цена",
+            "true_avg": 4.86,
+            "pred_avg": 4.34,
+            "error": 0.52,
+            "n_true": 7,
+            "n_pred": 8
+          }
+        ],
+        "product_mae": 0.888,
+        "n_aspects_compared": 9
+      },
+      "254445126": {
+        "aspects": [
+          {
+            "aspect": "Внешний вид",
+            "true_avg": 4.3,
+            "pred_avg": 3.1,
+            "error": 1.19,
+            "n_true": 27,
+            "n_pred": 13
+          },
+          {
+            "aspect": "Качество",
+            "true_avg": 4.4,
+            "pred_avg": 4.02,
+            "error": 0.38,
+            "n_true": 63,
+            "n_pred": 33
+          },
+          {
+            "aspect": "Комфорт",
+            "true_avg": 3.93,
+            "pred_avg": 3.51,
+            "error": 0.42,
+            "n_true": 28,
+            "n_pred": 15
+          },
+          {
+            "aspect": "Общее впечатление",
+            "true_avg": 4.81,
+            "pred_avg": 4.59,
+            "error": 0.22,
+            "n_true": 27,
+            "n_pred": 3
+          },
+          {
+            "aspect": "Соответствие",
+            "true_avg": 3.7,
+            "pred_avg": 3.3,
+            "error": 0.4,
+            "n_true": 30,
+            "n_pred": 7
+          },
+          {
+            "aspect": "Цена",
+            "true_avg": 3.11,
+            "pred_avg": 3.27,
+            "error": 0.16,
+            "n_true": 9,
+            "n_pred": 6
+          }
+        ],
+        "product_mae": 0.462,
+        "n_aspects_compared": 6
+      },
+      "311233470": {
+        "aspects": [
+          {
+            "aspect": "Внешний вид",
+            "true_avg": 4.34,
+            "pred_avg": 3.7,
+            "error": 0.64,
+            "n_true": 67,
+            "n_pred": 15
+          },
+          {
+            "aspect": "Качество",
+            "true_avg": 2.32,
+            "pred_avg": 2.19,
+            "error": 0.13,
+            "n_true": 71,
+            "n_pred": 23
+          },
+          {
+            "aspect": "Комфорт",
+            "true_avg": 2.7,
+            "pred_avg": 3.18,
+            "error": 0.48,
+            "n_true": 10,
+            "n_pred": 15
+          },
+          {
+            "aspect": "Продавец",
+            "true_avg": 1.4,
+            "pred_avg": 2.11,
+            "error": 0.71,
+            "n_true": 10,
+            "n_pred": 14
+          },
+          {
+            "aspect": "Соответствие",
+            "true_avg": 4.05,
+            "pred_avg": 2.92,
+            "error": 1.13,
+            "n_true": 39,
+            "n_pred": 11
+          },
+          {
+            "aspect": "Состояние",
+            "true_avg": 1.46,
+            "pred_avg": 1.76,
+            "error": 0.3,
+            "n_true": 13,
+            "n_pred": 3
+          },
+          {
+            "aspect": "Упаковка",
+            "true_avg": 1.5,
+            "pred_avg": 1.72,
+            "error": 0.22,
+            "n_true": 10,
+            "n_pred": 11
+          },
+          {
+            "aspect": "Цена",
+            "true_avg": 1.56,
+            "pred_avg": 1.94,
+            "error": 0.38,
+            "n_true": 43,
+            "n_pred": 21
+          }
+        ],
+        "product_mae": 0.499,
+        "n_aspects_compared": 8
+      },
+      "441378025": {
+        "aspects": [
+          {
+            "aspect": "Вместимость",
+            "true_avg": 2.5,
+            "pred_avg": 2.79,
+            "error": 0.29,
+            "n_true": 6,
+            "n_pred": 4
+          },
+          {
+            "aspect": "Внешний вид",
+            "true_avg": 4.69,
+            "pred_avg": 2.91,
+            "error": 1.78,
+            "n_true": 13,
+            "n_pred": 2
+          },
+          {
+            "aspect": "Качество",
+            "true_avg": 2.62,
+            "pred_avg": 4.93,
+            "error": 2.31,
+            "n_true": 29,
+            "n_pred": 3
+          },
+          {
+            "aspect": "Логистика",
+            "true_avg": 5.0,
+            "pred_avg": 2.92,
+            "error": 2.08,
+            "n_true": 3,
+            "n_pred": 2
+          },
+          {
+            "aspect": "Соответствие",
+            "true_avg": 3.5,
+            "pred_avg": 2.3,
+            "error": 1.2,
+            "n_true": 4,
+            "n_pred": 2
+          },
+          {
+            "aspect": "Состояние",
+            "true_avg": 5.0,
+            "pred_avg": 1.25,
+            "error": 3.75,
+            "n_true": 3,
+            "n_pred": 1
+          },
+          {
+            "aspect": "Удобство",
+            "true_avg": 3.91,
+            "pred_avg": 4.3,
+            "error": 0.39,
+            "n_true": 33,
+            "n_pred": 6
+          },
+          {
+            "aspect": "Упаковка",
+            "true_avg": 5.0,
+            "pred_avg": 1.05,
+            "error": 3.95,
+            "n_true": 1,
+            "n_pred": 1
+          },
+          {
+            "aspect": "Функционал",
+            "true_avg": 3.5,
+            "pred_avg": 3.04,
+            "error": 0.46,
+            "n_true": 6,
+            "n_pred": 4
+          },
+          {
+            "aspect": "Цена",
+            "true_avg": 4.5,
+            "pred_avg": 2.68,
+            "error": 1.82,
+            "n_true": 2,
+            "n_pred": 3
+          }
+        ],
+        "product_mae": 1.803,
+        "n_aspects_compared": 10
+      },
+      "506358703": {
+        "aspects": [
+          {
+            "aspect": "Здоровье",
+            "true_avg": 4.65,
+            "pred_avg": 3.62,
+            "error": 1.03,
+            "n_true": 23,
+            "n_pred": 10
+          },
+          {
+            "aspect": "Качество",
+            "true_avg": 5.0,
+            "pred_avg": 4.79,
+            "error": 0.21,
+            "n_true": 33,
+            "n_pred": 4
+          },
+          {
+            "aspect": "Логистика",
+            "true_avg": 5.0,
+            "pred_avg": 4.69,
+            "error": 0.31,
+            "n_true": 18,
+            "n_pred": 10
+          },
+          {
+            "aspect": "Поедаемость",
+            "true_avg": 4.84,
+            "pred_avg": 4.32,
+            "error": 0.52,
+            "n_true": 82,
+            "n_pred": 72
+          },
+          {
+            "aspect": "Свежесть",
+            "true_avg": 5.0,
+            "pred_avg": 4.74,
+            "error": 0.26,
+            "n_true": 9,
+            "n_pred": 5
+          },
+          {
+            "aspect": "Состав",
+            "true_avg": 4.92,
+            "pred_avg": 4.94,
+            "error": 0.02,
+            "n_true": 12,
+            "n_pred": 8
+          },
+          {
+            "aspect": "Упаковка",
+            "true_avg": 4.88,
+            "pred_avg": 4.47,
+            "error": 0.41,
+            "n_true": 25,
+            "n_pred": 14
+          },
+          {
+            "aspect": "Цена",
+            "true_avg": 5.0,
+            "pred_avg": 4.36,
+            "error": 0.64,
+            "n_true": 12,
+            "n_pred": 5
+          }
+        ],
+        "product_mae": 0.425,
+        "n_aspects_compared": 8
+      }
+    },
+    "global_product_mae": 0.883,
+    "macro_product_mae": 0.815,
+    "n_pairs": 41
+  }
+}
