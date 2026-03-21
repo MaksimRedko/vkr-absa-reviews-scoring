@@ -99,11 +99,15 @@ class ABSAPipeline:
         print("[3/7] Извлечение кандидатов...")
         all_candidates = []
         review_candidates_map: Dict[str, list] = {}
+        sentence_to_review: Dict[str, str] = {}
 
         for i, text in enumerate(texts):
             candidates = self.candidate_extractor.extract(text)
             all_candidates.extend(candidates)
             review_candidates_map[reviews[i].id] = candidates
+            for c in candidates:
+                sentence_to_review[c.sentence.strip()] = reviews[i].id
+                sentence_to_review[c.sentence.lower().strip()] = reviews[i].id
 
         print(f"       Всего кандидатов: {len(all_candidates)}")
 
@@ -127,7 +131,7 @@ class ABSAPipeline:
         # 6. NLI Sentiment
         print(f"[6/7] NLI Sentiment ({len(aspect_names)} аспектов)...")
         sentiment_pairs = self._build_sentiment_pairs(
-            scored_candidates, aspects, reviews,
+            scored_candidates, aspects, sentence_to_review,
         )
         print(f"       Пар для NLI: {len(sentiment_pairs)}")
         sentiment_scores = self.sentiment_engine.batch_analyze(sentiment_pairs)
@@ -172,7 +176,7 @@ class ABSAPipeline:
         self,
         scored_candidates: List[ScoredCandidate],
         aspects: Dict[str, AspectInfo],
-        reviews: List[ReviewInput],
+        sentence_to_review: Dict[str, str],
     ) -> List[Tuple[str, str, str]]:
         """
         Формирует (review_id, sentence, aspect_name) для NLI.
@@ -187,19 +191,9 @@ class ABSAPipeline:
         if not aspects or not scored_candidates:
             return []
 
-        # Маппинг sentence → review_id
-        sentence_to_review: Dict[str, str] = {}
-        for review in reviews:
-            text = review.clean_text
-            for sent in self._split_sentences(text):
-                sentence_to_review[sent.lower().strip()] = review.id
-                sentence_to_review[sent.strip()] = review.id
-
-        # Центроиды аспектов
         aspect_names = list(aspects.keys())
         centroids = np.stack([aspects[n].centroid_embedding for n in aspect_names])
 
-        # Привязка кандидатов к аспектам
         seen_pairs: set = set()
         pairs: List[Tuple[str, str, str]] = []
 
@@ -208,7 +202,6 @@ class ABSAPipeline:
             best_idx = int(np.argmax(sim))
             aspect_name = aspect_names[best_idx]
 
-            # review_id по sentence
             review_id = sentence_to_review.get(
                 cand.sentence.strip(),
                 sentence_to_review.get(cand.sentence.lower().strip(), "unknown"),
