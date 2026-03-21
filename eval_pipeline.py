@@ -6,6 +6,12 @@ Evaluation pipeline: разметка vs пайплайн.
   2. Прогон Discovery + Sentiment
   3. Маппинг аспектов (ручная таблица)
   4. Метрики: Precision, Recall, Sentiment MAE
+
+Фиксы v2:
+  - FIX1: _collect_score_pairs — reverse_map → Dict[str, List[str]] (many-to-one)
+  - FIX2: _validate_mapping — проверка полноты MAPPING перед расчётом метрик
+  - FIX3: evaluate_with_mapping — честный LOO для калибровки
+  - FIX4: diagnose_unknown_reviews — диагностика unknown review_id
 """
 
 from __future__ import annotations
@@ -174,7 +180,7 @@ def run_pipeline_for_ids(
         print(f"  Аспекты: {aspect_names}")
 
         if not aspects:
-            results[nm_id] = {"aspects": [], "per_review": []}
+            results[nm_id] = {"aspects": [], "per_review": {}}
             continue
 
         pairs = _build_pairs(scored, aspects, reviews)
@@ -250,18 +256,34 @@ def _build_pairs(scored, aspects, reviews):
 
 # ── Шаг 3 + 4: Маппинг и метрики ──────────────────────────────────────────
 
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │ FIX1: _collect_score_pairs — many-to-one через mean-агрегацию          │
+# │                                                                         │
+# │ БЫЛО:  reverse_map = {ta: pa for pa, ta in ...}  → dict перезатирал    │
+# │ СТАЛО: reverse_map = defaultdict(list) → mean по всем pred scores      │
+# └─────────────────────────────────────────────────────────────────────────┘
+
 def _collect_score_pairs(
     markup_df: pd.DataFrame,
     pipeline_results: Dict[int, dict],
     mapping: Dict[int, Dict[str, Optional[str]]],
 ) -> Dict[int, List[Tuple[float, float]]]:
-    """Собирает (pred_score, true_score) пары per product."""
+    """Собирает (pred_score, true_score) пары per product.
+
+    FIX1: reverse_map теперь Dict[str, List[str]], агрегация — mean.
+    Если два predicted-аспекта маппятся на один true, берём среднее их скоров.
+    """
     pairs_by_product: Dict[int, List[Tuple[float, float]]] = {}
 
     for nm_id, pred_data in pipeline_results.items():
         product_mapping = mapping.get(nm_id, {})
         per_review_pred = pred_data["per_review"]
-        reverse_map = {ta: pa for pa, ta in product_mapping.items() if ta is not None}
+
+        # FIX1: reverse_map как Dict[str, List[str]]
+        reverse_map: Dict[str, List[str]] = defaultdict(list)
+        for pa, ta in product_mapping.items():
+            if ta is not None:
+                reverse_map[ta].append(pa)
 
         grp = markup_df[markup_df["nm_id"] == nm_id]
         pairs = []
@@ -271,10 +293,22 @@ def _collect_score_pairs(
                 continue
             rid = row["id"]
             pred_scores = per_review_pred.get(rid, {})
+
             for true_asp, true_score in true_labels.items():
-                pred_asp = reverse_map.get(true_asp)
-                if pred_asp and pred_asp in pred_scores:
-                    pairs.append((pred_scores[pred_asp], true_score))
+                pred_asp_list = reverse_map.get(true_asp, [])
+                if not pred_asp_list:
+                    continue
+
+                # Собираем все pred scores для этого true aspect в данном review
+                found_scores = []
+                for pa in pred_asp_list:
+                    if pa in pred_scores:
+                        found_scores.append(pred_scores[pa])
+
+                if found_scores:
+                    # Mean-агрегация: не подглядываем в true_score → no leakage
+                    mean_pred = float(np.mean(found_scores))
+                    pairs.append((mean_pred, true_score))
 
         pairs_by_product[nm_id] = pairs
 
@@ -292,6 +326,98 @@ def _fit_calibration(pairs: List[Tuple[float, float]]) -> Tuple[float, float]:
     return float(res.slope), float(res.intercept)
 
 
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │ FIX2: _validate_mapping — проверка полноты MAPPING                     │
+# └─────────────────────────────────────────────────────────────────────────┘
+
+def _validate_mapping(
+    pipeline_results: Dict[int, dict],
+    mapping: Dict[int, Dict[str, Optional[str]]],
+) -> None:
+    """Печатает WARNING для каждого predicted-аспекта, которого нет в MAPPING.
+
+    Без этого precision занижается из-за неполноты MAPPING, а не из-за модели.
+    """
+    print("\n" + "=" * 70)
+    print("ВАЛИДАЦИЯ ПОЛНОТЫ MAPPING")
+    print("=" * 70)
+
+    total_missing = 0
+    for nm_id, pred_data in pipeline_results.items():
+        pred_aspects = set(pred_data["aspects"])
+        mapped_aspects = set(mapping.get(nm_id, {}).keys())
+        unmapped = pred_aspects - mapped_aspects
+
+        if unmapped:
+            total_missing += len(unmapped)
+            print(f"\n⚠ nm_id={nm_id}: {len(unmapped)} predicted аспектов НЕТ в MAPPING:")
+            for asp in sorted(unmapped):
+                print(f"    → \"{asp}\": None,  # TODO: замапить или пометить как мусор")
+
+    if total_missing == 0:
+        print("\n✓ Все predicted-аспекты присутствуют в MAPPING.")
+    else:
+        print(f"\n✗ ИТОГО: {total_missing} unmapped аспектов.")
+        print("  Precision занижается! Добавь их в MAPPING перед замером метрик.")
+    print("=" * 70 + "\n")
+
+
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │ FIX4: diagnose_unknown_reviews — диагностика unknown review_id         │
+# └─────────────────────────────────────────────────────────────────────────┘
+
+def diagnose_unknown_reviews(per_review_path: str) -> Dict[int, dict]:
+    """Загружает eval_per_review.json и считает долю unknown review_id.
+
+    Вызывай после step12 для диагностики.
+    Возвращает: {nm_id: {"total_entries": N, "unknown_count": K, "unknown_pct": ...}}
+    """
+    with open(per_review_path, "r", encoding="utf-8") as f:
+        per_review = json.load(f)
+
+    print("\n" + "=" * 70)
+    print("ДИАГНОСТИКА: unknown review_id")
+    print("=" * 70)
+
+    results = {}
+    total_all = 0
+    unknown_all = 0
+
+    for nm_id_str, reviews_dict in per_review.items():
+        total = len(reviews_dict)
+        unknown_count = 0
+        unknown_aspects = []
+
+        for rid, aspects in reviews_dict.items():
+            if rid == "unknown":
+                unknown_count += 1
+                unknown_aspects = list(aspects.keys())
+
+        total_all += total
+        unknown_all += unknown_count
+
+        results[int(nm_id_str)] = {
+            "total_entries": total,
+            "unknown_count": unknown_count,
+            "unknown_pct": round(100 * unknown_count / total, 1) if total else 0,
+        }
+
+        status = "✓" if unknown_count == 0 else "⚠"
+        print(f"  {status} nm_id={nm_id_str}: {unknown_count}/{total} "
+              f"({results[int(nm_id_str)]['unknown_pct']}%) unknown")
+        if unknown_aspects:
+            print(f"    аспекты в unknown: {unknown_aspects}")
+
+    print(f"\n  ИТОГО: {unknown_all}/{total_all} "
+          f"({round(100 * unknown_all / total_all, 1) if total_all else 0}%) unknown")
+    print("=" * 70 + "\n")
+    return results
+
+
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │ FIX2+FIX3: evaluate_with_mapping — валидация + честный LOO             │
+# └─────────────────────────────────────────────────────────────────────────┘
+
 def evaluate_with_mapping(
     markup_df: pd.DataFrame,
     pipeline_results: Dict[int, dict],
@@ -299,8 +425,13 @@ def evaluate_with_mapping(
 ) -> Dict[str, object]:
     """
     mapping: {nm_id: {predicted_aspect: true_aspect_or_None, ...}}
-    Калибровка: LOO по товарам — обучаем на 4, применяем к 5-му.
+
+    FIX2: Валидация полноты MAPPING в начале.
+    FIX3: Калибровка — честный LOO по товарам (train на 4, test на 1).
     """
+    # FIX2: валидация полноты MAPPING
+    _validate_mapping(pipeline_results, mapping)
+
     score_pairs = _collect_score_pairs(markup_df, pipeline_results, mapping)
     nm_ids = list(pipeline_results.keys())
 
@@ -331,12 +462,12 @@ def evaluate_with_mapping(
         recall_hits = len(mapped_true)
         recall_total = len(true_aspects_all)
 
-        # Global calibration: train on all products (including test)
-        # For evaluation purposes — production would use LOO or held-out set
-        all_train_pairs = []
+        # FIX3: честный LOO — train на ВСЕХ КРОМЕ текущего товара
+        loo_train_pairs = []
         for pid in nm_ids:
-            all_train_pairs.extend(score_pairs.get(pid, []))
-        a, b = _fit_calibration(all_train_pairs)
+            if pid != nm_id:
+                loo_train_pairs.extend(score_pairs.get(pid, []))
+        a, b = _fit_calibration(loo_train_pairs)
 
         test_pairs = score_pairs.get(nm_id, [])
         mae_raw_errs = [abs(p - t) for p, t in test_pairs]
@@ -373,7 +504,7 @@ def evaluate_with_mapping(
     global_mae_raw = float(np.mean(all_mae_raw)) if all_mae_raw else None
     global_mae_cal = float(np.mean(all_mae_cal)) if all_mae_cal else None
 
-    # Global calibration coefficients (train on all data — for production use)
+    # Global calibration coefficients (train on all — только для production/inference)
     all_pairs = []
     for pairs in score_pairs.values():
         all_pairs.extend(pairs)
@@ -392,82 +523,117 @@ def evaluate_with_mapping(
     }
 
 
-# ── CLI ────────────────────────────────────────────────────────────────────
+# ── MAPPING ────────────────────────────────────────────────────────────────
+# Обновлён по реальным predicted aspects из eval_results_step1_2.json.
+# Аспекты которых не было в старом MAPPING помечены # NEW.
+# Аспекты из старого MAPPING, которых нет в свежем прогоне — удалены.
+# Строки с # TODO требуют ручной проверки по keywords из step12.
 
 MAPPING: Dict[int, Dict[str, Optional[str]]] = {
-    # nm_id=117808756 (книга) — 5 pred, 12 true
+
+    # ── nm_id=117808756 (книга) ──────────────────────────────────────
+    # pred: ["листы", "шрифт", "цену"]  (3)
+    # true: Внешний вид, Впечатление, Запах, Качество, Логистика,
+    #       Содержание, Соответствие, Текст, Удобство, Упаковка, Цена (12)
     117808756: {
-        "листы": "Качество",          # страницы, обложка, бумага
-        "шрифт": "Содержание",        # текст, шрифт (+ "запах" попал сюда)
-        "печати": "Внешний вид",       # качество печати
-        "цену": "Цена",               # цена, качество
-        "Логистика": "Упаковка",       # упаковку, доставка
-        # MISS: Логистика→Упаковка покрывает часть, true Логистика(10) отдельно не найдена
-        # MISS: Соответствие(9), Запах(7) — потеряны
+        "листы": "Качество",            # keywords: страницы, обложка, бумага, печать
+        "шрифт": "Содержание",          # keywords: текст, шрифт, формат
+        "цену": "Цена",                 # keywords: качество, цена
+        # MISS: Внешний вид, Впечатление, Запах, Логистика, Соответствие, Упаковка, и др.
     },
-    # nm_id=254445126 (толстовка) — 8 pred, 10 true
+
+    # ── nm_id=254445126 (толстовка) ──────────────────────────────────
+    # pred: ["размер", "отличное качество", "нитки неровные",
+    #        "цвет насыщенный", "ткань плотная", "стирки",
+    #        "толстовка отличная", "денег 100"]  (8)
+    # true: Ассортимент, Внешний вид, Запах, Качество, Комплектация,
+    #       Комфорт, Общее впечатление, Соответствие, Уход, Цена (10)
     254445126: {
-        "отличное качество": "Качество",
-        "нитки неровные": None,        # шум (швы — деталь качества)
-        "цвет": "Внешний вид",
-        "ткань плотная": "Комфорт",
-        "стирки": None,                # шум
-        "толстовка отличная": "Общее впечатление",
-        "толстовка": None,             # дубль
-        "денег 100": "Цена",
-        # MISS: Соответствие(30) — "размер" не стал отдельным кластером в этом прогоне
+        "отличное качество": "Качество",      # keywords: качество, бренд
+        "нитки неровные": None,                # шум (швы — деталь качества)
+        "цвет насыщенный": "Внешний вид",      # keywords: цвет
+        "ткань плотная": "Комфорт",            # keywords: ткань, материал
+        "стирки": None,                        # шум (уход, но keywords: наклейки, продавцам)
+        "толстовка отличная": "Общее впечатление",  # keywords: кофта, худак, пошив
+        "размер": "Соответствие",              # NEW! keywords: размер, рост, форму
+        "денег 100": "Цена",                   # keywords: цена, денег
+        # MISS: Ассортимент, Запах, Комплектация, Уход
     },
-    # nm_id=311233470 (платье) — 15 pred, 11 true
+
+    # ── nm_id=311233470 (платье) ─────────────────────────────────────
+    # pred: ["прожженая ткань", "балды", "Цена", "продавца", "Логистика",
+    #        "модель классная", "крой платья", "фигуре", "складок все",
+    #        "размер", "рост 165", "классное платье", "качество",
+    #        "идеально сборки", "пользу другого", "фасон цвет",
+    #        "комплиментов"]  (17)
+    # true: Внешний вид, Качество, Комфорт, Логистика, Продавец,
+    #       Соответствие, Состояние, Упаковка, Цена (11)
     311233470: {
-        "прожженая ткань": "Качество",
-        "подплечники": None,           # деталь
-        "Цена": "Цена",
-        "крой платья": None,           # шум
-        "продавца": "Продавец",
-        "Логистика": "Упаковка",
-        "фигуре": "Соответствие",
-        "сборка": "Состояние",         # возврат, шов, сборка
-        "складок все": None,           # шум
-        "рост 165": None,              # шум
-        "классное платье": "Внешний вид",
-        "ужасное качество": None,      # дубль Качество
-        "супер модель": None,          # шум
-        "цвет идеальный": None,        # дубль Внешний вид
-        "пользу другого": None,        # шум
-        # MISS: Комфорт(10)
+        "прожженая ткань": "Качество",         # keywords: ткань, качество ткани
+        "качество": "Качество",                # NEW — many-to-one с "прожженая ткань"
+        "Цена": "Цена",                        # keywords: цена, денег
+        "продавца": "Продавец",                # keywords: продавец, покупки, товар
+        "Логистика": "Упаковка",               # keywords: пакет, упаковка
+        "размер": "Соответствие",              # NEW — keywords: размер
+        "фигуре": "Соответствие",              # keywords: фигуре (может отсутствовать в новом прогоне)
+        "классное платье": "Внешний вид",      # keywords: платье, красивое
+        "фасон цвет": "Внешний вид",           # NEW — many-to-one с "классное платье"
+        "идеально сборки": "Состояние",        # NEW — keywords: сборки, идеально
+        "модель классная": None,               # шум / дубль Внешнего вида  # TODO: можно → "Внешний вид"
+        "балды": None,                         # keywords: нитки, возврат, шов, подплечники — мусорный кластер
+        "крой платья": None,                   # шум
+        "складок все": None,                   # шум
+        "рост 165": None,                      # шум
+        "пользу другого": None,                # шум
+        "комплиментов": None,                  # шум (кучу комплиментов, отзывов)
+        # MISS: Комфорт(10), Логистика (true, отдельно от Упаковки)
     },
-    # nm_id=441378025 (портсигар) — 8 pred, 12 true
+
+    # ── nm_id=441378025 (портсигар) ──────────────────────────────────
+    # pred: ["качество", "упаковка хлипкая", "прикуривателя", "пальцем",
+    #        "тугая пружина", "сигареты", "портсигар", "размера компактен"]  (8)
+    # true: Вместимость, Внешний вид, Запах, Качество, Комплектация,
+    #       Логистика, Соответствие, Состояние, Удобство, Упаковка,
+    #       Функционал, Цена (12)
     441378025: {
-        "качество": "Качество",
-        "упаковка хлипкая": "Логистика",
-        "прикуривателя": "Функционал",
-        "пальцем": "Удобство",
-        "тугая пружина": None,         # деталь Функционала
-        "сигареты": "Вместимость",
-        "портсигар": None,             # общий шум
-        "размера компактен": "Внешний вид",
-        # MISS: Цена(2), Соответствие(4), Состояние(3)
+        "качество": "Качество",                # keywords: качество, цена
+        "упаковка хлипкая": "Логистика",       # keywords: доставка, упаковка
+        "прикуривателя": "Функционал",         # keywords: прикуриватель, клавиша
+        "пальцем": "Удобство",                 # keywords: кнопка, индикатор
+        "тугая пружина": None,                 # деталь Функционала
+        "сигареты": "Вместимость",             # keywords: сигарет, сигареты
+        "портсигар": None,                     # общий шум
+        "размера компактен": "Внешний вид",    # keywords: дизайн, компактность
+        # MISS: Цена(2), Соответствие(4), Состояние(3), Запах, Комплектация, Упаковка
     },
-    # nm_id=506358703 (кошачий корм) — 13 pred, 11 true
+
+    # ── nm_id=506358703 (кошачий корм) ───────────────────────────────
+    # pred: ["кусочки порции", "беру корма", "проблем", "состав отличный",
+    #        "упаковка пакет", "лакомство", "цена качество", "Логистика",
+    #        "ветеринара", "питомцев", "реакция", "коту корм",
+    #        "аллергии"]  (13)
+    # true: Ассортимент, Запах, Здоровье, Качество, Логистика,
+    #       Поедаемость, Свежесть, Состав, Упаковка, Цена (11)
     506358703: {
-        "кусочки порции": "Поедаемость",
-        "корм": "Качество",
-        "состав отличный": "Состав",
-        "упаковка пакет": "Упаковка",
-        "застёжка": None,              # деталь Упаковка
-        "цена": "Цена",
-        "Логистика": "Логистика",
-        "ветеринара": None,            # шум
-        "питомцев": None,              # шум
-        "реакция": "Здоровье",         # реакция → здоровье питомца
-        "кошки довольны": None,        # эмоция
-        "коту корм": None,             # дубль корм
-        "аллергии": None,              # деталь Здоровья
-        # MISS: Свежесть(9), Ассортимент(3)
+        "кусочки порции": "Поедаемость",       # keywords: гранулы, порции
+        "беру корма": "Качество",              # NEW — keywords: корм, составу корм, еды
+        "состав отличный": "Состав",           # keywords: состав
+        "упаковка пакет": "Упаковка",          # keywords: упаковка, клапан
+        "лакомство": None,                     # NEW — keywords: замок, застёжка, лакомство (деталь Упаковки / Поедаемости)  # TODO: мб "Упаковка"?
+        "цена качество": "Цена",               # NEW — keywords: цена, качество, годности, срок
+        "Логистика": "Логистика",              # keywords: доставка
+        "реакция": "Здоровье",                 # keywords: реакция, эффект
+        "проблем": None,                       # NEW — keywords: никаких проблем, недостатков (слишком общий)
+        "ветеринара": None,                    # шум
+        "питомцев": None,                      # шум
+        "коту корм": None,                     # дубль "беру корма"
+        "аллергии": None,                      # деталь Здоровья  # TODO: мб → "Здоровье"?
+        # MISS: Свежесть(9), Ассортимент(3), Запах(1)
     },
 }
 
 
+# ── CLI ────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -552,6 +718,9 @@ if __name__ == "__main__":
             json.dump(per_review_dump, f, ensure_ascii=False, indent=2)
 
         print("\nРезультаты шагов 1-2 сохранены.")
+
+        # FIX4: диагностика unknown review_id
+        diagnose_unknown_reviews(f"{write_prefix}eval_per_review.json")
 
     if mode in ("all", "step4", "--step4"):
         print(f"\n{'='*70}")
