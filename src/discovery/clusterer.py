@@ -166,6 +166,11 @@ class AspectClusterer:
         self.anchor_assign_threshold: float = getattr(
             config.discovery, "anchor_assign_threshold", 0.55
         )
+        # FIX2: Минимальный margin между top-1 и top-2 anchor.
+        # Если margin < δ — спан "confused", уходит в residual.
+        self.anchor_assign_margin: float = getattr(
+            config.discovery, "anchor_assign_margin", 0.03
+        )
 
         self._anchor_embeddings: dict[str, np.ndarray] = {}
         self._anti_anchor_embeddings: dict[str, np.ndarray] = {}
@@ -191,15 +196,26 @@ class AspectClusterer:
         """
         Anchor-First Assignment + Residual Discovery.
 
-        Pass 1: каждый span → best anchor по cosine.
-                Если cos ≥ τ_anchor и не junk → назначаем.
-        Pass 2: остатки → UMAP → HDBSCAN → именование через якоря.
-        Pass 3: фильтрация min_mentions + анти-якоря.
+        v3 fixes:
+          FIX1: Auto product-name stop-spans (top-frequency single words → filter)
+          FIX2: Margin-based assignment (margin < δ → residual)
+          FIX3: Domain-aware post-filter (anchors with few mentions → residual)
+
+        Pass 0: Auto-detect product name stop-spans.
+        Pass 1: Anchor assignment with margin check.
+        Pass 2: Residual → UMAP → HDBSCAN.
+        Pass 3: Domain-aware filtering + min_mentions.
         """
         if not candidates:
             return {}
 
-        span_data = self._aggregate_spans(candidates, min_mentions=1)
+        # ── Pass 0: Auto stop-spans ──────────────────────────────────
+        # Самые частые single-word спаны (count > 5% всех кандидатов)
+        # — скорее всего название товара. Фильтруем ДО агрегации.
+        auto_stops = self._detect_product_stops(candidates)
+        local_stops = STOP_SPANS | auto_stops  # не мутируем глобальный set
+
+        span_data = self._aggregate_spans(candidates, min_mentions=1, stop_spans=local_stops)
         if not span_data:
             return {}
 
@@ -207,7 +223,7 @@ class AspectClusterer:
         embeddings = np.stack([span_data[s]["embedding"] for s in spans])
         counts = np.array([span_data[s]["count"] for s in spans])
 
-        # ── Pass 1: Anchor Assignment ────────────────────────────────
+        # ── Pass 1: Anchor Assignment with margin ────────────────────
         anchor_names = list(self._anchor_embeddings.keys())
         anchor_matrix = np.stack([self._anchor_embeddings[n] for n in anchor_names])
 
@@ -218,11 +234,14 @@ class AspectClusterer:
         residual_indices: List[int] = []
 
         for i in range(len(spans)):
-            best_j = int(np.argmax(sim_matrix[i]))
+            sorted_idx = np.argsort(sim_matrix[i])[::-1]
+            best_j = int(sorted_idx[0])
             best_sim = float(sim_matrix[i, best_j])
+            second_sim = float(sim_matrix[i, sorted_idx[1]]) if len(sorted_idx) > 1 else 0.0
+            margin = best_sim - second_sim
 
-            if best_sim >= self.anchor_assign_threshold:
-                # Проверка анти-якорь: если span ближе к анти-якорю → residual
+            # FIX2: margin check — confused spans go to residual
+            if best_sim >= self.anchor_assign_threshold and margin >= self.anchor_assign_margin:
                 if self._is_junk_span(embeddings[i]):
                     residual_indices.append(i)
                 else:
@@ -240,7 +259,6 @@ class AspectClusterer:
             total_mentions = int(counts[indices].sum())
 
             if total_mentions < min_mentions:
-                # Мало упоминаний — отправляем обратно в residual
                 residual_indices.extend(indices)
                 continue
 
@@ -260,10 +278,8 @@ class AspectClusterer:
                 res_spans, res_embs, res_counts, min_mentions
             )
 
-            # Мержим residual aspects в result
             for name, info in residual_aspects.items():
                 if name in result:
-                    # Residual кластер получил имя существующего якоря → мержим
                     existing = result[name]
                     result[name] = AspectInfo(
                         keywords=existing.keywords + info.keywords,
@@ -278,9 +294,7 @@ class AspectClusterer:
                 else:
                     result[name] = info
 
-        # ── Pass 3: Финальная фильтрация ────────────────────────────
-        # min_mentions фильтр (для якорных кластеров уже проверено,
-        # но residual мог добавить мелкие)
+        # ── Pass 3: Domain-aware filtering ───────────────────────────
         filtered: Dict[str, AspectInfo] = {}
         for name, info in result.items():
             total = sum(
@@ -290,6 +304,42 @@ class AspectClusterer:
                 filtered[name] = info
 
         return filtered
+
+    # ------------------------------------------------------------------
+    # FIX1: Auto-detect product name stop-spans
+    # ------------------------------------------------------------------
+    @staticmethod
+    def _detect_product_stops(
+        candidates: List[ScoredCandidate],
+        freq_threshold: float = 0.05,
+    ) -> set:
+        """Находит спаны-названия товара: single words с частотой > threshold.
+
+        Логика: если одно слово встречается в >5% всех кандидатов —
+        это скорее всего название товара ("книга", "портсигар", "корм"),
+        а не аспект. Такие спаны засоряют anchor assignment.
+        """
+        if not candidates:
+            return set()
+
+        total = len(candidates)
+        word_counts: dict[str, int] = {}
+        for c in candidates:
+            # Только single-word спаны (не биграммы)
+            if " " not in c.span.strip():
+                w = c.span.strip().lower()
+                word_counts[w] = word_counts.get(w, 0) + 1
+
+        stops = set()
+        for word, count in word_counts.items():
+            if count / total >= freq_threshold and len(word) >= 3:
+                stops.add(word)
+                # Добавляем и оригинальный регистр из кандидатов
+                for c in candidates:
+                    if c.span.strip().lower() == word:
+                        stops.add(c.span.strip())
+
+        return stops
 
     # ------------------------------------------------------------------
     # Pass 2: HDBSCAN на остатках (residuals)
@@ -425,11 +475,13 @@ class AspectClusterer:
     # ------------------------------------------------------------------
     @staticmethod
     def _aggregate_spans(
-        candidates: List[ScoredCandidate], min_mentions: int
+        candidates: List[ScoredCandidate], min_mentions: int,
+        stop_spans: set | None = None,
     ) -> dict:
+        stops = stop_spans or STOP_SPANS
         agg: dict[str, dict] = {}
         for c in candidates:
-            if c.span in STOP_SPANS:
+            if c.span in stops:
                 continue
             if c.span not in agg:
                 agg[c.span] = {"count": 0, "embedding": c.embedding, "score_sum": 0.0}

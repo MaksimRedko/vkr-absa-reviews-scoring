@@ -230,21 +230,24 @@ def run_pipeline_for_ids(
 def _build_pairs(scored, aspects, sentence_to_review):
     """Формирует (review_id, sentence, aspect_name) для NLI.
 
-    FIX: sentence_to_review строится из реальных candidate.sentence
-    в run_pipeline_for_ids, а не пересоздаётся здесь через re.split.
-    Это устраняет 29% потерь на string mismatch.
+    FIX v2: aspect assignment берётся из clusterer (span→aspect через keywords),
+    а НЕ пересчитывается через argmax cos(cand, centroid).
+    Это устраняет 9-17% reassignment и перекос n_pred/n_true.
     """
-    from sklearn.metrics.pairwise import cosine_similarity as cos_sim
-
-    aspect_names = list(aspects.keys())
-    centroids = np.stack([aspects[n].centroid_embedding for n in aspect_names])
+    # Строим span→aspect из того что clusterer уже решил
+    span_to_aspect: Dict[str, str] = {}
+    for asp_name, info in aspects.items():
+        for kw in info.keywords:
+            span_to_aspect[kw] = asp_name
 
     seen = set()
     pairs = []
     for cand in scored:
-        sim = cos_sim(cand.embedding.reshape(1, -1), centroids)[0]
-        best_idx = int(np.argmax(sim))
-        aspect_name = aspect_names[best_idx]
+        aspect_name = span_to_aspect.get(cand.span)
+        if not aspect_name:
+            # Span не попал ни в один кластер (отфильтрован) — пропускаем
+            continue
+
         review_id = sentence_to_review.get(
             cand.sentence.strip(),
             sentence_to_review.get(cand.sentence.lower().strip(), "unknown"),
@@ -603,6 +606,7 @@ def evaluate_product_ratings(
     print("=" * 70)
 
     all_errors = []
+    all_errors_filtered = []  # only n_true >= 3
     per_product = {}
 
     for nm_id, pred_data in pipeline_results.items():
@@ -661,37 +665,53 @@ def evaluate_product_ratings(
                 "n_true": n_true,
                 "n_pred": n_pred,
             })
+
+            # All errors (unfiltered)
             all_errors.append(error)
+            # Filtered: only aspects with n_true >= 3 (statistically meaningful)
+            if n_true >= 3:
+                all_errors_filtered.append(error)
 
-            delta_str = f"{error:6.2f}"
-            print(f"    {true_asp:25s} {true_avg:6.2f} {pred_avg:6.2f} {delta_str}  {n_true:6d} {n_pred:6d}")
+            flag = " *" if n_true < 3 else ""
+            print(f"    {true_asp:25s} {true_avg:6.2f} {pred_avg:6.2f} {error:6.2f}  {n_true:6d} {n_pred:6d}{flag}")
 
-        product_mae = float(np.mean([c["error"] for c in aspect_comparisons])) if aspect_comparisons else None
+        # Per-product MAE (filtered)
+        filtered_errors = [c["error"] for c in aspect_comparisons if c["n_true"] >= 3]
+        product_mae = float(np.mean(filtered_errors)) if filtered_errors else None
+        product_mae_all = float(np.mean([c["error"] for c in aspect_comparisons])) if aspect_comparisons else None
         per_product[nm_id] = {
             "aspects": aspect_comparisons,
             "product_mae": round(product_mae, 3) if product_mae is not None else None,
+            "product_mae_unfiltered": round(product_mae_all, 3) if product_mae_all is not None else None,
             "n_aspects_compared": len(aspect_comparisons),
         }
 
         if product_mae is not None:
-            print(f"    {'':25s} {'':>6s} {'MAE':>6s} {product_mae:6.3f}")
+            extra = f"  (unfiltered: {product_mae_all:.3f})" if product_mae_all != product_mae else ""
+            print(f"    {'':25s} {'':>6s} {'MAE':>6s} {product_mae:6.3f}  (n_true≥3){extra}")
+        print(f"    (* = n_true < 3, excluded from MAE)")
 
     global_mae = float(np.mean(all_errors)) if all_errors else None
+    global_mae_filtered = float(np.mean(all_errors_filtered)) if all_errors_filtered else None
     macro_mae = float(np.mean([
         p["product_mae"] for p in per_product.values() if p["product_mae"] is not None
     ])) if per_product else None
 
     print(f"\n{'='*70}")
-    print(f"  Product-Level MAE (global):  {round(global_mae, 3) if global_mae else 'N/A'}"
-          f"  (n={len(all_errors)} aspect-product pairs)")
-    print(f"  Product-Level MAE (macro):   {round(macro_mae, 3) if macro_mae else 'N/A'}")
+    print(f"  Product-Level MAE (n_true≥3): {round(global_mae_filtered, 3) if global_mae_filtered else 'N/A'}"
+          f"  (n={len(all_errors_filtered)} pairs)")
+    print(f"  Product-Level MAE (all):      {round(global_mae, 3) if global_mae else 'N/A'}"
+          f"  (n={len(all_errors)} pairs)")
+    print(f"  Product-Level MAE (macro):    {round(macro_mae, 3) if macro_mae else 'N/A'}")
     print(f"{'='*70}\n")
 
     return {
         "per_product": per_product,
         "global_product_mae": round(global_mae, 3) if global_mae is not None else None,
+        "global_product_mae_filtered": round(global_mae_filtered, 3) if global_mae_filtered is not None else None,
         "macro_product_mae": round(macro_mae, 3) if macro_mae is not None else None,
         "n_pairs": len(all_errors),
+        "n_pairs_filtered": len(all_errors_filtered),
     }
 
 
