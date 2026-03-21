@@ -181,26 +181,25 @@ class ABSAPipeline:
         """
         Формирует (review_id, sentence, aspect_name) для NLI.
 
-        Стратегия: каждый scored_candidate привязан к sentence.
-        Ищем, к какому аспект-кластеру он относится (ближайший центроид).
-        Затем для каждой уникальной пары (sentence, aspect) создаём запись.
+        FIX v2:
+          - sentence_to_review из реальных candidate.sentence (не re.split)
+          - aspect assignment из clusterer keywords (не centroid argmax)
         """
-        from sklearn.metrics.pairwise import cosine_similarity as cos_sim
-        import numpy as np
-
         if not aspects or not scored_candidates:
             return []
 
-        aspect_names = list(aspects.keys())
-        centroids = np.stack([aspects[n].centroid_embedding for n in aspect_names])
+        span_to_aspect: Dict[str, str] = {}
+        for asp_name, info in aspects.items():
+            for kw in info.keywords:
+                span_to_aspect[kw] = asp_name
 
         seen_pairs: set = set()
         pairs: List[Tuple[str, str, str]] = []
 
         for cand in scored_candidates:
-            sim = cos_sim(cand.embedding.reshape(1, -1), centroids)[0]
-            best_idx = int(np.argmax(sim))
-            aspect_name = aspect_names[best_idx]
+            aspect_name = span_to_aspect.get(cand.span)
+            if not aspect_name:
+                continue
 
             review_id = sentence_to_review.get(
                 cand.sentence.strip(),
