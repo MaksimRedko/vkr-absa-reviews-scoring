@@ -18,7 +18,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 import numpy as np
 import torch
@@ -36,8 +36,7 @@ class SentimentResult:
     score: float          # [1.0, 5.0]
     p_ent_pos: float      # P(entailment | H_pos)
     p_ent_neg: float      # P(entailment | H_neg)
-
-
+    confidence: float = 1.0  # вес из soft-anchor / span
 class SentimentEngine:
     """
     NLI-based sentiment engine v3 (dual hypothesis).
@@ -75,7 +74,14 @@ class SentimentEngine:
               f"ent_idx={self.ent_idx}, device={self.device}")
 
     def batch_analyze(
-        self, pairs: List[Tuple[str, str, str]]
+        self,
+        pairs: List[
+            Union[
+                Tuple[str, str, str],
+                Tuple[str, str, str, float],
+                Tuple[str, str, str, str, float],
+            ]
+        ],
     ) -> List[SentimentResult]:
         if not pairs:
             return []
@@ -108,21 +114,41 @@ class SentimentEngine:
         return probs[:, self.ent_idx]
 
     def _process_batch(
-        self, batch: List[Tuple[str, str, str]]
+        self,
+        batch: List[
+            Union[
+                Tuple[str, str, str],
+                Tuple[str, str, str, float],
+                Tuple[str, str, str, str, float],
+            ]
+        ],
     ) -> List[SentimentResult]:
         review_ids = [p[0] for p in batch]
         premises = [p[1] for p in batch]
-        aspects = [p[2] for p in batch]
+        aspects_tag = [p[2] for p in batch]
 
-        hyp_pos = [self.h_pos.format(aspect=a) for a in aspects]
-        hyp_neg = [self.h_neg.format(aspect=a) for a in aspects]
+        nli_for_hyp: List[str] = []
+        confidences: List[float] = []
+        for p in batch:
+            if len(p) >= 5:
+                nli_for_hyp.append(p[3])
+                confidences.append(float(p[4]))
+            elif len(p) == 4:
+                nli_for_hyp.append(p[2])
+                confidences.append(float(p[3]))
+            else:
+                nli_for_hyp.append(p[2])
+                confidences.append(1.0)
+
+        hyp_pos = [self.h_pos.format(aspect=a) for a in nli_for_hyp]
+        hyp_neg = [self.h_neg.format(aspect=a) for a in nli_for_hyp]
 
         p_ent_pos = self._infer_entailment(premises, hyp_pos)
         p_ent_neg = self._infer_entailment(premises, hyp_neg)
 
         results = []
-        for idx, (review_id, sentence, aspect) in enumerate(
-            zip(review_ids, premises, aspects)
+        for idx, (review_id, sentence, aspect_orig) in enumerate(
+            zip(review_ids, premises, aspects_tag)
         ):
             pp = float(p_ent_pos[idx])
             pn = float(p_ent_neg[idx])
@@ -132,11 +158,12 @@ class SentimentEngine:
 
             results.append(SentimentResult(
                 review_id=review_id,
-                aspect=aspect,
+                aspect=aspect_orig,
                 sentence=sentence,
                 score=score,
                 p_ent_pos=pp,
                 p_ent_neg=pn,
+                confidence=confidences[idx],
             ))
 
         return results

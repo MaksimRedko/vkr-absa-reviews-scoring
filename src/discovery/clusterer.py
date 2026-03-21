@@ -1,21 +1,17 @@
 """
-AspectClusterer v2: Anchor-First Assignment + Residual Discovery.
+AspectClusterer: Anchor-First + Residual HDBSCAN (baseline).
 
-Architecture (matched filter analogy):
-  Pass 1 — Anchor Assignment: каждый span → argmax cos(span, anchor).
-           Если cos ≥ τ_anchor И НЕ junk → назначаем на якорь.
-           Детерминированный, стабильный, ловит все стандартные аспекты.
-
-  Pass 2 — Residual Discovery: остатки → UMAP → HDBSCAN.
-           Находит новые аспекты, которых нет в якорях.
-
-  Pass 3 — Фильтрация: min_mentions + анти-якоря.
+  Pass 1 — Anchor assignment: cos к якорям, margin; junk → residual.
+  Pass 2 — Residual → UMAP → HDBSCAN → _name_cluster (margin из config).
+  UMAP-merge близких residual-кластеров (cluster_merge_threshold).
+  Pass 3 — min_mentions filter.
+  nli_label: для NLI гипотезы; medoid-кластеры → argmax cos(centroid, anchors).
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Dict, List
+from typing import Dict, List, Optional, Tuple
 
 import hdbscan
 import numpy as np
@@ -28,11 +24,6 @@ from src.discovery.scorer import ScoredCandidate
 
 
 STOP_SPANS: set[str] = set()
-
-# ── Макро-якоря v2: расширенные описания для точного matching ────────────
-# Каждый якорь — 5-10 фраз из реального языка отзывов.
-# Больше фраз → плотнее облако в embedding space → точнее assignment.
-# "Логистика" и "Упаковка" РАЗДЕЛЕНЫ (раньше были слиты).
 
 MACRO_ANCHORS: Dict[str, List[str]] = {
     "Цена": [
@@ -147,35 +138,37 @@ ANTI_ANCHORS: Dict[str, List[str]] = {
 class AspectInfo:
     keywords: List[str]
     centroid_embedding: np.ndarray
+    keyword_weights: List[float] = field(default_factory=list)
+    nli_label: str = ""
 
 
 class AspectClusterer:
     def __init__(self, model: SentenceTransformer | None = None):
         self.model = model or SentenceTransformer(config.models.encoder_path)
         self.min_samples: int = config.discovery.hdbscan_min_samples
-        self.anchor_threshold: float = config.discovery.anchor_similarity_threshold
+        self.anchor_threshold: float = float(config.discovery.anchor_similarity_threshold)
         self.anti_anchor_threshold: float = config.discovery.anti_anchor_threshold
         self.merge_threshold: float = config.discovery.cluster_merge_threshold
+
+        self.anchor_assign_threshold: float = float(
+            getattr(config.discovery, "anchor_assign_threshold", 0.55)
+        )
+        self.anchor_assign_margin: float = float(
+            getattr(config.discovery, "anchor_assign_margin", 0.03)
+        )
 
         self.umap_n_components: int = config.discovery.umap_n_components
         self.umap_min_dist: float = config.discovery.umap_min_dist
         self.umap_metric: str = config.discovery.umap_metric
 
-        # Порог для Pass 1 (anchor assignment).
-        # Читаем из конфига если есть, иначе дефолт 0.55
-        self.anchor_assign_threshold: float = getattr(
-            config.discovery, "anchor_assign_threshold", 0.55
-        )
-        # FIX2: Минимальный margin между top-1 и top-2 anchor.
-        # Если margin < δ — спан "confused", уходит в residual.
-        self.anchor_assign_margin: float = getattr(
-            config.discovery, "anchor_assign_margin", 0.03
-        )
-
         self._anchor_embeddings: dict[str, np.ndarray] = {}
         self._anti_anchor_embeddings: dict[str, np.ndarray] = {}
         self._build_anchor_embeddings()
         self._build_anti_anchor_embeddings()
+
+        self.last_assignment_counts: Dict[str, int] = {}
+        self.last_residual_medoid_names: List[str] = []
+        self.last_nli_medoid_diagnostics: List[str] = []
 
     def _build_anchor_embeddings(self) -> None:
         for name, words in MACRO_ANCHORS.items():
@@ -187,47 +180,32 @@ class AspectClusterer:
             embs = self.model.encode(words, show_progress_bar=False)
             self._anti_anchor_embeddings[name] = np.mean(embs, axis=0)
 
-    # ------------------------------------------------------------------
-    # Публичный API
-    # ------------------------------------------------------------------
     def cluster(
         self, candidates: List[ScoredCandidate], min_mentions: int = 2
     ) -> Dict[str, AspectInfo]:
-        """
-        Anchor-First Assignment + Residual Discovery.
+        self.last_assignment_counts = {}
+        self.last_residual_medoid_names = []
+        self.last_nli_medoid_diagnostics = []
 
-        v3 fixes:
-          FIX1: Auto product-name stop-spans (top-frequency single words → filter)
-          FIX2: Margin-based assignment (margin < δ → residual)
-          FIX3: Domain-aware post-filter (anchors with few mentions → residual)
-
-        Pass 0: Auto-detect product name stop-spans.
-        Pass 1: Anchor assignment with margin check.
-        Pass 2: Residual → UMAP → HDBSCAN.
-        Pass 3: Domain-aware filtering + min_mentions.
-        """
         if not candidates:
             return {}
 
-        # ── Pass 0: Auto stop-spans ──────────────────────────────────
-        # Самые частые single-word спаны (count > 5% всех кандидатов)
-        # — скорее всего название товара. Фильтруем ДО агрегации.
         auto_stops = self._detect_product_stops(candidates)
-        local_stops = STOP_SPANS | auto_stops  # не мутируем глобальный set
+        local_stops = STOP_SPANS | auto_stops
 
         span_data = self._aggregate_spans(candidates, min_mentions=1, stop_spans=local_stops)
         if not span_data:
             return {}
 
+        aspect_medoid: Dict[str, bool] = {}
+
         spans = list(span_data.keys())
         embeddings = np.stack([span_data[s]["embedding"] for s in spans])
         counts = np.array([span_data[s]["count"] for s in spans])
 
-        # ── Pass 1: Anchor Assignment with margin ────────────────────
         anchor_names = list(self._anchor_embeddings.keys())
         anchor_matrix = np.stack([self._anchor_embeddings[n] for n in anchor_names])
 
-        # Cosine: |spans| × |anchors|
         sim_matrix = cosine_similarity(embeddings, anchor_matrix)
 
         assigned: Dict[str, List[int]] = {n: [] for n in anchor_names}
@@ -240,16 +218,18 @@ class AspectClusterer:
             second_sim = float(sim_matrix[i, sorted_idx[1]]) if len(sorted_idx) > 1 else 0.0
             margin = best_sim - second_sim
 
-            # FIX2: margin check — confused spans go to residual
-            if best_sim >= self.anchor_assign_threshold and margin >= self.anchor_assign_margin:
-                if self._is_junk_span(embeddings[i]):
-                    residual_indices.append(i)
-                else:
-                    assigned[anchor_names[best_j]].append(i)
+            if self._is_junk_span(embeddings[i]):
+                residual_indices.append(i)
+                continue
+
+            if (
+                best_sim >= self.anchor_assign_threshold
+                and margin >= self.anchor_assign_margin
+            ):
+                assigned[anchor_names[best_j]].append(i)
             else:
                 residual_indices.append(i)
 
-        # Собираем anchor-кластеры
         result: Dict[str, AspectInfo] = {}
         for anchor_name, indices in assigned.items():
             if not indices:
@@ -266,21 +246,31 @@ class AspectClusterer:
             result[anchor_name] = AspectInfo(
                 keywords=cluster_spans,
                 centroid_embedding=centroid,
+                keyword_weights=[1.0] * len(cluster_spans),
+                nli_label="",
             )
 
-        # ── Pass 2: Residual Discovery (HDBSCAN) ────────────────────
+        for _nm in result:
+            aspect_medoid[_nm] = False
+
+        n_confident = sum(len(info.keywords) for info in result.values())
+        n_residual_pass1 = len(residual_indices)
+
         if len(residual_indices) >= 5:
             res_spans = [spans[i] for i in residual_indices]
             res_embs = embeddings[residual_indices]
             res_counts = counts[residual_indices]
 
-            residual_aspects = self._cluster_residuals(
+            residual_aspects, residual_medoid = self._cluster_residuals(
                 res_spans, res_embs, res_counts, min_mentions
             )
 
             for name, info in residual_aspects.items():
+                m = residual_medoid.get(name, False)
                 if name in result:
                     existing = result[name]
+                    kw_w = existing.keyword_weights or [1.0] * len(existing.keywords)
+                    add_w = info.keyword_weights or [1.0] * len(info.keywords)
                     result[name] = AspectInfo(
                         keywords=existing.keywords + info.keywords,
                         centroid_embedding=np.mean(
@@ -290,11 +280,14 @@ class AspectClusterer:
                             ]),
                             axis=0,
                         ).flatten(),
+                        keyword_weights=kw_w + add_w,
+                        nli_label="",
                     )
+                    aspect_medoid[name] = aspect_medoid.get(name, False) or m
                 else:
                     result[name] = info
+                    aspect_medoid[name] = m
 
-        # ── Pass 3: Domain-aware filtering ───────────────────────────
         filtered: Dict[str, AspectInfo] = {}
         for name, info in result.items():
             total = sum(
@@ -303,29 +296,66 @@ class AspectClusterer:
             if total >= min_mentions:
                 filtered[name] = info
 
+        self._apply_nli_labels(
+            filtered, aspect_medoid, anchor_names, anchor_matrix
+        )
+
+        self.last_assignment_counts = {
+            "confident": n_confident,
+            "residual": n_residual_pass1,
+        }
+        self.last_residual_medoid_names = sorted(
+            k for k in filtered if aspect_medoid.get(k, False)
+        )
+
+        nli_txt = (
+            "  nli medoid routing:\n    "
+            + "\n    ".join(self.last_nli_medoid_diagnostics)
+            if self.last_nli_medoid_diagnostics
+            else ""
+        )
+        print(
+            f"[AspectClusterer] pass1 confident_spans={n_confident}, "
+            f"residual_spans={n_residual_pass1}\n"
+            f"{nli_txt}"
+            f"  residual medoid names (final): {self.last_residual_medoid_names}"
+        )
+
         return filtered
 
-    # ------------------------------------------------------------------
-    # FIX1: Auto-detect product name stop-spans
-    # ------------------------------------------------------------------
+    def _apply_nli_labels(
+        self,
+        filtered: Dict[str, AspectInfo],
+        aspect_medoid: Dict[str, bool],
+        anchor_names: List[str],
+        anchor_matrix: np.ndarray,
+    ) -> None:
+        for name, info in filtered.items():
+            if not aspect_medoid.get(name, False):
+                info.nli_label = name
+                continue
+
+            c = info.centroid_embedding.reshape(1, -1)
+            sims = cosine_similarity(c, anchor_matrix)[0]
+            bi = int(np.argmax(sims))
+            cos_v = float(sims[bi])
+            nli = anchor_names[bi]
+            info.nli_label = nli
+            self.last_nli_medoid_diagnostics.append(
+                f"medoid '{name}' → nli_label '{nli}' (cos={cos_v:.2f})"
+            )
+
     @staticmethod
     def _detect_product_stops(
         candidates: List[ScoredCandidate],
         freq_threshold: float = 0.05,
     ) -> set:
-        """Находит спаны-названия товара: single words с частотой > threshold.
-
-        Логика: если одно слово встречается в >5% всех кандидатов —
-        это скорее всего название товара ("книга", "портсигар", "корм"),
-        а не аспект. Такие спаны засоряют anchor assignment.
-        """
         if not candidates:
             return set()
 
         total = len(candidates)
         word_counts: dict[str, int] = {}
         for c in candidates:
-            # Только single-word спаны (не биграммы)
             if " " not in c.span.strip():
                 w = c.span.strip().lower()
                 word_counts[w] = word_counts.get(w, 0) + 1
@@ -334,28 +364,23 @@ class AspectClusterer:
         for word, count in word_counts.items():
             if count / total >= freq_threshold and len(word) >= 3:
                 stops.add(word)
-                # Добавляем и оригинальный регистр из кандидатов
                 for c in candidates:
                     if c.span.strip().lower() == word:
                         stops.add(c.span.strip())
 
         return stops
 
-    # ------------------------------------------------------------------
-    # Pass 2: HDBSCAN на остатках (residuals)
-    # ------------------------------------------------------------------
     def _cluster_residuals(
         self,
         spans: List[str],
         embeddings: np.ndarray,
         counts: np.ndarray,
         min_mentions: int,
-    ) -> Dict[str, AspectInfo]:
-        """UMAP → HDBSCAN на residual spans. Именование через якоря."""
+    ) -> Tuple[Dict[str, AspectInfo], Dict[str, bool]]:
         N = len(spans)
         min_cluster_size = max(3, min(8, N // 50))
         if N < min_cluster_size:
-            return {}
+            return {}, {}
 
         n_neighbors = max(2, min(15, N // 10))
 
@@ -384,12 +409,13 @@ class AspectClusterer:
             clusters.setdefault(label, []).append(idx)
 
         if not clusters:
-            return {}
+            return {}, {}
 
         result: Dict[str, AspectInfo] = {}
         umap_centroids: Dict[str, np.ndarray] = {}
+        aspect_medoid: Dict[str, bool] = {}
 
-        for label, indices in clusters.items():
+        for _label, indices in clusters.items():
             cluster_spans = [spans[i] for i in indices]
             cluster_embs = embeddings[indices]
             centroid = np.mean(cluster_embs, axis=0)
@@ -397,7 +423,6 @@ class AspectClusterer:
             umap_embs = reduced[indices]
             umap_centroid = np.mean(umap_embs, axis=0)
 
-            # Фильтрация мусорных кластеров
             if self._is_junk_cluster(centroid):
                 continue
 
@@ -405,10 +430,11 @@ class AspectClusterer:
             if total_mentions < min_mentions:
                 continue
 
-            name = self._name_cluster(centroid, cluster_spans, cluster_embs)
+            name, is_medoid = self._name_cluster(centroid, cluster_spans, cluster_embs)
 
             if name in result:
                 existing = result[name]
+                ex_kw = existing.keyword_weights or [1.0] * len(existing.keywords)
                 result[name] = AspectInfo(
                     keywords=existing.keywords + cluster_spans,
                     centroid_embedding=np.mean(
@@ -418,6 +444,8 @@ class AspectClusterer:
                         ]),
                         axis=0,
                     ).flatten(),
+                    keyword_weights=ex_kw + [1.0] * len(cluster_spans),
+                    nli_label="",
                 )
                 umap_centroids[name] = np.mean(
                     np.vstack([
@@ -426,77 +454,25 @@ class AspectClusterer:
                     ]),
                     axis=0,
                 ).flatten()
+                aspect_medoid[name] = aspect_medoid.get(name, False) or is_medoid
             else:
                 result[name] = AspectInfo(
                     keywords=cluster_spans,
                     centroid_embedding=centroid,
+                    keyword_weights=[1.0] * len(cluster_spans),
+                    nli_label="",
                 )
                 umap_centroids[name] = umap_centroid
+                aspect_medoid[name] = is_medoid
 
-        # Пост-кластерный мерж
-        result = self._merge_similar_clusters(result, umap_centroids)
-        return result
+        result = self._merge_similar_clusters(result, umap_centroids, aspect_medoid)
+        return result, aspect_medoid
 
-    # ------------------------------------------------------------------
-    # Junk detection
-    # ------------------------------------------------------------------
-    def _is_junk_span(self, embedding: np.ndarray) -> bool:
-        """Проверяет один span: ближе к анти-якорю чем к любому якорю?"""
-        emb = embedding.reshape(1, -1)
-
-        max_anti_sim = max(
-            cosine_similarity(emb, anti_emb.reshape(1, -1))[0, 0]
-            for anti_emb in self._anti_anchor_embeddings.values()
-        )
-        max_anchor_sim = max(
-            cosine_similarity(emb, anchor_emb.reshape(1, -1))[0, 0]
-            for anchor_emb in self._anchor_embeddings.values()
-        )
-
-        return max_anti_sim > max_anchor_sim + self.anti_anchor_threshold
-
-    def _is_junk_cluster(self, centroid: np.ndarray) -> bool:
-        """Проверяет центроид кластера."""
-        centroid_norm = centroid.reshape(1, -1)
-
-        max_anti_sim = max(
-            cosine_similarity(centroid_norm, anti_emb.reshape(1, -1))[0, 0]
-            for anti_emb in self._anti_anchor_embeddings.values()
-        )
-        max_anchor_sim = max(
-            cosine_similarity(centroid_norm, anchor_emb.reshape(1, -1))[0, 0]
-            for anchor_emb in self._anchor_embeddings.values()
-        )
-
-        return max_anti_sim > max_anchor_sim + self.anti_anchor_threshold
-
-    # ------------------------------------------------------------------
-    # Агрегация спанов
-    # ------------------------------------------------------------------
-    @staticmethod
-    def _aggregate_spans(
-        candidates: List[ScoredCandidate], min_mentions: int,
-        stop_spans: set | None = None,
-    ) -> dict:
-        stops = stop_spans or STOP_SPANS
-        agg: dict[str, dict] = {}
-        for c in candidates:
-            if c.span in stops:
-                continue
-            if c.span not in agg:
-                agg[c.span] = {"count": 0, "embedding": c.embedding, "score_sum": 0.0}
-            agg[c.span]["count"] += 1
-            agg[c.span]["score_sum"] += c.score
-
-        if min_mentions > 1:
-            agg = {s: d for s, d in agg.items() if d["count"] >= min_mentions}
-        return agg
-
-    # ------------------------------------------------------------------
-    # Пост-кластерный мерж близких кластеров (евклид в UMAP R5)
-    # ------------------------------------------------------------------
     def _merge_similar_clusters(
-        self, clusters: Dict[str, AspectInfo], umap_centroids: Dict[str, np.ndarray]
+        self,
+        clusters: Dict[str, AspectInfo],
+        umap_centroids: Dict[str, np.ndarray],
+        aspect_medoid: Optional[Dict[str, bool]] = None,
     ) -> Dict[str, AspectInfo]:
         if len(clusters) < 2:
             return clusters
@@ -531,9 +507,21 @@ class AspectClusterer:
             keep = clusters[keep_name]
             drop = clusters[drop_name]
 
+            kw_w_k = keep.keyword_weights or [1.0] * len(keep.keywords)
+            kw_w_d = drop.keyword_weights or [1.0] * len(drop.keywords)
+            wk = float(len(keep.keywords))
+            wd = float(len(drop.keywords))
+            wsum = wk + wd
+            merged_c = (
+                (wk * keep.centroid_embedding + wd * drop.centroid_embedding) / wsum
+                if wsum > 0
+                else keep.centroid_embedding
+            )
             clusters[keep_name] = AspectInfo(
                 keywords=keep.keywords + drop.keywords,
-                centroid_embedding=keep.centroid_embedding,
+                centroid_embedding=np.asarray(merged_c).flatten(),
+                keyword_weights=kw_w_k + kw_w_d,
+                nli_label="",
             )
             if keep_name in umap_centroids and drop_name in umap_centroids:
                 umap_centroids[keep_name] = np.mean(
@@ -547,19 +535,22 @@ class AspectClusterer:
             del clusters[drop_name]
             if drop_name in umap_centroids:
                 del umap_centroids[drop_name]
+            if aspect_medoid is not None:
+                aspect_medoid[keep_name] = aspect_medoid.get(keep_name, False) or aspect_medoid.get(
+                    drop_name, False
+                )
+                if drop_name in aspect_medoid:
+                    del aspect_medoid[drop_name]
             names = list(clusters.keys())
 
         return clusters
 
-    # ------------------------------------------------------------------
-    # Именование кластера (для residual discovery)
-    # ------------------------------------------------------------------
     def _name_cluster(
         self,
         centroid: np.ndarray,
         spans: List[str],
         embeddings: np.ndarray,
-    ) -> str:
+    ) -> Tuple[str, bool]:
         centroid_norm = centroid.reshape(1, -1)
 
         anchor_sims: list[tuple[str, float]] = []
@@ -573,15 +564,59 @@ class AspectClusterer:
         margin = best_sim - second_sim
 
         if margin >= self.anchor_threshold:
-            return best_name
+            return best_name, False
 
         sims = cosine_similarity(centroid_norm, embeddings)[0]
         medoid_idx = int(np.argmax(sims))
-        return spans[medoid_idx]
+        return spans[medoid_idx], True
 
-    # ------------------------------------------------------------------
-    # Fallback: если слишком мало данных для HDBSCAN
-    # ------------------------------------------------------------------
+    def _is_junk_span(self, embedding: np.ndarray) -> bool:
+        emb = embedding.reshape(1, -1)
+
+        max_anti_sim = max(
+            cosine_similarity(emb, anti_emb.reshape(1, -1))[0, 0]
+            for anti_emb in self._anti_anchor_embeddings.values()
+        )
+        max_anchor_sim = max(
+            cosine_similarity(emb, anchor_emb.reshape(1, -1))[0, 0]
+            for anchor_emb in self._anchor_embeddings.values()
+        )
+
+        return max_anti_sim > max_anchor_sim + self.anti_anchor_threshold
+
+    def _is_junk_cluster(self, centroid: np.ndarray) -> bool:
+        centroid_norm = centroid.reshape(1, -1)
+
+        max_anti_sim = max(
+            cosine_similarity(centroid_norm, anti_emb.reshape(1, -1))[0, 0]
+            for anti_emb in self._anti_anchor_embeddings.values()
+        )
+        max_anchor_sim = max(
+            cosine_similarity(centroid_norm, anchor_emb.reshape(1, -1))[0, 0]
+            for anchor_emb in self._anchor_embeddings.values()
+        )
+
+        return max_anti_sim > max_anchor_sim + self.anti_anchor_threshold
+
+    @staticmethod
+    def _aggregate_spans(
+        candidates: List[ScoredCandidate], min_mentions: int,
+        stop_spans: set | None = None,
+    ) -> dict:
+        stops = stop_spans or STOP_SPANS
+        agg: dict[str, dict] = {}
+        for c in candidates:
+            if c.span in stops:
+                continue
+            if c.span not in agg:
+                agg[c.span] = {"count": 0, "embedding": c.embedding, "score_sum": 0.0}
+            agg[c.span]["count"] += 1
+            agg[c.span]["score_sum"] += c.score
+
+        if min_mentions > 1:
+            agg = {s: d for s, d in agg.items() if d["count"] >= min_mentions}
+        return agg
+
     @staticmethod
     def _fallback_single_cluster(span_data: dict) -> Dict[str, AspectInfo]:
         if not span_data:
@@ -590,7 +625,12 @@ class AspectClusterer:
         embs = np.stack([span_data[s]["embedding"] for s in spans])
         centroid = np.mean(embs, axis=0)
         return {
-            "Общее": AspectInfo(keywords=spans, centroid_embedding=centroid)
+            "Общее": AspectInfo(
+                keywords=spans,
+                centroid_embedding=centroid,
+                keyword_weights=[1.0] * len(spans),
+                nli_label="Общее",
+            )
         }
 
 
@@ -607,16 +647,6 @@ if __name__ == "__main__":
     reviews = [
         "Доставка быстрая, курьер вежливый. Упаковка хорошая.",
         "Пришло быстро, упаковка целая, курьер позвонил заранее.",
-        "Доставили за два дня, упаковано отлично.",
-        "Качество материала отличное, сборка на уровне.",
-        "Материал приятный, качество сборки радует.",
-        "Сборка крепкая, материал хороший, брака нет.",
-        "Экран яркий, цвета насыщенные.",
-        "Дисплей отличный, матрица хорошая.",
-        "Экран шикарный, разрешение высокое.",
-        "Цена адекватная, за такие деньги — отлично.",
-        "Стоимость нормальная, не дорого.",
-        "За такую цену — отличное качество.",
     ]
 
     all_scored: list[ScoredCandidate] = []
@@ -625,12 +655,9 @@ if __name__ == "__main__":
         scored = scorer.score_and_select(cands)
         all_scored.extend(scored)
 
-    print(f"Всего scored-кандидатов: {len(all_scored)}\n")
-
     clusterer = AspectClusterer(model=scorer.model)
     aspects = clusterer.cluster(all_scored, min_mentions=1)
 
     for name, info in aspects.items():
-        print(f"[{name}]")
-        print(f"  keywords: {info.keywords}")
-        print()
+        print(f"[{name}] nli={info.nli_label!r}")
+        print(f"  keywords: {info.keywords[:5]}")

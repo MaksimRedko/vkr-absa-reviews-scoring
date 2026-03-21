@@ -1,5 +1,9 @@
 from omegaconf import OmegaConf
 
+# Baseline (зафиксировано):
+#   — NLI remap: medoid → nli_label = argmax_k cos(centroid, anchor_k) (clusterer)
+#   — Гипотезы: вариант B (оценочные фразы ниже)
+#   — Остальное: discovery / pipeline как в исходном baseline
 
 config = OmegaConf.create({
     "models": {
@@ -17,13 +21,14 @@ config = OmegaConf.create({
         "umap_min_dist": 0.0,
         "umap_metric": "cosine",
         "hdbscan_min_samples": 2,  # Фиксированный; min_cluster_size и umap_n_neighbors — адаптивные
-        "anchor_similarity_threshold": 0.05,  # Минимальный margin best-2nd для макро-якорей (антиврун)
+        "anchor_similarity_threshold": 0.05,  # margin в _name_cluster (residual): best−2nd
         "anti_anchor_threshold": 0.01,  # Margin: отбросить если max_anti > max_anchor + margin
-        "cluster_merge_threshold": 0.95,  # Евклидов порог мержа в UMAP R5 (меньше = ближе)
+        "cluster_merge_threshold": 0.95,  # Евклидов порог мержа в UMAP R5 (residual кластеры)
     },
     "sentiment": {
-        "hypothesis_template_pos": "Автор доволен {aspect}",
-        "hypothesis_template_neg": "Автор недоволен {aspect}",
+        # Baseline B: {aspect} = nli_label (якорь для medoid-кластеров)
+        "hypothesis_template_pos": "{aspect} — это хорошо",
+        "hypothesis_template_neg": "{aspect} — это плохо",
         "batch_size": 64,
         "score_epsilon": 0.0001,
     },

@@ -177,24 +177,29 @@ class ABSAPipeline:
         scored_candidates: List[ScoredCandidate],
         aspects: Dict[str, AspectInfo],
         sentence_to_review: Dict[str, str],
-    ) -> List[Tuple[str, str, str]]:
+    ) -> List[Tuple[str, str, str, str, float]]:
         """
-        Формирует (review_id, sentence, aspect_name) для NLI.
-
-        FIX v2:
-          - sentence_to_review из реальных candidate.sentence (не re.split)
-          - aspect assignment из clusterer keywords (не centroid argmax)
+        (review_id, sentence, aspect_name, nli_label, weight).
+        NLI-гипотезы по nli_label; агрегация по aspect_name (оригинальное имя кластера).
         """
         if not aspects or not scored_candidates:
             return []
 
         span_to_aspect: Dict[str, str] = {}
+        span_to_nli: Dict[str, str] = {}
+        span_to_weight: Dict[str, float] = {}
         for asp_name, info in aspects.items():
-            for kw in info.keywords:
+            wlist = info.keyword_weights
+            if len(wlist) != len(info.keywords):
+                wlist = [1.0] * len(info.keywords)
+            nli = (info.nli_label or asp_name).strip() or asp_name
+            for kw, w in zip(info.keywords, wlist):
                 span_to_aspect[kw] = asp_name
+                span_to_nli[kw] = nli
+                span_to_weight[kw] = float(w)
 
         seen_pairs: set = set()
-        pairs: List[Tuple[str, str, str]] = []
+        pairs: List[Tuple[str, str, str, str, float]] = []
 
         for cand in scored_candidates:
             aspect_name = span_to_aspect.get(cand.span)
@@ -211,7 +216,9 @@ class ABSAPipeline:
                 continue
             seen_pairs.add(pair_key)
 
-            pairs.append((review_id, cand.sentence, aspect_name))
+            w = span_to_weight.get(cand.span, 1.0)
+            nli = span_to_nli.get(cand.span, aspect_name)
+            pairs.append((review_id, cand.sentence, aspect_name, nli, w))
 
         return pairs
 
@@ -227,29 +234,38 @@ class ABSAPipeline:
         """
         review_id_to_idx = {r.id: i for i, r in enumerate(reviews)}
 
-        # Собираем оценки по review_id
-        review_aspects: Dict[str, Dict[str, List[float]]] = {}
+        # Собираем оценки по review_id: (score, confidence-вес)
+        review_aspects: Dict[str, Dict[str, List[Tuple[float, float]]]] = {}
         for sr in sentiment_scores:
             if sr.review_id not in review_aspects:
                 review_aspects[sr.review_id] = {}
             aspects = review_aspects[sr.review_id]
             if sr.aspect not in aspects:
                 aspects[sr.aspect] = []
-            aspects[sr.aspect].append(sr.score)
+            aspects[sr.aspect].append((sr.score, sr.confidence))
 
-        # Среднее по аспектам внутри одного отзыва (если несколько предложений)
+        # Взвешенное среднее по аспектам внутри одного отзыва
         result = []
         for review_id, aspects in review_aspects.items():
             idx = review_id_to_idx.get(review_id)
             if idx is None:
                 continue
 
+            aspect_means: Dict[str, float] = {}
+            for name, pairs_sw in aspects.items():
+                scores = [p[0] for p in pairs_sw]
+                weights = [p[1] for p in pairs_sw]
+                wsum = sum(weights)
+                if wsum > 0:
+                    aspect_means[name] = float(
+                        sum(s * w for s, w in zip(scores, weights)) / wsum
+                    )
+                else:
+                    aspect_means[name] = float(sum(scores) / len(scores))
+
             result.append({
                 "review_id": review_id,
-                "aspects": {
-                    name: float(sum(scores) / len(scores))
-                    for name, scores in aspects.items()
-                },
+                "aspects": aspect_means,
                 "fraud_weight": trust_weights[idx],
                 "date": reviews[idx].created_date,
             })

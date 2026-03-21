@@ -1,15 +1,15 @@
 {
   "per_product": {
     "117808756": {
-      "precision": 1.0,
+      "precision": 0.524,
       "recall": 0.909,
       "mention_recall_product": 0.992,
-      "mention_recall_review": 0.301,
-      "mae_raw": 0.571,
-      "mae_calibrated": 0.635,
-      "calibration_a": 0.8456,
-      "calibration_b": 0.6343,
-      "mae_n": 40,
+      "mention_recall_review": 0.271,
+      "mae_raw": 0.615,
+      "mae_calibrated": 0.51,
+      "calibration_a": 0.8011,
+      "calibration_b": 1.0261,
+      "mae_n": 36,
       "pred_aspects": [
         "Внешний вид",
         "Запах",
@@ -48,15 +48,15 @@
       ]
     },
     "254445126": {
-      "precision": 1.0,
-      "recall": 0.9,
-      "mention_recall_product": 0.995,
-      "mention_recall_review": 0.347,
-      "mae_raw": 0.738,
-      "mae_calibrated": 0.763,
-      "calibration_a": 0.871,
-      "calibration_b": 0.5294,
-      "mae_n": 66,
+      "precision": 0.471,
+      "recall": 0.7,
+      "mention_recall_product": 0.974,
+      "mention_recall_review": 0.326,
+      "mae_raw": 1.111,
+      "mae_calibrated": 0.972,
+      "calibration_a": 0.8493,
+      "calibration_b": 0.7696,
+      "mae_n": 62,
       "pred_aspects": [
         "Внешний вид",
         "Качество",
@@ -90,15 +90,15 @@
       ]
     },
     "311233470": {
-      "precision": 1.0,
+      "precision": 0.524,
       "recall": 1.0,
       "mention_recall_product": 1.0,
-      "mention_recall_review": 0.506,
-      "mae_raw": 0.92,
-      "mae_calibrated": 1.216,
-      "calibration_a": 0.6508,
-      "calibration_b": 1.644,
-      "mae_n": 135,
+      "mention_recall_review": 0.322,
+      "mae_raw": 0.666,
+      "mae_calibrated": 1.859,
+      "calibration_a": 0.3994,
+      "calibration_b": 2.9624,
+      "mae_n": 86,
       "pred_aspects": [
         "Вместимость",
         "Внешний вид",
@@ -135,15 +135,15 @@
       ]
     },
     "441378025": {
-      "precision": 1.0,
+      "precision": 0.44,
       "recall": 0.833,
-      "mention_recall_product": 0.951,
-      "mention_recall_review": 0.294,
-      "mae_raw": 0.828,
-      "mae_calibrated": 0.814,
-      "calibration_a": 0.8523,
-      "calibration_b": 0.5905,
-      "mae_n": 30,
+      "mention_recall_product": 0.98,
+      "mention_recall_review": 0.186,
+      "mae_raw": 1.282,
+      "mae_calibrated": 1.075,
+      "calibration_a": 0.8138,
+      "calibration_b": 0.9583,
+      "mae_n": 19,
       "pred_aspects": [
         "Вместимость",
         "Внешний вид",
@@ -187,15 +187,15 @@
       ]
     },
     "506358703": {
-      "precision": 1.0,
-      "recall": 1.0,
-      "mention_recall_product": 1.0,
-      "mention_recall_review": 0.557,
-      "mae_raw": 0.323,
-      "mae_calibrated": 0.62,
-      "calibration_a": 0.7883,
-      "calibration_b": 0.6821,
-      "mae_n": 122,
+      "precision": 0.435,
+      "recall": 0.8,
+      "mention_recall_product": 0.982,
+      "mention_recall_review": 0.498,
+      "mae_raw": 0.471,
+      "mae_calibrated": 0.553,
+      "calibration_a": 0.7684,
+      "calibration_b": 0.964,
+      "mae_n": 109,
       "pred_aspects": [
         "Запах",
         "Здоровье",
@@ -235,19 +235,19 @@
       ]
     }
   },
-  "macro_precision": 1.0,
-  "macro_recall": 0.928,
-  "macro_mention_recall_product": 0.988,
-  "macro_mention_recall_review": 0.401,
-  "micro_precision": 1.0,
-  "micro_recall": 0.923,
-  "global_mention_recall_review": 0.431,
-  "global_mae_raw": 0.662,
-  "global_mae_calibrated": 0.865,
-  "global_mae_n": 393,
+  "macro_precision": 0.479,
+  "macro_recall": 0.848,
+  "macro_mention_recall_product": 0.986,
+  "macro_mention_recall_review": 0.321,
+  "micro_precision": 0.477,
+  "micro_recall": 0.846,
+  "global_mention_recall_review": 0.342,
+  "global_mae_raw": 0.718,
+  "global_mae_calibrated": 1.023,
+  "global_mae_n": 312,
   "calibration_global": {
-    "a": 0.8341,
-    "b": 0.6719
+    "a": 0.7774,
+    "b": 1.1139
   },
   "assignment_by_product": {
     "117808756": {
@@ -389,127 +389,7 @@
       "medoid 'ветеринара' → nli_label 'Продавец' (cos=0.81)"
     ]
   },
-  "mapping_mode": "auto",
-  "auto_threshold": 0.3,
-  "auto_mapping": {
-    "117808756": {
-      "Цена": "Цена",
-      "Качество": "Качество",
-      "Внешний вид": "Внешний вид",
-      "Логистика": "Логистика",
-      "Упаковка": "Упаковка",
-      "Соответствие": "Соответствие",
-      "Органолептика": "Запах",
-      "Содержание": "Содержание",
-      "Комфорт": "Текст",
-      "Продавец": "Упаковка",
-      "Состояние": "Упаковка",
-      "листы белые": "Текст",
-      "хлам": "Внешний вид",
-      "печати": "Упаковка",
-      "обложка довольно": "Текст",
-      "языка": "Текст",
-      "отличная книга": "Содержание",
-      "преобрести": "Логистика",
-      "хороший шрифт": "Текст",
-      "идеальном виде": "Впечатление",
-      "Запах": "Запах"
-    },
-    "254445126": {
-      "Цена": "Цена",
-      "Качество": "Качество",
-      "Внешний вид": "Внешний вид",
-      "Соответствие": "Соответствие",
-      "Поедаемость": "Общее впечатление",
-      "Комфорт": "Комфорт",
-      "Продавец": "Комплектация",
-      "Состояние": "Комплектация",
-      "ваще": "Комплектация",
-      "кофта плотная": "Комплектация",
-      "бренд": "Внешний вид",
-      "стирке": "Уход",
-      "материала": "Комфорт",
-      "комфортно цвет": "Ассортимент",
-      "толстовка отличная": "Комфорт",
-      "ог-83 от-62": "Комплектация",
-      "осенью": "Внешний вид"
-    },
-    "311233470": {
-      "Цена": "Цена",
-      "Качество": "Качество",
-      "Внешний вид": "Внешний вид",
-      "Упаковка": "Упаковка",
-      "Соответствие": "Соответствие",
-      "Содержание": "Внешний вид",
-      "Свежесть": "Логистика",
-      "Комфорт": "Комфорт",
-      "Продавец": "Продавец",
-      "Состояние": "Состояние",
-      "Вместимость": "Комфорт",
-      "классное платье": "Внешний вид",
-      "сумму": "Состояние",
-      "идеальную фигуру": "Внешний вид",
-      "сборка": "Упаковка",
-      "шов": "Состояние",
-      "шее": "Состояние",
-      "колготки": "Состояние",
-      "фигуре хорошо": "Внешний вид",
-      "рост 168": "Соответствие",
-      "комментарии": "Соответствие"
-    },
-    "441378025": {
-      "Цена": "Цена",
-      "Качество": "Качество",
-      "Внешний вид": "Внешний вид",
-      "Удобство": "Удобство",
-      "Функциональность": "Функционал",
-      "Логистика": "Логистика",
-      "Упаковка": "Упаковка",
-      "Соответствие": "Внешний вид",
-      "Органолептика": "Запах",
-      "Комфорт": "Внешний вид",
-      "Продавец": "Состояние",
-      "Состояние": "Состояние",
-      "Вместимость": "Вместимость",
-      "прикуривателя": "Функционал",
-      "закрытие": "Функционал",
-      "пружинку": "Состояние",
-      "сигареты": "Вместимость",
-      "компактность стильно": "Внешний вид",
-      "зарядке": "Функционал",
-      "тугая-женские": "Состояние",
-      "корпус приятный": "Удобство",
-      "классный портсигар": "Состояние",
-      "затвор зажигалки": "Вместимость",
-      "Функционал": "Функционал",
-      "Запах": "Запах"
-    },
-    "506358703": {
-      "Цена": "Цена",
-      "Качество": "Качество",
-      "Функциональность": "Состав",
-      "Логистика": "Логистика",
-      "Упаковка": "Упаковка",
-      "Соответствие": "Цена",
-      "Органолептика": "Запах",
-      "Состав": "Состав",
-      "Здоровье": "Здоровье",
-      "Поедаемость": "Поедаемость",
-      "Свежесть": "Свежесть",
-      "Продавец": "Упаковка",
-      "калорийности": "Здоровье",
-      "гранулы": "Упаковка",
-      "корма": "Здоровье",
-      "обед": "Здоровье",
-      "альтернативу": "Ассортимент",
-      "застежка": "Упаковка",
-      "годности хороший": "Состав",
-      "котику": "Здоровье",
-      "ветеринара": "Здоровье",
-      "Функционал": "Состав",
-      "Запах": "Запах"
-    }
-  },
+  "mapping_mode": "manual",
   "product_ratings": {
     "per_product": {
       "117808756": {
@@ -517,309 +397,269 @@
           {
             "aspect": "Внешний вид",
             "true_avg": 4.83,
-            "pred_avg": 3.5,
-            "error": 1.34,
+            "pred_avg": 2.72,
+            "error": 2.11,
             "n_true": 12,
-            "n_pred": 15
-          },
-          {
-            "aspect": "Впечатление",
-            "true_avg": 5.0,
-            "pred_avg": 4.87,
-            "error": 0.13,
-            "n_true": 1,
-            "n_pred": 10
+            "n_pred": 3
           },
           {
             "aspect": "Запах",
             "true_avg": 4.14,
-            "pred_avg": 4.02,
-            "error": 0.12,
+            "pred_avg": 3.85,
+            "error": 0.29,
             "n_true": 7,
             "n_pred": 4
           },
           {
             "aspect": "Качество",
             "true_avg": 4.58,
-            "pred_avg": 4.96,
-            "error": 0.38,
+            "pred_avg": 4.04,
+            "error": 0.54,
             "n_true": 55,
-            "n_pred": 10
+            "n_pred": 13
           },
           {
             "aspect": "Логистика",
             "true_avg": 4.82,
-            "pred_avg": 4.52,
-            "error": 0.3,
+            "pred_avg": 4.71,
+            "error": 0.11,
             "n_true": 11,
-            "n_pred": 7
+            "n_pred": 5
           },
           {
             "aspect": "Содержание",
             "true_avg": 3.75,
-            "pred_avg": 4.44,
-            "error": 0.69,
+            "pred_avg": 4.07,
+            "error": 0.32,
             "n_true": 4,
-            "n_pred": 42
+            "n_pred": 32
           },
           {
             "aspect": "Соответствие",
             "true_avg": 3.22,
-            "pred_avg": 4.01,
-            "error": 0.79,
+            "pred_avg": 3.69,
+            "error": 0.47,
             "n_true": 9,
             "n_pred": 2
           },
           {
             "aspect": "Текст",
             "true_avg": 1.0,
-            "pred_avg": 4.2,
-            "error": 3.2,
+            "pred_avg": 4.04,
+            "error": 3.04,
             "n_true": 1,
-            "n_pred": 38
+            "n_pred": 7
           },
           {
             "aspect": "Упаковка",
             "true_avg": 4.56,
-            "pred_avg": 4.09,
-            "error": 0.47,
+            "pred_avg": 3.95,
+            "error": 0.61,
             "n_true": 25,
-            "n_pred": 26
+            "n_pred": 8
           },
           {
             "aspect": "Цена",
             "true_avg": 4.86,
-            "pred_avg": 4.6,
-            "error": 0.26,
+            "pred_avg": 4.34,
+            "error": 0.52,
             "n_true": 7,
             "n_pred": 8
           }
         ],
-        "product_mae": 0.544,
-        "product_mae_unfiltered": 0.768,
-        "n_aspects_compared": 10
+        "product_mae": 0.621,
+        "product_mae_unfiltered": 0.89,
+        "n_aspects_compared": 9
       },
       "254445126": {
         "aspects": [
           {
-            "aspect": "Ассортимент",
-            "true_avg": 5.0,
-            "pred_avg": 3.51,
-            "error": 1.49,
-            "n_true": 2,
-            "n_pred": 13
-          },
-          {
             "aspect": "Внешний вид",
             "true_avg": 4.3,
-            "pred_avg": 3.61,
-            "error": 0.68,
+            "pred_avg": 3.1,
+            "error": 1.19,
             "n_true": 27,
-            "n_pred": 18
+            "n_pred": 13
           },
           {
             "aspect": "Качество",
             "true_avg": 4.4,
-            "pred_avg": 4.67,
-            "error": 0.28,
+            "pred_avg": 4.02,
+            "error": 0.38,
             "n_true": 63,
-            "n_pred": 32
-          },
-          {
-            "aspect": "Комплектация",
-            "true_avg": 5.0,
-            "pred_avg": 3.69,
-            "error": 1.31,
-            "n_true": 2,
-            "n_pred": 26
+            "n_pred": 33
           },
           {
             "aspect": "Комфорт",
             "true_avg": 3.93,
-            "pred_avg": 3.97,
-            "error": 0.04,
+            "pred_avg": 3.51,
+            "error": 0.42,
             "n_true": 28,
-            "n_pred": 29
+            "n_pred": 15
           },
           {
             "aspect": "Общее впечатление",
             "true_avg": 4.81,
-            "pred_avg": 4.91,
-            "error": 0.1,
+            "pred_avg": 4.59,
+            "error": 0.22,
             "n_true": 27,
             "n_pred": 3
           },
           {
             "aspect": "Соответствие",
             "true_avg": 3.7,
-            "pred_avg": 4.01,
-            "error": 0.31,
+            "pred_avg": 3.3,
+            "error": 0.4,
             "n_true": 30,
             "n_pred": 7
           },
           {
-            "aspect": "Уход",
-            "true_avg": 3.0,
-            "pred_avg": 3.52,
-            "error": 0.52,
-            "n_true": 1,
-            "n_pred": 8
-          },
-          {
             "aspect": "Цена",
             "true_avg": 3.11,
-            "pred_avg": 4.23,
-            "error": 1.12,
+            "pred_avg": 3.27,
+            "error": 0.16,
             "n_true": 9,
             "n_pred": 6
           }
         ],
-        "product_mae": 0.422,
-        "product_mae_unfiltered": 0.65,
-        "n_aspects_compared": 9
+        "product_mae": 0.462,
+        "product_mae_unfiltered": 0.462,
+        "n_aspects_compared": 6
       },
       "311233470": {
         "aspects": [
           {
             "aspect": "Внешний вид",
             "true_avg": 4.34,
-            "pred_avg": 3.55,
-            "error": 0.8,
+            "pred_avg": 3.7,
+            "error": 0.64,
             "n_true": 67,
-            "n_pred": 70
+            "n_pred": 15
           },
           {
             "aspect": "Качество",
             "true_avg": 2.32,
-            "pred_avg": 2.41,
-            "error": 0.08,
+            "pred_avg": 2.19,
+            "error": 0.13,
             "n_true": 71,
             "n_pred": 23
           },
           {
             "aspect": "Комфорт",
             "true_avg": 2.73,
-            "pred_avg": 3.5,
-            "error": 0.77,
+            "pred_avg": 3.18,
+            "error": 0.46,
             "n_true": 11,
-            "n_pred": 18
-          },
-          {
-            "aspect": "Логистика",
-            "true_avg": 1.0,
-            "pred_avg": 4.94,
-            "error": 3.94,
-            "n_true": 1,
-            "n_pred": 1
+            "n_pred": 15
           },
           {
             "aspect": "Продавец",
             "true_avg": 1.4,
-            "pred_avg": 2.42,
-            "error": 1.02,
+            "pred_avg": 2.11,
+            "error": 0.71,
             "n_true": 10,
             "n_pred": 14
           },
           {
             "aspect": "Соответствие",
             "true_avg": 4.05,
-            "pred_avg": 3.51,
-            "error": 0.54,
+            "pred_avg": 2.92,
+            "error": 1.13,
             "n_true": 41,
-            "n_pred": 24
+            "n_pred": 11
           },
           {
             "aspect": "Состояние",
             "true_avg": 1.46,
-            "pred_avg": 2.9,
-            "error": 1.44,
+            "pred_avg": 1.76,
+            "error": 0.3,
             "n_true": 13,
-            "n_pred": 48
+            "n_pred": 3
           },
           {
             "aspect": "Упаковка",
             "true_avg": 1.5,
-            "pred_avg": 2.72,
-            "error": 1.22,
+            "pred_avg": 1.72,
+            "error": 0.22,
             "n_true": 10,
-            "n_pred": 17
+            "n_pred": 11
           },
           {
             "aspect": "Цена",
             "true_avg": 1.56,
-            "pred_avg": 2.66,
-            "error": 1.1,
+            "pred_avg": 1.94,
+            "error": 0.38,
             "n_true": 43,
             "n_pred": 21
           }
         ],
-        "product_mae": 0.871,
-        "product_mae_unfiltered": 1.212,
-        "n_aspects_compared": 9
+        "product_mae": 0.496,
+        "product_mae_unfiltered": 0.496,
+        "n_aspects_compared": 8
       },
       "441378025": {
         "aspects": [
           {
             "aspect": "Вместимость",
             "true_avg": 2.5,
-            "pred_avg": 2.71,
-            "error": 0.21,
+            "pred_avg": 2.79,
+            "error": 0.29,
             "n_true": 6,
-            "n_pred": 22
+            "n_pred": 4
           },
           {
             "aspect": "Внешний вид",
             "true_avg": 4.69,
-            "pred_avg": 3.77,
-            "error": 0.92,
+            "pred_avg": 2.91,
+            "error": 1.78,
             "n_true": 13,
-            "n_pred": 7
-          },
-          {
-            "aspect": "Запах",
-            "true_avg": 2.0,
-            "pred_avg": 3.46,
-            "error": 1.46,
-            "n_true": 1,
             "n_pred": 2
           },
           {
             "aspect": "Качество",
             "true_avg": 2.62,
-            "pred_avg": 5.0,
-            "error": 2.38,
+            "pred_avg": 4.93,
+            "error": 2.31,
             "n_true": 29,
             "n_pred": 3
           },
           {
             "aspect": "Логистика",
             "true_avg": 5.0,
-            "pred_avg": 3.73,
-            "error": 1.27,
+            "pred_avg": 2.92,
+            "error": 2.08,
             "n_true": 3,
+            "n_pred": 2
+          },
+          {
+            "aspect": "Соответствие",
+            "true_avg": 3.5,
+            "pred_avg": 2.3,
+            "error": 1.2,
+            "n_true": 4,
             "n_pred": 2
           },
           {
             "aspect": "Состояние",
             "true_avg": 5.0,
-            "pred_avg": 3.57,
-            "error": 1.43,
+            "pred_avg": 1.25,
+            "error": 3.75,
             "n_true": 3,
-            "n_pred": 15
+            "n_pred": 1
           },
           {
             "aspect": "Удобство",
             "true_avg": 3.91,
-            "pred_avg": 4.46,
-            "error": 0.55,
+            "pred_avg": 4.3,
+            "error": 0.39,
             "n_true": 33,
-            "n_pred": 11
+            "n_pred": 6
           },
           {
             "aspect": "Упаковка",
             "true_avg": 5.0,
-            "pred_avg": 1.31,
-            "error": 3.69,
+            "pred_avg": 1.05,
+            "error": 3.95,
             "n_true": 1,
             "n_pred": 1
           },
@@ -829,113 +669,97 @@
             "pred_avg": 3.04,
             "error": 0.46,
             "n_true": 6,
-            "n_pred": 18
+            "n_pred": 4
           },
           {
             "aspect": "Цена",
             "true_avg": 4.5,
-            "pred_avg": 3.23,
-            "error": 1.27,
+            "pred_avg": 2.68,
+            "error": 1.82,
             "n_true": 2,
             "n_pred": 3
           }
         ],
-        "product_mae": 1.031,
-        "product_mae_unfiltered": 1.364,
+        "product_mae": 1.533,
+        "product_mae_unfiltered": 1.803,
         "n_aspects_compared": 10
       },
       "506358703": {
         "aspects": [
           {
-            "aspect": "Ассортимент",
-            "true_avg": 2.67,
-            "pred_avg": 4.26,
-            "error": 1.59,
-            "n_true": 3,
-            "n_pred": 2
-          },
-          {
-            "aspect": "Запах",
-            "true_avg": 5.0,
-            "pred_avg": 4.69,
-            "error": 0.31,
-            "n_true": 1,
-            "n_pred": 6
-          },
-          {
             "aspect": "Здоровье",
             "true_avg": 4.65,
-            "pred_avg": 4.45,
-            "error": 0.21,
+            "pred_avg": 3.62,
+            "error": 1.03,
             "n_true": 23,
-            "n_pred": 64
+            "n_pred": 10
           },
           {
             "aspect": "Качество",
             "true_avg": 5.0,
-            "pred_avg": 4.99,
-            "error": 0.01,
+            "pred_avg": 4.79,
+            "error": 0.21,
             "n_true": 33,
             "n_pred": 4
           },
           {
             "aspect": "Логистика",
             "true_avg": 5.0,
-            "pred_avg": 4.87,
-            "error": 0.13,
+            "pred_avg": 4.69,
+            "error": 0.31,
             "n_true": 18,
             "n_pred": 10
           },
           {
             "aspect": "Поедаемость",
             "true_avg": 4.84,
-            "pred_avg": 4.55,
-            "error": 0.29,
+            "pred_avg": 4.32,
+            "error": 0.52,
             "n_true": 82,
-            "n_pred": 70
+            "n_pred": 72
           },
           {
             "aspect": "Свежесть",
             "true_avg": 5.0,
-            "pred_avg": 4.7,
-            "error": 0.3,
+            "pred_avg": 4.74,
+            "error": 0.26,
             "n_true": 10,
             "n_pred": 5
           },
           {
             "aspect": "Состав",
             "true_avg": 4.92,
-            "pred_avg": 4.86,
-            "error": 0.06,
+            "pred_avg": 4.94,
+            "error": 0.02,
             "n_true": 12,
-            "n_pred": 25
+            "n_pred": 8
           },
           {
             "aspect": "Упаковка",
             "true_avg": 4.88,
-            "pred_avg": 4.55,
-            "error": 0.33,
+            "pred_avg": 4.47,
+            "error": 0.41,
             "n_true": 25,
-            "n_pred": 28
+            "n_pred": 14
           },
           {
             "aspect": "Цена",
             "true_avg": 5.0,
-            "pred_avg": 4.79,
-            "error": 0.21,
+            "pred_avg": 4.36,
+            "error": 0.64,
             "n_true": 12,
-            "n_pred": 6
+            "n_pred": 5
           }
         ],
-        "product_mae": 0.348,
-        "product_mae_unfiltered": 0.344,
-        "n_aspects_compared": 10
+        "product_mae": 0.425,
+        "product_mae_unfiltered": 0.425,
+        "n_aspects_compared": 8
       }
     },
-    "global_product_mae": 0.865,
-    "global_product_mae_filtered": 0.636,
-    "macro_product_mae": 0.643,
-    "n_pairs": 48,
+    "global_product_mae": 0.882,
+    "global_product_mae_filtered": 0.72,
+    "macro_product_mae": 0.707,
+    "n_pairs": 41,
     "n_pairs_filtered": 38
   }
 }

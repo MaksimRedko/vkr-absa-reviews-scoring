@@ -21,7 +21,7 @@ import argparse
 import json
 import random
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
@@ -186,8 +186,24 @@ def run_pipeline_for_ids(
         aspect_names = list(aspects.keys())
         print(f"  Аспекты: {aspect_names}")
 
+        ac = getattr(clusterer, "last_assignment_counts", {})
+        c_assign = Counter(ac)
+        medoid_names = list(getattr(clusterer, "last_residual_medoid_names", []))
+        print(f"  Counter (confident / residual): {c_assign}")
+        print(f"  Residual medoid names (final): {medoid_names}")
+
+        nli_lines = list(getattr(clusterer, "last_nli_medoid_diagnostics", []))
+
         if not aspects:
-            results[nm_id] = {"aspects": [], "per_review": {}}
+            results[nm_id] = {
+                "aspects": [],
+                "per_review": {},
+                "diagnostics": {
+                    "anchor_assignment_counts": dict(ac),
+                    "residual_medoid_names": medoid_names,
+                    "nli_medoid_diagnostics": nli_lines,
+                },
+            }
             continue
 
         pairs = _build_pairs(scored, aspects, sentence_to_review)
@@ -197,14 +213,22 @@ def run_pipeline_for_ids(
         for sr in sentiment_scores:
             if sr.aspect not in per_review[sr.review_id]:
                 per_review[sr.review_id][sr.aspect] = []
-            per_review[sr.review_id][sr.aspect].append(sr.score)
+            per_review[sr.review_id][sr.aspect].append((sr.score, sr.confidence))
 
         per_review_avg = {}
         for rid, asp_dict in per_review.items():
-            avg = {
-                asp: round(float(np.mean(scores)), 2)
-                for asp, scores in asp_dict.items()
-            }
+            avg = {}
+            for asp, pairs_sw in asp_dict.items():
+                scores = [p[0] for p in pairs_sw]
+                weights = [p[1] for p in pairs_sw]
+                wsum = float(sum(weights))
+                if wsum > 0:
+                    avg[asp] = round(
+                        float(sum(s * w for s, w in zip(scores, weights)) / wsum),
+                        2,
+                    )
+                else:
+                    avg[asp] = round(float(np.mean(scores)), 2)
             # Apply aliases: "Органолептика"→"Запах" etc.
             # Добавляем aliased ключи чтобы identity match работал
             for pred_name, true_name in ASPECT_ALIASES.items():
@@ -229,6 +253,9 @@ def run_pipeline_for_ids(
                 "scored_candidates_count": len(scored),
                 "raw_candidate_samples": all_cand_texts[:30],
                 "scored_candidate_samples": scored_texts,
+                "anchor_assignment_counts": dict(ac),
+                "residual_medoid_names": medoid_names,
+                "nli_medoid_diagnostics": nli_lines,
             },
         }
 
@@ -236,24 +263,25 @@ def run_pipeline_for_ids(
 
 
 def _build_pairs(scored, aspects, sentence_to_review):
-    """Формирует (review_id, sentence, aspect_name) для NLI.
-
-    FIX v2: aspect assignment берётся из clusterer (span→aspect через keywords),
-    а НЕ пересчитывается через argmax cos(cand, centroid).
-    Это устраняет 9-17% reassignment и перекос n_pred/n_true.
-    """
-    # Строим span→aspect из того что clusterer уже решил
+    """(review_id, sentence, aspect_name, nli_label, weight) — NLI по nli_label."""
     span_to_aspect: Dict[str, str] = {}
+    span_to_nli: Dict[str, str] = {}
+    span_to_weight: Dict[str, float] = {}
     for asp_name, info in aspects.items():
-        for kw in info.keywords:
+        wlist = info.keyword_weights
+        if len(wlist) != len(info.keywords):
+            wlist = [1.0] * len(info.keywords)
+        nli = (getattr(info, "nli_label", None) or asp_name).strip() or asp_name
+        for kw, w in zip(info.keywords, wlist):
             span_to_aspect[kw] = asp_name
+            span_to_nli[kw] = nli
+            span_to_weight[kw] = float(w)
 
     seen = set()
     pairs = []
     for cand in scored:
         aspect_name = span_to_aspect.get(cand.span)
         if not aspect_name:
-            # Span не попал ни в один кластер (отфильтрован) — пропускаем
             continue
 
         review_id = sentence_to_review.get(
@@ -263,7 +291,9 @@ def _build_pairs(scored, aspects, sentence_to_review):
         key = (review_id, cand.sentence, aspect_name)
         if key not in seen:
             seen.add(key)
-            pairs.append((review_id, cand.sentence, aspect_name))
+            w = span_to_weight.get(cand.span, 1.0)
+            nli = span_to_nli.get(cand.span, aspect_name)
+            pairs.append((review_id, cand.sentence, aspect_name, nli, w))
 
     return pairs
 
@@ -1215,7 +1245,11 @@ if __name__ == "__main__":
         with open(f"{write_prefix}eval_results_step1_2.json", "w", encoding="utf-8") as f:
             json.dump({
                 "pipeline_results": {
-                    str(k): {"aspects": v["aspects"], "aspect_keywords": v.get("aspect_keywords", {})}
+                    str(k): {
+                        "aspects": v["aspects"],
+                        "aspect_keywords": v.get("aspect_keywords", {}),
+                        "diagnostics": v.get("diagnostics", {}),
+                    }
                     for k, v in pipeline_results.items()
                 },
             }, f, ensure_ascii=False, indent=2, default=str)
@@ -1249,6 +1283,7 @@ if __name__ == "__main__":
                 "aspects": info["aspects"],
                 "aspect_keywords": info.get("aspect_keywords", {}),
                 "per_review": per_review_loaded.get(nm_id_str, {}),
+                "diagnostics": info.get("diagnostics", {}),
             }
 
         # Выбор маппинга
@@ -1260,6 +1295,56 @@ if __name__ == "__main__":
             active_mapping = MANUAL_MAPPING
 
         metrics = evaluate_with_mapping(df, pipeline_results_for_eval, active_mapping)
+
+        metrics["assignment_by_product"] = {
+            str(k): (v.get("diagnostics") or {}).get("anchor_assignment_counts", {})
+            for k, v in pipeline_results_for_eval.items()
+        }
+        metrics["residual_medoid_by_product"] = {
+            str(k): (v.get("diagnostics") or {}).get("residual_medoid_names", [])
+            for k, v in pipeline_results_for_eval.items()
+        }
+        metrics["nli_medoid_diagnostics_by_product"] = {
+            str(k): (v.get("diagnostics") or {}).get("nli_medoid_diagnostics", [])
+            for k, v in pipeline_results_for_eval.items()
+        }
+
+        print("\n--- Counter: confident / residual (per product) ---")
+        for nm_id in sorted(pipeline_results_for_eval.keys(), key=lambda x: int(x) if isinstance(x, int) else x):
+            ac = metrics["assignment_by_product"].get(str(nm_id), {})
+            print(f"  nm_id={nm_id}: Counter({dict(ac)})")
+
+        print("\n--- Residual medoid names (final, per product) ---")
+        for nm_id in sorted(pipeline_results_for_eval.keys(), key=lambda x: int(x) if isinstance(x, int) else x):
+            names = metrics["residual_medoid_by_product"].get(str(nm_id), [])
+            print(f"  nm_id={nm_id}: {names}")
+
+        print("\n--- NLI medoid routing (per product) ---")
+        for nm_id in sorted(pipeline_results_for_eval.keys(), key=lambda x: int(x) if isinstance(x, int) else x):
+            lines = metrics["nli_medoid_diagnostics_by_product"].get(str(nm_id), [])
+            print(f"  nm_id={nm_id}:")
+            if not lines:
+                print("    (нет medoid → nli маршрутизации)")
+            for line in lines:
+                print(f"    {line}")
+
+        if mapping_mode == "manual":
+            print("\n--- Manual mapping: precision, recall, mention recall, MAE (per product) ---")
+            print(
+                f"  {'nm_id':>8}  {'P':>6}  {'R':>6}  {'mR_pr':>6}  "
+                f"{'mR_rev':>7}  {'MAE_r':>7}  {'MAE_cal':>8}  {'n':>4}"
+            )
+            for nm_id in sorted(metrics["per_product"].keys()):
+                pm = metrics["per_product"][nm_id]
+                mr = pm["mae_raw"]
+                mc = pm["mae_calibrated"]
+                mr_s = f"{mr:.3f}" if mr is not None else "   N/A"
+                mc_s = f"{mc:.3f}" if mc is not None else "    N/A"
+                print(
+                    f"  {nm_id:8d}  {pm['precision']:6.3f}  {pm['recall']:6.3f}  "
+                    f"{pm['mention_recall_product']:6.3f}  {pm['mention_recall_review']:7.3f}  "
+                    f"{mr_s:>7}  {mc_s:>8}  {pm['mae_n']:4d}"
+                )
 
         # Сохраняем использованный маппинг в метрики для воспроизводимости
         metrics["mapping_mode"] = mapping_mode
