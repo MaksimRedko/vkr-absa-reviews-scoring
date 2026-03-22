@@ -19,6 +19,7 @@ from __future__ import annotations
 import ast
 import argparse
 import json
+import os
 import random
 import sys
 from collections import Counter, defaultdict
@@ -41,6 +42,32 @@ def load_markup(csv_path: str) -> pd.DataFrame:
     df = pd.read_csv(csv_path)
     df["true_labels_parsed"] = df["true_labels"].apply(_parse_labels)
     return df
+
+
+def load_pipeline_reviews_from_csv(csv_path: str, nm_ids: List[int]) -> List[dict]:
+    """
+    Те же поля, что в longest_reviews.json, для ReviewInput.
+    Берётся из разметочного CSV (например merged_checked_reviews.csv).
+    """
+    df = pd.read_csv(csv_path, dtype={"id": str})
+    df = df[df["nm_id"].isin(nm_ids)]
+    out: List[dict] = []
+    for _, row in df.iterrows():
+        ft = row.get("full_text")
+        pr = row.get("pros")
+        cn = row.get("cons")
+        out.append(
+            {
+                "nm_id": int(row["nm_id"]),
+                "id": str(row["id"]),
+                "rating": int(row["rating"]),
+                "created_date": str(row["created_date"]).strip(),
+                "full_text": "" if pd.isna(ft) else str(ft),
+                "pros": "" if pd.isna(pr) else str(pr),
+                "cons": "" if pd.isna(cn) else str(cn),
+            }
+        )
+    return out
 
 
 def _parse_labels(val) -> Optional[Dict[str, float]]:
@@ -114,10 +141,11 @@ def load_eval_config(config_path: str) -> Dict[str, object]:
 def run_pipeline_for_ids(
     nm_ids: List[int],
     csv_path: str,
-    json_path: str,
+    json_path: Optional[str] = None,
 ) -> Dict[int, dict]:
     """
-    Прогоняет пайплайн на отзывах из json-файла (те же, что в разметке).
+    Прогоняет пайплайн на отзывах: по умолчанию из csv_path (как merged_checked_reviews.csv),
+    либо из json_path, если файл задан и существует (старый режим longest_reviews.json).
     Возвращает {nm_id: {"aspects": [...], "per_review": [{...}]}}
     """
     from src.discovery.candidates import CandidateExtractor
@@ -129,8 +157,15 @@ def run_pipeline_for_ids(
     from sentence_transformers import SentenceTransformer
     from configs.configs import config
 
-    with open(json_path, "r", encoding="utf-8") as f:
-        all_reviews_raw = json.load(f)
+    if json_path and os.path.isfile(json_path):
+        with open(json_path, "r", encoding="utf-8") as f:
+            all_reviews_raw = json.load(f)
+    else:
+        all_reviews_raw = load_pipeline_reviews_from_csv(csv_path, nm_ids)
+        if json_path:
+            print(
+                f"[Eval] json_path={json_path!r} не найден — отзывы из CSV: {csv_path}"
+            )
 
     reviews_by_nm = defaultdict(list)
     for r in all_reviews_raw:
@@ -1209,8 +1244,18 @@ if __name__ == "__main__":
     )
     parser.add_argument("--config", type=str, default=None)
     parser.add_argument("--seed", type=int, default=None)
-    parser.add_argument("--csv-path", type=str, default="parser/razmetka/checked_reviews.csv")
-    parser.add_argument("--json-path", type=str, default="parser/razmetka/longest_reviews.json")
+    parser.add_argument(
+        "--csv-path",
+        type=str,
+        default="parser/reviews_batches/merged_checked_reviews.csv",
+        help="Разметка и по умолчанию источник отзывов для пайплайна",
+    )
+    parser.add_argument(
+        "--json-path",
+        type=str,
+        default=None,
+        help="Если задан и файл существует — отзывы из JSON; иначе из --csv-path",
+    )
     parser.add_argument("--write-prefix", type=str, default="")
     parser.add_argument(
         "--mapping",
@@ -1240,7 +1285,11 @@ if __name__ == "__main__":
         apply_config_overrides(overrides)
 
     CSV_PATH = str(cfg.get("csv_path", args.csv_path))
-    JSON_PATH = str(cfg.get("json_path", args.json_path))
+    if "json_path" in cfg:
+        j = cfg["json_path"]
+        JSON_PATH = None if j in (None, "") else str(j)
+    else:
+        JSON_PATH = args.json_path
     write_prefix = str(cfg.get("write_prefix", args.write_prefix or "")).strip()
     if write_prefix and not write_prefix.endswith("_"):
         write_prefix = f"{write_prefix}_"
@@ -1248,6 +1297,8 @@ if __name__ == "__main__":
     print(f"[Eval] seed={seed}")
     if args.config:
         print(f"[Eval] config={args.config}")
+    print(f"[Eval] csv_path={CSV_PATH}")
+    print(f"[Eval] json_path={JSON_PATH or '(none — отзывы из CSV)'}")
 
     df = load_markup(CSV_PATH)
 

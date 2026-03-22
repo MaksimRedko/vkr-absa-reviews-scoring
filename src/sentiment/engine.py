@@ -26,6 +26,12 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 from configs.configs import config
 
+try:
+    from tqdm import tqdm
+except ImportError:  # pragma: no cover
+    def tqdm(x, **kwargs):
+        return x
+
 
 @dataclass
 class SentimentResult:
@@ -87,7 +93,15 @@ class SentimentEngine:
             return []
 
         results = []
-        for i in range(0, len(pairs), self.batch_size):
+        n_batches = (len(pairs) + self.batch_size - 1) // self.batch_size
+        batch_indices = range(0, len(pairs), self.batch_size)
+        for i in tqdm(
+            batch_indices,
+            desc="      NLI батчи",
+            total=n_batches,
+            leave=False,
+            unit="batch",
+        ):
             batch = pairs[i : i + self.batch_size]
             batch_results = self._process_batch(batch)
             results.extend(batch_results)

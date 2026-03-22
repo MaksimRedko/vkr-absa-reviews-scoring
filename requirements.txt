@@ -11,6 +11,7 @@ pydantic>=2.0
 # NLP & ML
 scikit-learn>=1.4.0
 sentence-transformers>=2.3.1
+tqdm>=4.66.0
 torch>=2.1.2
 transformers>=4.36.0
 hdbscan>=0.8.33
@@ -24,3 +25,6 @@ omegaconf
 streamlit>=1.31.0
 plotly
 requests
+
+# Tests
+pytest>=7.4.0

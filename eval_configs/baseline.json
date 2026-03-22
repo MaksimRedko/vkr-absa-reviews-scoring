@@ -1,7 +1,7 @@
 {
   "seed": 42,
-  "csv_path": "parser/razmetka/checked_reviews.csv",
-  "json_path": "parser/razmetka/longest_reviews.json",
+  "csv_path": "parser/reviews_batches/merged_checked_reviews.csv",
+  "json_path": null,
   "write_prefix": "baseline",
   "overrides": {}
 }

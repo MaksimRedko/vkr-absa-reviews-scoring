@@ -15,6 +15,12 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass, field
+
+try:
+    from tqdm import tqdm
+except ImportError:  # pragma: no cover
+    def tqdm(x, **kwargs):
+        return x
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
@@ -78,10 +84,7 @@ class ABSAPipeline:
     def analyze_product(
         self, nm_id: int, limit: int = 200
     ) -> PipelineResult:
-        """End-to-end анализ одного товара."""
-        t_start = time.time()
-
-        # 1. Загрузка
+        """End-to-end анализ одного товара (отзывы из SQLite через DataLoader)."""
         print(f"[1/7] Загрузка отзывов для {nm_id}...")
         reviews = self.loader.load_reviews(nm_id, limit)
         if not reviews:
@@ -89,13 +92,43 @@ class ABSAPipeline:
                 product_id=nm_id, reviews_processed=0,
                 processing_time=0.0, aspects={},
             )
+        print(f"       Загружено {len(reviews)} отзывов")
+        return self.analyze_reviews_list(reviews, nm_id)
+
+    def analyze_reviews_list(
+        self, reviews: List[ReviewInput], product_id: int
+    ) -> PipelineResult:
+        """
+        Полный прогон (как analyze_product), но отзывы задаются снаружи
+        (например из merged_checked_reviews.csv / JSON).
+        """
+        t_start = time.time()
+        if not reviews:
+            return PipelineResult(
+                product_id=product_id,
+                reviews_processed=0,
+                processing_time=0.0,
+                aspects={},
+            )
 
         texts = [r.clean_text for r in reviews]
-        print(f"       Загружено {len(reviews)} отзывов")
+        step_t = time.time()
+
+        def _tick(step_label: str, step_idx: int) -> None:
+            nonlocal step_t
+            now = time.time()
+            seg = now - step_t
+            tot = now - t_start
+            print(
+                f"       ⏱ шаг {step_idx}/7 «{step_label}» {seg:.1f}s "
+                f"| с начала {tot:.1f}s"
+            )
+            step_t = now
 
         # 2. AntiFraud
         print("[2/7] AntiFraud...")
         trust_weights = self.fraud_engine.calculate_trust_weights(texts)
+        _tick("AntiFraud", 2)
 
         # 3. Candidate Extraction
         print("[3/7] Извлечение кандидатов...")
@@ -103,7 +136,9 @@ class ABSAPipeline:
         review_candidates_map: Dict[str, list] = {}
         sentence_to_review: Dict[str, str] = {}
 
-        for i, text in enumerate(texts):
+        for i, text in enumerate(
+            tqdm(texts, desc="      отзывы", leave=False, unit="шт")
+        ):
             candidates = self.candidate_extractor.extract(text)
             all_candidates.extend(candidates)
             review_candidates_map[reviews[i].id] = candidates
@@ -112,21 +147,24 @@ class ABSAPipeline:
                 sentence_to_review[c.sentence.lower().strip()] = reviews[i].id
 
         print(f"       Всего кандидатов: {len(all_candidates)}")
+        _tick("кандидаты", 3)
 
         # 4. KeyBERT + MMR
         print("[4/7] KeyBERT-скоринг + MMR...")
         scored_candidates = self.scorer.score_and_select(all_candidates)
         print(f"       Отобрано после MMR: {len(scored_candidates)}")
+        _tick("KeyBERT+MMR", 4)
 
         # 5. Кластеризация
-        print(f"[5/7] Кластеризация аспектов...")
+        print("[5/7] Кластеризация аспектов...")
         aspects = self.clusterer.cluster(scored_candidates)
         aspect_names = list(aspects.keys())
         print(f"       Найдено аспектов: {len(aspect_names)} — {aspect_names}")
+        _tick("кластеризация", 5)
 
         if not aspects:
             return PipelineResult(
-                product_id=nm_id, reviews_processed=len(reviews),
+                product_id=product_id, reviews_processed=len(reviews),
                 processing_time=time.time() - t_start, aspects={},
             )
 
@@ -138,6 +176,7 @@ class ABSAPipeline:
         print(f"       Пар для NLI: {len(sentiment_pairs)}")
         sentiment_scores = self.sentiment_engine.batch_analyze(sentiment_pairs)
         print(f"       Получено оценок: {len(sentiment_scores)}")
+        _tick("NLI", 6)
 
         # 7. Математическая агрегация
         print("[7/7] Агрегация...")
@@ -145,12 +184,13 @@ class ABSAPipeline:
             reviews, sentiment_scores, trust_weights,
         )
         agg_result = self.math_engine.aggregate(aggregation_input)
+        _tick("агрегация", 7)
 
         elapsed = time.time() - t_start
         print(f"[Pipeline] Готово за {elapsed:.1f}s")
 
         return PipelineResult(
-            product_id=nm_id,
+            product_id=product_id,
             reviews_processed=len(reviews),
             processing_time=round(elapsed, 2),
             aspects={

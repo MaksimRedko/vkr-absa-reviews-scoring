@@ -17,3 +17,9 @@ env/
 # IDE
 .idea/
 .vscode/
+
+# Артефакты прогонов (логи, json, txt — всё из run_merged_suite / локальных прогонов)
+experiments/merged_suite_run/
+
+# Локальные дампы БД вне data/
+dataset_with_pagination.db
