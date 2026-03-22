@@ -17,7 +17,9 @@ import time
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
+import numpy as np
 from sentence_transformers import SentenceTransformer
+from sklearn.metrics.pairwise import cosine_similarity
 
 from configs.configs import config
 from src.data.loader import DataLoader
@@ -179,31 +181,46 @@ class ABSAPipeline:
         sentence_to_review: Dict[str, str],
     ) -> List[Tuple[str, str, str, str, float]]:
         """
-        (review_id, sentence, aspect_name, nli_label, weight).
-        NLI-гипотезы по nli_label; агрегация по aspect_name (оригинальное имя кластера).
+        Multi-label: cos(span, anchor) >= threshold → NLI-пара (до max_aspects якорей).
+        product_anchors — из результата кластеризации (имена якорей / nli_label).
+        (review_id, sentence, aspect_name, nli_label, weight); здесь aspect_name = nli_label = якорь.
         """
         if not aspects or not scored_candidates:
             return []
 
-        span_to_aspect: Dict[str, str] = {}
-        span_to_nli: Dict[str, str] = {}
-        span_to_weight: Dict[str, float] = {}
+        threshold = float(config.discovery.multi_label_threshold)
+        max_aspects = int(config.discovery.multi_label_max_aspects)
+
+        anchor_names = list(self.clusterer._anchor_embeddings.keys())
+        anchor_matrix = np.stack(
+            [self.clusterer._anchor_embeddings[n] for n in anchor_names]
+        )
+
+        product_anchors: set[str] = set()
         for asp_name, info in aspects.items():
-            wlist = info.keyword_weights
-            if len(wlist) != len(info.keywords):
-                wlist = [1.0] * len(info.keywords)
             nli = (info.nli_label or asp_name).strip() or asp_name
-            for kw, w in zip(info.keywords, wlist):
-                span_to_aspect[kw] = asp_name
-                span_to_nli[kw] = nli
-                span_to_weight[kw] = float(w)
+            if nli in self.clusterer._anchor_embeddings:
+                product_anchors.add(nli)
+            if asp_name in self.clusterer._anchor_embeddings:
+                product_anchors.add(asp_name)
 
         seen_pairs: set = set()
         pairs: List[Tuple[str, str, str, str, float]] = []
 
         for cand in scored_candidates:
-            aspect_name = span_to_aspect.get(cand.span)
-            if not aspect_name:
+            emb = np.asarray(cand.embedding, dtype=np.float64).reshape(1, -1)
+            sims = cosine_similarity(emb, anchor_matrix)[0]
+
+            candidates_anchors: List[Tuple[str, float]] = []
+            for idx, sim in enumerate(sims):
+                aname = anchor_names[idx]
+                if sim >= threshold and aname in product_anchors:
+                    candidates_anchors.append((aname, float(sim)))
+
+            candidates_anchors.sort(key=lambda x: x[1], reverse=True)
+            candidates_anchors = candidates_anchors[:max_aspects]
+
+            if not candidates_anchors:
                 continue
 
             review_id = sentence_to_review.get(
@@ -211,14 +228,14 @@ class ABSAPipeline:
                 sentence_to_review.get(cand.sentence.lower().strip(), "unknown"),
             )
 
-            pair_key = (review_id, cand.sentence, aspect_name)
-            if pair_key in seen_pairs:
-                continue
-            seen_pairs.add(pair_key)
-
-            w = span_to_weight.get(cand.span, 1.0)
-            nli = span_to_nli.get(cand.span, aspect_name)
-            pairs.append((review_id, cand.sentence, aspect_name, nli, w))
+            for aname, sim in candidates_anchors:
+                pair_key = (review_id, cand.sentence, aname)
+                if pair_key in seen_pairs:
+                    continue
+                seen_pairs.add(pair_key)
+                pairs.append(
+                    (review_id, cand.sentence, aname, aname, float(sim)),
+                )
 
         return pairs
 

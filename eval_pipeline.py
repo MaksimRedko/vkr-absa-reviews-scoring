@@ -143,7 +143,13 @@ def run_pipeline_for_ids(
     fraud = AntiFraudEngine()
     sentiment = SentimentEngine()
 
+    print(
+        f"[Eval] multi_label: threshold={config.discovery.multi_label_threshold}, "
+        f"max_aspects={config.discovery.multi_label_max_aspects}"
+    )
+
     results = {}
+    total_nli_pairs = 0
 
     for nm_id in nm_ids:
         raw_reviews = reviews_by_nm.get(nm_id, [])
@@ -206,7 +212,10 @@ def run_pipeline_for_ids(
             }
             continue
 
-        pairs = _build_pairs(scored, aspects, sentence_to_review)
+        pairs = _build_pairs(scored, aspects, sentence_to_review, clusterer)
+        n_nli = len(pairs)
+        total_nli_pairs += n_nli
+        print(f"  NLI пар: {n_nli}")
         sentiment_scores = sentiment.batch_analyze(pairs)
 
         per_review = defaultdict(dict)
@@ -256,44 +265,75 @@ def run_pipeline_for_ids(
                 "anchor_assignment_counts": dict(ac),
                 "residual_medoid_names": medoid_names,
                 "nli_medoid_diagnostics": nli_lines,
+                "nli_pairs_count": n_nli,
             },
         }
+
+    print(f"\n[Eval] Всего NLI пар (по всем nm_id): {total_nli_pairs}")
 
     return results
 
 
-def _build_pairs(scored, aspects, sentence_to_review):
-    """(review_id, sentence, aspect_name, nli_label, weight) — NLI по nli_label."""
-    span_to_aspect: Dict[str, str] = {}
-    span_to_nli: Dict[str, str] = {}
-    span_to_weight: Dict[str, float] = {}
-    for asp_name, info in aspects.items():
-        wlist = info.keyword_weights
-        if len(wlist) != len(info.keywords):
-            wlist = [1.0] * len(info.keywords)
-        nli = (getattr(info, "nli_label", None) or asp_name).strip() or asp_name
-        for kw, w in zip(info.keywords, wlist):
-            span_to_aspect[kw] = asp_name
-            span_to_nli[kw] = nli
-            span_to_weight[kw] = float(w)
+def _build_pairs(scored, aspects, sentence_to_review, clusterer):
+    """
+    Multi-label: cos(span, anchor) >= threshold — до max_aspects якорей на кандидата.
+    (review_id, sentence, aspect_name, nli_label, weight) — как в pipeline.
+    """
+    import numpy as np
+    from sklearn.metrics.pairwise import cosine_similarity
 
-    seen = set()
-    pairs = []
+    from configs.configs import config
+
+    if not aspects or not scored:
+        return []
+
+    threshold = float(config.discovery.multi_label_threshold)
+    max_aspects = int(config.discovery.multi_label_max_aspects)
+
+    anchor_names = list(clusterer._anchor_embeddings.keys())
+    anchor_matrix = np.stack(
+        [clusterer._anchor_embeddings[n] for n in anchor_names]
+    )
+
+    product_anchors: set[str] = set()
+    for asp_name, info in aspects.items():
+        nli = (getattr(info, "nli_label", None) or asp_name).strip() or asp_name
+        if nli in clusterer._anchor_embeddings:
+            product_anchors.add(nli)
+        if asp_name in clusterer._anchor_embeddings:
+            product_anchors.add(asp_name)
+
+    seen: set = set()
+    pairs: List[Tuple[str, str, str, str, float]] = []
+
     for cand in scored:
-        aspect_name = span_to_aspect.get(cand.span)
-        if not aspect_name:
+        emb = np.asarray(cand.embedding, dtype=np.float64).reshape(1, -1)
+        sims = cosine_similarity(emb, anchor_matrix)[0]
+
+        cand_anchors: List[Tuple[str, float]] = []
+        for idx, sim in enumerate(sims):
+            aname = anchor_names[idx]
+            if sim >= threshold and aname in product_anchors:
+                cand_anchors.append((aname, float(sim)))
+
+        cand_anchors.sort(key=lambda x: x[1], reverse=True)
+        cand_anchors = cand_anchors[:max_aspects]
+
+        if not cand_anchors:
             continue
 
         review_id = sentence_to_review.get(
             cand.sentence.strip(),
             sentence_to_review.get(cand.sentence.lower().strip(), "unknown"),
         )
-        key = (review_id, cand.sentence, aspect_name)
-        if key not in seen:
-            seen.add(key)
-            w = span_to_weight.get(cand.span, 1.0)
-            nli = span_to_nli.get(cand.span, aspect_name)
-            pairs.append((review_id, cand.sentence, aspect_name, nli, w))
+
+        for aname, sim in cand_anchors:
+            key = (review_id, cand.sentence, aname)
+            if key not in seen:
+                seen.add(key)
+                pairs.append(
+                    (review_id, cand.sentence, aname, aname, float(sim)),
+                )
 
     return pairs
 
@@ -1390,6 +1430,29 @@ if __name__ == "__main__":
             df, pipeline_results_for_eval, active_mapping,
         )
         metrics["product_ratings"] = product_ratings
+
+        from configs.configs import config as _cfg_ml
+        total_nli_pairs = sum(
+            int((v.get("diagnostics") or {}).get("nli_pairs_count") or 0)
+            for v in pipeline_results_for_eval.values()
+        )
+        metrics["run_summary"] = {
+            "multi_label_threshold": float(_cfg_ml.discovery.multi_label_threshold),
+            "multi_label_max_aspects": int(_cfg_ml.discovery.multi_label_max_aspects),
+            "nli_pairs_total": total_nli_pairs,
+            "mention_recall_review": metrics["global_mention_recall_review"],
+            "sentence_mae_raw": metrics["global_mae_raw"],
+            "product_mae_n_ge_3": product_ratings.get("global_product_mae_filtered"),
+        }
+        print(f"\n{'='*70}")
+        print("СВОДКА ПРОГОНА (multi-label, discovery)")
+        print(f"  multi_label_threshold = {_cfg_ml.discovery.multi_label_threshold}")
+        print(f"  multi_label_max_aspects = {_cfg_ml.discovery.multi_label_max_aspects}")
+        print(f"  NLI пар (всего):              {total_nli_pairs}")
+        print(f"  Mention recall (review):     {metrics['global_mention_recall_review']}")
+        print(f"  Sentence MAE (global raw):   {metrics['global_mae_raw']}")
+        print(f"  Product MAE (n_true≥3):      {product_ratings.get('global_product_mae_filtered')}")
+        print(f"{'='*70}\n")
 
         # Перезаписываем с product_ratings
         with open(metrics_path, "w", encoding="utf-8") as f:

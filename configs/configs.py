@@ -24,6 +24,8 @@ config = OmegaConf.create({
         "anchor_similarity_threshold": 0.05,  # margin в _name_cluster (residual): best−2nd
         "anti_anchor_threshold": 0.01,  # Margin: отбросить если max_anti > max_anchor + margin
         "cluster_merge_threshold": 0.95,  # Евклидов порог мержа в UMAP R5 (residual кластеры)
+        "multi_label_threshold": 0.4,   # cosine: span → anchor для NLI-пар
+        "multi_label_max_aspects": 3,    # макс. якорей на один (sentence, span)
     },
     "sentiment": {
         # Baseline B: {aspect} = nli_label (якорь для medoid-кластеров)
