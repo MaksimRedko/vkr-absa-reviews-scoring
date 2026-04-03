@@ -1291,7 +1291,7 @@ if __name__ == "__main__":
     else:
         JSON_PATH = args.json_path
     write_prefix = str(cfg.get("write_prefix", args.write_prefix or "")).strip()
-    if write_prefix and not write_prefix.endswith("_"):
+    if write_prefix and not write_prefix.endswith(("_", "/", os.sep)):
         write_prefix = f"{write_prefix}_"
 
     print(f"[Eval] seed={seed}")
