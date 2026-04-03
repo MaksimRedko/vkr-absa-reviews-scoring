@@ -1,14 +1,32 @@
 # Data & Cache
-data/*.db
-data/*.sqlite
-data/*.csv
+*.csv
+*.tsv
+*.json
+*.sqlite
+*.sqlite3
+*.db
+data
+datasets/
+
 .cache/
 __pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.py[cod]
+*$py.class
 *.pyc
+.hypothesis/
+
 models
 parser
 ideas.md
 data/corpus_loader.py
+eval_configs
+experiments/
+tests
+
+
 # Environments
 .venv/
 venv/
@@ -18,8 +36,41 @@ env/
 .idea/
 .vscode/
 
-# Артефакты прогонов (логи, json, txt — всё из run_merged_suite / локальных прогонов)
-experiments/merged_suite_run/
-
 # Локальные дампы БД вне data/
 dataset_with_pagination.db
+
+local_dataflow_map/
+
+# Локальные отладочные скрипты (воронка, coverage, recall — не в индексе)
+diagnostics/
+
+# Логи и временные файлы
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+
+# ML-артефакты (веса, экспорт)
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.bin
+*.safetensors
+wandb/
+mlruns/
+lightning_logs/
+tensorboard/
+
+# Сборка / покрытие
+*.egg-info/
+dist/
+build/
+.coverage
+htmlcov/
+coverage.xml
+
+# OS
+.DS_Store
+Thumbs.db

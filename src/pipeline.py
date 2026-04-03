@@ -13,8 +13,11 @@
 
 from __future__ import annotations
 
+import json
 import time
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from pathlib import Path
 
 try:
     from tqdm import tqdm
@@ -82,7 +85,11 @@ class ABSAPipeline:
     # ------------------------------------------------------------------
 
     def analyze_product(
-        self, nm_id: int, limit: int = 200
+        self,
+        nm_id: int,
+        limit: int = 200,
+        save_input_snapshot: bool = False,
+        input_snapshot_path: Optional[str] = None,
     ) -> PipelineResult:
         """End-to-end анализ одного товара (отзывы из SQLite через DataLoader)."""
         print(f"[1/7] Загрузка отзывов для {nm_id}...")
@@ -93,10 +100,19 @@ class ABSAPipeline:
                 processing_time=0.0, aspects={},
             )
         print(f"       Загружено {len(reviews)} отзывов")
-        return self.analyze_reviews_list(reviews, nm_id)
+        return self.analyze_reviews_list(
+            reviews=reviews,
+            product_id=nm_id,
+            save_input_snapshot=save_input_snapshot,
+            input_snapshot_path=input_snapshot_path,
+        )
 
     def analyze_reviews_list(
-        self, reviews: List[ReviewInput], product_id: int
+        self,
+        reviews: List[ReviewInput],
+        product_id: int,
+        save_input_snapshot: bool = False,
+        input_snapshot_path: Optional[str] = None,
     ) -> PipelineResult:
         """
         Полный прогон (как analyze_product), но отзывы задаются снаружи
@@ -109,6 +125,13 @@ class ABSAPipeline:
                 reviews_processed=0,
                 processing_time=0.0,
                 aspects={},
+            )
+
+        if save_input_snapshot:
+            self._save_input_snapshot(
+                reviews=reviews,
+                product_id=product_id,
+                snapshot_path=input_snapshot_path,
             )
 
         texts = [r.clean_text for r in reviews]
@@ -335,6 +358,38 @@ class ABSAPipeline:
         import re
         parts = re.split(r'[.!?]+', text)
         return [p.strip() for p in parts if p.strip()]
+
+    @staticmethod
+    def _save_input_snapshot(
+        reviews: List[ReviewInput],
+        product_id: int,
+        snapshot_path: Optional[str] = None,
+    ) -> str:
+        """
+        Сохраняет исходный массив отзывов ДО обработки.
+        Формат: JSONL (1 отзыв = 1 строка).
+        """
+        ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+        default_path = Path("data/snapshots") / f"input_reviews_nm{product_id}_{ts}.jsonl"
+        out_path = Path(snapshot_path) if snapshot_path else default_path
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+
+        with out_path.open("w", encoding="utf-8") as f:
+            for r in reviews:
+                row = {
+                    "id": r.id,
+                    "nm_id": r.nm_id,
+                    "rating": r.rating,
+                    "created_date": r.created_date.isoformat(),
+                    "full_text": r.full_text,
+                    "pros": r.pros,
+                    "cons": r.cons,
+                    "clean_text": r.clean_text,
+                }
+                f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+        print(f"[Pipeline] Snapshot входных отзывов сохранён: {out_path}")
+        return str(out_path)
 
 
 # ------------------------------------------------------------------

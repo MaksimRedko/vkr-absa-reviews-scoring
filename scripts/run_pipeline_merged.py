@@ -53,6 +53,17 @@ def main() -> None:
         type=str,
         default=str(ROOT / "experiments" / "merged_pipeline_run"),
     )
+    ap.add_argument(
+        "--save-input-snapshot",
+        action="store_true",
+        help="Сохранять входные отзывы (JSONL) перед обработкой каждого товара",
+    )
+    ap.add_argument(
+        "--snapshot-dir",
+        type=str,
+        default=str(ROOT / "data" / "snapshots"),
+        help="Каталог для snapshot входных отзывов",
+    )
     args = ap.parse_args()
 
     csv_path = Path(args.csv_path)
@@ -62,6 +73,9 @@ def main() -> None:
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+    snapshot_dir = Path(args.snapshot_dir)
+    if args.save_input_snapshot:
+        snapshot_dir.mkdir(parents=True, exist_ok=True)
 
     pipeline = ABSAPipeline(db_path=str(ROOT / "data" / "dataset.db"))
 
@@ -99,7 +113,15 @@ def main() -> None:
                 print(f"  skip id={row.get('id')}: {e}")
 
         print(f"       ReviewInput с текстом: {len(reviews)}")
-        result = pipeline.analyze_reviews_list(reviews, nm_id)
+        snapshot_path = None
+        if args.save_input_snapshot:
+            snapshot_path = str(snapshot_dir / f"input_reviews_nm{nm_id}.jsonl")
+        result = pipeline.analyze_reviews_list(
+            reviews=reviews,
+            product_id=nm_id,
+            save_input_snapshot=args.save_input_snapshot,
+            input_snapshot_path=snapshot_path,
+        )
         step_durations.append(time.perf_counter() - t_nm)
         print(
             f"       ✓ товар {idx}/{n_total} готов за {step_durations[-1]:.1f}s "

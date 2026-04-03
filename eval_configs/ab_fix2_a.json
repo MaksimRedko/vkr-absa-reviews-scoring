@@ -1,9 +1,0 @@
-{
-  "seed": 42,
-  "write_prefix": "fix2_a",
-  "overrides": {
-    "discovery": {
-      "anti_anchor_threshold": 0.01
-    }
-  }
-}

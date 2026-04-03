@@ -4,7 +4,7 @@
   1) scripts/run_pipeline_merged.py — ABSAPipeline (аспекты + агрегированные scores, как бек)
   2) eval_pipeline.py step12 — статистика + прогон как в eval (из CSV)
   3) eval_pipeline.py step4 --mapping auto — Recall, MAE, Mention recall
-  4) diag_loss_funnel.py — воронка потерь
+  4) diagnostics/diag_loss_funnel.py — воронка потерь
 
 Логи: experiments/merged_suite_run/logs/*.log
 Показывает: длительность шага, оценку оставшегося времени, heartbeat раз в 30s пока subprocess молчит.
@@ -157,7 +157,7 @@ def main() -> int:
         ),
         (
             "04_diag_loss_funnel.log",
-            [py, str(ROOT / "diag_loss_funnel.py"), "--csv-path", CSV_REL],
+            [py, str(ROOT / "diagnostics" / "diag_loss_funnel.py"), "--csv-path", CSV_REL],
         ),
     ]
 
