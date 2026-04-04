@@ -23,7 +23,11 @@ parser
 ideas.md
 data/corpus_loader.py
 eval_configs
-experiments/
+# Runtime-данные экспериментов (логи, запуски, реестр)
+experiments/runs/
+experiments/merged_suite_run/
+experiments/registry.jsonl
+experiments/hypothesis_experiment.md
 tests
 
 
