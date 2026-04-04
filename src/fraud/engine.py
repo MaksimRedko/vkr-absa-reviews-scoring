@@ -24,6 +24,7 @@ from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
 from configs.configs import config
+from src.stages import FraudStage
 
 
 @dataclass
@@ -37,7 +38,7 @@ class TrustResult:
     bot_cluster_id: int        # -1 если не в кластере ботов, иначе ID кластера
 
 
-class AntiFraudEngine:
+class AntiFraudEngine(FraudStage):
     """
     AntiFraud v2.
 

@@ -7,6 +7,7 @@ from typing import List
 import pymorphy3
 
 from configs.configs import config
+from src.stages import ExtractionStage
 
 _morph = pymorphy3.MorphAnalyzer()
 
@@ -37,7 +38,7 @@ class Candidate:
     token_indices: tuple[int, int]
 
 
-class CandidateExtractor:
+class CandidateExtractor(ExtractionStage):
     def __init__(
         self,
         ngram_range: tuple[int, int] | None = None,

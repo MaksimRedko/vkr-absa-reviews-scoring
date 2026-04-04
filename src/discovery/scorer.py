@@ -9,6 +9,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from configs.configs import config
 from src.discovery.candidates import Candidate
+from src.stages import ScoringStage
 
 
 @dataclass
@@ -19,7 +20,7 @@ class ScoredCandidate:
     embedding: np.ndarray
 
 
-class KeyBERTScorer:
+class KeyBERTScorer(ScoringStage):
     def __init__(self, model: SentenceTransformer | None = None):
         self.model = model or SentenceTransformer(config.models.encoder_path)
         self.cosine_threshold: float = config.discovery.cosine_threshold

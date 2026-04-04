@@ -39,6 +39,11 @@ from src.fraud.engine import AntiFraudEngine
 from src.math.engine import AggregationResult, RatingMathEngine
 from src.schemas.models import ReviewInput
 from src.sentiment.engine import SentimentEngine, SentimentResult
+from src.stages import (
+    AggregationStage, ClusteringStage, ExtractionStage,
+    FraudStage, ScoringStage, SentimentStage,
+)
+from src.snapshots import SnapshotWriter
 
 
 @dataclass
@@ -62,7 +67,20 @@ class ABSAPipeline:
         result = pipeline.analyze_product(nm_id=154532597, limit=100)
     """
 
-    def __init__(self, db_path: str = "data/dataset.db"):
+    def __init__(
+        self,
+        db_path: str = "data/dataset.db",
+        # Опциональные переопределения стадий (Dependency Injection).
+        # None → используется стандартная реализация.
+        # Передай любой объект, реализующий соответствующий ABC из src/stages.py,
+        # и пайплайн подхватит его без других изменений.
+        fraud_stage: Optional[FraudStage] = None,
+        extraction_stage: Optional[ExtractionStage] = None,
+        scoring_stage: Optional[ScoringStage] = None,
+        clustering_stage: Optional[ClusteringStage] = None,
+        sentiment_stage: Optional[SentimentStage] = None,
+        aggregation_stage: Optional[AggregationStage] = None,
+    ):
         print("[Pipeline] Инициализация модулей...")
         t0 = time.time()
 
@@ -71,12 +89,13 @@ class ABSAPipeline:
         # Общая модель-энкодер (rubert-tiny2) — одна на всех
         self._encoder = SentenceTransformer(config.models.encoder_path)
 
-        self.candidate_extractor = CandidateExtractor()
-        self.scorer = KeyBERTScorer(model=self._encoder)
-        self.clusterer = AspectClusterer(model=self._encoder)
-        self.fraud_engine = AntiFraudEngine()
-        self.sentiment_engine = SentimentEngine()
-        self.math_engine = RatingMathEngine()
+        # Стандартные реализации как дефолт; заменяются через DI-параметры выше
+        self.candidate_extractor: ExtractionStage  = extraction_stage  or CandidateExtractor()
+        self.scorer:              ScoringStage      = scoring_stage     or KeyBERTScorer(model=self._encoder)
+        self.clusterer:           ClusteringStage   = clustering_stage  or AspectClusterer(model=self._encoder)
+        self.fraud_engine:        FraudStage        = fraud_stage       or AntiFraudEngine()
+        self.sentiment_engine:    SentimentStage    = sentiment_stage   or SentimentEngine()
+        self.math_engine:         AggregationStage  = aggregation_stage or RatingMathEngine()
 
         print(f"[Pipeline] Готов за {time.time() - t0:.1f}s")
 
@@ -113,10 +132,15 @@ class ABSAPipeline:
         product_id: int,
         save_input_snapshot: bool = False,
         input_snapshot_path: Optional[str] = None,
+        snapshot_writer: Optional[SnapshotWriter] = None,
     ) -> PipelineResult:
         """
         Полный прогон (как analyze_product), но отзывы задаются снаружи
         (например из merged_checked_reviews.csv / JSON).
+
+        snapshot_writer: если передан — сохраняет снепшот после каждой стадии.
+            Создаётся через ExperimentManager.snapshot_writer(nm_id) или напрямую:
+              SnapshotWriter(base_dir=Path("experiments/runs/.../snapshots"), product_id=nm_id)
         """
         t_start = time.time()
         if not reviews:
@@ -133,6 +157,9 @@ class ABSAPipeline:
                 product_id=product_id,
                 snapshot_path=input_snapshot_path,
             )
+
+        if snapshot_writer:
+            snapshot_writer.save_reviews(reviews)
 
         texts = [r.clean_text for r in reviews]
         step_t = time.time()
@@ -152,6 +179,8 @@ class ABSAPipeline:
         print("[2/7] AntiFraud...")
         trust_weights = self.fraud_engine.calculate_trust_weights(texts)
         _tick("AntiFraud", 2)
+        if snapshot_writer:
+            snapshot_writer.save_fraud([r.id for r in reviews], trust_weights)
 
         # 3. Candidate Extraction
         print("[3/7] Извлечение кандидатов...")
@@ -171,12 +200,16 @@ class ABSAPipeline:
 
         print(f"       Всего кандидатов: {len(all_candidates)}")
         _tick("кандидаты", 3)
+        if snapshot_writer:
+            snapshot_writer.save_candidates(review_candidates_map)
 
         # 4. KeyBERT + MMR
         print("[4/7] KeyBERT-скоринг + MMR...")
         scored_candidates = self.scorer.score_and_select(all_candidates)
         print(f"       Отобрано после MMR: {len(scored_candidates)}")
         _tick("KeyBERT+MMR", 4)
+        if snapshot_writer:
+            snapshot_writer.save_scored(scored_candidates)
 
         # 5. Кластеризация
         print("[5/7] Кластеризация аспектов...")
@@ -184,6 +217,8 @@ class ABSAPipeline:
         aspect_names = list(aspects.keys())
         print(f"       Найдено аспектов: {len(aspect_names)} — {aspect_names}")
         _tick("кластеризация", 5)
+        if snapshot_writer:
+            snapshot_writer.save_clusters(aspects)
 
         if not aspects:
             return PipelineResult(
@@ -197,22 +232,28 @@ class ABSAPipeline:
             scored_candidates, aspects, sentence_to_review,
         )
         print(f"       Пар для NLI: {len(sentiment_pairs)}")
+        if snapshot_writer:
+            snapshot_writer.save_sentiment_pairs(sentiment_pairs)
         sentiment_scores = self.sentiment_engine.batch_analyze(sentiment_pairs)
         print(f"       Получено оценок: {len(sentiment_scores)}")
         _tick("NLI", 6)
+        if snapshot_writer:
+            snapshot_writer.save_sentiment_results(sentiment_scores)
 
         # 7. Математическая агрегация
         print("[7/7] Агрегация...")
         aggregation_input = self._build_aggregation_input(
             reviews, sentiment_scores, trust_weights,
         )
+        if snapshot_writer:
+            snapshot_writer.save_aggregation_input(aggregation_input)
         agg_result = self.math_engine.aggregate(aggregation_input)
         _tick("агрегация", 7)
 
         elapsed = time.time() - t_start
         print(f"[Pipeline] Готово за {elapsed:.1f}s")
 
-        return PipelineResult(
+        result = PipelineResult(
             product_id=product_id,
             reviews_processed=len(reviews),
             processing_time=round(elapsed, 2),
@@ -232,6 +273,9 @@ class ABSAPipeline:
                 name: info.keywords for name, info in aspects.items()
             },
         )
+        if snapshot_writer:
+            snapshot_writer.save_pipeline_result(result)
+        return result
 
     # ------------------------------------------------------------------
     # Связующие функции

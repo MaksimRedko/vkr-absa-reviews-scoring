@@ -25,6 +25,7 @@ import numpy as np
 from sklearn.covariance import LedoitWolf
 
 from configs.configs import config
+from src.stages import AggregationStage
 
 
 @dataclass
@@ -46,7 +47,7 @@ class AggregationResult:
     aspect_order: List[str] = field(default_factory=list)  # Порядок осей в Σ
 
 
-class RatingMathEngine:
+class RatingMathEngine(AggregationStage):
     """
     Байесовская агрегация аспектных оценок v2.
 

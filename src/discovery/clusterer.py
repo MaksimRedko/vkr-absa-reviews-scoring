@@ -21,6 +21,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from configs.configs import config
 from src.discovery.scorer import ScoredCandidate
+from src.stages import ClusteringStage
 
 
 STOP_SPANS: set[str] = set()
@@ -142,7 +143,7 @@ class AspectInfo:
     nli_label: str = ""
 
 
-class AspectClusterer:
+class AspectClusterer(ClusteringStage):
     def __init__(self, model: SentenceTransformer | None = None):
         self.model = model or SentenceTransformer(config.models.encoder_path)
         self.min_samples: int = config.discovery.hdbscan_min_samples

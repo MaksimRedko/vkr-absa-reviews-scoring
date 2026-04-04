@@ -25,6 +25,7 @@ import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 from configs.configs import config
+from src.stages import SentimentStage
 
 try:
     from tqdm import tqdm
@@ -43,7 +44,7 @@ class SentimentResult:
     p_ent_pos: float      # P(entailment | H_pos)
     p_ent_neg: float      # P(entailment | H_neg)
     confidence: float = 1.0  # вес из soft-anchor / span
-class SentimentEngine:
+class SentimentEngine(SentimentStage):
     """
     NLI-based sentiment engine v3 (dual hypothesis).
 
