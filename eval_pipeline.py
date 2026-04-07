@@ -28,6 +28,8 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 import pandas as pd
 
+from src.pairing import build_sentiment_pairs
+
 sys.stdout.reconfigure(encoding="utf-8")
 
 try:
@@ -247,7 +249,14 @@ def run_pipeline_for_ids(
             }
             continue
 
-        pairs = _build_pairs(scored, aspects, sentence_to_review, clusterer)
+        pairs = build_sentiment_pairs(
+            scored_candidates=scored,
+            aspects=aspects,
+            sentence_to_review=sentence_to_review,
+            anchor_embeddings=clusterer._anchor_embeddings,
+            threshold=float(config.discovery.multi_label_threshold),
+            max_aspects=int(config.discovery.multi_label_max_aspects),
+        )
         n_nli = len(pairs)
         total_nli_pairs += n_nli
         print(f"  NLI пар: {n_nli}")
@@ -307,70 +316,6 @@ def run_pipeline_for_ids(
     print(f"\n[Eval] Всего NLI пар (по всем nm_id): {total_nli_pairs}")
 
     return results
-
-
-def _build_pairs(scored, aspects, sentence_to_review, clusterer):
-    """
-    Multi-label: cos(span, anchor) >= threshold — до max_aspects якорей на кандидата.
-    (review_id, sentence, aspect_name, nli_label, weight) — как в pipeline.
-    """
-    import numpy as np
-    from sklearn.metrics.pairwise import cosine_similarity
-
-    from configs.configs import config
-
-    if not aspects or not scored:
-        return []
-
-    threshold = float(config.discovery.multi_label_threshold)
-    max_aspects = int(config.discovery.multi_label_max_aspects)
-
-    anchor_names = list(clusterer._anchor_embeddings.keys())
-    anchor_matrix = np.stack(
-        [clusterer._anchor_embeddings[n] for n in anchor_names]
-    )
-
-    product_anchors: set[str] = set()
-    for asp_name, info in aspects.items():
-        nli = (getattr(info, "nli_label", None) or asp_name).strip() or asp_name
-        if nli in clusterer._anchor_embeddings:
-            product_anchors.add(nli)
-        if asp_name in clusterer._anchor_embeddings:
-            product_anchors.add(asp_name)
-
-    seen: set = set()
-    pairs: List[Tuple[str, str, str, str, float]] = []
-
-    for cand in scored:
-        emb = np.asarray(cand.embedding, dtype=np.float64).reshape(1, -1)
-        sims = cosine_similarity(emb, anchor_matrix)[0]
-
-        cand_anchors: List[Tuple[str, float]] = []
-        for idx, sim in enumerate(sims):
-            aname = anchor_names[idx]
-            if sim >= threshold and aname in product_anchors:
-                cand_anchors.append((aname, float(sim)))
-
-        cand_anchors.sort(key=lambda x: x[1], reverse=True)
-        cand_anchors = cand_anchors[:max_aspects]
-
-        if not cand_anchors:
-            continue
-
-        review_id = sentence_to_review.get(
-            cand.sentence.strip(),
-            sentence_to_review.get(cand.sentence.lower().strip(), "unknown"),
-        )
-
-        for aname, sim in cand_anchors:
-            key = (review_id, cand.sentence, aname)
-            if key not in seen:
-                seen.add(key)
-                pairs.append(
-                    (review_id, cand.sentence, aname, aname, float(sim)),
-                )
-
-    return pairs
 
 
 # ── Шаг 3 + 4: Маппинг и метрики ──────────────────────────────────────────

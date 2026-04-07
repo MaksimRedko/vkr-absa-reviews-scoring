@@ -24,13 +24,14 @@ AggregationInput = Dict{"review_id", "aspects": Dict[str,float], "fraud_weight",
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Dict, List, Tuple
+from typing import TYPE_CHECKING, Dict, List, Tuple
 
-from src.discovery.candidates import Candidate
-from src.discovery.clusterer import AspectInfo
-from src.discovery.scorer import ScoredCandidate
-from src.math.engine import AggregationResult
-from src.sentiment.engine import SentimentResult
+if TYPE_CHECKING:
+    from src.discovery.candidates import Candidate
+    from src.discovery.clusterer import AspectInfo
+    from src.discovery.scorer import ScoredCandidate
+    from src.math.engine import AggregationResult
+    from src.sentiment.engine import SentimentResult
 
 SentimentPair    = Tuple[str, str, str, str, float]  # (review_id, sentence, aspect, nli_label, weight)
 AggregationInput = Dict                              # {"review_id", "aspects", "fraud_weight", "date"}

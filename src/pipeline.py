@@ -26,17 +26,16 @@ except ImportError:  # pragma: no cover
         return x
 from typing import Dict, List, Optional, Tuple
 
-import numpy as np
 from sentence_transformers import SentenceTransformer
-from sklearn.metrics.pairwise import cosine_similarity
 
 from configs.configs import config
 from src.data.loader import DataLoader
 from src.discovery.candidates import CandidateExtractor
-from src.discovery.clusterer import AspectClusterer, AspectInfo
-from src.discovery.scorer import KeyBERTScorer, ScoredCandidate
+from src.discovery.clusterer import AspectClusterer
+from src.discovery.scorer import KeyBERTScorer
 from src.fraud.engine import AntiFraudEngine
 from src.math.engine import AggregationResult, RatingMathEngine
+from src.pairing import build_sentiment_pairs
 from src.schemas.models import ReviewInput
 from src.sentiment.engine import SentimentEngine, SentimentResult
 from src.stages import (
@@ -228,8 +227,13 @@ class ABSAPipeline:
 
         # 6. NLI Sentiment
         print(f"[6/7] NLI Sentiment ({len(aspect_names)} аспектов)...")
-        sentiment_pairs = self._build_sentiment_pairs(
-            scored_candidates, aspects, sentence_to_review,
+        sentiment_pairs = build_sentiment_pairs(
+            scored_candidates=scored_candidates,
+            aspects=aspects,
+            sentence_to_review=sentence_to_review,
+            anchor_embeddings=self.clusterer._anchor_embeddings,
+            threshold=float(config.discovery.multi_label_threshold),
+            max_aspects=int(config.discovery.multi_label_max_aspects),
         )
         print(f"       Пар для NLI: {len(sentiment_pairs)}")
         if snapshot_writer:
@@ -280,71 +284,6 @@ class ABSAPipeline:
     # ------------------------------------------------------------------
     # Связующие функции
     # ------------------------------------------------------------------
-
-    def _build_sentiment_pairs(
-        self,
-        scored_candidates: List[ScoredCandidate],
-        aspects: Dict[str, AspectInfo],
-        sentence_to_review: Dict[str, str],
-    ) -> List[Tuple[str, str, str, str, float]]:
-        """
-        Multi-label: cos(span, anchor) >= threshold → NLI-пара (до max_aspects якорей).
-        product_anchors — из результата кластеризации (имена якорей / nli_label).
-        (review_id, sentence, aspect_name, nli_label, weight); здесь aspect_name = nli_label = якорь.
-        """
-        if not aspects or not scored_candidates:
-            return []
-
-        threshold = float(config.discovery.multi_label_threshold)
-        max_aspects = int(config.discovery.multi_label_max_aspects)
-
-        anchor_names = list(self.clusterer._anchor_embeddings.keys())
-        anchor_matrix = np.stack(
-            [self.clusterer._anchor_embeddings[n] for n in anchor_names]
-        )
-
-        product_anchors: set[str] = set()
-        for asp_name, info in aspects.items():
-            nli = (info.nli_label or asp_name).strip() or asp_name
-            if nli in self.clusterer._anchor_embeddings:
-                product_anchors.add(nli)
-            if asp_name in self.clusterer._anchor_embeddings:
-                product_anchors.add(asp_name)
-
-        seen_pairs: set = set()
-        pairs: List[Tuple[str, str, str, str, float]] = []
-
-        for cand in scored_candidates:
-            emb = np.asarray(cand.embedding, dtype=np.float64).reshape(1, -1)
-            sims = cosine_similarity(emb, anchor_matrix)[0]
-
-            candidates_anchors: List[Tuple[str, float]] = []
-            for idx, sim in enumerate(sims):
-                aname = anchor_names[idx]
-                if sim >= threshold and aname in product_anchors:
-                    candidates_anchors.append((aname, float(sim)))
-
-            candidates_anchors.sort(key=lambda x: x[1], reverse=True)
-            candidates_anchors = candidates_anchors[:max_aspects]
-
-            if not candidates_anchors:
-                continue
-
-            review_id = sentence_to_review.get(
-                cand.sentence.strip(),
-                sentence_to_review.get(cand.sentence.lower().strip(), "unknown"),
-            )
-
-            for aname, sim in candidates_anchors:
-                pair_key = (review_id, cand.sentence, aname)
-                if pair_key in seen_pairs:
-                    continue
-                seen_pairs.add(pair_key)
-                pairs.append(
-                    (review_id, cand.sentence, aname, aname, float(sim)),
-                )
-
-        return pairs
 
     def _build_aggregation_input(
         self,
