@@ -6,10 +6,30 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
 if TYPE_CHECKING:
+    from src.discovery.candidates import Candidate
     from src.discovery.clusterer import AspectInfo
     from src.discovery.scorer import ScoredCandidate
+    from src.stages import ExtractionStage
 
 SentimentPair = Tuple[str, str, str, str, float]
+
+
+def extract_all_with_mapping(
+    extractor: ExtractionStage,
+    texts: List[str],
+    review_ids: List[str],
+) -> Tuple[List[Candidate], Dict[str, str]]:
+    all_candidates: List[Candidate] = []
+    sentence_to_review: Dict[str, str] = {}
+
+    for text, review_id in zip(texts, review_ids):
+        candidates = extractor.extract(text)
+        for cand in candidates:
+            sentence_to_review[cand.sentence.strip()] = review_id
+            sentence_to_review[cand.sentence.lower().strip()] = review_id
+        all_candidates.extend(candidates)
+
+    return all_candidates, sentence_to_review
 
 
 def build_sentiment_pairs(

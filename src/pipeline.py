@@ -35,7 +35,7 @@ from src.discovery.clusterer import AspectClusterer
 from src.discovery.scorer import KeyBERTScorer
 from src.fraud.engine import AntiFraudEngine
 from src.math.engine import AggregationResult, RatingMathEngine
-from src.pairing import build_sentiment_pairs
+from src.pairing import build_sentiment_pairs, extract_all_with_mapping
 from src.schemas.models import ReviewInput
 from src.sentiment.engine import SentimentEngine, SentimentResult
 from src.stages import (
@@ -183,23 +183,20 @@ class ABSAPipeline:
 
         # 3. Candidate Extraction
         print("[3/7] Извлечение кандидатов...")
-        all_candidates = []
-        review_candidates_map: Dict[str, list] = {}
-        sentence_to_review: Dict[str, str] = {}
-
-        for i, text in enumerate(
-            tqdm(texts, desc="      отзывы", leave=False, unit="шт")
-        ):
-            candidates = self.candidate_extractor.extract(text)
-            all_candidates.extend(candidates)
-            review_candidates_map[reviews[i].id] = candidates
-            for c in candidates:
-                sentence_to_review[c.sentence.strip()] = reviews[i].id
-                sentence_to_review[c.sentence.lower().strip()] = reviews[i].id
+        all_candidates, sentence_to_review = extract_all_with_mapping(
+            self.candidate_extractor,
+            texts,
+            [r.id for r in reviews],
+        )
 
         print(f"       Всего кандидатов: {len(all_candidates)}")
         _tick("кандидаты", 3)
         if snapshot_writer:
+            review_candidates_map: Dict[str, list] = {}
+            for i, text in enumerate(
+                tqdm(texts, desc="      отзывы", leave=False, unit="шт")
+            ):
+                review_candidates_map[reviews[i].id] = self.candidate_extractor.extract(text)
             snapshot_writer.save_candidates(review_candidates_map)
 
         # 4. KeyBERT + MMR

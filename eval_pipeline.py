@@ -28,7 +28,7 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 import pandas as pd
 
-from src.pairing import build_sentiment_pairs
+from src.pairing import build_sentiment_pairs, extract_all_with_mapping
 
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -213,16 +213,11 @@ def run_pipeline_for_ids(
 
         trust_weights = fraud.calculate_trust_weights(texts)
 
-        all_candidates = []
-        # FIX: строим sentence_to_review ИЗ РЕАЛЬНЫХ candidate.sentence,
-        # а не из повторного split. Это устраняет 29% потерь на string mismatch.
-        sentence_to_review = {}
-        for i, text in enumerate(texts):
-            candidates = extractor.extract(text)
-            for c in candidates:
-                sentence_to_review[c.sentence.strip()] = reviews[i].id
-                sentence_to_review[c.sentence.lower().strip()] = reviews[i].id
-            all_candidates.extend(candidates)
+        all_candidates, sentence_to_review = extract_all_with_mapping(
+            extractor,
+            texts,
+            [r.id for r in reviews],
+        )
 
         scored = scorer.score_and_select(all_candidates)
         aspects = clusterer.cluster(scored)
@@ -650,11 +645,12 @@ def evaluate_product_ratings(
     pipeline_results: Dict[int, dict],
     mapping: Dict[int, Dict[str, Optional[str]]],
 ) -> Dict[str, object]:
-    """Product-level MAE: средняя оценка аспекта по разметке vs по пайплайну.
+    """Product-level MAE: matched-sample средняя оценка аспекта.
 
     Для каждого товара, для каждого true аспекта с маппингом:
-      true_avg  = mean(true_scores[aspect] across all reviews)
-      pred_avg  = mean(pred_scores[mapped_pred_aspects] across all reviews)
+      true_avg_matched = mean(true_scores[aspect] только для review_id с pred score)
+      true_avg_all     = mean(true_scores[aspect] по всем review_id, для диагностики)
+      pred_avg         = mean(pred_scores[mapped_pred_aspects] по review_id с pred score)
       error     = |true_avg - pred_avg|
 
     Returns dict с per-product и global метриками.
@@ -677,25 +673,26 @@ def evaluate_product_ratings(
             if ta is not None:
                 reverse_map[ta].append(pa)
 
-        # True avg scores per aspect
+        # True scores per aspect (with review_id for matched-sample comparison)
         grp = markup_df[markup_df["nm_id"] == nm_id]
-        true_scores_by_aspect: Dict[str, List[float]] = defaultdict(list)
+        true_scores_by_aspect: Dict[str, List[Tuple[str, float]]] = defaultdict(list)
         for _, row in grp.iterrows():
             labels = row["true_labels_parsed"]
             if not labels:
                 continue
+            rid = row["id"]
             for asp, score in labels.items():
-                true_scores_by_aspect[asp].append(score)
+                true_scores_by_aspect[asp].append((rid, score))
 
-        # Pred avg scores per mapped true aspect
-        pred_scores_by_true: Dict[str, List[float]] = defaultdict(list)
+        # Pred scores per mapped true aspect (with review_id for matched-sample)
+        pred_scores_by_true: Dict[str, List[Tuple[str, float]]] = defaultdict(list)
         for rid, pred_scores in per_review_pred.items():
             if rid == "unknown":
                 continue
             for true_asp, pred_asps in reverse_map.items():
                 found = [pred_scores[pa] for pa in pred_asps if pa in pred_scores]
                 if found:
-                    pred_scores_by_true[true_asp].append(float(np.mean(found)))
+                    pred_scores_by_true[true_asp].append((rid, float(np.mean(found))))
 
         # Compare
         aspect_comparisons = []
@@ -704,23 +701,38 @@ def evaluate_product_ratings(
         print(f"    {'-'*65}")
 
         for true_asp in sorted(true_scores_by_aspect.keys()):
-            true_avg = float(np.mean(true_scores_by_aspect[true_asp]))
-            n_true = len(true_scores_by_aspect[true_asp])
+            true_scores_all = [score for _, score in true_scores_by_aspect[true_asp]]
+            true_avg_all = float(np.mean(true_scores_all))
+            n_true = len(true_scores_all)
 
             if true_asp not in pred_scores_by_true or not pred_scores_by_true[true_asp]:
-                print(f"    {true_asp:25s} {true_avg:6.2f}    —      —    {n_true:6d}      0")
+                print(f"    {true_asp:25s} {true_avg_all:6.2f}    —      —    {n_true:6d}      0")
                 continue
 
-            pred_avg = float(np.mean(pred_scores_by_true[true_asp]))
-            n_pred = len(pred_scores_by_true[true_asp])
-            error = abs(true_avg - pred_avg)
+            pred_pairs = pred_scores_by_true[true_asp]
+            pred_rids = {rid for rid, _ in pred_pairs}
+            matched_true_scores = [
+                score for rid, score in true_scores_by_aspect[true_asp] if rid in pred_rids
+            ]
+            if not matched_true_scores:
+                print(f"    {true_asp:25s} {true_avg_all:6.2f}    —      —    {n_true:6d}      0")
+                continue
+
+            true_avg_matched = float(np.mean(matched_true_scores))
+            pred_avg = float(np.mean([score for _, score in pred_pairs]))
+            n_pred = len(pred_pairs)
+            n_true_matched = len(matched_true_scores)
+            error = abs(true_avg_matched - pred_avg)
 
             aspect_comparisons.append({
                 "aspect": true_asp,
-                "true_avg": round(true_avg, 2),
+                "true_avg": round(true_avg_matched, 2),
+                "true_avg_all": round(true_avg_all, 2),
+                "true_avg_matched": round(true_avg_matched, 2),
                 "pred_avg": round(pred_avg, 2),
                 "error": round(error, 2),
                 "n_true": n_true,
+                "n_true_matched": n_true_matched,
                 "n_pred": n_pred,
             })
 
@@ -731,7 +743,7 @@ def evaluate_product_ratings(
                 all_errors_filtered.append(error)
 
             flag = " *" if n_true < 3 else ""
-            print(f"    {true_asp:25s} {true_avg:6.2f} {pred_avg:6.2f} {error:6.2f}  {n_true:6d} {n_pred:6d}{flag}")
+            print(f"    {true_asp:25s} {true_avg_matched:6.2f} {pred_avg:6.2f} {error:6.2f}  {n_true:6d} {n_pred:6d}{flag}")
 
         # Per-product MAE (filtered)
         filtered_errors = [c["error"] for c in aspect_comparisons if c["n_true"] >= 3]
