@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 from typing import List
 
 import numpy as np
@@ -8,16 +7,8 @@ from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
 from configs.configs import config
-from src.discovery.candidates import Candidate
-from src.stages import ScoringStage
-
-
-@dataclass
-class ScoredCandidate:
-    span: str
-    score: float
-    sentence: str
-    embedding: np.ndarray
+from src.schemas.models import Candidate, ScoredCandidate
+from src.stages.contracts import ScoringStage
 
 
 class KeyBERTScorer(ScoringStage):
@@ -127,7 +118,7 @@ if __name__ == "__main__":
     import sys
     sys.stdout.reconfigure(encoding="utf-8")
 
-    from src.discovery.candidates import CandidateExtractor
+    from src.stages.extraction import CandidateExtractor
 
     extractor = CandidateExtractor()
     scorer = KeyBERTScorer()

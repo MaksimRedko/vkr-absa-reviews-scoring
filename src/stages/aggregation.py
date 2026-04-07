@@ -17,7 +17,6 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional
 
@@ -25,26 +24,8 @@ import numpy as np
 from sklearn.covariance import LedoitWolf
 
 from configs.configs import config
-from src.stages import AggregationStage
-
-
-@dataclass
-class AspectScore:
-    """Итоговые метрики одного аспекта"""
-    name: str
-    score: float               # Байесовски сглаженная оценка [1, 5]
-    raw_mean: float            # Чистое взвешенное среднее
-    controversy: float         # Взвешенное стандартное отклонение (для UI-алерта)
-    mentions: int              # Число упоминаний (до фильтрации ботов)
-    effective_mentions: float  # Сумма весов (после AntiFraud * Time)
-
-
-@dataclass
-class AggregationResult:
-    """Полный результат агрегации по товару"""
-    aspects: Dict[str, AspectScore] = field(default_factory=dict)
-    covariance_matrix: Optional[np.ndarray] = None  # Ledoit-Wolf Σ (K×K)
-    aspect_order: List[str] = field(default_factory=list)  # Порядок осей в Σ
+from src.schemas.models import AggregationResult, AspectScore
+from src.stages.contracts import AggregationStage
 
 
 class RatingMathEngine(AggregationStage):

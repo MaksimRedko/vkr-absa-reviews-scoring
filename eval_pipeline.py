@@ -28,7 +28,7 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 import pandas as pd
 
-from src.pairing import build_sentiment_pairs, extract_all_with_mapping
+from src.stages.pairing import build_sentiment_pairs, extract_all_with_mapping
 
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -150,11 +150,11 @@ def run_pipeline_for_ids(
     либо из json_path, если файл задан и существует (старый режим longest_reviews.json).
     Возвращает {nm_id: {"aspects": [...], "per_review": [{...}]}}
     """
-    from src.discovery.candidates import CandidateExtractor
-    from src.discovery.clusterer import AspectClusterer
-    from src.discovery.scorer import KeyBERTScorer
-    from src.fraud.engine import AntiFraudEngine
-    from src.sentiment.engine import SentimentEngine
+    from src.stages.clustering import AspectClusterer
+    from src.stages.extraction import CandidateExtractor
+    from src.stages.fraud import AntiFraudEngine
+    from src.stages.scoring import KeyBERTScorer
+    from src.stages.sentiment import SentimentEngine
 
     from sentence_transformers import SentenceTransformer
     from configs.configs import config

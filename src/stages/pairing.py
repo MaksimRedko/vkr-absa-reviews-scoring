@@ -6,10 +6,8 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
 if TYPE_CHECKING:
-    from src.discovery.candidates import Candidate
-    from src.discovery.clusterer import AspectInfo
-    from src.discovery.scorer import ScoredCandidate
-    from src.stages import ExtractionStage
+    from src.schemas.models import AspectInfo, Candidate, ScoredCandidate
+    from src.stages.contracts import ExtractionStage
 
 SentimentPair = Tuple[str, str, str, str, float]
 

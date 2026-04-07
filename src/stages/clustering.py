@@ -10,7 +10,6 @@ AspectClusterer: Anchor-First + Residual HDBSCAN (baseline).
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
 import hdbscan
@@ -20,8 +19,8 @@ from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
 from configs.configs import config
-from src.discovery.scorer import ScoredCandidate
-from src.stages import ClusteringStage
+from src.schemas.models import AspectInfo, ScoredCandidate
+from src.stages.contracts import ClusteringStage
 
 
 STOP_SPANS: set[str] = set()
@@ -133,14 +132,6 @@ ANTI_ANCHORS: Dict[str, List[str]] = {
         "штучка", "игрушка",
     ],
 }
-
-
-@dataclass
-class AspectInfo:
-    keywords: List[str]
-    centroid_embedding: np.ndarray
-    keyword_weights: List[float] = field(default_factory=list)
-    nli_label: str = ""
 
 
 class AspectClusterer(ClusteringStage):
@@ -639,8 +630,8 @@ if __name__ == "__main__":
     import sys
     sys.stdout.reconfigure(encoding="utf-8")
 
-    from src.discovery.candidates import CandidateExtractor
-    from src.discovery.scorer import KeyBERTScorer
+    from src.stages.extraction import CandidateExtractor
+    from src.stages.scoring import KeyBERTScorer
 
     extractor = CandidateExtractor()
     scorer = KeyBERTScorer()

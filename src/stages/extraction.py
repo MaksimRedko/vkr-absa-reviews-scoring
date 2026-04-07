@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
 from typing import List
 
 import pymorphy3
 
 from configs.configs import config
-from src.stages import ExtractionStage
+from src.schemas.models import Candidate
+from src.stages.contracts import ExtractionStage
 
 _morph = pymorphy3.MorphAnalyzer()
 
@@ -29,13 +29,6 @@ STOP_TOKENS: set[str] = {
 
 
 }
-
-
-@dataclass
-class Candidate:
-    span: str
-    sentence: str
-    token_indices: tuple[int, int]
 
 
 class CandidateExtractor(ExtractionStage):

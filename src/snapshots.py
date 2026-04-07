@@ -286,7 +286,7 @@ def load_candidates_snapshot(path: str | Path) -> list:
     Загружает снепшот 02_candidates.json → плоский List[Candidate].
     Replay: передать результат в scorer.score_and_select().
     """
-    from src.discovery.candidates import Candidate
+    from src.schemas.models import Candidate
     data = json.loads(Path(path).read_text(encoding="utf-8"))
     result = []
     for rev_id, cands in data["per_review"].items():
@@ -304,7 +304,7 @@ def load_scored_snapshot(path: str | Path) -> list:
     Загружает снепшот 03_scored.json → List[ScoredCandidate].
     Replay: передать результат в clusterer.cluster().
     """
-    from src.discovery.scorer import ScoredCandidate
+    from src.schemas.models import ScoredCandidate
     data = json.loads(Path(path).read_text(encoding="utf-8"))
     result = []
     for item in data["candidates"]:
@@ -323,7 +323,7 @@ def load_clusters_snapshot(path: str | Path) -> dict:
     Загружает снепшот 04_clusters.json → Dict[str, AspectInfo].
     Replay: передать результат в _build_sentiment_pairs() пайплайна.
     """
-    from src.discovery.clusterer import AspectInfo
+    from src.schemas.models import AspectInfo
     data = json.loads(Path(path).read_text(encoding="utf-8"))
     result = {}
     for name, entry in data["aspects"].items():
@@ -346,7 +346,7 @@ def load_sentiment_results_snapshot(path: str | Path) -> list:
     Загружает снепшот 06_sentiment_results.json → List[SentimentResult].
     Replay: передать результат в _build_aggregation_input() пайплайна.
     """
-    from src.sentiment.engine import SentimentResult
+    from src.schemas.models import SentimentResult
     data = json.loads(Path(path).read_text(encoding="utf-8"))
     return [
         SentimentResult(

@@ -30,18 +30,18 @@ from sentence_transformers import SentenceTransformer
 
 from configs.configs import config
 from src.data.loader import DataLoader
-from src.discovery.candidates import CandidateExtractor
-from src.discovery.clusterer import AspectClusterer
-from src.discovery.scorer import KeyBERTScorer
-from src.fraud.engine import AntiFraudEngine
-from src.math.engine import AggregationResult, RatingMathEngine
-from src.pairing import build_sentiment_pairs, extract_all_with_mapping
-from src.schemas.models import ReviewInput
-from src.sentiment.engine import SentimentEngine, SentimentResult
+from src.schemas.models import AggregationResult, ReviewInput, SentimentResult
 from src.stages import (
     AggregationStage, ClusteringStage, ExtractionStage,
     FraudStage, ScoringStage, SentimentStage,
 )
+from src.stages.aggregation import RatingMathEngine
+from src.stages.clustering import AspectClusterer
+from src.stages.extraction import CandidateExtractor
+from src.stages.fraud import AntiFraudEngine
+from src.stages.pairing import build_sentiment_pairs, extract_all_with_mapping
+from src.stages.scoring import KeyBERTScorer
+from src.stages.sentiment import SentimentEngine
 from src.snapshots import SnapshotWriter
 
 

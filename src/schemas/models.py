@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional
+from typing import Dict, List, Optional
+
+import numpy as np
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -38,3 +41,54 @@ class ReviewInput(BaseModel):
         if self.full_text and len(str(self.full_text)) > 2:
             parts.append(f"Комментарий: {str(self.full_text).strip()}")
         return " ".join(parts)
+
+
+@dataclass
+class Candidate:
+    span: str
+    sentence: str
+    token_indices: tuple[int, int]
+
+
+@dataclass
+class ScoredCandidate:
+    span: str
+    score: float
+    sentence: str
+    embedding: np.ndarray
+
+
+@dataclass
+class AspectInfo:
+    keywords: List[str]
+    centroid_embedding: np.ndarray
+    keyword_weights: List[float] = field(default_factory=list)
+    nli_label: str = ""
+
+
+@dataclass
+class SentimentResult:
+    review_id: str
+    aspect: str
+    sentence: str
+    score: float
+    p_ent_pos: float
+    p_ent_neg: float
+    confidence: float = 1.0
+
+
+@dataclass
+class AspectScore:
+    name: str
+    score: float
+    raw_mean: float
+    controversy: float
+    mentions: int
+    effective_mentions: float
+
+
+@dataclass
+class AggregationResult:
+    aspects: Dict[str, AspectScore] = field(default_factory=dict)
+    covariance_matrix: Optional[np.ndarray] = None
+    aspect_order: List[str] = field(default_factory=list)

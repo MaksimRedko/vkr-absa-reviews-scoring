@@ -24,7 +24,7 @@ from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 
 from configs.configs import config
-from src.stages import FraudStage
+from src.stages.contracts import FraudStage
 
 
 @dataclass

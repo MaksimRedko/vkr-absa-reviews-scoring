@@ -17,7 +17,6 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from typing import List, Tuple, Union
 
 import numpy as np
@@ -25,7 +24,8 @@ import torch
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 from configs.configs import config
-from src.stages import SentimentStage
+from src.schemas.models import SentimentResult
+from src.stages.contracts import SentimentStage
 
 try:
     from tqdm import tqdm
@@ -34,16 +34,6 @@ except ImportError:  # pragma: no cover
         return x
 
 
-@dataclass
-class SentimentResult:
-    """Результат анализа сентимента для одной пары (предложение, аспект)"""
-    review_id: str
-    aspect: str
-    sentence: str
-    score: float          # [1.0, 5.0]
-    p_ent_pos: float      # P(entailment | H_pos)
-    p_ent_neg: float      # P(entailment | H_neg)
-    confidence: float = 1.0  # вес из soft-anchor / span
 class SentimentEngine(SentimentStage):
     """
     NLI-based sentiment engine v3 (dual hypothesis).
