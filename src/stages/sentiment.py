@@ -148,8 +148,12 @@ class SentimentEngine(SentimentStage):
         hyp_pos = [self.h_pos.format(aspect=a) for a in nli_for_hyp]
         hyp_neg = [self.h_neg.format(aspect=a) for a in nli_for_hyp]
 
-        p_ent_pos = self._infer_entailment(premises, hyp_pos)
-        p_ent_neg = self._infer_entailment(premises, hyp_neg)
+        all_premises = premises + premises
+        all_hyp = hyp_pos + hyp_neg
+        all_probs = self._infer_entailment(all_premises, all_hyp)
+        split_idx = len(premises)
+        p_ent_pos = all_probs[:split_idx]
+        p_ent_neg = all_probs[split_idx:]
 
         results = []
         for idx, (review_id, sentence, aspect_orig) in enumerate(

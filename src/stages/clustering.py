@@ -10,7 +10,10 @@ AspectClusterer: Anchor-First + Residual HDBSCAN (baseline).
 
 from __future__ import annotations
 
+import hashlib
+import json
 from typing import Dict, List, Optional, Tuple
+from pathlib import Path
 
 import hdbscan
 import numpy as np
@@ -155,8 +158,7 @@ class AspectClusterer(ClusteringStage):
 
         self._anchor_embeddings: dict[str, np.ndarray] = {}
         self._anti_anchor_embeddings: dict[str, np.ndarray] = {}
-        self._build_anchor_embeddings()
-        self._build_anti_anchor_embeddings()
+        self._load_or_build_anchor_embeddings()
 
         self.last_assignment_counts: Dict[str, int] = {}
         self.last_residual_medoid_names: List[str] = []
@@ -171,6 +173,41 @@ class AspectClusterer(ClusteringStage):
         for name, words in ANTI_ANCHORS.items():
             embs = self.model.encode(words, show_progress_bar=False)
             self._anti_anchor_embeddings[name] = np.mean(embs, axis=0)
+
+    def _anchors_signature(self) -> str:
+        payload = {
+            "model": str(config.models.encoder_path),
+            "macro": MACRO_ANCHORS,
+            "anti": ANTI_ANCHORS,
+        }
+        raw = json.dumps(payload, ensure_ascii=False, sort_keys=True).encode("utf-8")
+        return hashlib.sha256(raw).hexdigest()[:16]
+
+    def _anchors_cache_path(self) -> Path:
+        sig = self._anchors_signature()
+        cache_dir = Path("data") / "cache"
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        return cache_dir / f"anchor_embeddings_{sig}.npz"
+
+    def _load_or_build_anchor_embeddings(self) -> None:
+        cache_path = self._anchors_cache_path()
+        if cache_path.exists():
+            cached = np.load(cache_path, allow_pickle=False)
+            self._anchor_embeddings = {
+                name: cached[f"macro__{name}"] for name in MACRO_ANCHORS
+            }
+            self._anti_anchor_embeddings = {
+                name: cached[f"anti__{name}"] for name in ANTI_ANCHORS
+            }
+            return
+
+        self._build_anchor_embeddings()
+        self._build_anti_anchor_embeddings()
+
+        payload: dict[str, np.ndarray] = {}
+        payload.update({f"macro__{k}": v for k, v in self._anchor_embeddings.items()})
+        payload.update({f"anti__{k}": v for k, v in self._anti_anchor_embeddings.items()})
+        np.savez_compressed(cache_path, **payload)
 
     def cluster(
         self, candidates: List[ScoredCandidate], min_mentions: int = 2

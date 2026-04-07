@@ -92,7 +92,7 @@ class ABSAPipeline:
         self.candidate_extractor: ExtractionStage  = extraction_stage  or CandidateExtractor()
         self.scorer:              ScoringStage      = scoring_stage     or KeyBERTScorer(model=self._encoder)
         self.clusterer:           ClusteringStage   = clustering_stage  or AspectClusterer(model=self._encoder)
-        self.fraud_engine:        FraudStage        = fraud_stage       or AntiFraudEngine()
+        self.fraud_engine:        FraudStage        = fraud_stage       or AntiFraudEngine(model=self._encoder)
         self.sentiment_engine:    SentimentStage    = sentiment_stage   or SentimentEngine()
         self.math_engine:         AggregationStage  = aggregation_stage or RatingMathEngine()
 

@@ -54,8 +54,8 @@ class AntiFraudEngine(FraudStage):
       5. Клиппинг до [min_trust_weight, 1.0].
     """
 
-    def __init__(self):
-        self.model = SentenceTransformer(config.models.encoder_path)
+    def __init__(self, model: SentenceTransformer | None = None):
+        self.model = model or SentenceTransformer(config.models.encoder_path)
         self.uniqueness_threshold: float = config.fraud.uniqueness_threshold
         self.sim_noise_floor: float = config.fraud.sim_noise_floor
         self.min_trust_weight: float = config.fraud.min_trust_weight
