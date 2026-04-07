@@ -51,3 +51,13 @@ config = OmegaConf.create({
         "max_aspects_radar": 8,  # Максимум аспектов для радара и ползунков (топ по mentions)
     },
 })
+
+
+def make_config_with_overrides(overrides: dict) -> OmegaConf:
+    """
+    Возвращает новый конфиг: baseline + overrides.
+    Глобальный `config` не мутируется.
+    """
+    base = OmegaConf.create(OmegaConf.to_container(config, resolve=True))
+    override_cfg = OmegaConf.create(overrides or {})
+    return OmegaConf.merge(base, override_cfg)

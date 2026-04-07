@@ -11,7 +11,6 @@ compare_runs.py — сравнение результатов экспериме
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -19,7 +18,7 @@ from typing import Any, Dict, List, Optional
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from experiments.experiment_manager import load_registry, ExperimentManager, RUNS_DIR
+from experiments.experiment_manager import load_registry, ExperimentManager
 
 # ── Форматирование ──────────────────────────────────────────────────────────
 
@@ -34,6 +33,51 @@ _METRIC_COLS = [
 ]
 
 _COL_W = 9  # ширина числовой колонки
+
+
+def compare_two_runs(baseline_metrics: Dict[str, Any], current_metrics: Dict[str, Any]) -> str:
+    """
+    Возвращает табличное сравнение ключевых метрик baseline vs current.
+    """
+    def _extract(m: Dict[str, Any], key: str) -> Optional[float]:
+        if key == "product_mae_matched":
+            return (
+                (m.get("product_ratings") or {})
+                .get("global_product_mae_filtered")
+            )
+        return m.get(key)
+
+    rows = [
+        ("Macro Recall", "macro_recall", "up"),
+        ("Mention Recall", "global_mention_recall_review", "up"),
+        ("Sentence MAE", "global_mae_raw", "down"),
+        ("Product MAE (matched)", "product_mae_matched", "down"),
+        ("Macro Precision (manual)", "macro_precision", "up"),
+    ]
+
+    lines = []
+    lines.append(f"{'Метрика':<26} {'baseline':>10} {'current':>10} {'Δ':>10} {'ok':>4}")
+    lines.append("-" * 66)
+
+    for label, key, direction in rows:
+        b = _extract(baseline_metrics, key)
+        c = _extract(current_metrics, key)
+
+        if b is None or c is None:
+            lines.append(f"{label:<26} {'-':>10} {'-':>10} {'-':>10} {'-':>4}")
+            continue
+
+        delta = c - b
+        if direction == "up":
+            ok = "✓" if delta > 0 else ("=" if delta == 0 else "✗")
+        else:
+            ok = "✓" if delta < 0 else ("=" if delta == 0 else "✗")
+
+        lines.append(
+            f"{label:<26} {b:>10.3f} {c:>10.3f} {delta:+10.3f} {ok:>4}"
+        )
+
+    return "\n".join(lines)
 
 
 def _fmt(val: Optional[float], w: int = _COL_W) -> str:
