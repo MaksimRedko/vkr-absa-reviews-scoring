@@ -1,0 +1,9 @@
+{
+  "name": "multi_label_threshold_05",
+  "description": "Raise multi-label threshold from 0.4 to 0.5",
+  "overrides": {
+    "discovery": {
+      "multi_label_threshold": 0.5
+    }
+  }
+}
