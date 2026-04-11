@@ -35,11 +35,11 @@ class ReviewInput(BaseModel):
         """Склейка трёх текстовых полей в один текст для анализа."""
         parts = []
         if self.pros and len(str(self.pros)) > 2:
-            parts.append(f"Достоинства: {str(self.pros).strip()}")
+            parts.append(str(self.pros).strip())
         if self.cons and len(str(self.cons)) > 2:
-            parts.append(f"Недостатки: {str(self.cons).strip()}")
+            parts.append(str(self.cons).strip())
         if self.full_text and len(str(self.full_text)) > 2:
-            parts.append(f"Комментарий: {str(self.full_text).strip()}")
+            parts.append(str(self.full_text).strip())
         return " ".join(parts)
 
 
