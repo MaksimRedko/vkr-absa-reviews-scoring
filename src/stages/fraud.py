@@ -38,6 +38,13 @@ class TrustResult:
     bot_cluster_id: int        # -1 если не в кластере ботов, иначе ID кластера
 
 
+class NoOpFraud(FraudStage):
+    """Без антифрода: единый вес доверия для всех отзывов."""
+
+    def calculate_trust_weights(self, texts: List[str]) -> List[float]:
+        return [1.0] * len(texts)
+
+
 class AntiFraudEngine(FraudStage):
     """
     AntiFraud v2.

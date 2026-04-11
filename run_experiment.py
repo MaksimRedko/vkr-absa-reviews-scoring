@@ -18,6 +18,7 @@ from eval_pipeline import (
     run_pipeline_for_ids,
     set_global_seed,
 )
+from src.stages.fraud import NoOpFraud
 from experiments.compare_runs import compare_two_runs
 from experiments.experiment_manager import ExperimentManager, load_registry
 
@@ -88,6 +89,11 @@ def main() -> None:
     parser.add_argument("--auto-threshold", type=float, default=0.3)
     parser.add_argument("--json-path", default=None)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument(
+        "--no-fraud",
+        action="store_true",
+        help="Подставить NoOpFraud (все trust_weight=1.0), без encode антифрода",
+    )
     args = parser.parse_args()
 
     exp_cfg = _load_experiment_config(args.config)
@@ -109,7 +115,10 @@ def main() -> None:
         stats = df.groupby("nm_id").size().reset_index(name="n")
         nm_ids = stats["nm_id"].astype(int).tolist()
 
-        pipeline_results = run_pipeline_for_ids(nm_ids, args.csv_path, args.json_path)
+        fraud_stage = NoOpFraud() if args.no_fraud else None
+        pipeline_results = run_pipeline_for_ids(
+            nm_ids, args.csv_path, args.json_path, fraud_stage=fraud_stage
+        )
 
         step12_payload = {
             "pipeline_results": {
@@ -162,6 +171,7 @@ def main() -> None:
             "mention_recall_review": metrics.get("global_mention_recall_review"),
             "sentence_mae_raw": metrics.get("global_mae_raw"),
             "product_mae_n_ge_3": product_ratings.get("global_product_mae_filtered"),
+            "no_fraud": bool(args.no_fraud),
         }
 
         metrics_name = "eval_metrics_auto.json" if args.mapping == "auto" else "eval_metrics.json"

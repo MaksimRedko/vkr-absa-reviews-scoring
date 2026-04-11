@@ -28,8 +28,6 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 import pandas as pd
 
-from src.stages.pairing import build_sentiment_pairs, extract_all_with_mapping
-
 sys.stdout.reconfigure(encoding="utf-8")
 
 try:
@@ -144,20 +142,17 @@ def run_pipeline_for_ids(
     nm_ids: List[int],
     csv_path: str,
     json_path: Optional[str] = None,
+    fraud_stage=None,
 ) -> Dict[int, dict]:
     """
     Прогоняет пайплайн на отзывах: по умолчанию из csv_path (как merged_checked_reviews.csv),
     либо из json_path, если файл задан и существует (старый режим longest_reviews.json).
     Возвращает {nm_id: {"aspects": [...], "per_review": [{...}]}}
-    """
-    from src.stages.clustering import AspectClusterer
-    from src.stages.extraction import CandidateExtractor
-    from src.stages.fraud import AntiFraudEngine
-    from src.stages.scoring import KeyBERTScorer
-    from src.stages.sentiment import SentimentEngine
 
-    from sentence_transformers import SentenceTransformer
-    from configs.configs import config
+    fraud_stage: опционально подкласс FraudStage (например NoOpFraud); None → AntiFraudEngine.
+    """
+    from src.pipeline import ABSAPipeline
+    from src.schemas.models import ReviewInput
 
     if json_path and os.path.isfile(json_path):
         with open(json_path, "r", encoding="utf-8") as f:
@@ -173,20 +168,8 @@ def run_pipeline_for_ids(
     for r in all_reviews_raw:
         reviews_by_nm[r["nm_id"]].append(r)
 
-    encoder = SentenceTransformer(config.models.encoder_path)
-    extractor = CandidateExtractor()
-    scorer = KeyBERTScorer(model=encoder)
-    clusterer = AspectClusterer(model=encoder)
-    fraud = AntiFraudEngine()
-    sentiment = SentimentEngine()
-
-    print(
-        f"[Eval] multi_label: threshold={config.discovery.multi_label_threshold}, "
-        f"max_aspects={config.discovery.multi_label_max_aspects}"
-    )
-
+    pipeline = ABSAPipeline(fraud_stage=fraud_stage)
     results = {}
-    total_nli_pairs = 0
 
     for nm_id in nm_ids:
         raw_reviews = reviews_by_nm.get(nm_id, [])
@@ -198,7 +181,6 @@ def run_pipeline_for_ids(
         print(f"nm_id={nm_id}  ({len(raw_reviews)} отзывов)")
         print(f"{'='*60}")
 
-        from src.schemas.models import ReviewInput
         reviews = []
         for r in raw_reviews:
             try:
@@ -208,107 +190,29 @@ def run_pipeline_for_ids(
             except Exception:
                 continue
 
-        texts = [r.clean_text for r in reviews]
-        review_id_list = [r.id for r in reviews]
-
-        trust_weights = fraud.calculate_trust_weights(texts)
-
-        all_candidates, sentence_to_review = extract_all_with_mapping(
-            extractor,
-            texts,
-            [r.id for r in reviews],
-        )
-
-        scored = scorer.score_and_select(all_candidates)
-        aspects = clusterer.cluster(scored)
-        aspect_names = list(aspects.keys())
-        print(f"  Аспекты: {aspect_names}")
-
-        ac = getattr(clusterer, "last_assignment_counts", {})
-        c_assign = Counter(ac)
-        medoid_names = list(getattr(clusterer, "last_residual_medoid_names", []))
-        print(f"  Counter (confident / residual): {c_assign}")
-        print(f"  Residual medoid names (final): {medoid_names}")
-
-        nli_lines = list(getattr(clusterer, "last_nli_medoid_diagnostics", []))
-
-        if not aspects:
+        eval_data = pipeline.analyze_for_eval(reviews, product_id=nm_id)
+        if not eval_data.aspects:
             results[nm_id] = {
                 "aspects": [],
                 "per_review": {},
-                "diagnostics": {
-                    "anchor_assignment_counts": dict(ac),
-                    "residual_medoid_names": medoid_names,
-                    "nli_medoid_diagnostics": nli_lines,
-                },
             }
             continue
 
-        pairs = build_sentiment_pairs(
-            scored_candidates=scored,
-            aspects=aspects,
-            sentence_to_review=sentence_to_review,
-            anchor_embeddings=clusterer._anchor_embeddings,
-            threshold=float(config.discovery.multi_label_threshold),
-            max_aspects=int(config.discovery.multi_label_max_aspects),
-        )
-        n_nli = len(pairs)
-        total_nli_pairs += n_nli
-        print(f"  NLI пар: {n_nli}")
-        sentiment_scores = sentiment.batch_analyze(pairs)
-
-        per_review = defaultdict(dict)
-        for sr in sentiment_scores:
-            if sr.aspect not in per_review[sr.review_id]:
-                per_review[sr.review_id][sr.aspect] = []
-            per_review[sr.review_id][sr.aspect].append((sr.score, sr.confidence))
-
         per_review_avg = {}
-        for rid, asp_dict in per_review.items():
-            avg = {}
-            for asp, pairs_sw in asp_dict.items():
-                scores = [p[0] for p in pairs_sw]
-                weights = [p[1] for p in pairs_sw]
-                wsum = float(sum(weights))
-                if wsum > 0:
-                    avg[asp] = round(
-                        float(sum(s * w for s, w in zip(scores, weights)) / wsum),
-                        2,
-                    )
-                else:
-                    avg[asp] = round(float(np.mean(scores)), 2)
-            # Apply aliases: "Органолептика"→"Запах" etc.
-            # Добавляем aliased ключи чтобы identity match работал
+        for rid, asp_dict in eval_data.per_review.items():
+            avg = {asp: round(float(score), 2) for asp, score in asp_dict.items()}
             for pred_name, true_name in ASPECT_ALIASES.items():
                 if pred_name in avg and true_name not in avg:
                     avg[true_name] = avg[pred_name]
             per_review_avg[rid] = avg
 
-        # Диагностика: какие кандидаты были до кластеризации
-        all_cand_texts = [c.span for c in all_candidates]
-        scored_texts = [c.span for c in scored]
-
         results[nm_id] = {
-            "aspects": aspect_names + [
-                ASPECT_ALIASES[a] for a in aspect_names if a in ASPECT_ALIASES
+            "aspects": list(eval_data.aspects.keys()) + [
+                ASPECT_ALIASES[a] for a in eval_data.aspects.keys() if a in ASPECT_ALIASES
             ],
             "per_review": per_review_avg,
-            "aspect_keywords": {
-                name: info.keywords for name, info in aspects.items()
-            },
-            "diagnostics": {
-                "raw_candidates_count": len(all_candidates),
-                "scored_candidates_count": len(scored),
-                "raw_candidate_samples": all_cand_texts[:30],
-                "scored_candidate_samples": scored_texts,
-                "anchor_assignment_counts": dict(ac),
-                "residual_medoid_names": medoid_names,
-                "nli_medoid_diagnostics": nli_lines,
-                "nli_pairs_count": n_nli,
-            },
+            "aspect_keywords": eval_data.aspect_keywords,
         }
-
-    print(f"\n[Eval] Всего NLI пар (по всем nm_id): {total_nli_pairs}")
 
     return results
 
