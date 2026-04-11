@@ -19,7 +19,7 @@ class ReviewInput(BaseModel):
     id: str
     nm_id: int
     rating: int = Field(..., ge=1, le=5)
-    created_date: datetime
+    created_date: Optional[datetime] = None
 
     full_text: Optional[str] = None
     pros: Optional[str] = None
@@ -75,6 +75,16 @@ class SentimentResult:
     p_ent_pos: float
     p_ent_neg: float
     confidence: float = 1.0
+
+
+@dataclass
+class EvalData:
+    aspects: Dict[str, AspectInfo]
+    sentiment_results: List[SentimentResult]
+    sentence_to_review: Dict[str, str]
+    trust_weights: List[float]
+    per_review: Dict[str, Dict[str, float]]
+    aspect_keywords: Dict[str, List[str]]
 
 
 @dataclass
