@@ -20,9 +20,9 @@ if str(ROOT) not in sys.path:
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-from eval_pipeline import load_pipeline_reviews_from_csv  # noqa: E402
-from src.pipeline import ABSAPipeline  # noqa: E402
-from src.schemas.models import ReviewInput  # noqa: E402
+from eval_pipeline import load_pipeline_reviews_from_csv
+from src.pipeline import ABSAPipeline
+from src.schemas.models import ReviewInput
 
 DEFAULT_CSV = ROOT / "parser" / "reviews_batches" / "merged_checked_reviews.csv"
 DEFAULT_NM = [15430704, 619500952, 54581151]

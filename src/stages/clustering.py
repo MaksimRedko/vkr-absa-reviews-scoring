@@ -19,11 +19,13 @@ import hdbscan
 import numpy as np
 import umap
 from sentence_transformers import SentenceTransformer
+from sklearn.cluster import KMeans
 from sklearn.metrics.pairwise import cosine_similarity
 
 from configs.configs import config
 from src.schemas.models import AspectInfo, ScoredCandidate
 from src.stages.contracts import ClusteringStage
+from src.stages.naming import ClusterNamer, MedoidNamer
 
 
 STOP_SPANS: set[str] = set()
@@ -661,6 +663,303 @@ class AspectClusterer(ClusteringStage):
                 nli_label="Общее",
             )
         }
+
+
+class DivisiveClusterer(ClusteringStage):
+    def __init__(
+        self,
+        model: SentenceTransformer | None = None,
+        min_variance_ratio: float = 0.05,
+        max_clusters: int = 20,
+        min_cluster_size: int = 3,
+        umap_n_components: int = 5,
+        umap_min_dist: float = 0.0,
+        umap_metric: str = "cosine",
+        random_state: int = 42,
+        namer: ClusterNamer | None = None,
+    ):
+        self.model = model or SentenceTransformer(config.models.encoder_path)
+        self.min_variance_ratio = float(min_variance_ratio)
+        self.max_clusters = int(max_clusters)
+        self.min_cluster_size = int(min_cluster_size)
+        self.umap_n_components = int(umap_n_components)
+        self.umap_min_dist = float(umap_min_dist)
+        self.umap_metric = str(umap_metric)
+        self.random_state = int(random_state)
+        self.merge_threshold: float = float(config.discovery.cluster_merge_threshold)
+        self.anti_anchor_threshold: float = float(config.discovery.anti_anchor_threshold)
+        self.namer: ClusterNamer = namer or MedoidNamer()
+
+        self._anchor_embeddings: dict[str, np.ndarray] = {}
+        self._cluster_centroids: dict[str, np.ndarray] = {}
+        self._anti_anchor_embeddings: dict[str, np.ndarray] = {}
+        self._build_anti_anchor_embeddings()
+
+        self.last_n_splits: int = 0
+        self.last_n_rejected: int = 0
+        self.last_leaf_variances: list[float] = []
+        self.last_split_history: list[tuple[int, int, int, float]] = []
+
+    def _build_anti_anchor_embeddings(self) -> None:
+        for name, words in ANTI_ANCHORS.items():
+            embs = self.model.encode(words, show_progress_bar=False)
+            self._anti_anchor_embeddings[name] = np.mean(embs, axis=0)
+
+    @staticmethod
+    def _detect_product_stops(
+        candidates: List[ScoredCandidate],
+        freq_threshold: float = 0.05,
+    ) -> set:
+        if not candidates:
+            return set()
+
+        total = len(candidates)
+        word_counts: dict[str, int] = {}
+        for cand in candidates:
+            if " " not in cand.span.strip():
+                word = cand.span.strip().lower()
+                word_counts[word] = word_counts.get(word, 0) + 1
+
+        stops: set[str] = set()
+        for word, count in word_counts.items():
+            if count / total >= freq_threshold and len(word) >= 3:
+                stops.add(word)
+                for cand in candidates:
+                    if cand.span.strip().lower() == word:
+                        stops.add(cand.span.strip())
+        return stops
+
+    @staticmethod
+    def _aggregate_spans(
+        candidates: List[ScoredCandidate],
+        min_mentions: int,
+        stop_spans: set | None = None,
+    ) -> dict:
+        stops = stop_spans or STOP_SPANS
+        agg: dict[str, dict] = {}
+        for cand in candidates:
+            if cand.span in stops:
+                continue
+            if cand.span not in agg:
+                agg[cand.span] = {"count": 0, "embedding": cand.embedding, "score_sum": 0.0}
+            agg[cand.span]["count"] += 1
+            agg[cand.span]["score_sum"] += cand.score
+
+        if min_mentions > 1:
+            agg = {span: data for span, data in agg.items() if data["count"] >= min_mentions}
+        return agg
+
+    @staticmethod
+    def _cluster_variance(points: np.ndarray) -> float:
+        if points.size == 0:
+            return 0.0
+        centroid = np.mean(points, axis=0)
+        sq = np.sum((points - centroid) ** 2, axis=1)
+        return float(np.mean(sq))
+
+    def _merge_similar_clusters_cosine(
+        self,
+        clusters: Dict[str, AspectInfo],
+        span_data: dict[str, dict],
+    ) -> Dict[str, AspectInfo]:
+        if len(clusters) < 2:
+            return clusters
+
+        names = list(clusters.keys())
+        while True:
+            best_pair: tuple[str, str] | None = None
+            best_sim = -1.0
+
+            for i in range(len(names)):
+                for j in range(i + 1, len(names)):
+                    ci = clusters[names[i]].centroid_embedding.reshape(1, -1)
+                    cj = clusters[names[j]].centroid_embedding.reshape(1, -1)
+                    sim = float(cosine_similarity(ci, cj)[0, 0])
+                    if sim > best_sim:
+                        best_sim = sim
+                        best_pair = (names[i], names[j])
+
+            if best_pair is None or best_sim <= self.merge_threshold:
+                break
+
+            a, b = best_pair
+            cluster_a = clusters[a]
+            cluster_b = clusters[b]
+            keep, drop = (a, b) if len(cluster_a.keywords) >= len(cluster_b.keywords) else (b, a)
+
+            keep_info = clusters[keep]
+            drop_info = clusters[drop]
+            combined_keywords = keep_info.keywords + drop_info.keywords
+            unique_keywords = list(dict.fromkeys(combined_keywords))
+            embs = np.stack([span_data[s]["embedding"] for s in unique_keywords])
+            centroid = np.mean(embs, axis=0)
+            keyword_weights = [float(span_data[s]["count"]) for s in unique_keywords]
+            clusters[keep] = AspectInfo(
+                keywords=unique_keywords,
+                centroid_embedding=centroid,
+                keyword_weights=keyword_weights,
+                nli_label=keep,
+            )
+            del clusters[drop]
+            names = list(clusters.keys())
+
+        return clusters
+
+    def cluster(self, candidates: List[ScoredCandidate]) -> Dict[str, AspectInfo]:
+        self.last_n_splits = 0
+        self.last_n_rejected = 0
+        self.last_leaf_variances = []
+        self.last_split_history = []
+        self._anchor_embeddings = {}
+        self._cluster_centroids = {}
+
+        if not candidates:
+            return {}
+
+        auto_stops = self._detect_product_stops(candidates)
+        local_stops = STOP_SPANS | auto_stops
+        span_data = self._aggregate_spans(candidates, min_mentions=1, stop_spans=local_stops)
+        if len(span_data) < self.min_cluster_size:
+            return {}
+
+        spans = list(span_data.keys())
+        embeddings_312 = np.stack([span_data[s]["embedding"] for s in spans])
+        n_spans = len(spans)
+
+        n_neighbors = max(2, min(15, n_spans // 10))
+        reducer = umap.UMAP(
+            n_components=min(self.umap_n_components, max(2, n_spans - 1)),
+            n_neighbors=min(n_neighbors, n_spans - 1),
+            min_dist=self.umap_min_dist,
+            metric=self.umap_metric,
+            n_jobs=1,
+            random_state=self.random_state,
+        )
+        embeddings_umap = reducer.fit_transform(embeddings_312)
+
+        tree: dict[int, dict] = {
+            0: {
+                "id": 0,
+                "indices": list(range(n_spans)),
+                "variance": self._cluster_variance(embeddings_umap),
+                "final": False,
+            }
+        }
+        leaf_ids: set[int] = {0}
+        next_id = 1
+
+        while len(leaf_ids) < self.max_clusters:
+            splittable = [
+                cid for cid in leaf_ids
+                if (not tree[cid]["final"]) and len(tree[cid]["indices"]) >= 2 * self.min_cluster_size
+            ]
+            if not splittable:
+                break
+
+            target_id = max(splittable, key=lambda cid: tree[cid]["variance"])
+            target = tree[target_id]
+            target_indices = target["indices"]
+            points = embeddings_umap[target_indices]
+
+            km = KMeans(n_clusters=2, random_state=self.random_state, n_init=10)
+            labels = km.fit_predict(points)
+            local_c1 = [i for i, lb in enumerate(labels) if lb == 0]
+            local_c2 = [i for i, lb in enumerate(labels) if lb == 1]
+            if not local_c1 or not local_c2:
+                tree[target_id]["final"] = True
+                self.last_n_rejected += 1
+                continue
+
+            c1_indices = [target_indices[i] for i in local_c1]
+            c2_indices = [target_indices[i] for i in local_c2]
+            v_parent = float(target["variance"])
+            v1 = self._cluster_variance(embeddings_umap[c1_indices])
+            v2 = self._cluster_variance(embeddings_umap[c2_indices])
+
+            if v_parent <= 1e-12:
+                rho = 0.0
+            else:
+                weighted_child = (
+                    len(c1_indices) * v1 + len(c2_indices) * v2
+                ) / float(len(target_indices))
+                rho = 1.0 - (weighted_child / v_parent)
+
+            child1_id = next_id
+            child2_id = next_id + 1
+            if rho > self.min_variance_ratio:
+                leaf_ids.remove(target_id)
+                tree[child1_id] = {
+                    "id": child1_id,
+                    "indices": c1_indices,
+                    "variance": v1,
+                    "final": False,
+                }
+                tree[child2_id] = {
+                    "id": child2_id,
+                    "indices": c2_indices,
+                    "variance": v2,
+                    "final": False,
+                }
+                leaf_ids.add(child1_id)
+                leaf_ids.add(child2_id)
+                self.last_n_splits += 1
+                self.last_split_history.append((target_id, child1_id, child2_id, float(rho)))
+                next_id += 2
+            else:
+                tree[target_id]["final"] = True
+                self.last_n_rejected += 1
+
+            if all(tree[cid]["final"] for cid in leaf_ids):
+                break
+
+        final_leaf_ids = list(leaf_ids)
+        self.last_leaf_variances = [float(tree[cid]["variance"]) for cid in final_leaf_ids]
+
+        aspects: Dict[str, AspectInfo] = {}
+        for cid in final_leaf_ids:
+            indices = tree[cid]["indices"]
+            if len(indices) < self.min_cluster_size:
+                continue
+
+            cluster_embs_312 = embeddings_312[indices]
+            centroid_312 = np.mean(cluster_embs_312, axis=0)
+
+            cluster_spans = [spans[i] for i in indices]
+            sims = cosine_similarity(cluster_embs_312, centroid_312.reshape(1, -1)).reshape(-1)
+            medoid_local_idx = int(np.argmax(sims))
+            name = cluster_spans[medoid_local_idx]
+
+            keyword_weights = [float(span_data[s]["count"]) for s in cluster_spans]
+            info = AspectInfo(
+                keywords=cluster_spans,
+                centroid_embedding=centroid_312,
+                keyword_weights=keyword_weights,
+                nli_label=name,
+            )
+
+            if name in aspects:
+                merged_keywords = list(dict.fromkeys(aspects[name].keywords + info.keywords))
+                merged_embs = np.stack([span_data[s]["embedding"] for s in merged_keywords])
+                merged_centroid = np.mean(merged_embs, axis=0)
+                merged_weights = [float(span_data[s]["count"]) for s in merged_keywords]
+                aspects[name] = AspectInfo(
+                    keywords=merged_keywords,
+                    centroid_embedding=merged_centroid,
+                    keyword_weights=merged_weights,
+                    nli_label=name,
+                )
+            else:
+                aspects[name] = info
+
+        aspects = self._merge_similar_clusters_cosine(aspects, span_data)
+        aspects = self.namer.rename(aspects)
+
+        self._cluster_centroids = {
+            name: np.asarray(info.centroid_embedding).flatten()
+            for name, info in aspects.items()
+        }
+        self._anchor_embeddings = dict(self._cluster_centroids)
+        return aspects
 
 
 if __name__ == "__main__":

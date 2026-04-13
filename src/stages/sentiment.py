@@ -58,6 +58,7 @@ class SentimentEngine(SentimentStage):
         self.h_neg: str = config.sentiment.hypothesis_template_neg
         self.batch_size: int = config.sentiment.batch_size
         self.epsilon: float = config.sentiment.score_epsilon
+        self.temperature: float = float(config.sentiment.temperature)
 
         self.num_labels = self.model.config.num_labels
         self.id2label = self.model.config.id2label
@@ -99,24 +100,76 @@ class SentimentEngine(SentimentStage):
 
         return results
 
-    def _infer_entailment(
+    def _forward_logits_tensor(
         self, premises: List[str], hypotheses: List[str]
-    ) -> np.ndarray:
-        """Возвращает P(entailment) для каждой пары premise-hypothesis."""
+    ) -> torch.Tensor:
+        """Сырые логиты (B, num_labels) на device."""
         inputs = self.tokenizer(
             premises,
             hypotheses,
             padding=True,
             truncation=True,
-            max_length=512,
             return_tensors="pt",
         ).to(self.device)
 
         with torch.no_grad():
-            logits = self.model(**inputs).logits
-            probs = torch.softmax(logits, dim=1).cpu().numpy()
+            return self.model(**inputs).logits
 
-        return probs[:, self.ent_idx]
+    def batch_collect_logits(
+        self,
+        pairs: List[
+            Union[
+                Tuple[str, str, str],
+                Tuple[str, str, str, float],
+                Tuple[str, str, str, str, float],
+            ]
+        ],
+    ) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Один проход инференса: логиты для pos/neg гипотез, порядок строк = порядок pairs.
+        logits_pos, logits_neg: (N, num_labels)
+        """
+        if not pairs:
+            return (
+                np.zeros((0, self.num_labels), dtype=np.float32),
+                np.zeros((0, self.num_labels), dtype=np.float32),
+            )
+
+        blocks_pos: List[np.ndarray] = []
+        blocks_neg: List[np.ndarray] = []
+
+        batch_indices = range(0, len(pairs), self.batch_size)
+        for i in tqdm(
+            batch_indices,
+            desc="      NLI logits",
+            total=(len(pairs) + self.batch_size - 1) // self.batch_size,
+            leave=False,
+            unit="batch",
+        ):
+            batch = pairs[i : i + self.batch_size]
+            premises = [p[1] for p in batch]
+            aspects_tag = [p[2] for p in batch]
+
+            nli_for_hyp: List[str] = []
+            for p in batch:
+                if len(p) >= 5:
+                    nli_for_hyp.append(p[3])
+                elif len(p) == 4:
+                    nli_for_hyp.append(p[2])
+                else:
+                    nli_for_hyp.append(p[2])
+
+            hyp_pos = [self.h_pos.format(aspect=a) for a in nli_for_hyp]
+            hyp_neg = [self.h_neg.format(aspect=a) for a in nli_for_hyp]
+
+            all_premises = premises + premises
+            all_hyp = hyp_pos + hyp_neg
+            logits = self._forward_logits_tensor(all_premises, all_hyp)
+            split_idx = len(premises)
+            blocks_pos.append(logits[:split_idx].cpu().numpy())
+            blocks_neg.append(logits[split_idx:].cpu().numpy())
+
+        return np.vstack(blocks_pos), np.vstack(blocks_neg)
 
     def _process_batch(
         self,
@@ -150,7 +203,10 @@ class SentimentEngine(SentimentStage):
 
         all_premises = premises + premises
         all_hyp = hyp_pos + hyp_neg
-        all_probs = self._infer_entailment(all_premises, all_hyp)
+        logits = self._forward_logits_tensor(all_premises, all_hyp)
+        all_probs = torch.softmax(logits / self.temperature, dim=1).cpu().numpy()[
+            :, self.ent_idx
+        ]
         split_idx = len(premises)
         p_ent_pos = all_probs[:split_idx]
         p_ent_neg = all_probs[split_idx:]

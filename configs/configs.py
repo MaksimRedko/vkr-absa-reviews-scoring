@@ -1,6 +1,6 @@
 from omegaconf import OmegaConf
 
-# Baseline (зафиксировано):
+# Baseline:
 #   — NLI remap: medoid → nli_label = argmax_k cos(centroid, anchor_k) (clusterer)
 #   — Гипотезы: вариант B (оценочные фразы ниже)
 #   — Остальное: discovery / pipeline как в исходном baseline
@@ -9,6 +9,7 @@ config = OmegaConf.create({
     "models": {
         "encoder_path": "./scripts/models/models--cointegrated--rubert-tiny2/snapshots/e8ed3b0c8bbf4fb6984c3de043bf7d2f4e5969ae",
         "nli_path": "./models/rubert-nli/models--cointegrated--rubert-base-cased-nli-threeway/snapshots/920cbb52ef830e94461bf141ec2119979b6049e2",
+        "qwen_namer_path": "./models/qwen2_5_1_5b_instruct/models--Qwen--Qwen2.5-1.5B-Instruct/snapshots/989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
     },
     "discovery": {
         "ngram_range": [1, 2],  # Униграммы и биграммы
@@ -33,6 +34,8 @@ config = OmegaConf.create({
         "hypothesis_template_neg": "{aspect} — это плохо",
         "batch_size": 64,
         "score_epsilon": 0.0001,
+        # Temperature scaling на логитах NLI (Guo et al., 2017); 1.0 = без изменений
+        "temperature": 1.0,
     },
     "math": {
         "prior_mean": 3.0,  # Нейтральный априор (MaxEnt)

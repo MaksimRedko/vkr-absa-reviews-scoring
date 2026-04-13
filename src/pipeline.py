@@ -30,7 +30,7 @@ from sentence_transformers import SentenceTransformer
 
 from configs.configs import config
 from src.data.loader import DataLoader
-from src.schemas.models import AggregationResult, ReviewInput, SentimentResult
+from src.schemas.models import AggregationResult, EvalData, ReviewInput, SentimentResult
 from src.stages import (
     AggregationStage, ClusteringStage, ExtractionStage,
     FraudStage, ScoringStage, SentimentStage,
@@ -160,96 +160,30 @@ class ABSAPipeline:
         if snapshot_writer:
             snapshot_writer.save_reviews(reviews)
 
-        texts = [r.clean_text for r in reviews]
-        step_t = time.time()
-
-        def _tick(step_label: str, step_idx: int) -> None:
-            nonlocal step_t
-            now = time.time()
-            seg = now - step_t
-            tot = now - t_start
-            print(
-                f"       ⏱ шаг {step_idx}/7 «{step_label}» {seg:.1f}s "
-                f"| с начала {tot:.1f}s"
-            )
-            step_t = now
-
-        # 2. AntiFraud
-        print("[2/7] AntiFraud...")
-        trust_weights = self.fraud_engine.calculate_trust_weights(texts)
-        _tick("AntiFraud", 2)
-        if snapshot_writer:
-            snapshot_writer.save_fraud([r.id for r in reviews], trust_weights)
-
-        # 3. Candidate Extraction
-        print("[3/7] Извлечение кандидатов...")
-        all_candidates, sentence_to_review = extract_all_with_mapping(
-            self.candidate_extractor,
-            texts,
-            [r.id for r in reviews],
+        stages_result = self._run_stages(
+            reviews=reviews,
+            product_id=product_id,
+            snapshot_writer=snapshot_writer,
+            t_start=t_start,
         )
-
-        print(f"       Всего кандидатов: {len(all_candidates)}")
-        _tick("кандидаты", 3)
-        if snapshot_writer:
-            review_candidates_map: Dict[str, list] = {}
-            for i, text in enumerate(
-                tqdm(texts, desc="      отзывы", leave=False, unit="шт")
-            ):
-                review_candidates_map[reviews[i].id] = self.candidate_extractor.extract(text)
-            snapshot_writer.save_candidates(review_candidates_map)
-
-        # 4. KeyBERT + MMR
-        print("[4/7] KeyBERT-скоринг + MMR...")
-        scored_candidates = self.scorer.score_and_select(all_candidates)
-        print(f"       Отобрано после MMR: {len(scored_candidates)}")
-        _tick("KeyBERT+MMR", 4)
-        if snapshot_writer:
-            snapshot_writer.save_scored(scored_candidates)
-
-        # 5. Кластеризация
-        print("[5/7] Кластеризация аспектов...")
-        aspects = self.clusterer.cluster(scored_candidates)
-        aspect_names = list(aspects.keys())
-        print(f"       Найдено аспектов: {len(aspect_names)} — {aspect_names}")
-        _tick("кластеризация", 5)
-        if snapshot_writer:
-            snapshot_writer.save_clusters(aspects)
-
-        if not aspects:
+        if not stages_result.aspects:
             return PipelineResult(
-                product_id=product_id, reviews_processed=len(reviews),
-                processing_time=time.time() - t_start, aspects={},
+                product_id=product_id,
+                reviews_processed=len(reviews),
+                processing_time=time.time() - t_start,
+                aspects={},
             )
-
-        # 6. NLI Sentiment
-        print(f"[6/7] NLI Sentiment ({len(aspect_names)} аспектов)...")
-        sentiment_pairs = build_sentiment_pairs(
-            scored_candidates=scored_candidates,
-            aspects=aspects,
-            sentence_to_review=sentence_to_review,
-            anchor_embeddings=self.clusterer._anchor_embeddings,
-            threshold=float(config.discovery.multi_label_threshold),
-            max_aspects=int(config.discovery.multi_label_max_aspects),
-        )
-        print(f"       Пар для NLI: {len(sentiment_pairs)}")
-        if snapshot_writer:
-            snapshot_writer.save_sentiment_pairs(sentiment_pairs)
-        sentiment_scores = self.sentiment_engine.batch_analyze(sentiment_pairs)
-        print(f"       Получено оценок: {len(sentiment_scores)}")
-        _tick("NLI", 6)
-        if snapshot_writer:
-            snapshot_writer.save_sentiment_results(sentiment_scores)
 
         # 7. Математическая агрегация
         print("[7/7] Агрегация...")
         aggregation_input = self._build_aggregation_input(
-            reviews, sentiment_scores, trust_weights,
+            reviews=reviews,
+            per_review=stages_result.per_review,
+            trust_weights=stages_result.trust_weights,
         )
         if snapshot_writer:
             snapshot_writer.save_aggregation_input(aggregation_input)
         agg_result = self.math_engine.aggregate(aggregation_input)
-        _tick("агрегация", 7)
 
         elapsed = time.time() - t_start
         print(f"[Pipeline] Готово за {elapsed:.1f}s")
@@ -269,14 +203,24 @@ class ABSAPipeline:
                 for name, a in agg_result.aspects.items()
             },
             aggregation=agg_result,
-            sentiment_details=sentiment_scores,
-            aspect_keywords={
-                name: info.keywords for name, info in aspects.items()
-            },
+            sentiment_details=stages_result.sentiment_results,
+            aspect_keywords=stages_result.aspect_keywords,
         )
         if snapshot_writer:
             snapshot_writer.save_pipeline_result(result)
         return result
+
+    def analyze_for_eval(
+        self,
+        reviews: List[ReviewInput],
+        product_id: int,
+        snapshot_writer: Optional[SnapshotWriter] = None,
+    ) -> EvalData:
+        return self._run_stages(
+            reviews=reviews,
+            product_id=product_id,
+            snapshot_writer=snapshot_writer,
+        )
 
     # ------------------------------------------------------------------
     # Связующие функции
@@ -285,7 +229,7 @@ class ABSAPipeline:
     def _build_aggregation_input(
         self,
         reviews: List[ReviewInput],
-        sentiment_scores: List[SentimentResult],
+        per_review: Dict[str, Dict[str, float]],
         trust_weights: List[float],
     ) -> List[Dict]:
         """
@@ -294,43 +238,141 @@ class ABSAPipeline:
         """
         review_id_to_idx = {r.id: i for i, r in enumerate(reviews)}
 
-        # Собираем оценки по review_id: (score, confidence-вес)
-        review_aspects: Dict[str, Dict[str, List[Tuple[float, float]]]] = {}
-        for sr in sentiment_scores:
-            if sr.review_id not in review_aspects:
-                review_aspects[sr.review_id] = {}
-            aspects = review_aspects[sr.review_id]
-            if sr.aspect not in aspects:
-                aspects[sr.aspect] = []
-            aspects[sr.aspect].append((sr.score, sr.confidence))
-
-        # Взвешенное среднее по аспектам внутри одного отзыва
         result = []
-        for review_id, aspects in review_aspects.items():
+        for review_id, aspects in per_review.items():
             idx = review_id_to_idx.get(review_id)
             if idx is None:
                 continue
-
-            aspect_means: Dict[str, float] = {}
-            for name, pairs_sw in aspects.items():
-                scores = [p[0] for p in pairs_sw]
-                weights = [p[1] for p in pairs_sw]
-                wsum = sum(weights)
-                if wsum > 0:
-                    aspect_means[name] = float(
-                        sum(s * w for s, w in zip(scores, weights)) / wsum
-                    )
-                else:
-                    aspect_means[name] = float(sum(scores) / len(scores))
-
             result.append({
                 "review_id": review_id,
-                "aspects": aspect_means,
+                "aspects": aspects,
                 "fraud_weight": trust_weights[idx],
                 "date": reviews[idx].created_date,
             })
 
         return result
+
+    def _run_stages(
+        self,
+        reviews: List[ReviewInput],
+        product_id: int,
+        snapshot_writer: Optional[SnapshotWriter] = None,
+        t_start: Optional[float] = None,
+    ) -> EvalData:
+        _ = product_id
+        texts = [r.clean_text for r in reviews]
+        review_ids = [r.id for r in reviews]
+        start = t_start if t_start is not None else time.time()
+        step_t = time.time()
+
+        def _tick(step_label: str, step_idx: int) -> None:
+            nonlocal step_t
+            now = time.time()
+            seg = now - step_t
+            tot = now - start
+            print(
+                f"       ⏱ шаг {step_idx}/7 «{step_label}» {seg:.1f}s "
+                f"| с начала {tot:.1f}s"
+            )
+            step_t = now
+
+        print("[2/7] AntiFraud...")
+        trust_weights = self.fraud_engine.calculate_trust_weights(texts)
+        _tick("AntiFraud", 2)
+        if snapshot_writer:
+            snapshot_writer.save_fraud(review_ids, trust_weights)
+
+        print("[3/7] Извлечение кандидатов...")
+        all_candidates, sentence_to_review = extract_all_with_mapping(
+            self.candidate_extractor,
+            texts,
+            review_ids,
+        )
+        print(f"       Всего кандидатов: {len(all_candidates)}")
+        _tick("кандидаты", 3)
+        if snapshot_writer:
+            review_candidates_map: Dict[str, list] = {}
+            for i, text in enumerate(
+                tqdm(texts, desc="      отзывы", leave=False, unit="шт")
+            ):
+                review_candidates_map[reviews[i].id] = self.candidate_extractor.extract(text)
+            snapshot_writer.save_candidates(review_candidates_map)
+
+        print("[4/7] KeyBERT-скоринг + MMR...")
+        scored_candidates = self.scorer.score_and_select(all_candidates)
+        print(f"       Отобрано после MMR: {len(scored_candidates)}")
+        _tick("KeyBERT+MMR", 4)
+        if snapshot_writer:
+            snapshot_writer.save_scored(scored_candidates)
+
+        print("[5/7] Кластеризация аспектов...")
+        aspects = self.clusterer.cluster(scored_candidates)
+        aspect_names = list(aspects.keys())
+        print(f"       Найдено аспектов: {len(aspect_names)} — {aspect_names}")
+        _tick("кластеризация", 5)
+        if snapshot_writer:
+            snapshot_writer.save_clusters(aspects)
+
+        if not aspects:
+            return EvalData(
+                aspects={},
+                sentiment_results=[],
+                sentence_to_review=sentence_to_review,
+                trust_weights=trust_weights,
+                per_review={},
+                aspect_keywords={},
+            )
+
+        print(f"[6/7] NLI Sentiment ({len(aspect_names)} аспектов)...")
+        anchor_embeddings = getattr(
+            self.clusterer,
+            "_cluster_centroids",
+            getattr(self.clusterer, "_anchor_embeddings", {}),
+        )
+        sentiment_pairs = build_sentiment_pairs(
+            scored_candidates=scored_candidates,
+            aspects=aspects,
+            sentence_to_review=sentence_to_review,
+            anchor_embeddings=anchor_embeddings,
+            threshold=float(config.discovery.multi_label_threshold),
+            max_aspects=int(config.discovery.multi_label_max_aspects),
+        )
+        print(f"       Пар для NLI: {len(sentiment_pairs)}")
+        if snapshot_writer:
+            snapshot_writer.save_sentiment_pairs(sentiment_pairs)
+        sentiment_scores = self.sentiment_engine.batch_analyze(sentiment_pairs)
+        print(f"       Получено оценок: {len(sentiment_scores)}")
+        _tick("NLI", 6)
+        if snapshot_writer:
+            snapshot_writer.save_sentiment_results(sentiment_scores)
+
+        per_review_pairs: Dict[str, Dict[str, List[Tuple[float, float]]]] = {}
+        for sr in sentiment_scores:
+            review_bucket = per_review_pairs.setdefault(sr.review_id, {})
+            review_bucket.setdefault(sr.aspect, []).append((sr.score, sr.confidence))
+
+        per_review: Dict[str, Dict[str, float]] = {}
+        for review_id, aspect_pairs in per_review_pairs.items():
+            per_review[review_id] = {}
+            for aspect_name, pairs_sw in aspect_pairs.items():
+                scores = [score for score, _ in pairs_sw]
+                weights = [weight for _, weight in pairs_sw]
+                wsum = float(sum(weights))
+                if wsum > 0:
+                    per_review[review_id][aspect_name] = float(
+                        sum(s * w for s, w in zip(scores, weights)) / wsum
+                    )
+                else:
+                    per_review[review_id][aspect_name] = float(sum(scores) / len(scores))
+
+        return EvalData(
+            aspects=aspects,
+            sentiment_results=sentiment_scores,
+            sentence_to_review=sentence_to_review,
+            trust_weights=trust_weights,
+            per_review=per_review,
+            aspect_keywords={name: info.keywords for name, info in aspects.items()},
+        )
 
     @staticmethod
     def _split_sentences(text: str) -> List[str]:

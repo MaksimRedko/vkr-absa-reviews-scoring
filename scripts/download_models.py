@@ -3,11 +3,12 @@ import os
 from pathlib import Path
 
 from sentence_transformers import SentenceTransformer
-from transformers import AutoModel, AutoTokenizer
+from transformers import AutoModel, AutoModelForCausalLM, AutoTokenizer
 
 
 RUBERT_ENCODER_MODEL = "cointegrated/rubert-tiny2"
 RUBERT_NLI_MODEL = "cointegrated/rubert-base-cased-nli-threeway"
+QWEN_NAMER_MODEL = "Qwen/Qwen2.5-1.5B-Instruct"
 
 
 def ensure_dir(path: Path) -> None:
@@ -30,6 +31,15 @@ def download_nli(cache_root: Path) -> None:
     print("[nli] Готово.")
 
 
+def download_qwen_namer(cache_root: Path) -> None:
+    qwen_dir = cache_root / "qwen2_5_1_5b_instruct"
+    print(f"[qwen] Скачиваю/проверяю {QWEN_NAMER_MODEL} (cache: {qwen_dir}) ...")
+    ensure_dir(qwen_dir)
+    AutoTokenizer.from_pretrained(QWEN_NAMER_MODEL, cache_dir=str(qwen_dir))
+    AutoModelForCausalLM.from_pretrained(QWEN_NAMER_MODEL, cache_dir=str(qwen_dir))
+    print("[qwen] Готово.")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Скачать локально модели для ABSA пайплайна."
@@ -49,6 +59,7 @@ def main() -> None:
 
     download_encoder(cache_root)
     download_nli(cache_root)
+    download_qwen_namer(cache_root)
 
     print("Все модели скачаны. Повторный запуск ничего не перекачивает.")
 
