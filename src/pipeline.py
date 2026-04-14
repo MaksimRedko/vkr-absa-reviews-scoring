@@ -39,7 +39,11 @@ from src.stages.aggregation import RatingMathEngine
 from src.stages.clustering import AspectClusterer
 from src.stages.extraction import CandidateExtractor
 from src.stages.fraud import AntiFraudEngine
-from src.stages.pairing import build_sentiment_pairs, extract_all_with_mapping
+from src.stages.pairing import (
+    build_review_level_pairs,
+    build_sentiment_pairs,
+    extract_all_with_mapping,
+)
 from src.stages.scoring import KeyBERTScorer
 from src.stages.sentiment import SentimentEngine
 from src.snapshots import SnapshotWriter
@@ -329,18 +333,37 @@ class ABSAPipeline:
             "_cluster_centroids",
             getattr(self.clusterer, "_anchor_embeddings", {}),
         )
-        sentiment_pairs = build_sentiment_pairs(
-            scored_candidates=scored_candidates,
-            aspects=aspects,
-            sentence_to_review=sentence_to_review,
-            anchor_embeddings=anchor_embeddings,
-            threshold=float(config.discovery.multi_label_threshold),
-            max_aspects=int(config.discovery.multi_label_max_aspects),
-        )
+        review_level = bool(getattr(config.sentiment, "review_level", False))
+        if review_level:
+            review_text_by_id = {
+                review_id: text
+                for review_id, text in zip(review_ids, texts)
+            }
+            sentiment_pairs = build_review_level_pairs(
+                review_text_by_id=review_text_by_id,
+                aspects=aspects,
+                anchor_embeddings=anchor_embeddings,
+            )
+        else:
+            sentiment_pairs = build_sentiment_pairs(
+                scored_candidates=scored_candidates,
+                aspects=aspects,
+                sentence_to_review=sentence_to_review,
+                anchor_embeddings=anchor_embeddings,
+                threshold=float(config.discovery.multi_label_threshold),
+                max_aspects=int(config.discovery.multi_label_max_aspects),
+            )
         print(f"       Пар для NLI: {len(sentiment_pairs)}")
         if snapshot_writer:
             snapshot_writer.save_sentiment_pairs(sentiment_pairs)
         sentiment_scores = self.sentiment_engine.batch_analyze(sentiment_pairs)
+        relevance_threshold = float(getattr(config.sentiment, "relevance_threshold", 0.0))
+        if relevance_threshold > 0:
+            sentiment_scores = [
+                s
+                for s in sentiment_scores
+                if (float(s.p_ent_pos) + float(s.p_ent_neg)) >= relevance_threshold
+            ]
         print(f"       Получено оценок: {len(sentiment_scores)}")
         _tick("NLI", 6)
         if snapshot_writer:

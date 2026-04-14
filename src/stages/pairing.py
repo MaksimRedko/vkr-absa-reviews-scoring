@@ -12,6 +12,20 @@ if TYPE_CHECKING:
 SentimentPair = Tuple[str, str, str, str, float]
 
 
+def _resolve_product_anchors(
+    aspects: Dict[str, "AspectInfo"],
+    anchor_embeddings: Dict[str, np.ndarray],
+) -> set[str]:
+    product_anchors: set[str] = set()
+    for asp_name, info in aspects.items():
+        nli = (info.nli_label or asp_name).strip() or asp_name
+        if nli in anchor_embeddings:
+            product_anchors.add(nli)
+        if asp_name in anchor_embeddings:
+            product_anchors.add(asp_name)
+    return product_anchors
+
+
 def extract_all_with_mapping(
     extractor: ExtractionStage,
     texts: List[str],
@@ -49,13 +63,7 @@ def build_sentiment_pairs(
     anchor_names = list(anchor_embeddings.keys())
     anchor_matrix = np.stack([anchor_embeddings[n] for n in anchor_names])
 
-    product_anchors: set[str] = set()
-    for asp_name, info in aspects.items():
-        nli = (info.nli_label or asp_name).strip() or asp_name
-        if nli in anchor_embeddings:
-            product_anchors.add(nli)
-        if asp_name in anchor_embeddings:
-            product_anchors.add(asp_name)
+    product_anchors = _resolve_product_anchors(aspects, anchor_embeddings)
 
     seen_pairs: set[Tuple[str, str, str]] = set()
     pairs: List[SentimentPair] = []
@@ -88,4 +96,29 @@ def build_sentiment_pairs(
             seen_pairs.add(pair_key)
             pairs.append((review_id, cand.sentence, aname, aname, float(sim)))
 
+    return pairs
+
+
+def build_review_level_pairs(
+    review_text_by_id: Dict[str, str],
+    aspects: Dict[str, "AspectInfo"],
+    anchor_embeddings: Dict[str, np.ndarray],
+) -> List[SentimentPair]:
+    """
+    Review-level режим: одна NLI-пара на (review, aspect из product_anchors).
+    Вес = 1.0, premise = clean_text отзыва.
+    """
+    if not aspects or not review_text_by_id:
+        return []
+
+    product_anchors = _resolve_product_anchors(aspects, anchor_embeddings)
+    if not product_anchors:
+        return []
+
+    pairs: List[SentimentPair] = []
+    for review_id, text in review_text_by_id.items():
+        if not text:
+            continue
+        for aspect_name in sorted(product_anchors):
+            pairs.append((review_id, text, aspect_name, aspect_name, 1.0))
     return pairs

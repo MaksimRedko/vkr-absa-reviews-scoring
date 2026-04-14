@@ -34,8 +34,11 @@ config = OmegaConf.create({
         "hypothesis_template_neg": "{aspect} — это плохо",
         "batch_size": 64,
         "score_epsilon": 0.0001,
-        # Temperature scaling на логитах NLI (Guo et al., 2017); 1.0 = без изменений
-        "temperature": 1.0,
+        # Review-level NLI (one pair per review/aspect) + post-NLI relevance filter
+        "review_level": True,
+        "relevance_threshold": 0.6,  # keep pair if p_ent_pos + p_ent_neg >= threshold
+        # Temperature scaling на логитах NLI
+        "temperature": 0.7,
     },
     "math": {
         "prior_mean": 3.0,  # Нейтральный априор (MaxEnt)
