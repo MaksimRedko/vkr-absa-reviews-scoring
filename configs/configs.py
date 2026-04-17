@@ -1,4 +1,21 @@
+from pathlib import Path
+
 from omegaconf import OmegaConf
+
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+
+
+def _resolve_model_paths(cfg: OmegaConf) -> None:
+    """Относительные пути в models.* считаются от корня репозитория (cwd не важен)."""
+    if not OmegaConf.select(cfg, "models"):
+        return
+    for key in ("encoder_path", "nli_path", "qwen_namer_path"):
+        val = cfg.models.get(key)
+        if not isinstance(val, str) or not val.strip():
+            continue
+        p = Path(val)
+        if not p.is_absolute():
+            cfg.models[key] = str((_REPO_ROOT / p).resolve())
 
 # Baseline:
 #   — NLI remap: medoid → nli_label = argmax_k cos(centroid, anchor_k) (clusterer)
@@ -58,6 +75,8 @@ config = OmegaConf.create({
     },
 })
 
+_resolve_model_paths(config)
+
 
 def make_config_with_overrides(overrides: dict) -> OmegaConf:
     """
@@ -66,4 +85,6 @@ def make_config_with_overrides(overrides: dict) -> OmegaConf:
     """
     base = OmegaConf.create(OmegaConf.to_container(config, resolve=True))
     override_cfg = OmegaConf.create(overrides or {})
-    return OmegaConf.merge(base, override_cfg)
+    merged = OmegaConf.merge(base, override_cfg)
+    _resolve_model_paths(merged)
+    return merged

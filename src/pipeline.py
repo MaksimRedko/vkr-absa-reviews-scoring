@@ -77,6 +77,7 @@ class ABSAPipeline:
         # None → используется стандартная реализация.
         # Передай любой объект, реализующий соответствующий ABC из src/stages.py,
         # и пайплайн подхватит его без других изменений.
+        encoder: Optional[SentenceTransformer] = None,
         fraud_stage: Optional[FraudStage] = None,
         extraction_stage: Optional[ExtractionStage] = None,
         scoring_stage: Optional[ScoringStage] = None,
@@ -90,7 +91,7 @@ class ABSAPipeline:
         self.loader = DataLoader(db_path)
 
         # Общая модель-энкодер (rubert-tiny2) — одна на всех
-        self._encoder = SentenceTransformer(config.models.encoder_path)
+        self._encoder = encoder or SentenceTransformer(config.models.encoder_path)
 
         # Стандартные реализации как дефолт; заменяются через DI-параметры выше
         self.candidate_extractor: ExtractionStage  = extraction_stage  or CandidateExtractor()

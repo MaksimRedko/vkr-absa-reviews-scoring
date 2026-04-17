@@ -3,14 +3,22 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List
+
+from omegaconf import OmegaConf
 
 # При запуске `python benchmark/run_benchmark.py` корень sys.path — папка benchmark/.
 # eval_pipeline и run_experiment лежат в корне проекта.
 _ROOT = Path(__file__).resolve().parent.parent
 if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
+
+# Запуск «Run Python File» без аргументов: правьте при необходимости.
+_DEFAULT_CSV = _ROOT / "benchmark" / "eval_datasets" / "combined_benchmark.csv"
+_DEFAULT_MAPPING = "auto"
+_DEFAULT_CLUSTERER = "divisive"
 
 from eval_pipeline import (
     load_markup,
@@ -22,6 +30,11 @@ from eval_pipeline import (
     set_global_seed,
 )
 from run_experiment import temporary_config_overrides
+
+
+def _json_safe(obj: Any) -> Any:
+    """Превращает вложенную структуру в JSON-совместимые типы (для YAML через OmegaConf)."""
+    return json.loads(json.dumps(obj, ensure_ascii=False, default=str))
 
 
 def _print_summary_table(
@@ -90,6 +103,16 @@ def main() -> None:
         default=42,
         help="Seed для всех генераторов (default: 42).",
     )
+    parser.add_argument(
+        "--clusterer",
+        type=str,
+        default="aspect",
+        choices=["aspect", "divisive"],
+        help=(
+            "Кластеризация: aspect — якоря + HDBSCAN (дефолт пайплайна); "
+            "divisive — UMAP + рекурсивное k-means, имена через MedoidNamer (без LLM)."
+        ),
+    )
     args = parser.parse_args()
 
     set_global_seed(args.seed)
@@ -107,6 +130,7 @@ def main() -> None:
             csv_path=csv_path,
             json_path=None,
             fraud_stage=None,
+            clusterer=args.clusterer,
         )
 
     # Подготовка структуры, аналогичной eval_experiment
@@ -139,23 +163,31 @@ def main() -> None:
     else:
         metrics["macro_mae_raw"] = None
 
-    results_dir = Path("benchmark") / "eval_datasets" / "results"
+    results_dir = _ROOT / "benchmark" / "eval_datasets" / "results"
     results_dir.mkdir(parents=True, exist_ok=True)
-    out_path = results_dir / "benchmark_results.json"
+    out_suffix = f"_{args.clusterer}" if args.clusterer != "aspect" else ""
+    run_dt = datetime.now()
+    # Имя файла: дата и время локальные, напр. benchmark_results_divisive_2026_04_17_22_05_31.yaml
+    dt_name = run_dt.strftime("%Y_%m_%d_%H_%M_%S")
+    out_path = results_dir / f"benchmark_results{out_suffix}_{dt_name}.yaml"
     payload = {
+        "saved_at": run_dt.isoformat(timespec="seconds"),
         "csv_path": csv_path,
         "nm_ids": nm_ids,
         "n_reviews": n_reviews,
+        "clusterer": args.clusterer,
         "mapping_mode": args.mapping,
         "auto_threshold": args.auto_threshold if args.mapping == "auto" else None,
         "metrics": metrics,
         "product_ratings": product_ratings,
     }
-    with out_path.open("w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False, indent=2)
+    plain = _json_safe(payload)
+    yaml_text = OmegaConf.to_yaml(OmegaConf.create(plain))
+    out_path.write_text(yaml_text, encoding="utf-8")
+    print(f"\n[benchmark] Результаты записаны: {out_path}")
 
     _print_summary_table(
-        name="Yandex Maps",
+        name=f"Yandex Maps ({args.clusterer})",
         n_venues=len(nm_ids),
         n_reviews=n_reviews,
         metrics=metrics,
@@ -169,5 +201,16 @@ if __name__ == "__main__":
         sys.stdout.reconfigure(encoding="utf-8")
     except Exception:
         pass
+    # Без аргументов — как `python benchmark/run_benchmark.py --csv ... --mapping auto --clusterer divisive`
+    if len(sys.argv) <= 1:
+        sys.argv = [
+            sys.argv[0],
+            "--csv",
+            str(_DEFAULT_CSV),
+            "--mapping",
+            _DEFAULT_MAPPING,
+            "--clusterer",
+            _DEFAULT_CLUSTERER,
+        ]
     main()
 

@@ -143,6 +143,7 @@ def run_pipeline_for_ids(
     csv_path: str,
     json_path: Optional[str] = None,
     fraud_stage=None,
+    clusterer: str = "aspect",
 ) -> Dict[int, dict]:
     """
     Прогоняет пайплайн на отзывах: по умолчанию из csv_path (как merged_checked_reviews.csv),
@@ -150,9 +151,15 @@ def run_pipeline_for_ids(
     Возвращает {nm_id: {"aspects": [...], "per_review": [{...}]}}
 
     fraud_stage: опционально подкласс FraudStage (например NoOpFraud); None → AntiFraudEngine.
+    clusterer: "aspect" — AspectClusterer (якоря + HDBSCAN остатка); "divisive" — DivisiveClusterer + MedoidNamer (без LLM, без фиксированного словаря макро-якорей для кластеризации).
     """
+    from sentence_transformers import SentenceTransformer
+
+    from configs.configs import config
     from src.pipeline import ABSAPipeline
     from src.schemas.models import ReviewInput
+    from src.stages.clustering import AspectClusterer, DivisiveClusterer
+    from src.stages.naming import MedoidNamer
 
     if json_path and os.path.isfile(json_path):
         with open(json_path, "r", encoding="utf-8") as f:
@@ -168,7 +175,19 @@ def run_pipeline_for_ids(
     for r in all_reviews_raw:
         reviews_by_nm[r["nm_id"]].append(r)
 
-    pipeline = ABSAPipeline(fraud_stage=fraud_stage)
+    encoder = SentenceTransformer(config.models.encoder_path)
+    if clusterer == "aspect":
+        clustering_stage = AspectClusterer(model=encoder)
+    elif clusterer == "divisive":
+        clustering_stage = DivisiveClusterer(model=encoder, namer=MedoidNamer())
+    else:
+        raise ValueError(f"Неизвестный clusterer={clusterer!r}; ожидается 'aspect' или 'divisive'.")
+
+    pipeline = ABSAPipeline(
+        encoder=encoder,
+        clustering_stage=clustering_stage,
+        fraud_stage=fraud_stage,
+    )
     results = {}
 
     for nm_id in nm_ids:

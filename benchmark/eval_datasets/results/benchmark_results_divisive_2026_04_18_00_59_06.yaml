@@ -1,0 +1,1080 @@
+saved_at: '2026-04-18T00:59:06'
+csv_path: D:\diploma\benchmark\eval_datasets\combined_benchmark.csv
+nm_ids:
+- 9675256
+- 165234215
+- 209269133
+- 1504973191
+- 1526918294
+- 1645864865
+- 1733494834
+- 1809358565
+n_reviews: 988
+clusterer: divisive
+mapping_mode: auto
+auto_threshold: 0.3
+metrics:
+  per_product:
+    '9675256':
+      precision: 1.0
+      recall: 0.385
+      mention_recall_product: 0.26
+      mention_recall_review: 0.11
+      mae_raw: 0.859
+      mae_calibrated: 1.025
+      calibration_a: 0.7582
+      calibration_b: 0.5607
+      mae_n: 33
+      pred_aspects:
+      - 10ки
+      - бисера
+      - брака
+      - бусины
+      - возврата
+      - качеству
+      - китайсский бисер
+      - маленькими
+      - отверстием
+      - отли
+      - продавца
+      - размер
+      - ровный фиг
+      - упаковка
+      - фото
+      - цвет
+      true_aspects:
+      - Вес
+      - Вид
+      - Доставка
+      - Качество
+      - Количество
+      - Размер
+      - Скорость
+      - Стойкость
+      - Упаковка
+      - Фактура
+      - Форма
+      - Цвет
+      - Цена
+    '165234215':
+      precision: 1.0
+      recall: 0.226
+      mention_recall_product: 0.524
+      mention_recall_review: 0.242
+      mae_raw: 0.608
+      mae_calibrated: 1.005
+      calibration_a: 0.732
+      calibration_b: 0.6568
+      mae_n: 89
+      pred_aspects:
+      - '200'
+      - деньги
+      - заброса
+      - качество
+      - леска
+      - набор
+      - первого
+      - ребёнка
+      - рыбака
+      - счёт
+      - товар
+      - цветной
+      true_aspects:
+      - Блесна
+      - Вес
+      - Вид
+      - Впечатление
+      - Гибкость
+      - Дизайн
+      - Доставка
+      - Катушка
+      - Качество
+      - Компактность
+      - Комплектация
+      - Крючок
+      - Леска
+      - Материал
+      - Наживка
+      - Поводок
+      - Приманка
+      - Продавец
+      - Размер
+      - Сборка
+      - Снасти
+      - Соответствие
+      - Состояние
+      - Спиннинг
+      - Товар
+      - Удилище
+      - Удобство
+      - Удочка
+      - Упаковка
+      - Цвет
+      - Цена
+    '209269133':
+      precision: 1.0
+      recall: 0.381
+      mention_recall_product: 0.671
+      mention_recall_review: 0.287
+      mae_raw: 0.804
+      mae_calibrated: 1.013
+      calibration_a: 0.7485
+      calibration_b: 0.6074
+      mae_n: 62
+      pred_aspects:
+      - батарейку
+      - возврате
+      - дождь
+      - жиги
+      - зажигалка
+      - звезду
+      - модели
+      - описанию
+      - продавца
+      - точно фонарик
+      - упаковка
+      - функции
+      - хорошая вещь
+      - цену
+      - циферблата
+      - часов
+      true_aspects:
+      - Аккумулятор
+      - Батарея
+      - Безопасность
+      - Дизайн
+      - Зажигалка
+      - Зарядка
+      - Инструкция
+      - Качество
+      - Комплектация
+      - Корпус
+      - Модель
+      - Надежность
+      - Продавец
+      - Размер
+      - Удобство
+      - Упаковка
+      - Фонарик
+      - Функциональность
+      - Цвет
+      - Цена
+      - Часы
+    '1504973191':
+      precision: 1.0
+      recall: 0.286
+      mention_recall_product: 0.271
+      mention_recall_review: 0.155
+      mae_raw: 1.192
+      mae_calibrated: 1.161
+      calibration_a: 0.7593
+      calibration_b: 0.6384
+      mae_n: 51
+      pred_aspects:
+      - гостиницы
+      - завтрак
+      - коврика
+      - космос
+      - мебель
+      - метро
+      - народу
+      - номеров
+      - персоналу
+      - поездки
+      - старое телевизор
+      - халаты
+      true_aspects:
+      - Архитектура
+      - Атмосфера
+      - Безопасность
+      - Белье
+      - Бронирование
+      - Вентиляция
+      - Вид
+      - Еда
+      - Запах
+      - Заселение
+      - Интерьер
+      - Инфраструктура
+      - Комфорт
+      - Кровать
+      - Мебель
+      - Номер
+      - Обслуживание
+      - Освещение
+      - Оснащение
+      - Парковка
+      - Полотенца
+      - Расположение
+      - Сантехника
+      - Состояние
+      - Уборка
+      - Фасад
+      - Цена
+      - Чистота
+    '1526918294':
+      precision: 1.0
+      recall: 0.333
+      mention_recall_product: 0.294
+      mention_recall_review: 0.164
+      mae_raw: 1.07
+      mae_calibrated: 1.155
+      calibration_a: 0.7441
+      calibration_b: 0.6875
+      mae_n: 44
+      pred_aspects:
+      - '200'
+      - аэропорт
+      - города
+      - зона
+      - кафе
+      - комнаты
+      - лавочек
+      - места
+      - ожидания
+      - парковка
+      - прохождения досмотра
+      - работники
+      - рейс
+      - стойки регистрации
+      - такси
+      - цены
+      true_aspects:
+      - Атмосфера
+      - Багаж
+      - Безопасность
+      - Вентиляция
+      - Вид
+      - Досмотр
+      - Еда
+      - Интернет
+      - Интерьер
+      - Инфраструктура
+      - Комфорт
+      - Магазины
+      - Места
+      - Навигация
+      - Оборудование
+      - Обслуживание
+      - Оплата
+      - Организация
+      - Парковка
+      - Персонал
+      - Порядок
+      - Простор
+      - Расписание
+      - Расположение
+      - Регистрация
+      - Рейсы
+      - Скорость
+      - Состояние
+      - Такси
+      - Таможня
+      - Территория
+      - Транспорт
+      - Туалет
+      - Удобство
+      - Цена
+      - Чистота
+    '1645864865':
+      precision: 1.0
+      recall: 0.182
+      mention_recall_product: 0.312
+      mention_recall_review: 0.198
+      mae_raw: 0.387
+      mae_calibrated: 0.787
+      calibration_a: 0.723
+      calibration_b: 0.7081
+      mae_n: 61
+      pred_aspects:
+      - авито
+      - вещи
+      - вопросы
+      - доставка
+      - звонки
+      - компании авито
+      - объявления
+      - персоналу
+      - площадка
+      - поддержки
+      - покупателя
+      - сервис
+      - товарищи
+      - товары
+      true_aspects:
+      - Аккаунты
+      - Алгоритмы
+      - Ассортимент
+      - Аудитория
+      - Безопасность
+      - Верификация
+      - Возврат
+      - Выбор
+      - Вывод
+      - Доставка
+      - Интерфейс
+      - Интерьер
+      - Категории
+      - Комиссия
+      - Компания
+      - Компенсация
+      - Комфорт
+      - Конфиденциальность
+      - Корзина
+      - Лента
+      - Лимиты
+      - Модерация
+      - Надежность
+      - Обновления
+      - Обслуживание
+      - Оплата
+      - Отзывы
+      - Платформа
+      - Площадка
+      - Подборки
+      - Поддержка
+      - Подписка
+      - Поиск
+      - Приложение
+      - Примерка
+      - Продвижение
+      - Профиль
+      - Публикация
+      - Пункты
+      - Размещение
+      - Расположение
+      - Рекомендации
+      - Сайт
+      - Связь
+      - Сервис
+      - Система
+      - Скорость
+      - Сотрудники
+      - Стабильность
+      - Тарифы
+      - Уведомления
+      - Удобство
+      - Фильтры
+      - Цена
+      - Цены
+    '1733494834':
+      precision: 1.0
+      recall: 0.24
+      mention_recall_product: 0.162
+      mention_recall_review: 0.094
+      mae_raw: 0.632
+      mae_calibrated: 0.706
+      calibration_a: 0.7393
+      calibration_b: 0.6572
+      mae_n: 29
+      pred_aspects:
+      - вокзал
+      - зале
+      - залом ожидания
+      - зарядки
+      - кафе
+      - косяк
+      - маленькая
+      - молодых
+      - парковка
+      - персонал
+      - платформа
+      - поезда
+      - табло
+      - туалеты
+      - утра
+      true_aspects:
+      - Атмосфера
+      - Безопасность
+      - Вместительность
+      - Еда
+      - Интерьер
+      - Информирование
+      - Комфорт
+      - Магазины
+      - Навигация
+      - Напитки
+      - Обслуживание
+      - Ожидание
+      - Охрана
+      - Парковка
+      - Перрон
+      - Планировка
+      - Подъезд
+      - Размер
+      - Расположение
+      - Скорость
+      - Такси
+      - Туалет
+      - Удобства
+      - Цена
+      - Чистота
+    '1809358565':
+      precision: 1.0
+      recall: 0.112
+      mention_recall_product: 0.342
+      mention_recall_review: 0.24
+      mae_raw: 0.491
+      mae_calibrated: 0.898
+      calibration_a: 0.7045
+      calibration_b: 0.6745
+      mae_n: 182
+      pred_aspects:
+      - аквапарк
+      - атмосфера
+      - бассейнов
+      - детям
+      - людей
+      - персонал
+      - предела
+      - развлечения
+      - раздевалок
+      - терм
+      - цене
+      - чаем
+      true_aspects:
+      - Аквапарк
+      - Ассортимент
+      - Атмосфера
+      - Баня
+      - Бар
+      - Бассейн
+      - Безопасность
+      - Браслет
+      - Буфет
+      - Ватрушки
+      - Вентиляция
+      - Вместимость
+      - Вода
+      - Воздух
+      - Волны
+      - Вход
+      - Гардероб
+      - Горки
+      - Джакузи
+      - Доступность
+      - Душевая
+      - Еда
+      - Жилеты
+      - Загруженность
+      - Зона
+      - Зонирование
+      - Инструкторы
+      - Интерьер
+      - Кафе
+      - Ключи
+      - Контингент
+      - Круги
+      - Купель
+      - Кухня
+      - Лежаки
+      - Лифт
+      - Логистика
+      - Массаж
+      - Меню
+      - Места
+      - Навигация
+      - Напитки
+      - Оборудование
+      - Обслуживание
+      - Организация
+      - Освещение
+      - Оформление
+      - Охрана
+      - Очереди
+      - Парковка
+      - Персонал
+      - Пещера
+      - Площадь
+      - Плюшки
+      - Пол
+      - Полотенца
+      - Правила
+      - Пространство
+      - Процедуры
+      - Развлечения
+      - Раздевалка
+      - Расположение
+      - Ремонт
+      - Ресторан
+      - Сауна
+      - Сервис
+      - Скидки
+      - Скорость
+      - Состояние
+      - Спа
+      - Спасатели
+      - Температура
+      - Термы
+      - Территория
+      - Туалет
+      - Тюбинги
+      - Фены
+      - Фитнес
+      - Фото
+      - Фудкорт
+      - Хаммам
+      - Хлорка
+      - Цена
+      - Чистота
+      - Шезлонги
+      - Шкафчик
+      - Шкафчики
+      - Экипировка
+      - Экстерьер
+  macro_precision: 1.0
+  macro_recall: 0.268
+  macro_mention_recall_product: 0.354
+  macro_mention_recall_review: 0.186
+  micro_precision: 1.0
+  micro_recall: 0.221
+  global_mention_recall_review: 0.193
+  global_mae_raw: 0.674
+  global_mae_calibrated: 0.958
+  global_mae_n: 551
+  calibration_global:
+    a: 0.7404
+    b: 0.647
+  macro_mae_raw: 0.755375
+product_ratings:
+  per_product:
+    '9675256':
+      aspects:
+      - aspect: Вес
+        true_avg: 3.71
+        true_avg_all: 2.82
+        true_avg_matched: 3.71
+        pred_avg: 3.57
+        error: 0.14
+        n_true: 11
+        n_true_matched: 7
+        n_pred: 96
+      - aspect: Упаковка
+        true_avg: 2.56
+        true_avg_all: 2.13
+        true_avg_matched: 2.56
+        pred_avg: 3.36
+        error: 0.8
+        n_true: 31
+        n_true_matched: 16
+        n_pred: 83
+      - aspect: Цвет
+        true_avg: 3.33
+        true_avg_all: 3.11
+        true_avg_matched: 3.33
+        pred_avg: 3.32
+        error: 0.01
+        n_true: 18
+        n_true_matched: 6
+        n_pred: 31
+      - aspect: Цена
+        true_avg: 3.75
+        true_avg_all: 3.88
+        true_avg_matched: 3.75
+        pred_avg: 3.32
+        error: 0.43
+        n_true: 8
+        n_true_matched: 4
+        n_pred: 104
+      product_mae: 0.345
+      product_mae_unfiltered: 0.345
+      n_aspects_compared: 4
+    '165234215':
+      aspects:
+      - aspect: Впечатление
+        true_avg: 5.0
+        true_avg_all: 4.86
+        true_avg_matched: 5.0
+        pred_avg: 3.97
+        error: 1.03
+        n_true: 58
+        n_true_matched: 27
+        n_pred: 71
+      - aspect: Качество
+        true_avg: 2.71
+        true_avg_all: 2.25
+        true_avg_matched: 2.71
+        pred_avg: 3.88
+        error: 1.17
+        n_true: 68
+        n_true_matched: 31
+        n_pred: 75
+      - aspect: Комплектация
+        true_avg: 3.71
+        true_avg_all: 2.93
+        true_avg_matched: 3.71
+        pred_avg: 3.82
+        error: 0.11
+        n_true: 28
+        n_true_matched: 14
+        n_pred: 81
+      - aspect: Леска
+        true_avg: 1.86
+        true_avg_all: 1.55
+        true_avg_matched: 1.86
+        pred_avg: 3.25
+        error: 1.39
+        n_true: 11
+        n_true_matched: 7
+        n_pred: 46
+      - aspect: Состояние
+        true_avg: 5.0
+        true_avg_all: 3.67
+        true_avg_matched: 5.0
+        pred_avg: 3.66
+        error: 1.34
+        n_true: 6
+        n_true_matched: 1
+        n_pred: 60
+      - aspect: Товар
+        true_avg: 5.0
+        true_avg_all: 5.0
+        true_avg_matched: 5.0
+        pred_avg: 4.49
+        error: 0.51
+        n_true: 1
+        n_true_matched: 1
+        n_pred: 36
+      - aspect: Цена
+        true_avg: 5.0
+        true_avg_all: 4.9
+        true_avg_matched: 5.0
+        pred_avg: 4.26
+        error: 0.74
+        n_true: 21
+        n_true_matched: 8
+        n_pred: 18
+      product_mae: 0.963
+      product_mae_unfiltered: 0.899
+      n_aspects_compared: 7
+    '209269133':
+      aspects:
+      - aspect: Зажигалка
+        true_avg: 4.76
+        true_avg_all: 4.63
+        true_avg_matched: 4.76
+        pred_avg: 4.41
+        error: 0.35
+        n_true: 27
+        n_true_matched: 21
+        n_pred: 33
+      - aspect: Зарядка
+        true_avg: 5.0
+        true_avg_all: 5.0
+        true_avg_matched: 5.0
+        pred_avg: 4.49
+        error: 0.51
+        n_true: 1
+        n_true_matched: 1
+        n_pred: 30
+      - aspect: Комплектация
+        true_avg: 4.5
+        true_avg_all: 2.4
+        true_avg_matched: 4.5
+        pred_avg: 3.95
+        error: 0.55
+        n_true: 5
+        n_true_matched: 2
+        n_pred: 59
+      - aspect: Модель
+        true_avg: 1.0
+        true_avg_all: 1.1
+        true_avg_matched: 1.0
+        pred_avg: 4.47
+        error: 3.47
+        n_true: 29
+        n_true_matched: 1
+        n_pred: 1
+      - aspect: Продавец
+        true_avg: 1.0
+        true_avg_all: 1.0
+        true_avg_matched: 1.0
+        pred_avg: 2.0
+        error: 1.0
+        n_true: 7
+        n_true_matched: 2
+        n_pred: 4
+      - aspect: Упаковка
+        true_avg: 5.0
+        true_avg_all: 5.0
+        true_avg_matched: 5.0
+        pred_avg: 3.92
+        error: 1.08
+        n_true: 2
+        n_true_matched: 1
+        n_pred: 18
+      - aspect: Цена
+        true_avg: 5.0
+        true_avg_all: 3.0
+        true_avg_matched: 5.0
+        pred_avg: 3.82
+        error: 1.18
+        n_true: 2
+        n_true_matched: 1
+        n_pred: 13
+      - aspect: Часы
+        true_avg: 1.67
+        true_avg_all: 1.36
+        true_avg_matched: 1.67
+        pred_avg: 2.28
+        error: 0.61
+        n_true: 72
+        n_true_matched: 33
+        n_pred: 35
+      product_mae: 1.196
+      product_mae_unfiltered: 1.094
+      n_aspects_compared: 8
+    '1504973191':
+      aspects:
+      - aspect: Комфорт
+        true_avg: 1.0
+        true_avg_all: 1.0
+        true_avg_matched: 1.0
+        pred_avg: 4.83
+        error: 3.83
+        n_true: 1
+        n_true_matched: 1
+        n_pred: 26
+      - aspect: Мебель
+        true_avg: 1.5
+        true_avg_all: 1.47
+        true_avg_matched: 1.5
+        pred_avg: 3.98
+        error: 2.48
+        n_true: 17
+        n_true_matched: 14
+        n_pred: 41
+      - aspect: Номер
+        true_avg: 4.0
+        true_avg_all: 3.75
+        true_avg_matched: 4.0
+        pred_avg: 4.3
+        error: 0.3
+        n_true: 16
+        n_true_matched: 13
+        n_pred: 41
+      - aspect: Обслуживание
+        true_avg: 3.63
+        true_avg_all: 3.36
+        true_avg_matched: 3.63
+        pred_avg: 4.19
+        error: 0.55
+        n_true: 33
+        n_true_matched: 19
+        n_pred: 25
+      - aspect: Состояние
+        true_avg: 2.0
+        true_avg_all: 2.0
+        true_avg_matched: 2.0
+        pred_avg: 4.1
+        error: 2.1
+        n_true: 1
+        n_true_matched: 1
+        n_pred: 43
+      - aspect: Уборка
+        true_avg: 1.5
+        true_avg_all: 2.25
+        true_avg_matched: 1.5
+        pred_avg: 4.17
+        error: 2.67
+        n_true: 4
+        n_true_matched: 2
+        n_pred: 17
+      - aspect: Цена
+        true_avg: 5.0
+        true_avg_all: 3.57
+        true_avg_matched: 5.0
+        pred_avg: 5.0
+        error: 0.0
+        n_true: 14
+        n_true_matched: 1
+        n_pred: 6
+      product_mae: 1.2
+      product_mae_unfiltered: 1.704
+      n_aspects_compared: 7
+    '1526918294':
+      aspects:
+      - aspect: Комфорт
+        true_avg: 5.0
+        true_avg_all: 5.0
+        true_avg_matched: 5.0
+        pred_avg: 3.28
+        error: 1.72
+        n_true: 1
+        n_true_matched: 1
+        n_pred: 34
+      - aspect: Магазины
+        true_avg: 5.0
+        true_avg_all: 5.0
+        true_avg_matched: 5.0
+        pred_avg: 3.66
+        error: 1.34
+        n_true: 4
+        n_true_matched: 2
+        n_pred: 10
+      - aspect: Места
+        true_avg: 2.2
+        true_avg_all: 2.28
+        true_avg_matched: 2.2
+        pred_avg: 3.28
+        error: 1.08
+        n_true: 25
+        n_true_matched: 15
+        n_pred: 43
+      - aspect: Парковка
+        true_avg: 3.75
+        true_avg_all: 3.4
+        true_avg_matched: 3.75
+        pred_avg: 2.5
+        error: 1.25
+        n_true: 5
+        n_true_matched: 4
+        n_pred: 18
+      - aspect: Регистрация
+        true_avg: 3.67
+        true_avg_all: 2.29
+        true_avg_matched: 3.67
+        pred_avg: 3.18
+        error: 0.49
+        n_true: 7
+        n_true_matched: 3
+        n_pred: 48
+      - aspect: Рейсы
+        true_avg: 5.0
+        true_avg_all: 5.0
+        true_avg_matched: 5.0
+        pred_avg: 3.42
+        error: 1.58
+        n_true: 2
+        n_true_matched: 2
+        n_pred: 48
+      - aspect: Такси
+        true_avg: 2.0
+        true_avg_all: 2.8
+        true_avg_matched: 2.0
+        pred_avg: 2.1
+        error: 0.1
+        n_true: 10
+        n_true_matched: 2
+        n_pred: 4
+      - aspect: Территория
+        true_avg: 3.0
+        true_avg_all: 3.67
+        true_avg_matched: 3.0
+        pred_avg: 3.34
+        error: 0.34
+        n_true: 3
+        n_true_matched: 2
+        n_pred: 41
+      - aspect: Цена
+        true_avg: 1.38
+        true_avg_all: 1.78
+        true_avg_matched: 1.38
+        pred_avg: 3.16
+        error: 1.77
+        n_true: 18
+        n_true_matched: 13
+        n_pred: 25
+      product_mae: 0.91
+      product_mae_unfiltered: 1.074
+      n_aspects_compared: 9
+    '1645864865':
+      aspects:
+      - aspect: Доставка
+        true_avg: 3.95
+        true_avg_all: 3.91
+        true_avg_matched: 3.95
+        pred_avg: 4.15
+        error: 0.2
+        n_true: 35
+        n_true_matched: 21
+        n_pred: 59
+      - aspect: Платформа
+        true_avg: 5.0
+        true_avg_all: 5.0
+        true_avg_matched: 5.0
+        pred_avg: 4.42
+        error: 0.58
+        n_true: 2
+        n_true_matched: 2
+        n_pred: 51
+      - aspect: Поддержка
+        true_avg: 2.21
+        true_avg_all: 2.03
+        true_avg_matched: 2.21
+        pred_avg: 4.07
+        error: 1.86
+        n_true: 33
+        n_true_matched: 19
+        n_pred: 52
+      - aspect: Связь
+        true_avg: 2.0
+        true_avg_all: 2.0
+        true_avg_matched: 2.0
+        pred_avg: 2.87
+        error: 0.87
+        n_true: 1
+        n_true_matched: 1
+        n_pred: 23
+      - aspect: Сервис
+        true_avg: 4.47
+        true_avg_all: 4.55
+        true_avg_matched: 4.47
+        pred_avg: 4.15
+        error: 0.32
+        n_true: 20
+        n_true_matched: 17
+        n_pred: 62
+      - aspect: Цена
+        true_avg: 2.0
+        true_avg_all: 2.0
+        true_avg_matched: 2.0
+        pred_avg: 4.03
+        error: 2.03
+        n_true: 1
+        n_true_matched: 1
+        n_pred: 66
+      product_mae: 0.793
+      product_mae_unfiltered: 0.977
+      n_aspects_compared: 6
+    '1733494834':
+      aspects:
+      - aspect: Комфорт
+        true_avg: 5.0
+        true_avg_all: 3.67
+        true_avg_matched: 5.0
+        pred_avg: 3.11
+        error: 1.89
+        n_true: 3
+        n_true_matched: 1
+        n_pred: 39
+      - aspect: Напитки
+        true_avg: 3.67
+        true_avg_all: 3.67
+        true_avg_matched: 3.67
+        pred_avg: 3.61
+        error: 0.06
+        n_true: 3
+        n_true_matched: 3
+        n_pred: 33
+      - aspect: Ожидание
+        true_avg: 3.36
+        true_avg_all: 2.86
+        true_avg_matched: 3.36
+        pred_avg: 3.49
+        error: 0.12
+        n_true: 21
+        n_true_matched: 11
+        n_pred: 49
+      - aspect: Парковка
+        true_avg: 2.23
+        true_avg_all: 2.18
+        true_avg_matched: 2.23
+        pred_avg: 3.13
+        error: 0.89
+        n_true: 17
+        n_true_matched: 13
+        n_pred: 56
+      - aspect: Такси
+        true_avg: 1.0
+        true_avg_all: 1.0
+        true_avg_matched: 1.0
+        pred_avg: 3.92
+        error: 2.92
+        n_true: 1
+        n_true_matched: 1
+        n_pred: 46
+      product_mae: 0.74
+      product_mae_unfiltered: 1.176
+      n_aspects_compared: 5
+    '1809358565':
+      aspects:
+      - aspect: Аквапарк
+        true_avg: 4.38
+        true_avg_all: 4.27
+        true_avg_matched: 4.38
+        pred_avg: 4.53
+        error: 0.15
+        n_true: 67
+        n_true_matched: 50
+        n_pred: 79
+      - aspect: Атмосфера
+        true_avg: 4.08
+        true_avg_all: 4.0
+        true_avg_matched: 4.08
+        pred_avg: 4.34
+        error: 0.27
+        n_true: 16
+        n_true_matched: 13
+        n_pred: 119
+      - aspect: Бассейн
+        true_avg: 4.44
+        true_avg_all: 4.19
+        true_avg_matched: 4.44
+        pred_avg: 4.43
+        error: 0.01
+        n_true: 47
+        n_true_matched: 34
+        n_pred: 59
+      - aspect: Вместимость
+        true_avg: 1.33
+        true_avg_all: 1.4
+        true_avg_matched: 1.33
+        pred_avg: 4.23
+        error: 2.9
+        n_true: 5
+        n_true_matched: 3
+        n_pred: 92
+      - aspect: Персонал
+        true_avg: 4.42
+        true_avg_all: 3.9
+        true_avg_matched: 4.42
+        pred_avg: 4.34
+        error: 0.08
+        n_true: 29
+        n_true_matched: 19
+        n_pred: 34
+      - aspect: Скидки
+        true_avg: 3.0
+        true_avg_all: 3.0
+        true_avg_matched: 3.0
+        pred_avg: 4.45
+        error: 1.45
+        n_true: 2
+        n_true_matched: 2
+        n_pred: 117
+      - aspect: Состояние
+        true_avg: 1.0
+        true_avg_all: 1.5
+        true_avg_matched: 1.0
+        pred_avg: 4.45
+        error: 3.45
+        n_true: 4
+        n_true_matched: 1
+        n_pred: 52
+      - aspect: Термы
+        true_avg: 4.53
+        true_avg_all: 4.47
+        true_avg_matched: 4.53
+        pred_avg: 4.4
+        error: 0.12
+        n_true: 57
+        n_true_matched: 40
+        n_pred: 89
+      - aspect: Цена
+        true_avg: 3.0
+        true_avg_all: 3.07
+        true_avg_matched: 3.0
+        pred_avg: 3.96
+        error: 0.96
+        n_true: 30
+        n_true_matched: 20
+        n_pred: 33
+      product_mae: 0.992
+      product_mae_unfiltered: 1.043
+      n_aspects_compared: 9
+  global_product_mae: 1.076
+  global_product_mae_filtered: 0.924
+  macro_product_mae: 0.892
+  n_pairs: 55
+  n_pairs_filtered: 42
