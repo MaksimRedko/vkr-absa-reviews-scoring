@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import OrderedDict
 from typing import List
 
 import numpy as np
@@ -18,6 +19,40 @@ class KeyBERTScorer(ScoringStage):
         self.keybert_top_k: int = config.discovery.keybert_top_k
         self.mmr_lambda: float = config.discovery.mmr_lambda
         self.mmr_top_k: int = config.discovery.mmr_top_k
+        self._emb_cache: OrderedDict[str, np.ndarray] = OrderedDict()
+        self._emb_cache_max = int(
+            getattr(config.discovery, "embedding_cache_max", 10000) or 0
+        )
+
+    # ------------------------------------------------------------------
+    # Кэш эмбеддингов по строке (LRU)
+    # ------------------------------------------------------------------
+    def _embed_strings_cached(self, texts: List[str]) -> dict[str, np.ndarray]:
+        if not texts:
+            return {}
+        if self._emb_cache_max <= 0:
+            vecs = self.model.encode(texts, show_progress_bar=False)
+            return {t: np.asarray(v, dtype=np.float32) for t, v in zip(texts, vecs)}
+
+        out: dict[str, np.ndarray] = {}
+        missing: List[str] = []
+        for t in texts:
+            if t in self._emb_cache:
+                self._emb_cache.move_to_end(t)
+                out[t] = self._emb_cache[t]
+            else:
+                missing.append(t)
+        if missing:
+            new_vecs = self.model.encode(missing, show_progress_bar=False)
+            for t, v in zip(missing, new_vecs):
+                arr = np.asarray(v, dtype=np.float32)
+                self._emb_cache[t] = arr
+                self._emb_cache.move_to_end(t)
+                while len(self._emb_cache) > self._emb_cache_max:
+                    self._emb_cache.popitem(last=False)
+            for t in missing:
+                out[t] = self._emb_cache[t]
+        return out
 
     # ------------------------------------------------------------------
     # Публичный API
@@ -30,12 +65,10 @@ class KeyBERTScorer(ScoringStage):
 
         # Детерминированный порядок устраняет дрейф между запусками.
         sentences_unique = sorted({c.sentence for c in candidates})
-        sent_embs = self.model.encode(sentences_unique, show_progress_bar=False)
-        sent_to_emb: dict[str, np.ndarray] = dict(zip(sentences_unique, sent_embs))
+        sent_to_emb = self._embed_strings_cached(sentences_unique)
 
         spans_unique = sorted({c.span for c in candidates})
-        span_embs = self.model.encode(spans_unique, show_progress_bar=False)
-        span_to_emb: dict[str, np.ndarray] = dict(zip(spans_unique, span_embs))
+        span_to_emb = self._embed_strings_cached(spans_unique)
 
         by_sentence: dict[str, list[Candidate]] = {}
         for c in candidates:

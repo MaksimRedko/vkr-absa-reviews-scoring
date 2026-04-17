@@ -11,10 +11,13 @@
 
 В SentimentResult: p_ent_pos = P(entailment), p_ent_neg = P(contradiction)
 (имена полей сохранены для совместимости с фильтром релевантности и снепшотами).
+
+Кэш LRU по паре (premise, hypothesis) на уровне инстанса (см. sentiment.nli_pair_cache_max).
 """
 
 from __future__ import annotations
 
+from collections import OrderedDict
 from pathlib import Path
 from typing import List, Optional, Tuple, Union
 
@@ -68,6 +71,11 @@ class SentimentEngine(SentimentStage):
         self.batch_size: int = config.sentiment.batch_size
         self.epsilon: float = config.sentiment.score_epsilon
         self.temperature: float = float(config.sentiment.temperature)
+
+        self._nli_cache: OrderedDict[tuple[str, str], np.ndarray] = OrderedDict()
+        self._nli_cache_max = int(
+            getattr(config.sentiment, "nli_pair_cache_max", 50000) or 0
+        )
 
         self.model: Optional[AutoModelForSequenceClassification] = None
         self._ort_session = None
@@ -171,7 +179,52 @@ class SentimentEngine(SentimentStage):
     def _forward_logits_tensor(
         self, premises: List[str], hypotheses: List[str]
     ) -> torch.Tensor:
-        """Сырые логиты (B, num_labels), float32; при ONNX — CPU tensor."""
+        """Сырые логиты (B, num_labels); LRU по (premise, hypothesis)."""
+        assert len(premises) == len(hypotheses)
+        n = len(premises)
+        if n == 0:
+            return torch.zeros(0, self.num_labels)
+
+        if self._nli_cache_max <= 0:
+            return self._uncached_forward_logits_tensor(premises, hypotheses)
+
+        keys = list(zip(premises, hypotheses))
+        row_vecs: List[Optional[np.ndarray]] = [None] * n
+        miss_idx: List[int] = []
+
+        for i, key in enumerate(keys):
+            if key in self._nli_cache:
+                self._nli_cache.move_to_end(key)
+                row_vecs[i] = self._nli_cache[key]
+            else:
+                miss_idx.append(i)
+
+        for start in range(0, len(miss_idx), self.batch_size):
+            chunk_i = miss_idx[start : start + self.batch_size]
+            sub_p = [premises[i] for i in chunk_i]
+            sub_h = [hypotheses[i] for i in chunk_i]
+            logits = self._uncached_forward_logits_tensor(sub_p, sub_h)
+            mat = logits.detach().cpu().numpy().astype(np.float32)
+            for row, orig_i in enumerate(chunk_i):
+                key = keys[orig_i]
+                vec = mat[row].copy()
+                self._nli_cache[key] = vec
+                self._nli_cache.move_to_end(key)
+                while len(self._nli_cache) > self._nli_cache_max:
+                    self._nli_cache.popitem(last=False)
+                row_vecs[orig_i] = vec
+
+        vecs_np = [row_vecs[i] for i in range(n)]
+        assert all(v is not None for v in vecs_np)
+        stacked = torch.from_numpy(np.stack(vecs_np, axis=0))
+        if not self._use_onnx and self.model is not None:
+            stacked = stacked.to(self.device)
+        return stacked
+
+    def _uncached_forward_logits_tensor(
+        self, premises: List[str], hypotheses: List[str]
+    ) -> torch.Tensor:
+        """Один вызов модели / ORT без кэша."""
         if self._use_onnx:
             assert self._ort_session is not None
             inputs = self.tokenizer(

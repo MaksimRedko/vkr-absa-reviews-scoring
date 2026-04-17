@@ -46,6 +46,7 @@ config = OmegaConf.create({
         "cluster_merge_threshold": 0.95,  # Евклидов порог мержа в UMAP R5 (residual кластеры)
         "multi_label_threshold": 0.4,   # cosine: span → anchor для NLI-пар
         "multi_label_max_aspects": 3,    # макс. якорей на один (sentence, span)
+        "embedding_cache_max": 10000,  # LRU по строке для encode в KeyBERTScorer
     },
     "sentiment": {
         # Baseline B: {aspect} = nli_label (якорь для medoid-кластеров)
@@ -55,6 +56,7 @@ config = OmegaConf.create({
         "batch_size": 64,
         # Потоки CPU для onnxruntime (только при nli_onnx_quantized_path)
         "ort_intra_op_num_threads": 4,
+        "nli_pair_cache_max": 50000,  # LRU (premise, hypothesis) → logits в SentimentEngine
         "score_epsilon": 0.0001,
         # Review-level NLI (one pair per review/aspect) + post-NLI relevance filter
         "review_level": True,
