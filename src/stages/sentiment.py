@@ -15,11 +15,16 @@
 
 from __future__ import annotations
 
-from typing import List, Tuple, Union
+from pathlib import Path
+from typing import List, Optional, Tuple, Union
 
 import numpy as np
 import torch
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from transformers import (
+    AutoConfig,
+    AutoModelForSequenceClassification,
+    AutoTokenizer,
+)
 
 from configs.configs import config
 from src.schemas.models import SentimentResult
@@ -38,41 +43,101 @@ class SentimentEngine(SentimentStage):
 
     Один forward на батч пар (premise, hypothesis).
     Score = 1 + 4 · P_ent / (P_ent + P_contra + ε)
+
+    Инференс: PyTorch (GPU/CPU) или ONNX Runtime INT8 на CPU, если задан
+    `config.models.nli_onnx_quantized_path` и файл существует.
     """
 
     def __init__(self):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.model = AutoModelForSequenceClassification.from_pretrained(
-            config.models.nli_path,
-            local_files_only=True,
-        ).to(self.device)
         self.tokenizer = AutoTokenizer.from_pretrained(
             config.models.nli_path,
             local_files_only=True,
         )
-        self.model.eval()
+        hf_cfg = AutoConfig.from_pretrained(
+            config.models.nli_path,
+            local_files_only=True,
+        )
+        self.num_labels = int(hf_cfg.num_labels)
+        self.id2label = hf_cfg.id2label
+        self.ent_idx, self.contra_idx = self._ent_contra_indices(
+            self.id2label, self.num_labels
+        )
 
         self.h_template: str = config.sentiment.hypothesis_template_pos
         self.batch_size: int = config.sentiment.batch_size
         self.epsilon: float = config.sentiment.score_epsilon
         self.temperature: float = float(config.sentiment.temperature)
 
-        self.num_labels = self.model.config.num_labels
-        self.id2label = self.model.config.id2label
+        self.model: Optional[AutoModelForSequenceClassification] = None
+        self._ort_session = None
+        self._use_onnx = False
 
-        self.ent_idx = 0
-        self.contra_idx = 0
-        for idx, label in self.id2label.items():
+        onnx_path_str = getattr(config.models, "nli_onnx_quantized_path", "") or ""
+        onnx_path = Path(onnx_path_str) if onnx_path_str.strip() else None
+
+        try:
+            import onnxruntime as ort  # type: ignore import-not-found
+        except ImportError:
+            ort = None
+
+        if (
+            onnx_path is not None
+            and onnx_path.is_file()
+            and ort is not None
+        ):
+            opts = ort.SessionOptions()
+            threads = int(
+                getattr(config.sentiment, "ort_intra_op_num_threads", 4) or 0
+            )
+            if threads > 0:
+                opts.intra_op_num_threads = threads
+            self._ort_session = ort.InferenceSession(
+                str(onnx_path),
+                sess_options=opts,
+                providers=["CPUExecutionProvider"],
+            )
+            self._use_onnx = True
+            print(
+                f"[SentimentEngine v4] ONNX INT8, {self.num_labels} classes, "
+                f"ent_idx={self.ent_idx}, contra_idx={self.contra_idx}, "
+                f"model={onnx_path.name}"
+            )
+        else:
+            if onnx_path_str.strip() and onnx_path is not None and not onnx_path.is_file():
+                print(
+                    f"[SentimentEngine v4] ONNX не найден ({onnx_path}), "
+                    "используется PyTorch NLI."
+                )
+            elif onnx_path_str.strip() and ort is None:
+                print(
+                    "[SentimentEngine v4] onnxruntime не установлен — PyTorch NLI."
+                )
+            self.model = AutoModelForSequenceClassification.from_pretrained(
+                config.models.nli_path,
+                local_files_only=True,
+            ).to(self.device)
+            self.model.eval()
+            print(
+                f"[SentimentEngine v4] PyTorch, single-hypothesis, {self.num_labels} classes, "
+                f"ent_idx={self.ent_idx}, contra_idx={self.contra_idx}, device={self.device}"
+            )
+
+    @staticmethod
+    def _ent_contra_indices(id2label: dict, num_labels: int) -> Tuple[int, int]:
+        ent_idx = 0
+        contra_idx = 0
+        for idx, label in id2label.items():
             lab = str(label).lower()
             if lab == "entailment":
-                self.ent_idx = int(idx)
+                ent_idx = int(idx)
             if lab == "contradiction":
-                self.contra_idx = int(idx)
-
-        print(
-            f"[SentimentEngine v4] single-hypothesis, {self.num_labels} classes, "
-            f"ent_idx={self.ent_idx}, contra_idx={self.contra_idx}, device={self.device}"
-        )
+                contra_idx = int(idx)
+        if ent_idx != contra_idx:
+            return ent_idx, contra_idx
+        if num_labels >= 3:
+            return 2, 0
+        return ent_idx, contra_idx
 
     def batch_analyze(
         self,
@@ -106,7 +171,24 @@ class SentimentEngine(SentimentStage):
     def _forward_logits_tensor(
         self, premises: List[str], hypotheses: List[str]
     ) -> torch.Tensor:
-        """Сырые логиты (B, num_labels) на device."""
+        """Сырые логиты (B, num_labels), float32; при ONNX — CPU tensor."""
+        if self._use_onnx:
+            assert self._ort_session is not None
+            inputs = self.tokenizer(
+                premises,
+                hypotheses,
+                padding=True,
+                truncation=True,
+                return_tensors="pt",
+            )
+            ort_inputs = {
+                "input_ids": inputs["input_ids"].numpy().astype(np.int64),
+                "attention_mask": inputs["attention_mask"].numpy().astype(np.int64),
+            }
+            logits_np = self._ort_session.run(["logits"], ort_inputs)[0]
+            return torch.from_numpy(np.asarray(logits_np, dtype=np.float32))
+
+        assert self.model is not None
         inputs = self.tokenizer(
             premises,
             hypotheses,

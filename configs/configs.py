@@ -9,7 +9,7 @@ def _resolve_model_paths(cfg: OmegaConf) -> None:
     """Относительные пути в models.* считаются от корня репозитория (cwd не важен)."""
     if not OmegaConf.select(cfg, "models"):
         return
-    for key in ("encoder_path", "nli_path", "qwen_namer_path"):
+    for key in ("encoder_path", "nli_path", "nli_onnx_quantized_path", "qwen_namer_path"):
         val = cfg.models.get(key)
         if not isinstance(val, str) or not val.strip():
             continue
@@ -26,6 +26,8 @@ config = OmegaConf.create({
     "models": {
         "encoder_path": "./scripts/models/models--cointegrated--rubert-tiny2/snapshots/e8ed3b0c8bbf4fb6984c3de043bf7d2f4e5969ae",
         "nli_path": "./models/rubert-nli/models--cointegrated--rubert-base-cased-nli-threeway/snapshots/920cbb52ef830e94461bf141ec2119979b6049e2",
+        # INT8 ONNX: см. scripts/export_nli_onnx.py; непустой путь + существующий файл → ORT
+        "nli_onnx_quantized_path": "",
         "qwen_namer_path": "./models/qwen2_5_1_5b_instruct/models--Qwen--Qwen2.5-1.5B-Instruct/snapshots/989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
     },
     "discovery": {
@@ -51,6 +53,8 @@ config = OmegaConf.create({
         "hypothesis_template_pos": "{aspect} — это хорошо",
         "hypothesis_template_neg": "{aspect} — это плохо",  # legacy, SentimentEngine v4 не использует
         "batch_size": 64,
+        # Потоки CPU для onnxruntime (только при nli_onnx_quantized_path)
+        "ort_intra_op_num_threads": 4,
         "score_epsilon": 0.0001,
         # Review-level NLI (one pair per review/aspect) + post-NLI relevance filter
         "review_level": True,
