@@ -73,6 +73,7 @@ class SentimentResult:
     aspect: str
     sentence: str
     score: float
+    # NLI v4 (single hypothesis): entailment / contradiction из одного трёхклассового softmax
     p_ent_pos: float
     p_ent_neg: float
     confidence: float = 1.0

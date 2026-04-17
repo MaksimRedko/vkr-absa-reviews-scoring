@@ -363,6 +363,7 @@ class ABSAPipeline:
             sentiment_scores = [
                 s
                 for s in sentiment_scores
+                # v4: P(ent)+P(contra) = 1 - P(neutral)
                 if (float(s.p_ent_pos) + float(s.p_ent_neg)) >= relevance_threshold
             ]
         print(f"       Получено оценок: {len(sentiment_scores)}")

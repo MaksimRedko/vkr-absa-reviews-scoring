@@ -47,13 +47,15 @@ config = OmegaConf.create({
     },
     "sentiment": {
         # Baseline B: {aspect} = nli_label (якорь для medoid-кластеров)
+        # Одна гипотеза (v4): используется только hypothesis_template_pos.
         "hypothesis_template_pos": "{aspect} — это хорошо",
-        "hypothesis_template_neg": "{aspect} — это плохо",
+        "hypothesis_template_neg": "{aspect} — это плохо",  # legacy, SentimentEngine v4 не использует
         "batch_size": 64,
         "score_epsilon": 0.0001,
         # Review-level NLI (one pair per review/aspect) + post-NLI relevance filter
         "review_level": True,
-        "relevance_threshold": 0.6,  # keep pair if p_ent_pos + p_ent_neg >= threshold
+        # v4: p_ent_pos=P(entailment), p_ent_neg=P(contradiction) → сумма = 1 - P(neutral)
+        "relevance_threshold": 0.6,  # оставить пару, если p_ent_pos + p_ent_neg >= порога
         # Temperature scaling на логитах NLI
         "temperature": 0.7,
     },
