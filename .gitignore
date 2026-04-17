@@ -31,6 +31,11 @@ experiments/registry.jsonl
 experiments/hypothesis_experiment.md
 tests
 
+benchmark/raw/
+benchmark/batches/
+benchmark/labels/
+benchmark/eda/cache/
+
 
 # Environments
 .venv/

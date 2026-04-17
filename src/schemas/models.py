@@ -32,15 +32,16 @@ class ReviewInput(BaseModel):
 
     @property
     def clean_text(self) -> str:
-        """Склейка трёх текстовых полей в один текст для анализа."""
-        parts = []
-        if self.pros and len(str(self.pros)) > 2:
-            parts.append(str(self.pros).strip())
-        if self.cons and len(str(self.cons)) > 2:
-            parts.append(str(self.cons).strip())
-        if self.full_text and len(str(self.full_text)) > 2:
-            parts.append(str(self.full_text).strip())
-        return " ".join(parts)
+        """Текст отзыва для анализа."""
+        return (self.full_text or "").strip()
+        # parts = []
+        # if self.pros and len(str(self.pros)) > 2:
+        #     parts.append(str(self.pros).strip())
+        # if self.cons and len(str(self.cons)) > 2:
+        #     parts.append(str(self.cons).strip())
+        # if self.full_text and len(str(self.full_text)) > 2:
+        #     parts.append(str(self.full_text).strip())
+        # return " ".join(parts)
 
 
 @dataclass

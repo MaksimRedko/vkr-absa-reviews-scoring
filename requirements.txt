@@ -28,3 +28,6 @@ requests
 
 # Tests
 pytest>=7.4.0
+
+# Benchmark / datasets
+datasets>=2.19.0
