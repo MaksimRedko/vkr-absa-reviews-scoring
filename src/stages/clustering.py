@@ -28,7 +28,7 @@ from sklearn.metrics import pairwise_distances
 from sklearn.metrics.pairwise import cosine_similarity
 
 from configs.configs import config
-from src.schemas.models import AspectInfo, ScoredCandidate
+from src.schemas.models import AspectInfo, PairingMetadata, ScoredCandidate
 from src.stages.contracts import ClusteringStage
 from src.stages.naming import ClusterNamer, MedoidNamer
 
@@ -56,6 +56,20 @@ def _build_assignment_maps(
             candidate_to_cluster[candidate_id] = cluster_name
 
     return span_to_cluster, candidate_to_cluster
+
+
+def _build_pairing_metadata(
+    cluster_centroids: Dict[str, np.ndarray],
+    anchor_embeddings: Dict[str, np.ndarray],
+    candidate_assignments: Dict[str, str],
+) -> PairingMetadata:
+    resolved_embeddings = (
+        dict(cluster_centroids) if cluster_centroids else dict(anchor_embeddings)
+    )
+    return PairingMetadata(
+        anchor_embeddings=resolved_embeddings,
+        candidate_assignments=dict(candidate_assignments),
+    )
 
 
 @dataclass
@@ -268,6 +282,7 @@ class AspectClusterer(ClusteringStage):
         self.umap_metric: str = config.discovery.umap_metric
 
         self._anchor_embeddings: dict[str, np.ndarray] = {}
+        self._cluster_centroids: dict[str, np.ndarray] = {}
         self._anti_anchor_embeddings: dict[str, np.ndarray] = {}
         self._load_or_build_anchor_embeddings()
 
@@ -325,6 +340,7 @@ class AspectClusterer(ClusteringStage):
     def cluster(
         self, candidates: List[ScoredCandidate], min_mentions: int = 2
     ) -> Dict[str, AspectInfo]:
+        self._cluster_centroids = {}
         self.last_assignment_counts = {}
         self.last_residual_medoid_names = []
         self.last_nli_medoid_diagnostics = []
@@ -468,7 +484,29 @@ class AspectClusterer(ClusteringStage):
         self.last_span_assignments, self.last_candidate_assignments = (
             _build_assignment_maps(filtered, candidates)
         )
+        self._cluster_centroids = {
+            name: np.asarray(info.centroid_embedding).flatten()
+            for name, info in filtered.items()
+        }
         return filtered
+
+    def get_pairing_metadata(self) -> PairingMetadata:
+        return _build_pairing_metadata(
+            cluster_centroids=getattr(self, "_cluster_centroids", {}),
+            anchor_embeddings=getattr(self, "_anchor_embeddings", {}),
+            candidate_assignments=self.last_candidate_assignments,
+        )
+
+    def get_diagnostics(self) -> Dict[str, object]:
+        diagnostics: Dict[str, object] = {}
+        if self.last_assignment_counts:
+            diagnostics["anchor_assignment_counts"] = dict(self.last_assignment_counts)
+        diagnostics["residual_medoid_names"] = list(self.last_residual_medoid_names)
+        diagnostics["nli_medoid_diagnostics"] = list(self.last_nli_medoid_diagnostics)
+        diagnostics["clustering_stats"] = {
+            "num_clusters": int(len(getattr(self, "_cluster_centroids", {}))),
+        }
+        return diagnostics
 
     def _apply_nli_labels(
         self,
@@ -1098,6 +1136,25 @@ class DivisiveClusterer(ClusteringStage):
         }
         self._anchor_embeddings = dict(self._cluster_centroids)
         return aspects
+
+    def get_pairing_metadata(self) -> PairingMetadata:
+        return _build_pairing_metadata(
+            cluster_centroids=self._cluster_centroids,
+            anchor_embeddings=self._anchor_embeddings,
+            candidate_assignments=self.last_candidate_assignments,
+        )
+
+    def get_diagnostics(self) -> Dict[str, object]:
+        return {
+            "clustering_stats": {
+                "num_clusters": int(len(self._cluster_centroids)),
+                "mdl_accepted_splits": int(self.last_n_splits),
+                "mdl_rejected_splits": int(self.last_n_rejected),
+                "cluster_sizes": [],
+            },
+            "leaf_variances": list(self.last_leaf_variances),
+            "split_history": list(self.last_split_history),
+        }
 
 
 class MDLDivisiveClusterer(DivisiveClusterer):

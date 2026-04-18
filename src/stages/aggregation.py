@@ -24,7 +24,7 @@ import numpy as np
 from sklearn.covariance import LedoitWolf
 
 from configs.configs import config
-from src.schemas.models import AggregationResult, AspectScore
+from src.schemas.models import AggregationInput, AggregationResult, AspectScore
 from src.stages.contracts import AggregationStage
 
 
@@ -52,7 +52,7 @@ class RatingMathEngine(AggregationStage):
     # Публичный API
     # ------------------------------------------------------------------
 
-    def aggregate(self, reviews_data: List[Dict]) -> AggregationResult:
+    def aggregate(self, inputs: List[AggregationInput]) -> AggregationResult:
         """
         Главный метод агрегации.
 
@@ -73,15 +73,15 @@ class RatingMathEngine(AggregationStage):
         # 1. Разнести оценки по корзинам аспектов
         aspect_buckets: Dict[str, List[dict]] = {}
 
-        for review in reviews_data:
-            w_fraud = review.get("fraud_weight", 1.0)
-            w_time = self._time_weight(review.get("date"), current_date)
+        for review in inputs:
+            w_fraud = float(review.fraud_weight)
+            w_time = self._time_weight(review.date, current_date)
             w = w_fraud * w_time
 
             if w < self.variance_penalty if self.variance_penalty > 0 else w < 0.01:
                 continue
 
-            for aspect_name, score in review.get("aspects", {}).items():
+            for aspect_name, score in review.aspects.items():
                 if aspect_name not in aspect_buckets:
                     aspect_buckets[aspect_name] = []
                 aspect_buckets[aspect_name].append({"score": score, "weight": w})
@@ -131,7 +131,7 @@ class RatingMathEngine(AggregationStage):
 
         # 4. Ledoit-Wolf ковариация
         aspect_order = sorted(aspects.keys())
-        cov_matrix = self._compute_covariance(reviews_data, aspect_order, current_date)
+        cov_matrix = self._compute_covariance(inputs, aspect_order, current_date)
 
         return AggregationResult(
             aspects=aspects,
@@ -198,7 +198,7 @@ class RatingMathEngine(AggregationStage):
 
     def _compute_covariance(
         self,
-        reviews_data: List[Dict],
+        reviews_data: List[AggregationInput],
         aspect_order: List[str],
         current_date: datetime,
     ) -> Optional[np.ndarray]:
@@ -215,11 +215,11 @@ class RatingMathEngine(AggregationStage):
 
         rows = []
         for review in reviews_data:
-            w_fraud = review.get("fraud_weight", 1.0)
+            w_fraud = float(review.fraud_weight)
             if w_fraud < 0.01:
                 continue
 
-            asp = review.get("aspects", {})
+            asp = review.aspects
             present = [a for a in aspect_order if a in asp]
             if len(present) < 2:
                 continue
@@ -246,7 +246,7 @@ class RatingMathEngine(AggregationStage):
 
     def _diagonal_fallback(
         self,
-        reviews_data: List[Dict],
+        reviews_data: List[AggregationInput],
         aspect_order: List[str],
         current_date: datetime,  # noqa: ARG002
     ) -> np.ndarray:
@@ -256,11 +256,11 @@ class RatingMathEngine(AggregationStage):
 
         aspect_scores: Dict[str, list] = {a: [] for a in aspect_order}
         for review in reviews_data:
-            if review.get("fraud_weight", 1.0) < 0.01:
+            if float(review.fraud_weight) < 0.01:
                 continue
             for a in aspect_order:
-                if a in review.get("aspects", {}):
-                    aspect_scores[a].append(review["aspects"][a])
+                if a in review.aspects:
+                    aspect_scores[a].append(review.aspects[a])
 
         for i, a in enumerate(aspect_order):
             if len(aspect_scores[a]) > 1:
@@ -280,36 +280,11 @@ if __name__ == "__main__":
     engine = RatingMathEngine()
 
     mock_data = [
-        {
-            "review_id": "r1",
-            "fraud_weight": 0.01,  # БОТ
-            "date": datetime(2026, 3, 8),
-            "aspects": {"Качество": 5.0, "Цена": 5.0},
-        },
-        {
-            "review_id": "r2",
-            "fraud_weight": 0.95,
-            "date": datetime(2025, 1, 1),  # Старый (~1 год)
-            "aspects": {"Качество": 2.0},
-        },
-        {
-            "review_id": "r3",
-            "fraud_weight": 0.98,
-            "date": datetime(2026, 3, 8),  # Свежий
-            "aspects": {"Качество": 5.0, "Цена": 1.0},
-        },
-        {
-            "review_id": "r4",
-            "fraud_weight": 0.90,
-            "date": datetime(2026, 2, 1),
-            "aspects": {"Качество": 4.0, "Цена": 2.0, "Логистика": 5.0},
-        },
-        {
-            "review_id": "r5",
-            "fraud_weight": 0.85,
-            "date": datetime(2026, 1, 15),
-            "aspects": {"Качество": 3.5, "Логистика": 4.0},
-        },
+        AggregationInput("r1", {"Качество": 5.0, "Цена": 5.0}, 0.01, datetime(2026, 3, 8)),
+        AggregationInput("r2", {"Качество": 2.0}, 0.95, datetime(2025, 1, 1)),
+        AggregationInput("r3", {"Качество": 5.0, "Цена": 1.0}, 0.98, datetime(2026, 3, 8)),
+        AggregationInput("r4", {"Качество": 4.0, "Цена": 2.0, "Логистика": 5.0}, 0.90, datetime(2026, 2, 1)),
+        AggregationInput("r5", {"Качество": 3.5, "Логистика": 4.0}, 0.85, datetime(2026, 1, 15)),
     ]
 
     print("Запуск математического ядра v2\n")

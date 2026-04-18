@@ -2,13 +2,12 @@ from __future__ import annotations
 
 import argparse
 import json
-from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Dict, Optional
 
 from omegaconf import OmegaConf
 
-from configs.configs import config, make_config_with_overrides
+from configs.configs import config, temporary_config_overrides
 from eval_pipeline import (
     MANUAL_MAPPING,
     _build_auto_mapping,
@@ -21,26 +20,6 @@ from eval_pipeline import (
 from src.stages.fraud import NoOpFraud
 from experiments.compare_runs import compare_two_runs
 from experiments.experiment_manager import ExperimentManager, load_registry
-
-
-@contextmanager
-def temporary_config_overrides(overrides: Dict[str, Any]):
-    base = OmegaConf.to_container(config, resolve=True)
-    merged = make_config_with_overrides(overrides)
-    merged_dict = OmegaConf.to_container(merged, resolve=True)
-
-    for key in list(config.keys()):
-        del config[key]
-    for key, value in merged_dict.items():
-        config[key] = value
-
-    try:
-        yield merged
-    finally:
-        for key in list(config.keys()):
-            del config[key]
-        for key, value in base.items():
-            config[key] = value
 
 
 def _load_experiment_config(path: str) -> Dict[str, Any]:
@@ -218,6 +197,7 @@ def main() -> None:
         metrics["run_summary"] = {
             "multi_label_threshold": float(config.discovery.multi_label_threshold),
             "multi_label_max_aspects": int(config.discovery.multi_label_max_aspects),
+            "pairing_strategy": str(getattr(config.sentiment, "pairing_strategy", "")),
             "nli_pairs_total": total_nli_pairs,
             "mention_recall_review": metrics.get("global_mention_recall_review"),
             "sentence_mae_raw": metrics.get("global_mae_raw"),

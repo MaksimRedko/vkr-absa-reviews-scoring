@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from collections import OrderedDict
 from pathlib import Path
-from typing import List, Optional, Tuple, Union
+from typing import List, Optional, Tuple
 
 import numpy as np
 import torch
@@ -26,7 +26,7 @@ from transformers import (
 )
 
 from configs.configs import config
-from src.schemas.models import SentimentResult
+from src.schemas.models import SentimentPair, SentimentResult
 from src.stages.contracts import SentimentStage
 
 try:
@@ -152,13 +152,7 @@ class SentimentEngine(SentimentStage):
 
     def batch_analyze(
         self,
-        pairs: List[
-            Union[
-                Tuple[str, str, str],
-                Tuple[str, str, str, float],
-                Tuple[str, str, str, str, float],
-            ]
-        ],
+        pairs: List[SentimentPair],
     ) -> List[SentimentResult]:
         if not pairs:
             return []
@@ -262,13 +256,7 @@ class SentimentEngine(SentimentStage):
 
     def batch_collect_logits(
         self,
-        pairs: List[
-            Union[
-                Tuple[str, str, str],
-                Tuple[str, str, str, float],
-                Tuple[str, str, str, str, float],
-            ]
-        ],
+        pairs: List[SentimentPair],
     ) -> Tuple[np.ndarray, np.ndarray]:
         """
         Логиты для dual-hypothesis:
@@ -289,7 +277,7 @@ class SentimentEngine(SentimentStage):
             unit="batch",
         ):
             batch = pairs[i : i + self.batch_size]
-            premises = [p[1] for p in batch]
+            premises = [p.sentence for p in batch]
             hyp_aspects = self._hypothesis_aspects(batch)
             hyp_pos = [self.h_pos.format(aspect=a) for a in hyp_aspects]
             hyp_neg = [self.h_neg.format(aspect=a) for a in hyp_aspects]
@@ -302,47 +290,20 @@ class SentimentEngine(SentimentStage):
 
     @staticmethod
     def _hypothesis_aspects(
-        batch: List[
-            Union[
-                Tuple[str, str, str],
-                Tuple[str, str, str, float],
-                Tuple[str, str, str, str, float],
-            ]
-        ],
+        batch: List[SentimentPair],
     ) -> List[str]:
-        out: List[str] = []
-        for p in batch:
-            if len(p) >= 5:
-                out.append(p[3])
-            elif len(p) == 4:
-                out.append(p[2])
-            else:
-                out.append(p[2])
-        return out
+        return [pair.nli_label for pair in batch]
 
     def _process_batch(
         self,
-        batch: List[
-            Union[
-                Tuple[str, str, str],
-                Tuple[str, str, str, float],
-                Tuple[str, str, str, str, float],
-            ]
-        ],
+        batch: List[SentimentPair],
     ) -> List[SentimentResult]:
-        review_ids = [p[0] for p in batch]
-        premises = [p[1] for p in batch]
-        aspects_tag = [p[2] for p in batch]
+        review_ids = [p.review_id for p in batch]
+        premises = [p.sentence for p in batch]
+        aspects_tag = [p.aspect for p in batch]
 
         nli_for_hyp = self._hypothesis_aspects(batch)
-        confidences: List[float] = []
-        for p in batch:
-            if len(p) >= 5:
-                confidences.append(float(p[4]))
-            elif len(p) == 4:
-                confidences.append(float(p[3]))
-            else:
-                confidences.append(1.0)
+        confidences = [float(p.weight) for p in batch]
 
         hyp_pos = [self.h_pos.format(aspect=a) for a in nli_for_hyp]
         hyp_neg = [self.h_neg.format(aspect=a) for a in nli_for_hyp]
@@ -388,12 +349,12 @@ if __name__ == "__main__":
     from configs.configs import config  # noqa: E402
 
     test_pairs = [
-        ("r1", "Экран шикарный, яркие цвета", "Качество экрана"),
-        ("r2", "Сдохла батарея за день", "Батарея"),
-        ("r3", "Ну такое, средненько", "Общее впечатление"),
-        ("r4", "Коробка мятая, но сам товар целый", "Логистика"),
-        ("r5", "Быстрая доставка, всё пришло за 2 дня", "Логистика"),
-        ("r6", "Качество сборки на высоте, материал отличный", "Качество"),
+        SentimentPair("r1", "Экран шикарный, яркие цвета", "Качество экрана", "Качество экрана"),
+        SentimentPair("r2", "Сдохла батарея за день", "Батарея", "Батарея"),
+        SentimentPair("r3", "Ну такое, средненько", "Общее впечатление", "Общее впечатление"),
+        SentimentPair("r4", "Коробка мятая, но сам товар целый", "Логистика", "Логистика"),
+        SentimentPair("r5", "Быстрая доставка, всё пришло за 2 дня", "Логистика", "Логистика"),
+        SentimentPair("r6", "Качество сборки на высоте, материал отличный", "Качество", "Качество"),
     ]
 
     print("Инициализация SentimentEngine...")

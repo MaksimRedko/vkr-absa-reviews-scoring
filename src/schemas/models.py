@@ -79,6 +79,15 @@ class AspectInfo:
 
 
 @dataclass
+class SentimentPair:
+    review_id: str
+    sentence: str
+    aspect: str
+    nli_label: str
+    weight: float = 1.0
+
+
+@dataclass
 class SentimentResult:
     review_id: str
     aspect: str
@@ -88,6 +97,31 @@ class SentimentResult:
     p_ent_pos: float
     p_ent_neg: float
     confidence: float = 1.0
+
+
+@dataclass
+class AggregationInput:
+    review_id: str
+    aspects: Dict[str, float]
+    fraud_weight: float
+    date: Optional[datetime] = None
+
+
+@dataclass
+class PairingMetadata:
+    anchor_embeddings: Dict[str, np.ndarray] = field(default_factory=dict)
+    candidate_assignments: Dict[str, str] = field(default_factory=dict)
+
+
+@dataclass
+class PairingContext:
+    review_text_by_id: Dict[str, str]
+    sentence_to_review: Dict[str, str]
+    scored_candidates: List[ScoredCandidate]
+    aspects: Dict[str, AspectInfo]
+    metadata: PairingMetadata = field(default_factory=PairingMetadata)
+    multi_label_threshold: float = 0.0
+    multi_label_max_aspects: int = 0
 
 
 @dataclass

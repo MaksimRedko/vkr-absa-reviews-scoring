@@ -6,11 +6,13 @@ from typing import TYPE_CHECKING, Dict, List, Tuple
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 
+from configs.configs import config
+from src.schemas.models import PairingContext, SentimentPair
+from src.stages.contracts import PairingStage
+
 if TYPE_CHECKING:
     from src.schemas.models import AspectInfo, Candidate, ScoredCandidate
     from src.stages.contracts import ExtractionStage
-
-SentimentPair = Tuple[str, str, str, str, float]
 
 
 def _resolve_product_anchors(
@@ -49,19 +51,21 @@ def extract_all_with_mapping(
 
 
 def build_sentiment_pairs(
-    scored_candidates: List[ScoredCandidate],
-    aspects: Dict[str, AspectInfo],
-    sentence_to_review: Dict[str, str],
-    anchor_embeddings: Dict[str, np.ndarray],
-    threshold: float,
-    max_aspects: int,
+    context: PairingContext,
 ) -> List[SentimentPair]:
     """
     Multi-label: cos(span, anchor) >= threshold -> NLI-пара (до max_aspects якорей).
     product_anchors — из результата кластеризации (имена якорей / nli_label).
-    (review_id, sentence, aspect_name, nli_label, weight); здесь aspect_name = nli_label = якорь.
     """
+    scored_candidates = context.scored_candidates
+    aspects = context.aspects
+    sentence_to_review = context.sentence_to_review
+    anchor_embeddings = context.metadata.anchor_embeddings
+    threshold = float(context.multi_label_threshold)
+    max_aspects = int(context.multi_label_max_aspects)
     if not aspects or not scored_candidates:
+        return []
+    if not anchor_embeddings:
         return []
 
     anchor_names = list(anchor_embeddings.keys())
@@ -98,22 +102,31 @@ def build_sentiment_pairs(
             if pair_key in seen_pairs:
                 continue
             seen_pairs.add(pair_key)
-            pairs.append((review_id, cand.sentence, aname, aname, float(sim)))
+            pairs.append(
+                SentimentPair(
+                    review_id=review_id,
+                    sentence=cand.sentence,
+                    aspect=aname,
+                    nli_label=aname,
+                    weight=float(sim),
+                )
+            )
 
     return pairs
 
 
 def build_review_level_pairs(
-    review_text_by_id: Dict[str, str],
-    scored_candidates: List["ScoredCandidate"],
-    candidate_assignments: Dict[str, str],
-    aspects: Dict[str, "AspectInfo"],
+    context: PairingContext,
 ) -> List[SentimentPair]:
     """
     Review-level режим: одна NLI-пара на (review, aspect), но только для аспектов,
     в которые реально попали кандидаты из этого отзыва.
     Вес = 1.0, premise = clean_text отзыва.
     """
+    review_text_by_id = context.review_text_by_id
+    scored_candidates = context.scored_candidates
+    candidate_assignments = context.metadata.candidate_assignments
+    aspects = context.aspects
     if not aspects or not review_text_by_id or not scored_candidates or not candidate_assignments:
         return []
 
@@ -140,5 +153,40 @@ def build_review_level_pairs(
         if not text:
             continue
         for aspect_name in sorted(aspect_map):
-            pairs.append((review_id, text, aspect_name, aspect_map[aspect_name], 1.0))
+            pairs.append(
+                SentimentPair(
+                    review_id=review_id,
+                    sentence=text,
+                    aspect=aspect_name,
+                    nli_label=aspect_map[aspect_name],
+                    weight=1.0,
+                )
+            )
     return pairs
+
+
+class SentenceLevelPairingStage(PairingStage):
+    def build_pairs(self, context: PairingContext) -> List[SentimentPair]:
+        return build_sentiment_pairs(context)
+
+
+class ReviewLevelProvenancePairingStage(PairingStage):
+    def build_pairs(self, context: PairingContext) -> List[SentimentPair]:
+        return build_review_level_pairs(context)
+
+
+PAIRING_STAGE_REGISTRY: Dict[str, type[PairingStage]] = {
+    "sentence_multi_label": SentenceLevelPairingStage,
+    "review_provenance": ReviewLevelProvenancePairingStage,
+}
+
+
+def build_pairing_stage() -> PairingStage:
+    strategy_name = str(getattr(config.sentiment, "pairing_strategy", "") or "").strip()
+    if not strategy_name:
+        review_level = bool(getattr(config.sentiment, "review_level", False))
+        strategy_name = "review_provenance" if review_level else "sentence_multi_label"
+    stage_cls = PAIRING_STAGE_REGISTRY.get(strategy_name)
+    if stage_cls is None:
+        raise ValueError(f"Unsupported pairing_strategy={strategy_name!r}")
+    return stage_cls()

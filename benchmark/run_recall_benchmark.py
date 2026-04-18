@@ -19,6 +19,7 @@ _DEFAULT_MAPPING = "auto"
 _DEFAULT_CLUSTERER = "divisive"
 _DEFAULT_TARGET_NM_IDS = [1809358565, 165234215]
 
+from configs.configs import temporary_config_overrides  # noqa: E402
 from eval_pipeline import (  # noqa: E402
     ASPECT_ALIASES,
     MANUAL_MAPPING,
@@ -28,7 +29,6 @@ from eval_pipeline import (  # noqa: E402
     load_pipeline_reviews_from_csv,
     set_global_seed,
 )
-from run_experiment import temporary_config_overrides  # noqa: E402
 
 
 def _json_safe(obj: Any) -> Any:
@@ -188,33 +188,6 @@ def _print_summary_table(
     print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
 
-def _make_clusterer(clusterer_name: str, encoder):
-    from configs.configs import config
-    from src.stages.clustering import (
-        AspectClusterer,
-        DivisiveClusterer,
-        MDLDivisiveClusterer,
-    )
-    from src.stages.naming import MedoidNamer
-
-    if clusterer_name == "aspect":
-        return AspectClusterer(model=encoder)
-    if clusterer_name == "divisive":
-        return DivisiveClusterer(model=encoder, namer=MedoidNamer())
-    if clusterer_name == "mdl_divisive":
-        return MDLDivisiveClusterer(
-            model=encoder,
-            namer=MedoidNamer(),
-            use_aicc_correction=bool(
-                getattr(config.discovery, "mdl_use_aicc_correction", True)
-            ),
-            model_penalty_alpha=float(
-                getattr(config.discovery, "mdl_model_penalty_alpha", 1.0)
-            ),
-        )
-    raise ValueError(f"Unsupported clusterer={clusterer_name!r}")
-
-
 def _run_clustering_only_for_ids(
     nm_ids: List[int],
     csv_path: str,
@@ -223,9 +196,9 @@ def _run_clustering_only_for_ids(
     from sentence_transformers import SentenceTransformer
 
     from configs.configs import config
+    from src.factories import build_clustering_stage, build_extraction_stage
     from src.pipeline import build_aspect_eval_labels
     from src.schemas.models import ReviewInput
-    from src.stages.extraction import build_extraction_stage
     from src.stages.pairing import extract_all_with_mapping
     from src.stages.scoring import KeyBERTScorer
 
@@ -237,7 +210,7 @@ def _run_clustering_only_for_ids(
     encoder = SentenceTransformer(config.models.encoder_path)
     extractor = build_extraction_stage()
     scorer = KeyBERTScorer(model=encoder)
-    clusterer = _make_clusterer(clusterer_name, encoder)
+    clusterer = build_clustering_stage(encoder=encoder, name=clusterer_name)
 
     results: Dict[int, Dict[str, Any]] = {}
     for nm_id in nm_ids:

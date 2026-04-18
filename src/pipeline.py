@@ -31,22 +31,28 @@ from sentence_transformers import SentenceTransformer
 
 from configs.configs import config
 from src.data.loader import DataLoader
-from src.schemas.models import AggregationResult, EvalData, ReviewInput, SentimentResult
+from src.factories import (
+    build_aggregation_stage,
+    build_clustering_stage,
+    build_extraction_stage,
+    build_fraud_stage,
+    build_pairing_stage,
+    build_scoring_stage,
+    build_sentiment_stage,
+)
+from src.schemas.models import (
+    AggregationInput,
+    AggregationResult,
+    EvalData,
+    PairingContext,
+    ReviewInput,
+    SentimentResult,
+)
 from src.stages import (
     AggregationStage, ClusteringStage, ExtractionStage,
-    FraudStage, ScoringStage, SentimentStage,
+    FraudStage, PairingStage, ScoringStage, SentimentStage,
 )
-from src.stages.aggregation import RatingMathEngine
-from src.stages.clustering import AspectClusterer
-from src.stages.extraction import build_extraction_stage
-from src.stages.fraud import AntiFraudEngine
-from src.stages.pairing import (
-    build_review_level_pairs,
-    build_sentiment_pairs,
-    extract_all_with_mapping,
-)
-from src.stages.scoring import KeyBERTScorer
-from src.stages.sentiment import SentimentEngine
+from src.stages.pairing import extract_all_with_mapping
 from src.snapshots import SnapshotWriter
 
 
@@ -141,6 +147,7 @@ class ABSAPipeline:
         extraction_stage: Optional[ExtractionStage] = None,
         scoring_stage: Optional[ScoringStage] = None,
         clustering_stage: Optional[ClusteringStage] = None,
+        pairing_stage: Optional[PairingStage] = None,
         sentiment_stage: Optional[SentimentStage] = None,
         aggregation_stage: Optional[AggregationStage] = None,
     ):
@@ -153,12 +160,16 @@ class ABSAPipeline:
         self._encoder = encoder or SentenceTransformer(config.models.encoder_path)
 
         # Стандартные реализации как дефолт; заменяются через DI-параметры выше
-        self.candidate_extractor: ExtractionStage  = extraction_stage  or build_extraction_stage()
-        self.scorer:              ScoringStage      = scoring_stage     or KeyBERTScorer(model=self._encoder)
-        self.clusterer:           ClusteringStage   = clustering_stage  or AspectClusterer(model=self._encoder)
-        self.fraud_engine:        FraudStage        = fraud_stage       or AntiFraudEngine(model=self._encoder)
-        self.sentiment_engine:    SentimentStage    = sentiment_stage   or SentimentEngine()
-        self.math_engine:         AggregationStage  = aggregation_stage or RatingMathEngine()
+        self.candidate_extractor: ExtractionStage = extraction_stage or build_extraction_stage()
+        self.scorer: ScoringStage = scoring_stage or build_scoring_stage(self._encoder)
+        self.clusterer: ClusteringStage = clustering_stage or build_clustering_stage(
+            encoder=self._encoder,
+            name="aspect",
+        )
+        self.fraud_engine: FraudStage = fraud_stage or build_fraud_stage(self._encoder)
+        self.pairing_stage: PairingStage = pairing_stage or build_pairing_stage()
+        self.sentiment_engine: SentimentStage = sentiment_stage or build_sentiment_stage()
+        self.math_engine: AggregationStage = aggregation_stage or build_aggregation_stage()
 
         print(f"[Pipeline] Готов за {time.time() - t0:.1f}s")
 
@@ -293,59 +304,34 @@ class ABSAPipeline:
     # ------------------------------------------------------------------
 
     def _collect_clusterer_diagnostics(self) -> Dict[str, object]:
-        if hasattr(self.clusterer, "get_diagnostics"):
-            diagnostics = getattr(self.clusterer, "get_diagnostics")()
-            if isinstance(diagnostics, dict):
-                return diagnostics
-
-        diagnostics: Dict[str, object] = {}
-        assignment = getattr(self.clusterer, "last_assignment_counts", None)
-        if assignment:
-            diagnostics["anchor_assignment_counts"] = dict(assignment)
-
-        residual = getattr(self.clusterer, "last_residual_medoid_names", None)
-        if residual is not None:
-            diagnostics["residual_medoid_names"] = list(residual)
-
-        nli_diag = getattr(self.clusterer, "last_nli_medoid_diagnostics", None)
-        if nli_diag is not None:
-            diagnostics["nli_medoid_diagnostics"] = list(nli_diag)
-
-        stats = getattr(self.clusterer, "last_clustering_stats", None)
-        if isinstance(stats, dict) and stats:
-            diagnostics["clustering_stats"] = dict(stats)
-        else:
-            centroids = getattr(self.clusterer, "_cluster_centroids", {})
-            if isinstance(centroids, dict):
-                diagnostics["clustering_stats"] = {
-                    "num_clusters": int(len(centroids)),
-                }
-
-        return diagnostics
+        diagnostics = self.clusterer.get_diagnostics()
+        return dict(diagnostics) if isinstance(diagnostics, dict) else {}
 
     def _build_aggregation_input(
         self,
         reviews: List[ReviewInput],
         per_review: Dict[str, Dict[str, float]],
         trust_weights: List[float],
-    ) -> List[Dict]:
+    ) -> List[AggregationInput]:
         """
         Формирует вход для math_engine.aggregate():
         [{"review_id": ..., "aspects": {...}, "fraud_weight": ..., "date": ...}, ...]
         """
         review_id_to_idx = {r.id: i for i, r in enumerate(reviews)}
 
-        result = []
+        result: List[AggregationInput] = []
         for review_id, aspects in per_review.items():
             idx = review_id_to_idx.get(review_id)
             if idx is None:
                 continue
-            result.append({
-                "review_id": review_id,
-                "aspects": aspects,
-                "fraud_weight": trust_weights[idx],
-                "date": reviews[idx].created_date,
-            })
+            result.append(
+                AggregationInput(
+                    review_id=review_id,
+                    aspects=aspects,
+                    fraud_weight=float(trust_weights[idx]),
+                    date=reviews[idx].created_date,
+                )
+            )
 
         return result
 
@@ -427,36 +413,19 @@ class ABSAPipeline:
             )
 
         print(f"[6/7] NLI Sentiment ({len(aspect_names)} аспектов)...")
-        anchor_embeddings = getattr(
-            self.clusterer,
-            "_cluster_centroids",
-            getattr(self.clusterer, "_anchor_embeddings", {}),
-        )
-        review_level = bool(getattr(config.sentiment, "review_level", False))
-        if review_level:
-            review_text_by_id = {
+        pairing_context = PairingContext(
+            review_text_by_id={
                 review_id: text
                 for review_id, text in zip(review_ids, texts)
-            }
-            sentiment_pairs = build_review_level_pairs(
-                review_text_by_id=review_text_by_id,
-                scored_candidates=scored_candidates,
-                candidate_assignments=getattr(
-                    self.clusterer,
-                    "last_candidate_assignments",
-                    {},
-                ),
-                aspects=aspects,
-            )
-        else:
-            sentiment_pairs = build_sentiment_pairs(
-                scored_candidates=scored_candidates,
-                aspects=aspects,
-                sentence_to_review=sentence_to_review,
-                anchor_embeddings=anchor_embeddings,
-                threshold=float(config.discovery.multi_label_threshold),
-                max_aspects=int(config.discovery.multi_label_max_aspects),
-            )
+            },
+            sentence_to_review=sentence_to_review,
+            scored_candidates=scored_candidates,
+            aspects=aspects,
+            metadata=self.clusterer.get_pairing_metadata(),
+            multi_label_threshold=float(config.discovery.multi_label_threshold),
+            multi_label_max_aspects=int(config.discovery.multi_label_max_aspects),
+        )
+        sentiment_pairs = self.pairing_stage.build_pairs(pairing_context)
         print(f"       Пар для NLI: {len(sentiment_pairs)}")
         diagnostics["nli_pairs_count"] = int(len(sentiment_pairs))
         if snapshot_writer:

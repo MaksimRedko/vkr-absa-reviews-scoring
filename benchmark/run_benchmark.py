@@ -21,6 +21,7 @@ _DEFAULT_MAPPING = "auto"
 _DEFAULT_CLUSTERER = "divisive"
 _DEFAULT_TARGET_NM_IDS = [1809358565, 165234215]
 
+from configs.configs import temporary_config_overrides
 from eval_pipeline import (
     load_markup,
     run_pipeline_for_ids,
@@ -30,7 +31,6 @@ from eval_pipeline import (
     MANUAL_MAPPING,
     set_global_seed,
 )
-from run_experiment import temporary_config_overrides
 
 
 def _json_safe(obj: Any) -> Any:
@@ -147,7 +147,7 @@ def main() -> None:
     parser.add_argument(
         "--clusterer",
         type=str,
-        default="aspect",
+        default=_DEFAULT_CLUSTERER,
         choices=["aspect", "divisive", "mdl_divisive"],
         help=(
             "Кластеризация: aspect — якоря + HDBSCAN (дефолт пайплайна); "

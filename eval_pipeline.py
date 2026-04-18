@@ -30,6 +30,8 @@ import pandas as pd
 
 sys.stdout.reconfigure(encoding="utf-8")
 
+from configs.configs import temporary_config_overrides
+
 try:
     import torch
 except Exception:  # pragma: no cover
@@ -119,17 +121,6 @@ def set_global_seed(seed: int) -> None:
         torch.use_deterministic_algorithms(True, warn_only=True)
 
 
-def apply_config_overrides(overrides: Dict[str, object]) -> None:
-    from configs.configs import config
-    for section, values in overrides.items():
-        if not hasattr(config, section):
-            continue
-        if not isinstance(values, dict):
-            continue
-        for key, val in values.items():
-            setattr(getattr(config, section), key, val)
-
-
 def load_eval_config(config_path: str) -> Dict[str, object]:
     with open(config_path, "r", encoding="utf-8") as f:
         cfg = json.load(f)
@@ -156,14 +147,9 @@ def run_pipeline_for_ids(
     from sentence_transformers import SentenceTransformer
 
     from configs.configs import config
+    from src.factories import build_clustering_stage
     from src.pipeline import ABSAPipeline
     from src.schemas.models import ReviewInput
-    from src.stages.clustering import (
-        AspectClusterer,
-        DivisiveClusterer,
-        MDLDivisiveClusterer,
-    )
-    from src.stages.naming import MedoidNamer
 
     if json_path and os.path.isfile(json_path):
         with open(json_path, "r", encoding="utf-8") as f:
@@ -180,26 +166,7 @@ def run_pipeline_for_ids(
         reviews_by_nm[r["nm_id"]].append(r)
 
     encoder = SentenceTransformer(config.models.encoder_path)
-    if clusterer == "aspect":
-        clustering_stage = AspectClusterer(model=encoder)
-    elif clusterer == "divisive":
-        clustering_stage = DivisiveClusterer(model=encoder, namer=MedoidNamer())
-    elif clusterer == "mdl_divisive":
-        clustering_stage = MDLDivisiveClusterer(
-            model=encoder,
-            namer=MedoidNamer(),
-            use_aicc_correction=bool(
-                getattr(config.discovery, "mdl_use_aicc_correction", True)
-            ),
-            model_penalty_alpha=float(
-                getattr(config.discovery, "mdl_model_penalty_alpha", 1.0)
-            ),
-        )
-    else:
-        raise ValueError(
-            f"Неизвестный clusterer={clusterer!r}; "
-            "ожидается 'aspect', 'divisive' или 'mdl_divisive'."
-        )
+    clustering_stage = build_clustering_stage(encoder=encoder, name=clusterer)
 
     pipeline = ABSAPipeline(
         encoder=encoder,
@@ -1265,6 +1232,12 @@ if __name__ == "__main__":
     )
     parser.add_argument("--write-prefix", type=str, default="")
     parser.add_argument(
+        "--clusterer",
+        type=str,
+        default=None,
+        choices=["aspect", "divisive", "mdl_divisive"],
+    )
+    parser.add_argument(
         "--mapping",
         type=str,
         default="manual",
@@ -1287,10 +1260,6 @@ if __name__ == "__main__":
     seed = args.seed if args.seed is not None else int(cfg.get("seed", 42))
     set_global_seed(seed)
 
-    overrides = cfg.get("overrides", {})
-    if isinstance(overrides, dict):
-        apply_config_overrides(overrides)
-
     CSV_PATH = str(cfg.get("csv_path", args.csv_path))
     if "json_path" in cfg:
         j = cfg["json_path"]
@@ -1300,37 +1269,49 @@ if __name__ == "__main__":
     write_prefix = str(cfg.get("write_prefix", args.write_prefix or "")).strip()
     if write_prefix and not write_prefix.endswith(("_", "/", os.sep)):
         write_prefix = f"{write_prefix}_"
+    clusterer_name = str(args.clusterer or cfg.get("clusterer", "aspect"))
 
-    print(f"[Eval] seed={seed}")
-    if args.config:
-        print(f"[Eval] config={args.config}")
-    print(f"[Eval] csv_path={CSV_PATH}")
-    print(f"[Eval] json_path={JSON_PATH or '(none — отзывы из CSV)'}")
+    overrides = cfg.get("overrides", {})
+    if not isinstance(overrides, dict):
+        overrides = {}
 
-    df = load_markup(CSV_PATH)
+    with temporary_config_overrides(overrides):
+        print(f"[Eval] seed={seed}")
+        if args.config:
+            print(f"[Eval] config={args.config}")
+        print(f"[Eval] csv_path={CSV_PATH}")
+        print(f"[Eval] json_path={JSON_PATH or '(none — отзывы из CSV)'}")
+        print(f"[Eval] clusterer={clusterer_name}")
 
-    if mode in ("all", "step12"):
-        print("=" * 70)
-        print("ШАГ 1: СТАТИСТИКА ПО РАЗМЕТКЕ")
-        print("=" * 70)
+        df = load_markup(CSV_PATH)
 
-        stats = markup_stats(df)
-        for _, row in stats.iterrows():
-            print(f"\nnm_id: {row['nm_id']}")
-            print(f"  Отзывов всего:    {row['total_reviews']}")
-            print(f"  С разметкой:      {row['labeled_reviews']}")
-            print(f"  Уникальные аспекты: {row['unique_aspects']}")
-            print(f"  Средние оценки:")
-            for asp, info in row['aspect_avg_scores'].items():
-                print(f"    {asp:25s} {info}")
+        if mode in ("all", "step12"):
+            print("=" * 70)
+            print("ШАГ 1: СТАТИСТИКА ПО РАЗМЕТКЕ")
+            print("=" * 70)
 
-        nm_ids = stats["nm_id"].tolist()
+            stats = markup_stats(df)
+            for _, row in stats.iterrows():
+                print(f"\nnm_id: {row['nm_id']}")
+                print(f"  Отзывов всего:    {row['total_reviews']}")
+                print(f"  С разметкой:      {row['labeled_reviews']}")
+                print(f"  Уникальные аспекты: {row['unique_aspects']}")
+                print(f"  Средние оценки:")
+                for asp, info in row['aspect_avg_scores'].items():
+                    print(f"    {asp:25s} {info}")
 
-        print(f"\n{'='*70}")
+            nm_ids = stats["nm_id"].tolist()
+
+            print(f"\n{'='*70}")
         print("ШАГ 2: ПРОГОН ПАЙПЛАЙНА")
         print("=" * 70)
 
-        pipeline_results = run_pipeline_for_ids(nm_ids, CSV_PATH, JSON_PATH)
+        pipeline_results = run_pipeline_for_ids(
+            nm_ids,
+            CSV_PATH,
+            JSON_PATH,
+            clusterer=clusterer_name,
+        )
 
         for nm_id, data in pipeline_results.items():
             print(f"\nnm_id={nm_id}")
@@ -1386,9 +1367,10 @@ if __name__ == "__main__":
 
         # Выбор маппинга
         if mapping_mode == "auto":
-            active_mapping = _build_auto_mapping(
-                pipeline_results_for_eval, df, threshold=auto_threshold,
-            )
+            with temporary_config_overrides(overrides):
+                active_mapping = _build_auto_mapping(
+                    pipeline_results_for_eval, df, threshold=auto_threshold,
+                )
         else:
             active_mapping = MANUAL_MAPPING
 
@@ -1520,28 +1502,32 @@ if __name__ == "__main__":
         )
         metrics["product_ratings"] = product_ratings
 
-        from configs.configs import config as _cfg_ml
-        total_nli_pairs = sum(
-            int((v.get("diagnostics") or {}).get("nli_pairs_count") or 0)
-            for v in pipeline_results_for_eval.values()
-        )
-        metrics["run_summary"] = {
-            "multi_label_threshold": float(_cfg_ml.discovery.multi_label_threshold),
-            "multi_label_max_aspects": int(_cfg_ml.discovery.multi_label_max_aspects),
-            "nli_pairs_total": total_nli_pairs,
-            "mention_recall_review": metrics["global_mention_recall_review"],
-            "sentence_mae_raw": metrics["global_mae_raw"],
-            "product_mae_n_ge_3": product_ratings.get("global_product_mae_filtered"),
-        }
-        print(f"\n{'='*70}")
-        print("СВОДКА ПРОГОНА (multi-label, discovery)")
-        print(f"  multi_label_threshold = {_cfg_ml.discovery.multi_label_threshold}")
-        print(f"  multi_label_max_aspects = {_cfg_ml.discovery.multi_label_max_aspects}")
-        print(f"  NLI пар (всего):              {total_nli_pairs}")
-        print(f"  Mention recall (review):     {metrics['global_mention_recall_review']}")
-        print(f"  Sentence MAE (global raw):   {metrics['global_mae_raw']}")
-        print(f"  Product MAE (n_true≥3):      {product_ratings.get('global_product_mae_filtered')}")
-        print(f"{'='*70}\n")
+        with temporary_config_overrides(overrides):
+            from configs.configs import config as _cfg_ml
+
+            total_nli_pairs = sum(
+                int((v.get("diagnostics") or {}).get("nli_pairs_count") or 0)
+                for v in pipeline_results_for_eval.values()
+            )
+            metrics["run_summary"] = {
+                "multi_label_threshold": float(_cfg_ml.discovery.multi_label_threshold),
+                "multi_label_max_aspects": int(_cfg_ml.discovery.multi_label_max_aspects),
+                "pairing_strategy": str(getattr(_cfg_ml.sentiment, "pairing_strategy", "")),
+                "nli_pairs_total": total_nli_pairs,
+                "mention_recall_review": metrics["global_mention_recall_review"],
+                "sentence_mae_raw": metrics["global_mae_raw"],
+                "product_mae_n_ge_3": product_ratings.get("global_product_mae_filtered"),
+            }
+            print(f"\n{'='*70}")
+            print("СВОДКА ПРОГОНА (multi-label, discovery)")
+            print(f"  multi_label_threshold = {_cfg_ml.discovery.multi_label_threshold}")
+            print(f"  multi_label_max_aspects = {_cfg_ml.discovery.multi_label_max_aspects}")
+            print(f"  pairing_strategy = {_cfg_ml.sentiment.pairing_strategy}")
+            print(f"  NLI пар (всего):              {total_nli_pairs}")
+            print(f"  Mention recall (review):     {metrics['global_mention_recall_review']}")
+            print(f"  Sentence MAE (global raw):   {metrics['global_mae_raw']}")
+            print(f"  Product MAE (n_true≥3):      {product_ratings.get('global_product_mae_filtered')}")
+            print(f"{'='*70}\n")
 
         # Перезаписываем с product_ratings
         with open(metrics_path, "w", encoding="utf-8") as f:

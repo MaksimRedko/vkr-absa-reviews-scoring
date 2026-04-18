@@ -1,4 +1,6 @@
+from contextlib import contextmanager
 from pathlib import Path
+from typing import Any, Dict, Iterator
 
 from omegaconf import OmegaConf
 
@@ -67,7 +69,9 @@ config = OmegaConf.create({
         "ort_intra_op_num_threads": 4,
         "nli_pair_cache_max": 50000,  # LRU (premise, hypothesis) → logits в SentimentEngine
         "score_epsilon": 0.0001,
+        "pairing_strategy": "review_provenance",
         # Review-level NLI (one pair per review/aspect) + post-NLI relevance filter
+        # legacy fallback; новые гипотезы должны использовать pairing_strategy
         "review_level": True,
         # v4: p_ent_pos=P(entailment), p_ent_neg=P(contradiction) → сумма = 1 - P(neutral)
         # Для single-hypothesis 0.6 слишком агрессивно и может обнулить пары.
@@ -106,3 +110,22 @@ def make_config_with_overrides(overrides: dict) -> OmegaConf:
     merged = OmegaConf.merge(base, override_cfg)
     _resolve_model_paths(merged)
     return merged
+
+
+def _replace_global_config(payload: Dict[str, Any]) -> None:
+    for key in list(config.keys()):
+        del config[key]
+    for key, value in payload.items():
+        config[key] = value
+
+
+@contextmanager
+def temporary_config_overrides(overrides: Dict[str, Any]) -> Iterator[OmegaConf]:
+    base = OmegaConf.to_container(config, resolve=True)
+    merged = make_config_with_overrides(overrides or {})
+    merged_dict = OmegaConf.to_container(merged, resolve=True)
+    _replace_global_config(merged_dict)
+    try:
+        yield merged
+    finally:
+        _replace_global_config(base)

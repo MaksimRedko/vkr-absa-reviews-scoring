@@ -76,9 +76,9 @@ self.clusterer = clustering_stage or AspectClusterer(model=self._encoder)
 
 Модель NLI прогоняется **дважды** на батч (объединённые premise + pos-hyp и premise + neg-hyp), из логитов берётся вероятность **entailment**, затем скор в шкале 1…5 строится из отношения `P_ent_pos` и `P_ent_neg` (см. формулу и комментарии в `sentiment.py`). Применяется **temperature** на логитах (`config.sentiment.temperature`, сейчас **0.7**).
 
-### 3.1. Уровень гранулярности: review-level
+### 3.1. Уровень гранулярности: pairing strategy
 
-В конфиге **`review_level: True`**. Тогда пары для NLI строятся функцией `build_review_level_pairs` (`src/stages/pairing.py`): на **каждый отзыв** и **каждый «продуктовый якорь»** из результата кластеризации — **одна** пара (premise = полный текст отзыва, вес 1.0). Это не sentence-level multi-label режим (`build_sentiment_pairs` с `multi_label_threshold` / `multi_label_max_aspects` включается только при `review_level: False`).
+В конфиге используется **`pairing_strategy`**. Текущий основной режим — `review_provenance`: пары для NLI строятся только для тех аспектов, в которые реально попали кандидаты данного отзыва. Legacy-флаг `review_level` оставлен только как fallback для старых конфигов; новые гипотезы должны переключаться через `pairing_strategy`.
 
 ### 3.2. Пост-фильтр релевантности
 

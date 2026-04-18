@@ -212,14 +212,14 @@ class SnapshotWriter:
     # ── Стадия 5: NLI-пары ────────────────────────────────────────────────────
 
     def save_sentiment_pairs(self, pairs: list) -> None:
-        """pairs: List[Tuple[review_id, sentence, aspect, nli_label, weight]]"""
+        """pairs: List[SentimentPair]"""
         items = [
             {
-                "review_id": p[0],
-                "sentence": p[1],
-                "aspect": p[2],
-                "nli_label": p[3],
-                "weight": round(float(p[4]), 6),
+                "review_id": p.review_id,
+                "sentence": p.sentence,
+                "aspect": p.aspect,
+                "nli_label": p.nli_label,
+                "weight": round(float(p.weight), 6),
             }
             for p in pairs
         ]
@@ -257,13 +257,13 @@ class SnapshotWriter:
     # ── Стадия 7: Aggregation input ───────────────────────────────────────────
 
     def save_aggregation_input(self, agg_input: list) -> None:
-        """agg_input: List[Dict] из _build_aggregation_input()"""
+        """agg_input: List[AggregationInput] из _build_aggregation_input()."""
         items = [
             {
-                "review_id": row["review_id"],
-                "aspects": {k: round(float(v), 4) for k, v in row["aspects"].items()},
-                "fraud_weight": round(float(row["fraud_weight"]), 4),
-                "date": row["date"].isoformat() if hasattr(row.get("date"), "isoformat") else str(row.get("date", "")),
+                "review_id": row.review_id,
+                "aspects": {k: round(float(v), 4) for k, v in row.aspects.items()},
+                "fraud_weight": round(float(row.fraud_weight), 4),
+                "date": row.date.isoformat() if hasattr(row.date, "isoformat") else str(row.date or ""),
             }
             for row in agg_input
         ]
@@ -348,7 +348,7 @@ def load_scored_snapshot(path: str | Path) -> list:
 def load_clusters_snapshot(path: str | Path) -> dict:
     """
     Загружает снепшот 04_clusters.json → Dict[str, AspectInfo].
-    Replay: передать результат в _build_sentiment_pairs() пайплайна.
+    Replay: передать результат в PairingStage пайплайна.
     """
     from src.schemas.models import AspectInfo
     data = json.loads(Path(path).read_text(encoding="utf-8"))

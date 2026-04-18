@@ -4,6 +4,7 @@ from src.stages.contracts import (
     ClusteringStage,
     ExtractionStage,
     FraudStage,
+    PairingStage,
     ScoringStage,
     SentimentPair,
     SentimentStage,

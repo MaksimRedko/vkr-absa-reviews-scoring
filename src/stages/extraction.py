@@ -519,135 +519,126 @@ class NominalAspectExtractor(ExtractionStage):
         return candidates
 
 
-class PairAndEventExtractor(ExtractionStage):
-    def __init__(self):
+class CompositeParsedExtractor(ExtractionStage):
+    def __init__(
+        self,
+        extractor_name: str,
+        shared_parser: DependencyParser,
+        component_specs: list[tuple[str, str, object]],
+    ):
         self.last_filter_stats: dict[str, object] = {}
-        shared_parser = _build_dependency_parser_from_config()
+        self._extractor_name = extractor_name
         self._dependency_parser = shared_parser
         self._fallback_extractor = CandidateExtractor()
-        self._pair_extractor = AspectSentimentPairExtractor(dependency_parser=shared_parser)
-        self._event_extractor = EventCandidateExtractor(dependency_parser=shared_parser)
+        self._component_specs = component_specs
 
     def extract(self, raw_text: str) -> List[Candidate]:
         cleaned_text = _clean_text(raw_text)
         parsed = self._dependency_parser.parse(cleaned_text)
         if parsed.parse_failed or (not parsed.parser_available):
             fallback_candidates = self._fallback_extractor.extract(raw_text)
+            before_stats = {
+                f"{label}_before_filter": 0
+                for label, _, _ in self._component_specs
+            }
             self.last_filter_stats = {
-                "extractor": "pairs+events",
+                "extractor": self._extractor_name,
                 "parser_available": parsed.parser_available,
                 "parse_failed": parsed.parse_failed,
                 "fallback_used": True,
-                "pairs_before_filter": 0,
-                "events_before_filter": 0,
+                **before_stats,
                 "candidates_after_filter": len(fallback_candidates),
             }
             return fallback_candidates
 
         candidates: list[Candidate] = []
         seen_keys: set[tuple[str, str, tuple[int, int]]] = set()
-        pair_candidates = self._pair_extractor.extract_from_parsed(parsed)
-        event_candidates = self._event_extractor.extract_from_parsed(parsed)
-        for candidate in (
-            pair_candidates
-            + event_candidates
-        ):
-            key = (candidate.span, candidate.sentence, candidate.token_indices)
-            if key in seen_keys:
-                continue
-            seen_keys.add(key)
-            candidates.append(candidate)
+        component_stats: dict[str, int] = {}
+        for label, parsed_attr, extractor_impl in self._component_specs:
+            extracted = extractor_impl.extract_from_parsed(parsed)
+            component_stats[f"{label}_before_filter"] = len(getattr(parsed, parsed_attr))
+            component_stats[f"{label}_after_filter"] = len(extracted)
+            for candidate in extracted:
+                key = (candidate.span, candidate.sentence, candidate.token_indices)
+                if key in seen_keys:
+                    continue
+                seen_keys.add(key)
+                candidates.append(candidate)
 
         self.last_filter_stats = {
-            "extractor": "pairs+events",
+            "extractor": self._extractor_name,
             "parser_available": parsed.parser_available,
             "parse_failed": parsed.parse_failed,
             "parser_model": parsed.model_name,
             "fallback_used": False,
-            "pairs_before_filter": len(parsed.aspect_pairs),
-            "events_before_filter": len(parsed.event_candidates),
-            "pairs_after_filter": len(pair_candidates),
-            "events_after_filter": len(event_candidates),
+            **component_stats,
             "candidates_after_filter": len(candidates),
         }
         return candidates
 
 
-class PairEventNominalExtractor(ExtractionStage):
+class PairAndEventExtractor(CompositeParsedExtractor):
     def __init__(self):
-        self.last_filter_stats: dict[str, object] = {}
         shared_parser = _build_dependency_parser_from_config()
-        self._dependency_parser = shared_parser
-        self._fallback_extractor = CandidateExtractor()
-        self._pair_extractor = AspectSentimentPairExtractor(dependency_parser=shared_parser)
-        self._event_extractor = EventCandidateExtractor(dependency_parser=shared_parser)
-        self._nominal_extractor = NominalAspectExtractor(dependency_parser=shared_parser)
+        super().__init__(
+            extractor_name="pairs+events",
+            shared_parser=shared_parser,
+            component_specs=[
+                (
+                    "pairs",
+                    "aspect_pairs",
+                    AspectSentimentPairExtractor(dependency_parser=shared_parser),
+                ),
+                (
+                    "events",
+                    "event_candidates",
+                    EventCandidateExtractor(dependency_parser=shared_parser),
+                ),
+            ],
+        )
 
-    def extract(self, raw_text: str) -> List[Candidate]:
-        cleaned_text = _clean_text(raw_text)
-        parsed = self._dependency_parser.parse(cleaned_text)
-        if parsed.parse_failed or (not parsed.parser_available):
-            fallback_candidates = self._fallback_extractor.extract(raw_text)
-            self.last_filter_stats = {
-                "extractor": "pairs+events+nominals",
-                "parser_available": parsed.parser_available,
-                "parse_failed": parsed.parse_failed,
-                "fallback_used": True,
-                "pairs_before_filter": 0,
-                "events_before_filter": 0,
-                "nominals_before_filter": 0,
-                "candidates_after_filter": len(fallback_candidates),
-            }
-            return fallback_candidates
 
-        candidates: list[Candidate] = []
-        seen_keys: set[tuple[str, str, tuple[int, int]]] = set()
-        pair_candidates = self._pair_extractor.extract_from_parsed(parsed)
-        event_candidates = self._event_extractor.extract_from_parsed(parsed)
-        nominal_candidates = self._nominal_extractor.extract_from_parsed(parsed)
-        for candidate in (
-            pair_candidates
-            + event_candidates
-            + nominal_candidates
-        ):
-            key = (candidate.span, candidate.sentence, candidate.token_indices)
-            if key in seen_keys:
-                continue
-            seen_keys.add(key)
-            candidates.append(candidate)
+class PairEventNominalExtractor(CompositeParsedExtractor):
+    def __init__(self):
+        shared_parser = _build_dependency_parser_from_config()
+        super().__init__(
+            extractor_name="pairs+events+nominals",
+            shared_parser=shared_parser,
+            component_specs=[
+                (
+                    "pairs",
+                    "aspect_pairs",
+                    AspectSentimentPairExtractor(dependency_parser=shared_parser),
+                ),
+                (
+                    "events",
+                    "event_candidates",
+                    EventCandidateExtractor(dependency_parser=shared_parser),
+                ),
+                (
+                    "nominals",
+                    "nominal_candidates",
+                    NominalAspectExtractor(dependency_parser=shared_parser),
+                ),
+            ],
+        )
 
-        self.last_filter_stats = {
-            "extractor": "pairs+events+nominals",
-            "parser_available": parsed.parser_available,
-            "parse_failed": parsed.parse_failed,
-            "parser_model": parsed.model_name,
-            "fallback_used": False,
-            "pairs_before_filter": len(parsed.aspect_pairs),
-            "events_before_filter": len(parsed.event_candidates),
-            "nominals_before_filter": len(parsed.nominal_candidates),
-            "pairs_after_filter": len(pair_candidates),
-            "events_after_filter": len(event_candidates),
-            "nominals_after_filter": len(nominal_candidates),
-            "candidates_after_filter": len(candidates),
-        }
-        return candidates
+
+EXTRACTION_STAGE_REGISTRY: dict[str, type[ExtractionStage]] = {
+    "ngram": CandidateExtractor,
+    "chunks": NounChunkExtractor,
+    "pairs": AspectSentimentPairExtractor,
+    "events": EventCandidateExtractor,
+    "nominals": NominalAspectExtractor,
+    "pairs+events": PairAndEventExtractor,
+    "pairs+events+nominals": PairEventNominalExtractor,
+}
 
 
 def build_extraction_stage() -> ExtractionStage:
     extractor_name = str(getattr(config.discovery, "extractor", "ngram"))
-    if extractor_name == "pairs+events+nominals":
-        return PairEventNominalExtractor()
-    if extractor_name == "pairs+events":
-        return PairAndEventExtractor()
-    if extractor_name == "nominals":
-        return NominalAspectExtractor()
-    if extractor_name == "events":
-        return EventCandidateExtractor()
-    if extractor_name == "pairs":
-        return AspectSentimentPairExtractor()
-    if extractor_name == "chunks":
-        return NounChunkExtractor()
-    return CandidateExtractor()
+    extractor_cls = EXTRACTION_STAGE_REGISTRY.get(extractor_name, CandidateExtractor)
+    return extractor_cls()
 
 
 if __name__ == "__main__":
