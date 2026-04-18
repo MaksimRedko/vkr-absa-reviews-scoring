@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import re
-from typing import List
+from typing import List, Literal, Optional
 
 import pymorphy3
 
 from configs.configs import config
 from src.schemas.models import Candidate
 from src.stages.contracts import ExtractionStage
+from src.stages.parsing import DependencyParser
 
 _morph = pymorphy3.MorphAnalyzer()
 
@@ -41,18 +42,66 @@ class CandidateExtractor(ExtractionStage):
             if min_word_length is not None
             else config.discovery.min_word_length
         )
+        self.dependency_filter_enabled: bool = bool(
+            getattr(config.discovery, "dependency_filter_enabled", False)
+        )
+        self.dependency_filter_mode: Literal["all_heads", "aspect_roles"] = str(
+            getattr(config.discovery, "dependency_filter_mode", "aspect_roles")
+        )
+        self.last_filter_stats: dict[str, object] = {}
+        self._dependency_parser: DependencyParser | None = None
+        if self.dependency_filter_enabled:
+            fallback_models = list(
+                getattr(
+                    config.discovery,
+                    "dependency_spacy_fallback_models",
+                    ["ru_core_news_md", "ru_core_news_sm"],
+                )
+            )
+            self._dependency_parser = DependencyParser(
+                preferred_model=str(
+                    getattr(config.discovery, "dependency_spacy_model", "ru_core_news_lg")
+                ),
+                fallback_models=fallback_models,
+                include_root_verbs=bool(
+                    getattr(config.discovery, "dependency_include_root_verbs", True)
+                ),
+                include_root_adjs=bool(
+                    getattr(config.discovery, "dependency_include_root_adjs", True)
+                ),
+            )
 
     # ------------------------------------------------------------------
     # Публичный API
     # ------------------------------------------------------------------
     def extract(self, raw_text: str) -> List[Candidate]:
-        text = self._clean(raw_text)
-        sentences = self._split_sentences(text)
+        cleaned_text = self._clean(raw_text)
+        sentences = self._split_sentences(cleaned_text)
+        allowed_filter_lemmas, parse_meta = self._get_allowed_filter_lemmas(cleaned_text)
 
         results: list[Candidate] = []
+        before_filter = 0
         for sent in sentences:
             candidates = self._candidates_from_sentence(sent)
+            before_filter += len(candidates)
+            if allowed_filter_lemmas is not None:
+                candidates = [
+                    candidate
+                    for candidate in candidates
+                    if self._candidate_matches_heads(candidate, allowed_filter_lemmas)
+                ]
             results.extend(candidates)
+        self.last_filter_stats = {
+            "filter_enabled": bool(allowed_filter_lemmas is not None),
+            "filter_mode": self.dependency_filter_mode,
+            "allowed_head_lemmas": sorted((parse_meta or {}).get("head_lemmas", [])),
+            "allowed_filter_lemmas": sorted(allowed_filter_lemmas or []),
+            "parser_model": (parse_meta or {}).get("model_name"),
+            "parser_available": bool((parse_meta or {}).get("parser_available", False)),
+            "parse_failed": bool((parse_meta or {}).get("parse_failed", False)),
+            "candidates_before_filter": int(before_filter),
+            "candidates_after_filter": int(len(results)),
+        }
         return results
 
     # ------------------------------------------------------------------
@@ -60,6 +109,7 @@ class CandidateExtractor(ExtractionStage):
     # ------------------------------------------------------------------
     @staticmethod
     def _clean(text: str) -> str:
+        text = str(text).replace("\\n", " ")
         text = re.sub(r"(?<=[.,!?;:])(?=[^\s])", " ", text)
         text = re.sub(r"[^\w\s.,!?;:\-]", " ", text, flags=re.UNICODE)
         text = re.sub(r"\s{2,}", " ", text).strip()
@@ -79,6 +129,46 @@ class CandidateExtractor(ExtractionStage):
         raw = sentence.lower().split()
         tokens = [re.sub(r"[^\w\-]", "", t) for t in raw]
         return [t for t in tokens if t]
+
+    def _get_allowed_filter_lemmas(
+        self,
+        text: str,
+    ) -> tuple[Optional[set[str]], Optional[dict[str, object]]]:
+        if not self.dependency_filter_enabled or self._dependency_parser is None:
+            return None, None
+        parsed = self._dependency_parser.parse(text)
+        filter_lemmas: set[str]
+        if self.dependency_filter_mode == "all_heads":
+            filter_lemmas = set(parsed.head_lemmas)
+        else:
+            filter_lemmas = set(parsed.aspect_role_lemmas)
+
+        parse_meta = {
+            "head_lemmas": set(parsed.head_lemmas),
+            "aspect_role_lemmas": set(parsed.aspect_role_lemmas),
+            "model_name": parsed.model_name,
+            "parser_available": parsed.parser_available,
+            "parse_failed": parsed.parse_failed,
+        }
+        if parsed.parse_failed or (not parsed.parser_available) or (not filter_lemmas):
+            return None, parse_meta
+        return filter_lemmas, parse_meta
+
+    @staticmethod
+    def _lemma(token: str) -> str:
+        parses = _morph.parse(token)
+        if not parses:
+            return token.lower()
+        return str(parses[0].normal_form or token).lower()
+
+    def _candidate_matches_heads(
+        self,
+        candidate: Candidate,
+        allowed_head_lemmas: set[str],
+    ) -> bool:
+        candidate_tokens = self._tokenize(candidate.span)
+        candidate_lemmas = {self._lemma(token) for token in candidate_tokens}
+        return bool(candidate_lemmas & allowed_head_lemmas)
 
     def _candidates_from_sentence(self, sentence: str) -> List[Candidate]:
         tokens = self._tokenize(sentence)
@@ -165,8 +255,8 @@ if __name__ == "__main__":
         "Rick Owens качество огонь",
     ]
 
-    for text in test_texts:
-        print(f"\n--- Текст: {text!r} ---")
-        candidates = extractor.extract(text)
-        for c in candidates:
+    for sample_text in test_texts:
+        print(f"\n--- Текст: {sample_text!r} ---")
+        sample_candidates = extractor.extract(sample_text)
+        for c in sample_candidates:
             print(f"  span={c.span!r:30s}  sentence={c.sentence!r}")

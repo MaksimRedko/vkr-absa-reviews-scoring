@@ -19,6 +19,7 @@ onnxruntime>=1.17.0
 hdbscan>=0.8.33
 umap-learn
 pymorphy3
+spacy
 
 # Configs
 omegaconf

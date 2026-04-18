@@ -10,16 +10,21 @@ AspectClusterer: Anchor-First + Residual HDBSCAN (baseline).
 
 from __future__ import annotations
 
+import heapq
 import hashlib
 import json
-from typing import Dict, List, Optional, Tuple
+import math
+from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
 
 import hdbscan
 import numpy as np
 import umap
+from scipy.stats import normaltest
 from sentence_transformers import SentenceTransformer
 from sklearn.cluster import KMeans
+from sklearn.metrics import pairwise_distances
 from sklearn.metrics.pairwise import cosine_similarity
 
 from configs.configs import config
@@ -29,6 +34,89 @@ from src.stages.naming import ClusterNamer, MedoidNamer
 
 
 STOP_SPANS: set[str] = set()
+MDL_NORMALITY_PVALUE_THRESHOLD = 0.20
+
+
+@dataclass
+class MDLDelta:
+    delta_l_model: float
+    delta_l_data: float
+    delta_l_total: float
+
+
+@dataclass
+class MDLTreeNode:
+    node_id: int
+    indices: np.ndarray
+    centroid: np.ndarray
+    sum_sq_dist: float
+    depth: int
+    is_leaf: bool = True
+    split_reason: str = ""
+    parent_id: Optional[int] = None
+    children_ids: tuple[int, int] | None = None
+    split_diagnostics: dict[str, Any] = field(default_factory=dict)
+
+
+def compute_delta_L(
+    n_parent: int,
+    V_parent: float,
+    n1: int,
+    V1: float,
+    n2: int,
+    V2: float,
+    d: int,
+    epsilon: float = 1e-12,
+    use_aicc_correction: bool = False,
+    model_penalty_alpha: float = 1.0,
+) -> MDLDelta:
+    """MDL gain from splitting one Gaussian cluster into two."""
+    if min(n_parent, n1, n2, d) <= 0:
+        raise ValueError("n_parent, n1, n2, d must be positive")
+
+    sigma2_parent = float(V_parent) / float(n_parent * d) + float(epsilon)
+    sigma2_child1 = float(V1) / float(n1 * d) + float(epsilon)
+    sigma2_child2 = float(V2) / float(n2 * d) + float(epsilon)
+
+    log_size_term = (
+        math.log2(float(n_parent)) - math.log2(float(n1)) - math.log2(float(n2))
+    )
+    if use_aicc_correction:
+        effective_k = int(d + 2)
+        denom_parent = int(n_parent - effective_k - 1)
+        denom_child1 = int(n1 - effective_k - 1)
+        denom_child2 = int(n2 - effective_k - 1)
+        if min(denom_parent, denom_child1, denom_child2) <= 0:
+            delta_l_model = float("-inf")
+        else:
+            aicc_correction = (
+                0.5
+                * effective_k
+                * (effective_k + 1)
+                * math.log2(math.e)
+                * (
+                    (1.0 / float(denom_parent))
+                    - (1.0 / float(denom_child1))
+                    - (1.0 / float(denom_child2))
+                )
+            )
+            delta_l_model = 0.5 * effective_k * log_size_term + aicc_correction
+    else:
+        delta_l_model = 0.5 * (d + 1) * log_size_term
+    delta_l_data = 0.5 * d * (
+        float(n_parent) * math.log2(sigma2_parent)
+        - float(n1) * math.log2(sigma2_child1)
+        - float(n2) * math.log2(sigma2_child2)
+    )
+    if use_aicc_correction:
+        delta_l_total = float(delta_l_model + delta_l_data)
+    else:
+        delta_l_total = float(float(model_penalty_alpha) * delta_l_model + delta_l_data)
+    return MDLDelta(
+        delta_l_model=float(delta_l_model),
+        delta_l_data=float(delta_l_data),
+        delta_l_total=delta_l_total,
+    )
 
 MACRO_ANCHORS: Dict[str, List[str]] = {
     "Цена": [
@@ -960,6 +1048,663 @@ class DivisiveClusterer(ClusteringStage):
         }
         self._anchor_embeddings = dict(self._cluster_centroids)
         return aspects
+
+
+class MDLDivisiveClusterer(DivisiveClusterer):
+    def __init__(
+        self,
+        model: SentenceTransformer | None = None,
+        min_cluster_size: Optional[int] = 3,
+        kmeans_restarts: int = 10,
+        kmeans_max_iter: int = 50,
+        epsilon: float = 1e-12,
+        use_aicc_correction: bool = False,
+        model_penalty_alpha: float = 1.0,
+        max_depth: Optional[int] = None,
+        max_clusters: Optional[int] = None,
+        namer: ClusterNamer | None = None,
+    ):
+        self.model = model
+        self.min_cluster_size = (
+            None if min_cluster_size is None else int(min_cluster_size)
+        )
+        self.kmeans_restarts = int(kmeans_restarts)
+        self.kmeans_max_iter = int(kmeans_max_iter)
+        self.epsilon = float(epsilon)
+        self.use_aicc_correction = bool(use_aicc_correction)
+        self.model_penalty_alpha = float(model_penalty_alpha)
+        self.max_depth = None if max_depth is None else int(max_depth)
+        self.max_clusters = None if max_clusters is None else int(max_clusters)
+        self.umap_n_components = int(config.discovery.umap_n_components)
+        self.umap_min_dist = float(config.discovery.umap_min_dist)
+        self.umap_metric = str(config.discovery.umap_metric)
+        self.merge_threshold = float(config.discovery.cluster_merge_threshold)
+        self.namer: ClusterNamer = namer or MedoidNamer()
+
+        self._anchor_embeddings: dict[str, np.ndarray] = {}
+        self._cluster_centroids: dict[str, np.ndarray] = {}
+
+        self.last_n_splits: int = 0
+        self.last_n_rejected: int = 0
+        self.last_leaf_variances: list[float] = []
+        self.last_split_history: list[tuple[int, int, int, float]] = []
+        self.last_tree_nodes: list[MDLTreeNode] = []
+        self.last_tree_summary: dict[str, Any] = {}
+        self.last_split_reason_histogram: dict[str, int] = {}
+        self.last_clustering_stats: dict[str, Any] = {}
+        self.last_node_logs: list[str] = []
+        self.last_sigma_sq_min: float = 0.0
+        self.last_tree_dimension: int = 0
+        self.last_effective_min_cluster_size: int = 0
+
+    def _resolve_min_cluster_size(self, d: int) -> int:
+        if self.min_cluster_size is not None:
+            return int(self.min_cluster_size)
+        return int(max(3, int(d) + 2))
+
+    @staticmethod
+    def _estimate_sigma_sq_min(embeddings: np.ndarray, k: int = 5) -> float:
+        n_points, d = embeddings.shape
+        if n_points <= 1 or d <= 0:
+            return 0.0
+
+        kth = min(k, n_points - 1)
+        distances = pairwise_distances(embeddings, metric="euclidean")
+        kth_nearest = np.partition(distances, kth, axis=1)[:, kth]
+        sigma_sq_min = (float(np.percentile(kth_nearest, 5)) ** 2) / float(d)
+        return float(max(sigma_sq_min, 0.0))
+
+    @staticmethod
+    def _sum_sq_dist(points: np.ndarray, centroid: Optional[np.ndarray] = None) -> float:
+        if points.size == 0:
+            return 0.0
+        center = np.mean(points, axis=0) if centroid is None else centroid
+        sq = np.sum((points - center) ** 2, axis=1)
+        return float(np.sum(sq))
+
+    def _make_node(
+        self,
+        node_id: int,
+        indices: np.ndarray,
+        embeddings: np.ndarray,
+        depth: int,
+        parent_id: Optional[int] = None,
+    ) -> MDLTreeNode:
+        node_points = embeddings[indices]
+        centroid = np.mean(node_points, axis=0)
+        sum_sq_dist = self._sum_sq_dist(node_points, centroid=centroid)
+        return MDLTreeNode(
+            node_id=node_id,
+            indices=np.asarray(indices, dtype=int),
+            centroid=np.asarray(centroid).flatten(),
+            sum_sq_dist=float(sum_sq_dist),
+            depth=depth,
+            parent_id=parent_id,
+        )
+
+    def _best_bisect(self, points: np.ndarray) -> tuple[np.ndarray, float, float] | None:
+        best_labels: np.ndarray | None = None
+        best_total_v = float("inf")
+        best_v1 = 0.0
+        best_v2 = 0.0
+
+        for restart in range(self.kmeans_restarts):
+            km = KMeans(
+                n_clusters=2,
+                init="k-means++",
+                n_init=1,
+                max_iter=self.kmeans_max_iter,
+                random_state=restart,
+            )
+            labels = km.fit_predict(points)
+            mask0 = labels == 0
+            mask1 = labels == 1
+            if (not np.any(mask0)) or (not np.any(mask1)):
+                continue
+            v1 = self._sum_sq_dist(points[mask0])
+            v2 = self._sum_sq_dist(points[mask1])
+            total_v = float(v1 + v2)
+            if total_v < best_total_v:
+                best_total_v = total_v
+                best_labels = labels.copy()
+                best_v1 = float(v1)
+                best_v2 = float(v2)
+
+        if best_labels is None:
+            return None
+        return best_labels, best_v1, best_v2
+
+    def _log_node(
+        self,
+        node: MDLTreeNode,
+        n1: int,
+        n2: int,
+        v1: float,
+        v2: float,
+        delta: Optional[MDLDelta],
+        decision: str,
+    ) -> None:
+        lines = [
+            f"[MDL] Node n={len(node.indices)}, V={node.sum_sq_dist:.4f}, "
+            f"V/n={node.sum_sq_dist / max(len(node.indices), 1):.4f}",
+            f"  Bisect attempted: n1={n1}, n2={n2}, V1={v1:.4f}, V2={v2:.4f}",
+        ]
+        if delta is not None:
+            lines.extend(
+                [
+                    f"  dL_model = {delta.delta_l_model:+.4f}",
+                    f"  dL_data  = {delta.delta_l_data:+.4f}",
+                    f"  dL_total = {delta.delta_l_total:+.4f} -> {decision}",
+                ]
+            )
+        else:
+            lines.append(f"  Decision  = {decision}")
+        message = "\n".join(lines)
+        self.last_node_logs.append(message)
+        print(message)
+
+    def _merge_leaf_groups_by_mdl(
+        self,
+        leaf_nodes: list[MDLTreeNode],
+        embeddings: np.ndarray,
+    ) -> list[np.ndarray]:
+        groups = [
+            np.asarray(node.indices, dtype=int).copy()
+            for node in leaf_nodes
+            if len(node.indices) >= self._resolve_min_cluster_size(int(embeddings.shape[1]))
+        ]
+        if len(groups) < 2:
+            return groups
+
+        d = int(embeddings.shape[1])
+        while len(groups) > 1:
+            best_pair: tuple[int, int] | None = None
+            best_delta_total = float("inf")
+
+            for i in range(len(groups)):
+                for j in range(i + 1, len(groups)):
+                    idx_i = groups[i]
+                    idx_j = groups[j]
+                    parent_indices = np.concatenate([idx_i, idx_j])
+                    parent_points = embeddings[parent_indices]
+                    parent_v = self._sum_sq_dist(parent_points)
+                    child_v1 = self._sum_sq_dist(embeddings[idx_i])
+                    child_v2 = self._sum_sq_dist(embeddings[idx_j])
+                    pair_labels = np.concatenate(
+                        [
+                            np.zeros(len(idx_i), dtype=int),
+                            np.ones(len(idx_j), dtype=int),
+                        ]
+                    )
+                    delta = compute_delta_L(
+                        n_parent=len(parent_indices),
+                        V_parent=parent_v,
+                        n1=len(idx_i),
+                        V1=child_v1,
+                        n2=len(idx_j),
+                        V2=child_v2,
+                        d=d,
+                        epsilon=self.epsilon,
+                        use_aicc_correction=self.use_aicc_correction,
+                        model_penalty_alpha=self.model_penalty_alpha,
+                    )
+                    normality_pvalue = self._split_normality_pvalue(parent_points, pair_labels)
+                    if (
+                        delta.delta_l_total < best_delta_total
+                        and normality_pvalue is not None
+                        and normality_pvalue >= MDL_NORMALITY_PVALUE_THRESHOLD
+                    ):
+                        best_delta_total = float(delta.delta_l_total)
+                        best_pair = (i, j)
+
+            if best_pair is None or best_delta_total > 0.0:
+                break
+
+            i, j = best_pair
+            merged = np.concatenate([groups[i], groups[j]])
+            groups[i] = np.asarray(merged, dtype=int)
+            del groups[j]
+
+        return groups
+
+    @staticmethod
+    def _split_normality_pvalue(points: np.ndarray, labels: np.ndarray) -> Optional[float]:
+        if len(points) < 8:
+            return None
+        mask0 = labels == 0
+        mask1 = labels == 1
+        if (not np.any(mask0)) or (not np.any(mask1)):
+            return None
+
+        axis = np.mean(points[mask1], axis=0) - np.mean(points[mask0], axis=0)
+        axis_norm = float(np.linalg.norm(axis))
+        if axis_norm <= 1e-12:
+            return 1.0
+
+        projection = (points - np.mean(points, axis=0)) @ (axis / axis_norm)
+        try:
+            _, pvalue = normaltest(projection)
+        except Exception:
+            return None
+        return float(pvalue)
+
+    def _compute_clustering_stats(self, leaf_nodes: list[MDLTreeNode]) -> dict[str, Any]:
+        leaf_sizes = [int(len(node.indices)) for node in leaf_nodes]
+        if not leaf_sizes:
+            return {
+                "num_clusters": 0,
+                "avg_cluster_size": 0.0,
+                "median_cluster_size": 0,
+                "largest_cluster_size": 0,
+                "smallest_cluster_size": 0,
+                "mdl_accepted_splits": int(self.last_n_splits),
+                "mdl_rejected_splits": int(self.last_n_rejected),
+                "cluster_sizes": [],
+            }
+
+        return {
+            "num_clusters": int(len(leaf_sizes)),
+            "avg_cluster_size": float(np.mean(leaf_sizes)),
+            "median_cluster_size": int(np.median(leaf_sizes)),
+            "largest_cluster_size": int(max(leaf_sizes)),
+            "smallest_cluster_size": int(min(leaf_sizes)),
+            "mdl_accepted_splits": int(self.last_n_splits),
+            "mdl_rejected_splits": int(self.last_n_rejected),
+            "cluster_sizes": leaf_sizes,
+        }
+
+    def get_diagnostics(self) -> dict[str, Any]:
+        return {
+            "clustering_stats": dict(self.last_clustering_stats),
+            "tree_summary": dict(self.last_tree_summary),
+            "split_reasons_histogram": dict(self.last_split_reason_histogram),
+            "mdl_node_logs": list(self.last_node_logs),
+            "sigma_sq_min": float(self.last_sigma_sq_min),
+            "tree_dimension": int(self.last_tree_dimension),
+            "effective_min_cluster_size": int(self.last_effective_min_cluster_size),
+            "use_aicc_correction": bool(self.use_aicc_correction),
+            "model_penalty_alpha": float(self.model_penalty_alpha),
+        }
+
+    def fit(
+        self,
+        embeddings: np.ndarray,
+        spans: List[str],
+        span_data: dict[str, dict],
+        original_embeddings: Optional[np.ndarray] = None,
+    ) -> Dict[str, AspectInfo]:
+        self.last_n_splits = 0
+        self.last_n_rejected = 0
+        self.last_leaf_variances = []
+        self.last_split_history = []
+        self.last_tree_nodes = []
+        self.last_tree_summary = {}
+        self.last_split_reason_histogram = {}
+        self.last_clustering_stats = {}
+        self.last_node_logs = []
+        self.last_sigma_sq_min = 0.0
+        self.last_tree_dimension = int(embeddings.shape[1]) if embeddings.ndim == 2 else 0
+        self.last_effective_min_cluster_size = 0
+        self._anchor_embeddings = {}
+        self._cluster_centroids = {}
+
+        if embeddings.size == 0:
+            return {}
+        point_embeddings = embeddings if original_embeddings is None else original_embeddings
+        sigma_sq_min = self._estimate_sigma_sq_min(embeddings)
+        self.last_sigma_sq_min = float(sigma_sq_min)
+
+        n_points, d = embeddings.shape
+        effective_min_cluster_size = self._resolve_min_cluster_size(d)
+        self.last_effective_min_cluster_size = int(effective_min_cluster_size)
+        nodes: dict[int, MDLTreeNode] = {}
+        queue: list[tuple[float, int, int]] = []
+        next_node_id = 0
+        next_uid = 0
+
+        root = self._make_node(
+            node_id=next_node_id,
+            indices=np.arange(n_points, dtype=int),
+            embeddings=embeddings,
+            depth=0,
+        )
+        nodes[root.node_id] = root
+        heapq.heappush(
+            queue,
+            (-root.sum_sq_dist / max(len(root.indices), 1), next_uid, root.node_id),
+        )
+        next_node_id += 1
+        next_uid += 1
+        leaf_count = 1
+
+        while queue:
+            _, _, node_id = heapq.heappop(queue)
+            node = nodes[node_id]
+
+            if len(node.indices) < 2 * effective_min_cluster_size:
+                node.is_leaf = True
+                node.split_reason = "min_size"
+                continue
+
+            safety_hit = (
+                (self.max_depth is not None and node.depth >= self.max_depth)
+                or (self.max_clusters is not None and leaf_count >= self.max_clusters)
+            )
+            if safety_hit:
+                node.is_leaf = True
+                node.split_reason = "max_depth"
+                continue
+
+            sigma_sq_parent = float(node.sum_sq_dist) / float(len(node.indices) * d)
+            if sigma_sq_parent < sigma_sq_min:
+                node.is_leaf = True
+                node.split_reason = "variance_floor"
+                node.split_diagnostics = {
+                    "n": int(len(node.indices)),
+                    "V": float(node.sum_sq_dist),
+                    "sigma_sq_parent": float(sigma_sq_parent),
+                    "sigma_sq_min": float(sigma_sq_min),
+                }
+                continue
+
+            points = embeddings[node.indices]
+            best_split = self._best_bisect(points)
+            if best_split is None:
+                node.is_leaf = True
+                node.split_reason = "degenerate_split"
+                self._log_node(
+                    node=node,
+                    n1=0,
+                    n2=0,
+                    v1=0.0,
+                    v2=0.0,
+                    delta=None,
+                    decision="DEGENERATE",
+                )
+                continue
+
+            labels, v1, v2 = best_split
+            mask0 = labels == 0
+            mask1 = labels == 1
+            n1 = int(np.sum(mask0))
+            n2 = int(np.sum(mask1))
+
+            if min(n1, n2) < effective_min_cluster_size:
+                node.is_leaf = True
+                node.split_reason = "degenerate_split"
+                self._log_node(
+                    node=node,
+                    n1=n1,
+                    n2=n2,
+                    v1=v1,
+                    v2=v2,
+                    delta=None,
+                    decision="DEGENERATE",
+                )
+                continue
+
+            delta = compute_delta_L(
+                n_parent=len(node.indices),
+                V_parent=node.sum_sq_dist,
+                n1=n1,
+                V1=v1,
+                n2=n2,
+                V2=v2,
+                d=d,
+                epsilon=self.epsilon,
+                use_aicc_correction=self.use_aicc_correction,
+                model_penalty_alpha=self.model_penalty_alpha,
+            )
+
+            node.split_diagnostics = {
+                "n": int(len(node.indices)),
+                "V": float(node.sum_sq_dist),
+                "V_per_point": float(node.sum_sq_dist / max(len(node.indices), 1)),
+                "n1": n1,
+                "n2": n2,
+                "V1": float(v1),
+                "V2": float(v2),
+                "delta_l_model": float(delta.delta_l_model),
+                "delta_l_data": float(delta.delta_l_data),
+                "delta_l_total": float(delta.delta_l_total),
+            }
+            normality_pvalue = self._split_normality_pvalue(points, labels)
+            node.split_diagnostics["split_normality_pvalue"] = normality_pvalue
+
+            if delta.delta_l_total > 0.0 and (
+                normality_pvalue is None or normality_pvalue < MDL_NORMALITY_PVALUE_THRESHOLD
+            ):
+                child1 = self._make_node(
+                    node_id=next_node_id,
+                    indices=node.indices[mask0],
+                    embeddings=embeddings,
+                    depth=node.depth + 1,
+                    parent_id=node.node_id,
+                )
+                child2 = self._make_node(
+                    node_id=next_node_id + 1,
+                    indices=node.indices[mask1],
+                    embeddings=embeddings,
+                    depth=node.depth + 1,
+                    parent_id=node.node_id,
+                )
+                nodes[child1.node_id] = child1
+                nodes[child2.node_id] = child2
+                node.is_leaf = False
+                node.split_reason = "mdl_accepted"
+                node.children_ids = (child1.node_id, child2.node_id)
+
+                heapq.heappush(
+                    queue,
+                    (-child1.sum_sq_dist / max(len(child1.indices), 1), next_uid, child1.node_id),
+                )
+                next_uid += 1
+                heapq.heappush(
+                    queue,
+                    (-child2.sum_sq_dist / max(len(child2.indices), 1), next_uid, child2.node_id),
+                )
+                next_uid += 1
+                next_node_id += 2
+                leaf_count += 1
+                self.last_n_splits += 1
+                self.last_split_history.append(
+                    (
+                        node.node_id,
+                        child1.node_id,
+                        child2.node_id,
+                        float(delta.delta_l_total),
+                    )
+                )
+                self._log_node(
+                    node=node,
+                    n1=n1,
+                    n2=n2,
+                    v1=v1,
+                    v2=v2,
+                    delta=delta,
+                    decision="ACCEPTED",
+                )
+            else:
+                node.is_leaf = True
+                node.split_reason = "mdl_rejected"
+                self.last_n_rejected += 1
+                self._log_node(
+                    node=node,
+                    n1=n1,
+                    n2=n2,
+                    v1=v1,
+                    v2=v2,
+                    delta=delta,
+                    decision="REJECTED",
+                )
+
+        self.last_tree_nodes = [nodes[node_id] for node_id in sorted(nodes)]
+        leaf_nodes = [node for node in self.last_tree_nodes if node.is_leaf]
+        self.last_leaf_variances = [
+            float(node.sum_sq_dist / max(len(node.indices), 1)) for node in leaf_nodes
+        ]
+        histogram: dict[str, int] = {}
+        for node in self.last_tree_nodes:
+            if node.split_reason:
+                histogram[node.split_reason] = histogram.get(node.split_reason, 0) + 1
+        self.last_split_reason_histogram = histogram
+        self.last_tree_summary = {
+            "total_nodes": int(len(self.last_tree_nodes)),
+            "leaves": int(len(leaf_nodes)),
+            "max_depth": int(max((node.depth for node in self.last_tree_nodes), default=0)),
+            "split_reasons_histogram": dict(histogram),
+            "sigma_sq_min": float(sigma_sq_min),
+            "tree_dimension": int(d),
+            "effective_min_cluster_size": int(effective_min_cluster_size),
+            "use_aicc_correction": bool(self.use_aicc_correction),
+            "model_penalty_alpha": float(self.model_penalty_alpha),
+        }
+        self.last_clustering_stats = self._compute_clustering_stats(leaf_nodes)
+
+        print("[MDL] Tree summary:")
+        print(f"  Total nodes: {self.last_tree_summary['total_nodes']}")
+        print(f"  Leaves: {self.last_tree_summary['leaves']}")
+        print(f"  Max depth: {self.last_tree_summary['max_depth']}")
+        print(f"  Tree dimension: {self.last_tree_summary['tree_dimension']}")
+        print(
+            f"  effective_min_cluster_size: "
+            f"{self.last_tree_summary['effective_min_cluster_size']}"
+        )
+        print(f"  sigma_sq_min: {self.last_tree_summary['sigma_sq_min']:.6f}")
+        print(
+            f"  use_aicc_correction: {self.last_tree_summary['use_aicc_correction']}"
+        )
+        print(f"  model_penalty_alpha: {self.last_tree_summary['model_penalty_alpha']:.3f}")
+        print("  Split reasons histogram:")
+        for reason in (
+            "mdl_accepted",
+            "mdl_rejected",
+            "min_size",
+            "degenerate_split",
+            "variance_floor",
+            "max_depth",
+        ):
+            print(f"    {reason:<17} {histogram.get(reason, 0)}")
+
+        merged_groups = self._merge_leaf_groups_by_mdl(leaf_nodes, embeddings)
+        self.last_clustering_stats = self._compute_clustering_stats(
+            [
+                MDLTreeNode(
+                    node_id=-1,
+                    indices=np.asarray(indices, dtype=int),
+                    centroid=np.mean(point_embeddings[indices], axis=0),
+                    sum_sq_dist=self._sum_sq_dist(point_embeddings[indices]),
+                    depth=0,
+                )
+                for indices in merged_groups
+            ]
+        )
+
+        aspects: Dict[str, AspectInfo] = {}
+        for group_indices in merged_groups:
+            indices = group_indices.tolist()
+            if len(indices) < effective_min_cluster_size:
+                continue
+
+            cluster_embs = point_embeddings[indices]
+            centroid = np.mean(cluster_embs, axis=0)
+            cluster_spans = [spans[i] for i in indices]
+            sims = cosine_similarity(cluster_embs, centroid.reshape(1, -1)).reshape(-1)
+            medoid_local_idx = int(np.argmax(sims))
+            name = cluster_spans[medoid_local_idx]
+            keyword_weights = [float(span_data[s]["count"]) for s in cluster_spans]
+            info = AspectInfo(
+                keywords=cluster_spans,
+                centroid_embedding=centroid,
+                keyword_weights=keyword_weights,
+                nli_label=name,
+            )
+
+            if name in aspects:
+                merged_keywords = list(dict.fromkeys(aspects[name].keywords + info.keywords))
+                merged_embs = np.stack([span_data[s]["embedding"] for s in merged_keywords])
+                merged_centroid = np.mean(merged_embs, axis=0)
+                merged_weights = [float(span_data[s]["count"]) for s in merged_keywords]
+                aspects[name] = AspectInfo(
+                    keywords=merged_keywords,
+                    centroid_embedding=merged_centroid,
+                    keyword_weights=merged_weights,
+                    nli_label=name,
+                )
+            else:
+                aspects[name] = info
+
+        aspects = self._merge_similar_clusters_cosine(aspects, span_data)
+        aspects = self.namer.rename(aspects)
+        self._cluster_centroids = {
+            name: np.asarray(info.centroid_embedding).flatten()
+            for name, info in aspects.items()
+        }
+        self._anchor_embeddings = dict(self._cluster_centroids)
+        return aspects
+
+    def cluster(self, candidates: List[ScoredCandidate]) -> Dict[str, AspectInfo]:
+        self._anchor_embeddings = {}
+        self._cluster_centroids = {}
+        if not candidates:
+            self.last_clustering_stats = self._compute_clustering_stats([])
+            self.last_tree_summary = {
+                "total_nodes": 0,
+                "leaves": 0,
+                "max_depth": 0,
+                "split_reasons_histogram": {},
+            }
+            self.last_split_reason_histogram = {}
+            self.last_tree_nodes = []
+            self.last_node_logs = []
+            self.last_effective_min_cluster_size = 0
+            return {}
+
+        auto_stops = self._detect_product_stops(candidates)
+        local_stops = STOP_SPANS | auto_stops
+        span_data = self._aggregate_spans(candidates, min_mentions=1, stop_spans=local_stops)
+        spans = list(span_data.keys())
+        if not spans:
+            self.last_clustering_stats = self._compute_clustering_stats([])
+            self.last_tree_summary = {
+                "total_nodes": 0,
+                "leaves": 0,
+                "max_depth": 0,
+                "split_reasons_histogram": {},
+            }
+            self.last_split_reason_histogram = {}
+            self.last_tree_nodes = []
+            self.last_node_logs = []
+            self.last_effective_min_cluster_size = 0
+            return {}
+
+        original_embeddings = np.stack([span_data[s]["embedding"] for s in spans])
+        n_points = len(spans)
+        tree_embeddings = original_embeddings
+        prospective_tree_d = int(original_embeddings.shape[1])
+
+        if n_points >= 5:
+            prospective_tree_d = int(min(self.umap_n_components, max(2, n_points - 1)))
+        effective_min_cluster_size = self._resolve_min_cluster_size(prospective_tree_d)
+
+        if n_points >= max(5, effective_min_cluster_size + 2):
+            n_neighbors = max(2, min(15, n_points // 10))
+            reducer = umap.UMAP(
+                n_components=min(self.umap_n_components, max(2, n_points - 1)),
+                n_neighbors=min(n_neighbors, n_points - 1),
+                min_dist=self.umap_min_dist,
+                metric=self.umap_metric,
+                n_jobs=1,
+                random_state=42,
+            )
+            tree_embeddings = reducer.fit_transform(original_embeddings)
+
+        return self.fit(
+            embeddings=tree_embeddings,
+            spans=spans,
+            span_data=span_data,
+            original_embeddings=original_embeddings,
+        )
 
 
 if __name__ == "__main__":

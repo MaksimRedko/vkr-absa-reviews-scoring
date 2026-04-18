@@ -47,6 +47,14 @@ config = OmegaConf.create({
         "multi_label_threshold": 0.4,   # cosine: span → anchor для NLI-пар
         "multi_label_max_aspects": 3,    # макс. якорей на один (sentence, span)
         "embedding_cache_max": 50000,  # LRU по строке для encode в KeyBERTScorer
+        "dependency_filter_enabled": True,
+        "dependency_filter_mode": "aspect_roles",
+        "dependency_spacy_model": "ru_core_news_lg",
+        "dependency_spacy_fallback_models": ["ru_core_news_md", "ru_core_news_sm"],
+        "dependency_include_root_verbs": True,
+        "dependency_include_root_adjs": True,
+        "mdl_use_aicc_correction": False,
+        "mdl_model_penalty_alpha": 1.0,
     },
     "sentiment": {
         # Baseline B: {aspect} = nli_label (якорь для medoid-кластеров)

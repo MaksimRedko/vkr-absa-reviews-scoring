@@ -75,6 +75,46 @@ def _print_summary_table(
     print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
 
+def _summarize_clustering_stats(pipeline_results: Dict[int, Dict[str, Any]]) -> Dict[str, Any]:
+    per_product: Dict[str, Dict[str, Any]] = {}
+    all_cluster_sizes: list[int] = []
+    mdl_accepted_total = 0
+    mdl_rejected_total = 0
+
+    for nm_id, payload in pipeline_results.items():
+        diagnostics = payload.get("diagnostics") or {}
+        stats = diagnostics.get("clustering_stats") or {}
+        per_product[str(nm_id)] = dict(stats)
+        cluster_sizes = [int(size) for size in stats.get("cluster_sizes", [])]
+        all_cluster_sizes.extend(cluster_sizes)
+        mdl_accepted_total += int(stats.get("mdl_accepted_splits", 0) or 0)
+        mdl_rejected_total += int(stats.get("mdl_rejected_splits", 0) or 0)
+
+    if not all_cluster_sizes:
+        return {
+            "num_clusters": 0,
+            "avg_cluster_size": 0.0,
+            "median_cluster_size": 0,
+            "largest_cluster_size": 0,
+            "smallest_cluster_size": 0,
+            "mdl_accepted_splits": mdl_accepted_total,
+            "mdl_rejected_splits": mdl_rejected_total,
+            "by_product": per_product,
+        }
+
+    ordered = sorted(all_cluster_sizes)
+    return {
+        "num_clusters": int(len(all_cluster_sizes)),
+        "avg_cluster_size": float(sum(all_cluster_sizes) / len(all_cluster_sizes)),
+        "median_cluster_size": int(ordered[len(ordered) // 2]),
+        "largest_cluster_size": int(max(all_cluster_sizes)),
+        "smallest_cluster_size": int(min(all_cluster_sizes)),
+        "mdl_accepted_splits": int(mdl_accepted_total),
+        "mdl_rejected_splits": int(mdl_rejected_total),
+        "by_product": per_product,
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Run ABSA pipeline on Yandex Maps benchmark CSV and compute metrics."
@@ -108,10 +148,11 @@ def main() -> None:
         "--clusterer",
         type=str,
         default="aspect",
-        choices=["aspect", "divisive"],
+        choices=["aspect", "divisive", "mdl_divisive"],
         help=(
             "Кластеризация: aspect — якоря + HDBSCAN (дефолт пайплайна); "
-            "divisive — UMAP + рекурсивное k-means, имена через MedoidNamer (без LLM)."
+            "divisive — UMAP + рекурсивное k-means; "
+            "mdl_divisive — bisecting k-means + MDL."
         ),
     )
     parser.add_argument(
@@ -170,6 +211,7 @@ def main() -> None:
 
     metrics = evaluate_with_mapping(df, pipeline_results_for_eval, active_mapping)
     product_ratings = evaluate_product_ratings(df, pipeline_results_for_eval, active_mapping)
+    metrics["clustering_stats"] = _summarize_clustering_stats(pipeline_results_for_eval)
 
     # Добавляем несколько сводных полей для удобства вывода
     if metrics.get("per_product"):

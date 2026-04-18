@@ -158,7 +158,11 @@ def run_pipeline_for_ids(
     from configs.configs import config
     from src.pipeline import ABSAPipeline
     from src.schemas.models import ReviewInput
-    from src.stages.clustering import AspectClusterer, DivisiveClusterer
+    from src.stages.clustering import (
+        AspectClusterer,
+        DivisiveClusterer,
+        MDLDivisiveClusterer,
+    )
     from src.stages.naming import MedoidNamer
 
     if json_path and os.path.isfile(json_path):
@@ -180,8 +184,22 @@ def run_pipeline_for_ids(
         clustering_stage = AspectClusterer(model=encoder)
     elif clusterer == "divisive":
         clustering_stage = DivisiveClusterer(model=encoder, namer=MedoidNamer())
+    elif clusterer == "mdl_divisive":
+        clustering_stage = MDLDivisiveClusterer(
+            model=encoder,
+            namer=MedoidNamer(),
+            use_aicc_correction=bool(
+                getattr(config.discovery, "mdl_use_aicc_correction", True)
+            ),
+            model_penalty_alpha=float(
+                getattr(config.discovery, "mdl_model_penalty_alpha", 1.0)
+            ),
+        )
     else:
-        raise ValueError(f"Неизвестный clusterer={clusterer!r}; ожидается 'aspect' или 'divisive'.")
+        raise ValueError(
+            f"Неизвестный clusterer={clusterer!r}; "
+            "ожидается 'aspect', 'divisive' или 'mdl_divisive'."
+        )
 
     pipeline = ABSAPipeline(
         encoder=encoder,
@@ -214,6 +232,8 @@ def run_pipeline_for_ids(
             results[nm_id] = {
                 "aspects": [],
                 "per_review": {},
+                "aspect_keywords": {},
+                "diagnostics": eval_data.diagnostics,
             }
             continue
 
@@ -231,6 +251,7 @@ def run_pipeline_for_ids(
             ],
             "per_review": per_review_avg,
             "aspect_keywords": eval_data.aspect_keywords,
+            "diagnostics": eval_data.diagnostics,
         }
 
     return results
@@ -1279,6 +1300,37 @@ if __name__ == "__main__":
             str(k): (v.get("diagnostics") or {}).get("nli_medoid_diagnostics", [])
             for k, v in pipeline_results_for_eval.items()
         }
+        metrics["clustering_stats_by_product"] = {
+            str(k): (v.get("diagnostics") or {}).get("clustering_stats", {})
+            for k, v in pipeline_results_for_eval.items()
+        }
+        all_cluster_sizes = [
+            int(size)
+            for product_stats in metrics["clustering_stats_by_product"].values()
+            for size in (product_stats.get("cluster_sizes") or [])
+        ]
+        if all_cluster_sizes:
+            metrics["clustering_stats"] = {
+                "num_clusters": int(len(all_cluster_sizes)),
+                "avg_cluster_size": float(np.mean(all_cluster_sizes)),
+                "median_cluster_size": int(np.median(all_cluster_sizes)),
+                "largest_cluster_size": int(max(all_cluster_sizes)),
+                "smallest_cluster_size": int(min(all_cluster_sizes)),
+                "mdl_accepted_splits": int(
+                    sum(
+                        int((stats or {}).get("mdl_accepted_splits", 0))
+                        for stats in metrics["clustering_stats_by_product"].values()
+                    )
+                ),
+                "mdl_rejected_splits": int(
+                    sum(
+                        int((stats or {}).get("mdl_rejected_splits", 0))
+                        for stats in metrics["clustering_stats_by_product"].values()
+                    )
+                ),
+            }
+        else:
+            metrics["clustering_stats"] = {}
 
         print("\n--- Counter: confident / residual (per product) ---")
         for nm_id in sorted(pipeline_results_for_eval.keys(), key=lambda x: int(x) if isinstance(x, int) else x):

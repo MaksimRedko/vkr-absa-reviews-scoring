@@ -59,6 +59,7 @@ class PipelineResult:
     aggregation: Optional[AggregationResult] = None
     sentiment_details: List[SentimentResult] = field(default_factory=list)
     aspect_keywords: Dict[str, List[str]] = field(default_factory=dict)
+    diagnostics: Dict[str, object] = field(default_factory=dict)
 
 
 class ABSAPipeline:
@@ -177,6 +178,7 @@ class ABSAPipeline:
                 reviews_processed=len(reviews),
                 processing_time=time.time() - t_start,
                 aspects={},
+                diagnostics=stages_result.diagnostics,
             )
 
         # 7. Математическая агрегация
@@ -210,6 +212,7 @@ class ABSAPipeline:
             aggregation=agg_result,
             sentiment_details=stages_result.sentiment_results,
             aspect_keywords=stages_result.aspect_keywords,
+            diagnostics=stages_result.diagnostics,
         )
         if snapshot_writer:
             snapshot_writer.save_pipeline_result(result)
@@ -230,6 +233,37 @@ class ABSAPipeline:
     # ------------------------------------------------------------------
     # Связующие функции
     # ------------------------------------------------------------------
+
+    def _collect_clusterer_diagnostics(self) -> Dict[str, object]:
+        if hasattr(self.clusterer, "get_diagnostics"):
+            diagnostics = getattr(self.clusterer, "get_diagnostics")()
+            if isinstance(diagnostics, dict):
+                return diagnostics
+
+        diagnostics: Dict[str, object] = {}
+        assignment = getattr(self.clusterer, "last_assignment_counts", None)
+        if assignment:
+            diagnostics["anchor_assignment_counts"] = dict(assignment)
+
+        residual = getattr(self.clusterer, "last_residual_medoid_names", None)
+        if residual is not None:
+            diagnostics["residual_medoid_names"] = list(residual)
+
+        nli_diag = getattr(self.clusterer, "last_nli_medoid_diagnostics", None)
+        if nli_diag is not None:
+            diagnostics["nli_medoid_diagnostics"] = list(nli_diag)
+
+        stats = getattr(self.clusterer, "last_clustering_stats", None)
+        if isinstance(stats, dict) and stats:
+            diagnostics["clustering_stats"] = dict(stats)
+        else:
+            centroids = getattr(self.clusterer, "_cluster_centroids", {})
+            if isinstance(centroids, dict):
+                diagnostics["clustering_stats"] = {
+                    "num_clusters": int(len(centroids)),
+                }
+
+        return diagnostics
 
     def _build_aggregation_input(
         self,
@@ -312,6 +346,7 @@ class ABSAPipeline:
 
         print("[5/7] Кластеризация аспектов...")
         aspects = self.clusterer.cluster(scored_candidates)
+        diagnostics = self._collect_clusterer_diagnostics()
         aspect_names = list(aspects.keys())
         print(f"       Найдено аспектов: {len(aspect_names)} — {aspect_names}")
         _tick("кластеризация", 5)
@@ -326,6 +361,7 @@ class ABSAPipeline:
                 trust_weights=trust_weights,
                 per_review={},
                 aspect_keywords={},
+                diagnostics=diagnostics,
             )
 
         print(f"[6/7] NLI Sentiment ({len(aspect_names)} аспектов)...")
@@ -355,6 +391,7 @@ class ABSAPipeline:
                 max_aspects=int(config.discovery.multi_label_max_aspects),
             )
         print(f"       Пар для NLI: {len(sentiment_pairs)}")
+        diagnostics["nli_pairs_count"] = int(len(sentiment_pairs))
         if snapshot_writer:
             snapshot_writer.save_sentiment_pairs(sentiment_pairs)
         sentiment_scores = self.sentiment_engine.batch_analyze(sentiment_pairs)
@@ -404,6 +441,7 @@ class ABSAPipeline:
             trust_weights=trust_weights,
             per_review=per_review,
             aspect_keywords={name: info.keywords for name, info in aspects.items()},
+            diagnostics=diagnostics,
         )
 
     @staticmethod

@@ -87,6 +87,7 @@ class EvalData:
     trust_weights: List[float]
     per_review: Dict[str, Dict[str, float]]
     aspect_keywords: Dict[str, List[str]]
+    diagnostics: Dict[str, object] = field(default_factory=dict)
 
 
 @dataclass

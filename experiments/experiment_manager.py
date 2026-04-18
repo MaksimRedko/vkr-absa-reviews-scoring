@@ -223,6 +223,7 @@ class ExperimentManager:
             "global_mae_raw": metrics.get("global_mae_raw"),
             "global_mae_calibrated": metrics.get("global_mae_calibrated"),
             "global_mention_recall_review": metrics.get("global_mention_recall_review"),
+            "clustering_stats": metrics.get("clustering_stats"),
         }
 
         # Дедупликация: не добавлять если run_id уже в registry

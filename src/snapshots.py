@@ -270,6 +270,7 @@ class SnapshotWriter:
             "reviews_processed": result.reviews_processed,
             "processing_time": result.processing_time,
             "aspect_keywords": result.aspect_keywords,
+            "diagnostics": getattr(result, "diagnostics", {}),
             "aspects": {
                 name: {k: (float(v) if isinstance(v, (float, int, np.floating)) else v)
                        for k, v in metrics.items()}
