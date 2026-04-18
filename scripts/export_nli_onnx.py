@@ -1,5 +1,6 @@
 """
 Однократный экспорт NLI (rubert-base-cased-nli-threeway) в ONNX + динамическое INT8.
+Экспортирует три входа: input_ids, attention_mask, token_type_ids.
 
 Запуск из корня репозитория:
   python scripts/export_nli_onnx.py
@@ -55,30 +56,49 @@ def main() -> None:
         padding="max_length",
         truncation=True,
     )
+    token_type_ids = dummy.get("token_type_ids")
+    if token_type_ids is None:
+        token_type_ids = torch.zeros_like(dummy["input_ids"])
 
     args.fp32_out.parent.mkdir(parents=True, exist_ok=True)
 
-    print(f"Экспорт FP32 ONNX → {args.fp32_out}")
+    print(f"Экспорт FP32 ONNX -> {args.fp32_out}")
     torch.onnx.export(
         model,
-        (dummy["input_ids"], dummy["attention_mask"]),
+        (dummy["input_ids"], dummy["attention_mask"], token_type_ids),
         str(args.fp32_out),
-        input_names=["input_ids", "attention_mask"],
+        input_names=["input_ids", "attention_mask", "token_type_ids"],
         output_names=["logits"],
         dynamic_axes={
             "input_ids": {0: "batch_size", 1: "sequence_length"},
             "attention_mask": {0: "batch_size", 1: "sequence_length"},
+            "token_type_ids": {0: "batch_size", 1: "sequence_length"},
             "logits": {0: "batch_size"},
         },
-        opset_version=14,
+        # Для современных torch/onnxruntime экспорт в opset<18 часто ведет
+        # к проблемам конвертера (LayerNormalization) и битым shape при quantize.
+        opset_version=18,
+        dynamo=False,
     )
 
-    print(f"Динамическое квантование INT8 → {args.int8_out}")
-    quantize_dynamic(
-        model_input=str(args.fp32_out),
-        model_output=str(args.int8_out),
-        weight_type=QuantType.QInt8,
-    )
+    print(f"Динамическое квантование INT8 -> {args.int8_out}")
+    try:
+        quantize_dynamic(
+            model_input=str(args.fp32_out),
+            model_output=str(args.int8_out),
+            weight_type=QuantType.QInt8,
+        )
+    except Exception as exc:
+        print(
+            "WARN: quantize_dynamic с shape inference упал, повтор без shape inference: "
+            f"{exc!r}"
+        )
+        quantize_dynamic(
+            model_input=str(args.fp32_out),
+            model_output=str(args.int8_out),
+            weight_type=QuantType.QInt8,
+            extra_options={"DisableShapeInference": True},
+        )
     print("Готово. В configs.models.nli_onnx_quantized_path укажите путь к int8 ONNX.")
 
 

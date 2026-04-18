@@ -4,10 +4,10 @@
 Полярность (позитив/негатив) через одну гипотезу на пару (sentence, aspect):
   H = "{aspect} — это хорошо"  (шаблон из config.sentiment.hypothesis_template_pos)
 
-Из одного трёхклассового прогона берём P(entailment) и P(contradiction); нейтраль
-остаётся в полном softmax, но в скоре не участвует:
+Из одного трёхклассового прогона берём вероятности всех классов и считаем
+матожидание на шкале 1..5:
 
-  Score = 1 + 4 · P_ent / (P_ent + P_contra + ε), затем clamp [1, 5]
+  Score = 5·P(entailment) + 3·P(neutral) + 1·P(contradiction)
 
 В SentimentResult: p_ent_pos = P(entailment), p_ent_neg = P(contradiction)
 (имена полей сохранены для совместимости с фильтром релевантности и снепшотами).
@@ -45,7 +45,7 @@ class SentimentEngine(SentimentStage):
     NLI-based sentiment engine v4 (single hypothesis).
 
     Один forward на батч пар (premise, hypothesis).
-    Score = 1 + 4 · P_ent / (P_ent + P_contra + ε)
+    Score = 5·P(entailment) + 3·P(neutral) + 1·P(contradiction)
 
     Инференс: PyTorch (GPU/CPU) или ONNX Runtime INT8 на CPU, если задан
     `config.models.nli_onnx_quantized_path` и файл существует.
@@ -63,7 +63,7 @@ class SentimentEngine(SentimentStage):
         )
         self.num_labels = int(hf_cfg.num_labels)
         self.id2label = hf_cfg.id2label
-        self.ent_idx, self.contra_idx = self._ent_contra_indices(
+        self.ent_idx, self.neu_idx, self.contra_idx = self._label_indices(
             self.id2label, self.num_labels
         )
 
@@ -106,9 +106,10 @@ class SentimentEngine(SentimentStage):
                 providers=["CPUExecutionProvider"],
             )
             self._use_onnx = True
+            onnx_kind = "INT8" if "int8" in onnx_path.name.lower() else "FP32"
             print(
-                f"[SentimentEngine v4] ONNX INT8, {self.num_labels} classes, "
-                f"ent_idx={self.ent_idx}, contra_idx={self.contra_idx}, "
+                f"[SentimentEngine v4] ONNX {onnx_kind}, {self.num_labels} classes, "
+                f"ent_idx={self.ent_idx}, neu_idx={self.neu_idx}, contra_idx={self.contra_idx}, "
                 f"model={onnx_path.name}"
             )
         else:
@@ -128,24 +129,28 @@ class SentimentEngine(SentimentStage):
             self.model.eval()
             print(
                 f"[SentimentEngine v4] PyTorch, single-hypothesis, {self.num_labels} classes, "
-                f"ent_idx={self.ent_idx}, contra_idx={self.contra_idx}, device={self.device}"
+                f"ent_idx={self.ent_idx}, neu_idx={self.neu_idx}, contra_idx={self.contra_idx}, device={self.device}"
             )
 
     @staticmethod
-    def _ent_contra_indices(id2label: dict, num_labels: int) -> Tuple[int, int]:
+    def _label_indices(id2label: dict, num_labels: int) -> Tuple[int, int, int]:
         ent_idx = 0
+        neu_idx = 1 if num_labels > 1 else 0
         contra_idx = 0
         for idx, label in id2label.items():
             lab = str(label).lower()
             if lab == "entailment":
                 ent_idx = int(idx)
+            if lab == "neutral":
+                neu_idx = int(idx)
             if lab == "contradiction":
                 contra_idx = int(idx)
-        if ent_idx != contra_idx:
-            return ent_idx, contra_idx
+        if num_labels >= 3 and len({ent_idx, neu_idx, contra_idx}) == 3:
+            return ent_idx, neu_idx, contra_idx
+        # fallback для стандартного порядка threeway: contradiction, neutral, entailment
         if num_labels >= 3:
-            return 2, 0
-        return ent_idx, contra_idx
+            return 2, 1, 0
+        return ent_idx, neu_idx, contra_idx
 
     def batch_analyze(
         self,
@@ -234,9 +239,13 @@ class SentimentEngine(SentimentStage):
                 truncation=True,
                 return_tensors="pt",
             )
+            token_type_ids = inputs.get("token_type_ids")
+            if token_type_ids is None:
+                token_type_ids = torch.zeros_like(inputs["input_ids"])
             ort_inputs = {
                 "input_ids": inputs["input_ids"].numpy().astype(np.int64),
                 "attention_mask": inputs["attention_mask"].numpy().astype(np.int64),
+                "token_type_ids": token_type_ids.numpy().astype(np.int64),
             }
             logits_np = self._ort_session.run(["logits"], ort_inputs)[0]
             return torch.from_numpy(np.asarray(logits_np, dtype=np.float32))
@@ -335,6 +344,7 @@ class SentimentEngine(SentimentStage):
         logits = self._forward_logits_tensor(premises, hyp_texts)
         probs = torch.softmax(logits / self.temperature, dim=1).cpu().numpy()
         p_ent = probs[:, self.ent_idx]
+        p_neu = probs[:, self.neu_idx]
         p_contra = probs[:, self.contra_idx]
 
         results = []
@@ -342,9 +352,9 @@ class SentimentEngine(SentimentStage):
             zip(review_ids, premises, aspects_tag)
         ):
             pe = float(p_ent[idx])
+            pn = float(p_neu[idx])
             pc = float(p_contra[idx])
-            denom = pe + pc + self.epsilon
-            score = 1.0 + 4.0 * pe / denom
+            score = 5.0 * pe + 3.0 * pn + 1.0 * pc
             score = max(1.0, min(5.0, score))
 
             results.append(

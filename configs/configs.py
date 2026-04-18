@@ -26,8 +26,8 @@ config = OmegaConf.create({
     "models": {
         "encoder_path": "./scripts/models/models--cointegrated--rubert-tiny2/snapshots/e8ed3b0c8bbf4fb6984c3de043bf7d2f4e5969ae",
         "nli_path": "./models/rubert-nli/models--cointegrated--rubert-base-cased-nli-threeway/snapshots/920cbb52ef830e94461bf141ec2119979b6049e2",
-        # INT8 ONNX: см. scripts/export_nli_onnx.py; непустой путь + существующий файл → ORT
-        "nli_onnx_quantized_path": "",
+        # ONNX путь для SentimentEngine (FP32/INT8). Существующий файл включает ORT автоматически.
+        "nli_onnx_quantized_path": "./models/rubert-nli/nli_threeway_fp32.onnx",
         "qwen_namer_path": "./models/qwen2_5_1_5b_instruct/models--Qwen--Qwen2.5-1.5B-Instruct/snapshots/989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
     },
     "discovery": {
@@ -46,7 +46,7 @@ config = OmegaConf.create({
         "cluster_merge_threshold": 0.95,  # Евклидов порог мержа в UMAP R5 (residual кластеры)
         "multi_label_threshold": 0.4,   # cosine: span → anchor для NLI-пар
         "multi_label_max_aspects": 3,    # макс. якорей на один (sentence, span)
-        "embedding_cache_max": 10000,  # LRU по строке для encode в KeyBERTScorer
+        "embedding_cache_max": 50000,  # LRU по строке для encode в KeyBERTScorer
     },
     "sentiment": {
         # Baseline B: {aspect} = nli_label (якорь для medoid-кластеров)
@@ -61,7 +61,8 @@ config = OmegaConf.create({
         # Review-level NLI (one pair per review/aspect) + post-NLI relevance filter
         "review_level": True,
         # v4: p_ent_pos=P(entailment), p_ent_neg=P(contradiction) → сумма = 1 - P(neutral)
-        "relevance_threshold": 0.6,  # оставить пару, если p_ent_pos + p_ent_neg >= порога
+        # Для single-hypothesis 0.6 слишком агрессивно и может обнулить пары.
+        "relevance_threshold": 0.2,  # оставить пару, если p_ent_pos + p_ent_neg >= порога
         # Temperature scaling на логитах NLI
         "temperature": 0.7,
     },

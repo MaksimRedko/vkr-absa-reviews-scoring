@@ -360,12 +360,19 @@ class ABSAPipeline:
         sentiment_scores = self.sentiment_engine.batch_analyze(sentiment_pairs)
         relevance_threshold = float(getattr(config.sentiment, "relevance_threshold", 0.0))
         if relevance_threshold > 0:
+            unfiltered_scores = sentiment_scores
             sentiment_scores = [
                 s
-                for s in sentiment_scores
+                for s in unfiltered_scores
                 # v4: P(ent)+P(contra) = 1 - P(neutral)
                 if (float(s.p_ent_pos) + float(s.p_ent_neg)) >= relevance_threshold
             ]
+            if unfiltered_scores and not sentiment_scores:
+                print(
+                    "       [WARN] relevance_threshold отфильтровал все NLI-пары; "
+                    "используется нефильтрованный набор."
+                )
+                sentiment_scores = unfiltered_scores
         print(f"       Получено оценок: {len(sentiment_scores)}")
         _tick("NLI", 6)
         if snapshot_writer:
