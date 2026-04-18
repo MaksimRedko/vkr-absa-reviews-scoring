@@ -15,10 +15,12 @@ from src.stages.contracts import ScoringStage
 class KeyBERTScorer(ScoringStage):
     def __init__(self, model: SentenceTransformer | None = None):
         self.model = model or SentenceTransformer(config.models.encoder_path)
+        self.extractor_mode: str = str(getattr(config.discovery, "extractor", "ngram"))
         self.cosine_threshold: float = config.discovery.cosine_threshold
         self.keybert_top_k: int = config.discovery.keybert_top_k
         self.mmr_lambda: float = config.discovery.mmr_lambda
         self.mmr_top_k: int = config.discovery.mmr_top_k
+        self.use_mmr: bool = self.extractor_mode == "ngram"
         self._emb_cache: OrderedDict[str, np.ndarray] = OrderedDict()
         self._emb_cache_max = int(
             getattr(config.discovery, "embedding_cache_max", 10000) or 0
@@ -57,6 +59,10 @@ class KeyBERTScorer(ScoringStage):
     # ------------------------------------------------------------------
     # Публичный API
     # ------------------------------------------------------------------
+    @staticmethod
+    def _candidate_text(candidate: Candidate) -> str:
+        return str(candidate.source_span or candidate.span)
+
     def score_and_select(
         self, candidates: List[Candidate]
     ) -> List[ScoredCandidate]:
@@ -67,7 +73,7 @@ class KeyBERTScorer(ScoringStage):
         sentences_unique = sorted({c.sentence for c in candidates})
         sent_to_emb = self._embed_strings_cached(sentences_unique)
 
-        spans_unique = sorted({c.span for c in candidates})
+        spans_unique = sorted({self._candidate_text(c) for c in candidates})
         span_to_emb = self._embed_strings_cached(spans_unique)
 
         by_sentence: dict[str, list[Candidate]] = {}
@@ -77,7 +83,7 @@ class KeyBERTScorer(ScoringStage):
         results: list[ScoredCandidate] = []
         for sent, cands in by_sentence.items():
             scored = self._score_candidates(cands, sent_to_emb[sent], span_to_emb)
-            selected = self._mmr(scored)
+            selected = scored if not self.use_mmr else self._mmr(scored)
             results.extend(selected)
 
         return results
@@ -95,7 +101,7 @@ class KeyBERTScorer(ScoringStage):
         sent_vec = sent_emb.reshape(1, -1)
 
         for c in candidates:
-            c_emb = span_to_emb[c.span]
+            c_emb = span_to_emb[self._candidate_text(c)]
             sim = cosine_similarity(c_emb.reshape(1, -1), sent_vec)[0, 0]
 
             if sim < self.cosine_threshold:
@@ -107,6 +113,9 @@ class KeyBERTScorer(ScoringStage):
                     score=float(sim),
                     sentence=c.sentence,
                     embedding=c_emb,
+                    review_id=getattr(c, "review_id", ""),
+                    candidate_id=getattr(c, "candidate_id", ""),
+                    source_span=self._candidate_text(c),
                 )
             )
 

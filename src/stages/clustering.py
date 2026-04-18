@@ -37,6 +37,27 @@ STOP_SPANS: set[str] = set()
 MDL_NORMALITY_PVALUE_THRESHOLD = 0.20
 
 
+def _build_assignment_maps(
+    aspects: Dict[str, AspectInfo],
+    candidates: List[ScoredCandidate],
+) -> tuple[dict[str, str], dict[str, str]]:
+    span_to_cluster: dict[str, str] = {}
+    for cluster_name, info in aspects.items():
+        for keyword in info.keywords:
+            span_to_cluster[str(keyword)] = str(cluster_name)
+
+    candidate_to_cluster: dict[str, str] = {}
+    for candidate in candidates:
+        candidate_id = str(getattr(candidate, "candidate_id", "") or "")
+        if not candidate_id:
+            continue
+        cluster_name = span_to_cluster.get(str(candidate.span), "")
+        if cluster_name:
+            candidate_to_cluster[candidate_id] = cluster_name
+
+    return span_to_cluster, candidate_to_cluster
+
+
 @dataclass
 class MDLDelta:
     delta_l_model: float
@@ -253,6 +274,8 @@ class AspectClusterer(ClusteringStage):
         self.last_assignment_counts: Dict[str, int] = {}
         self.last_residual_medoid_names: List[str] = []
         self.last_nli_medoid_diagnostics: List[str] = []
+        self.last_span_assignments: Dict[str, str] = {}
+        self.last_candidate_assignments: Dict[str, str] = {}
 
     def _build_anchor_embeddings(self) -> None:
         for name, words in MACRO_ANCHORS.items():
@@ -305,6 +328,8 @@ class AspectClusterer(ClusteringStage):
         self.last_assignment_counts = {}
         self.last_residual_medoid_names = []
         self.last_nli_medoid_diagnostics = []
+        self.last_span_assignments = {}
+        self.last_candidate_assignments = {}
 
         if not candidates:
             return {}
@@ -440,6 +465,9 @@ class AspectClusterer(ClusteringStage):
             f"  residual medoid names (final): {self.last_residual_medoid_names}"
         )
 
+        self.last_span_assignments, self.last_candidate_assignments = (
+            _build_assignment_maps(filtered, candidates)
+        )
         return filtered
 
     def _apply_nli_labels(
@@ -728,12 +756,21 @@ class AspectClusterer(ClusteringStage):
             if c.span in stops:
                 continue
             if c.span not in agg:
-                agg[c.span] = {"count": 0, "embedding": c.embedding, "score_sum": 0.0}
+                agg[c.span] = {
+                    "count": 0,
+                    "embedding_sum": np.asarray(c.embedding, dtype=np.float32).copy(),
+                    "score_sum": 0.0,
+                }
+            else:
+                agg[c.span]["embedding_sum"] += np.asarray(c.embedding, dtype=np.float32)
             agg[c.span]["count"] += 1
             agg[c.span]["score_sum"] += c.score
 
         if min_mentions > 1:
             agg = {s: d for s, d in agg.items() if d["count"] >= min_mentions}
+        for span, data in agg.items():
+            data["embedding"] = data["embedding_sum"] / max(int(data["count"]), 1)
+            data.pop("embedding_sum", None)
         return agg
 
     @staticmethod
@@ -787,6 +824,8 @@ class DivisiveClusterer(ClusteringStage):
         self.last_n_rejected: int = 0
         self.last_leaf_variances: list[float] = []
         self.last_split_history: list[tuple[int, int, int, float]] = []
+        self.last_span_assignments: Dict[str, str] = {}
+        self.last_candidate_assignments: Dict[str, str] = {}
 
     def _build_anti_anchor_embeddings(self) -> None:
         for name, words in ANTI_ANCHORS.items():
@@ -829,12 +868,21 @@ class DivisiveClusterer(ClusteringStage):
             if cand.span in stops:
                 continue
             if cand.span not in agg:
-                agg[cand.span] = {"count": 0, "embedding": cand.embedding, "score_sum": 0.0}
+                agg[cand.span] = {
+                    "count": 0,
+                    "embedding_sum": np.asarray(cand.embedding, dtype=np.float32).copy(),
+                    "score_sum": 0.0,
+                }
+            else:
+                agg[cand.span]["embedding_sum"] += np.asarray(cand.embedding, dtype=np.float32)
             agg[cand.span]["count"] += 1
             agg[cand.span]["score_sum"] += cand.score
 
         if min_mentions > 1:
             agg = {span: data for span, data in agg.items() if data["count"] >= min_mentions}
+        for span, data in agg.items():
+            data["embedding"] = data["embedding_sum"] / max(int(data["count"]), 1)
+            data.pop("embedding_sum", None)
         return agg
 
     @staticmethod
@@ -900,6 +948,8 @@ class DivisiveClusterer(ClusteringStage):
         self.last_split_history = []
         self._anchor_embeddings = {}
         self._cluster_centroids = {}
+        self.last_span_assignments = {}
+        self.last_candidate_assignments = {}
 
         if not candidates:
             return {}
@@ -1646,6 +1696,8 @@ class MDLDivisiveClusterer(DivisiveClusterer):
     def cluster(self, candidates: List[ScoredCandidate]) -> Dict[str, AspectInfo]:
         self._anchor_embeddings = {}
         self._cluster_centroids = {}
+        self.last_span_assignments = {}
+        self.last_candidate_assignments = {}
         if not candidates:
             self.last_clustering_stats = self._compute_clustering_stats([])
             self.last_tree_summary = {
@@ -1699,12 +1751,16 @@ class MDLDivisiveClusterer(DivisiveClusterer):
             )
             tree_embeddings = reducer.fit_transform(original_embeddings)
 
-        return self.fit(
+        aspects = self.fit(
             embeddings=tree_embeddings,
             spans=spans,
             span_data=span_data,
             original_embeddings=original_embeddings,
         )
+        self.last_span_assignments, self.last_candidate_assignments = (
+            _build_assignment_maps(aspects, candidates)
+        )
+        return aspects
 
 
 if __name__ == "__main__":

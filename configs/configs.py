@@ -31,6 +31,7 @@ config = OmegaConf.create({
         "qwen_namer_path": "./models/qwen2_5_1_5b_instruct/models--Qwen--Qwen2.5-1.5B-Instruct/snapshots/989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
     },
     "discovery": {
+        "extractor": "ngram",
         "ngram_range": [1, 2],  # Униграммы и биграммы
         "keybert_top_k": 7,  # Сколько кандидатов на предложение до MMR
         "mmr_lambda": 0.6,  # Баланс релевантность/разнообразие

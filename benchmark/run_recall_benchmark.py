@@ -22,6 +22,7 @@ _DEFAULT_TARGET_NM_IDS = [1809358565, 165234215]
 from eval_pipeline import (  # noqa: E402
     ASPECT_ALIASES,
     MANUAL_MAPPING,
+    _collect_eval_aspect_sets,
     _build_auto_mapping,
     load_markup,
     load_pipeline_reviews_from_csv,
@@ -88,7 +89,7 @@ def _evaluate_recall_only(
     all_recall_total = 0
 
     for nm_id, pred_data in pipeline_results.items():
-        pred_aspects = set(pred_data.get("aspects", []))
+        pred_aspects, pred_eval_aspects, eval_projection = _collect_eval_aspect_sets(pred_data)
         product_mapping = mapping.get(nm_id, {})
 
         grp = markup_df[markup_df["nm_id"] == nm_id]
@@ -97,7 +98,7 @@ def _evaluate_recall_only(
             true_aspects_all.update(labels.keys())
 
         mapped_pred = {
-            pred_aspect
+            eval_projection.get(pred_aspect, pred_aspect)
             for pred_aspect, true_aspect in product_mapping.items()
             if true_aspect is not None and pred_aspect in pred_aspects
         }
@@ -108,7 +109,7 @@ def _evaluate_recall_only(
         }
 
         precision_hits = len(mapped_pred)
-        precision_total = len(pred_aspects)
+        precision_total = len(pred_eval_aspects)
         recall_hits = len(mapped_true)
         recall_total = len(true_aspects_all)
 
@@ -119,6 +120,7 @@ def _evaluate_recall_only(
             "precision": round(precision, 3),
             "recall": round(recall, 3),
             "pred_aspects": sorted(pred_aspects),
+            "pred_eval_aspects": sorted(pred_eval_aspects),
             "true_aspects": sorted(true_aspects_all),
             "pred_aspects_count": int(precision_total),
             "true_aspects_count": int(recall_total),
@@ -221,8 +223,9 @@ def _run_clustering_only_for_ids(
     from sentence_transformers import SentenceTransformer
 
     from configs.configs import config
+    from src.pipeline import build_aspect_eval_labels
     from src.schemas.models import ReviewInput
-    from src.stages.extraction import CandidateExtractor
+    from src.stages.extraction import build_extraction_stage
     from src.stages.pairing import extract_all_with_mapping
     from src.stages.scoring import KeyBERTScorer
 
@@ -232,7 +235,7 @@ def _run_clustering_only_for_ids(
         reviews_by_nm[int(row["nm_id"])].append(row)
 
     encoder = SentenceTransformer(config.models.encoder_path)
-    extractor = CandidateExtractor()
+    extractor = build_extraction_stage()
     scorer = KeyBERTScorer(model=encoder)
     clusterer = _make_clusterer(clusterer_name, encoder)
 
@@ -268,14 +271,23 @@ def _run_clustering_only_for_ids(
             maybe_diagnostics = clusterer.get_diagnostics()
             if isinstance(maybe_diagnostics, dict):
                 diagnostics = maybe_diagnostics
+        aspect_eval_labels = build_aspect_eval_labels(aspects, scored_candidates)
+        diagnostics["aspect_eval_labels"] = aspect_eval_labels
 
         aspect_names = list(aspects.keys())
         aliased_names = [ASPECT_ALIASES[name] for name in aspect_names if name in ASPECT_ALIASES]
+        for aspect_name in aspect_names:
+            if aspect_name in ASPECT_ALIASES:
+                aspect_eval_labels[ASPECT_ALIASES[aspect_name]] = aspect_eval_labels.get(
+                    aspect_name,
+                    ASPECT_ALIASES[aspect_name],
+                )
         results[int(nm_id)] = {
             "aspects": list(dict.fromkeys(aspect_names + aliased_names)),
             "aspect_keywords": {
                 name: list(info.keywords) for name, info in aspects.items()
             },
+            "aspect_eval_labels": aspect_eval_labels,
             "diagnostics": diagnostics,
         }
         print(

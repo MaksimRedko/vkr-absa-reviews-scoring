@@ -233,6 +233,7 @@ def run_pipeline_for_ids(
                 "aspects": [],
                 "per_review": {},
                 "aspect_keywords": {},
+                "aspect_eval_labels": {},
                 "diagnostics": eval_data.diagnostics,
             }
             continue
@@ -251,8 +252,19 @@ def run_pipeline_for_ids(
             ],
             "per_review": per_review_avg,
             "aspect_keywords": eval_data.aspect_keywords,
+            "aspect_eval_labels": dict(
+                (eval_data.diagnostics or {}).get("aspect_eval_labels", {})
+            ),
             "diagnostics": eval_data.diagnostics,
         }
+        for aspect_name in list(eval_data.aspects.keys()):
+            if aspect_name in ASPECT_ALIASES:
+                results[nm_id]["aspect_eval_labels"][ASPECT_ALIASES[aspect_name]] = (
+                    results[nm_id]["aspect_eval_labels"].get(
+                        aspect_name,
+                        ASPECT_ALIASES[aspect_name],
+                    )
+                )
 
     return results
 
@@ -417,6 +429,69 @@ def diagnose_unknown_reviews(per_review_path: str) -> Dict[int, dict]:
     return results
 
 
+def _extract_pair_head_label(label: str) -> Optional[str]:
+    normalized = str(label or "").strip().lower()
+    if not normalized or normalized.startswith("event_") or "_" not in normalized:
+        return None
+    head = normalized.split("_", 1)[0].strip()
+    return head or None
+
+
+def _build_eval_projection_map(pred_data: Dict[str, object]) -> Dict[str, str]:
+    cached = pred_data.get("aspect_eval_labels")
+    if isinstance(cached, dict) and cached:
+        return {
+            str(aspect_name): str(eval_label)
+            for aspect_name, eval_label in cached.items()
+            if str(aspect_name).strip() and str(eval_label).strip()
+        }
+
+    aspect_keywords = pred_data.get("aspect_keywords") or {}
+    pred_aspects = list(pred_data.get("aspects", []) or list(aspect_keywords.keys()))
+    projection: Dict[str, str] = {}
+
+    for aspect_name in pred_aspects:
+        aspect_name = str(aspect_name)
+        keywords = aspect_keywords.get(aspect_name, [aspect_name]) or [aspect_name]
+        head_counts: Counter[str] = Counter()
+        for keyword in keywords:
+            head = _extract_pair_head_label(str(keyword))
+            if head:
+                head_counts[head] += 1
+
+        if head_counts:
+            best_count = max(head_counts.values())
+            best_heads = sorted(
+                head
+                for head, count in head_counts.items()
+                if count == best_count
+            )
+            projection[aspect_name] = best_heads[0]
+            continue
+
+        fallback_head = _extract_pair_head_label(aspect_name)
+        projection[aspect_name] = fallback_head or aspect_name
+
+    return projection
+
+
+def _collect_eval_aspect_sets(
+    pred_data: Dict[str, object],
+) -> Tuple[set[str], set[str], Dict[str, str]]:
+    aspect_keywords = pred_data.get("aspect_keywords") or {}
+    pred_aspects = {
+        str(aspect_name)
+        for aspect_name in (pred_data.get("aspects", []) or list(aspect_keywords.keys()))
+        if str(aspect_name).strip()
+    }
+    projection = _build_eval_projection_map(pred_data)
+    pred_eval_aspects = {
+        projection.get(aspect_name, aspect_name)
+        for aspect_name in pred_aspects
+    }
+    return pred_aspects, pred_eval_aspects, projection
+
+
 # ┌─────────────────────────────────────────────────────────────────────────┐
 # │ FIX2+FIX3: evaluate_with_mapping — валидация + честный LOO             │
 # └─────────────────────────────────────────────────────────────────────────┘
@@ -452,16 +527,20 @@ def evaluate_with_mapping(
     for nm_id in nm_ids:
         pred_data = pipeline_results[nm_id]
         product_mapping = mapping.get(nm_id, {})
-        pred_aspects = set(pred_data["aspects"])
+        pred_aspects, pred_eval_aspects, eval_projection = _collect_eval_aspect_sets(pred_data)
 
         grp = markup_df[markup_df["nm_id"] == nm_id]
         true_aspects_all = set()
         for labels in grp["true_labels_parsed"].dropna():
             true_aspects_all.update(labels.keys())
 
-        mapped_pred = {pa for pa, ta in product_mapping.items() if ta is not None}
+        mapped_pred = {
+            eval_projection.get(pa, pa)
+            for pa, ta in product_mapping.items()
+            if ta is not None and pa in pred_aspects
+        }
         prec_hits = len(mapped_pred)
-        prec_total = len(pred_aspects)
+        prec_total = len(pred_eval_aspects)
 
         mapped_true = {ta for ta in product_mapping.values() if ta is not None}
         recall_hits = len(mapped_true)
@@ -531,7 +610,12 @@ def evaluate_with_mapping(
             "calibration_b": round(b, 4),
             "mae_n": len(test_pairs),
             "pred_aspects": sorted(pred_aspects),
+            "pred_eval_aspects": sorted(pred_eval_aspects),
             "true_aspects": sorted(true_aspects_all),
+            "pred_aspects_count": int(prec_total),
+            "true_aspects_count": int(recall_total),
+            "matched_predicted_count": int(prec_hits),
+            "matched_true_count": int(recall_hits),
         }
 
         all_precision_hits += prec_hits
@@ -920,8 +1004,14 @@ def _build_auto_mapping(
     mapping: Dict[int, Dict[str, Optional[str]]] = {}
 
     for nm_id, pred_data in pipeline_results.items():
-        pred_aspects = pred_data["aspects"]
         aspect_keywords = pred_data.get("aspect_keywords", {})
+        pred_aspects = [
+            str(aspect_name)
+            for aspect_name in (
+                pred_data.get("aspects", []) or list(aspect_keywords.keys())
+            )
+        ]
+        eval_projection = _build_eval_projection_map(pred_data)
 
         # True aspects из разметки
         grp = markup_df[markup_df["nm_id"] == nm_id]
@@ -936,12 +1026,26 @@ def _build_auto_mapping(
 
         # Encode predicted: mean of keywords embeddings (pseudo-centroid)
         pred_embeddings = []
+        eval_embedding_cache: Dict[str, np.ndarray] = {}
         for pa in pred_aspects:
             kws = aspect_keywords.get(pa, [pa])
             if not kws:
                 kws = [pa]
-            embs = encoder.encode(kws, show_progress_bar=False)
-            pred_embeddings.append(np.mean(embs, axis=0))
+            eval_label = eval_projection.get(pa, pa)
+            use_eval_projection = (
+                eval_label != pa
+                or any(_extract_pair_head_label(str(keyword)) for keyword in kws)
+            )
+            if use_eval_projection:
+                if eval_label not in eval_embedding_cache:
+                    eval_embedding_cache[eval_label] = encoder.encode(
+                        eval_label,
+                        show_progress_bar=False,
+                    )
+                pred_embeddings.append(eval_embedding_cache[eval_label])
+            else:
+                embs = encoder.encode(kws, show_progress_bar=False)
+                pred_embeddings.append(np.mean(embs, axis=0))
         pred_matrix = np.stack(pred_embeddings)
 
         # Encode true: из desc_cache если есть, иначе fallback на encode(name)
@@ -963,12 +1067,14 @@ def _build_auto_mapping(
         for i, pa in enumerate(pred_aspects):
             best_j = int(np.argmax(sim_matrix[i]))
             best_sim = float(sim_matrix[i, best_j])
+            eval_label = eval_projection.get(pa, pa)
+            display_name = pa if eval_label == pa else f"{pa} [{eval_label}]"
             if best_sim >= threshold:
                 product_mapping[pa] = true_aspects[best_j]
-                print(f"    {pa:30s} → {true_aspects[best_j]:25s} (cos={best_sim:.3f})")
+                print(f"    {display_name:30s} → {true_aspects[best_j]:25s} (cos={best_sim:.3f})")
             else:
                 product_mapping[pa] = None
-                print(f"    {pa:30s} → None                      (max_cos={best_sim:.3f} < {threshold})")
+                print(f"    {display_name:30s} → None                      (max_cos={best_sim:.3f} < {threshold})")
 
         mapping[nm_id] = product_mapping
 

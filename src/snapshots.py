@@ -28,7 +28,7 @@ from __future__ import annotations
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 import numpy as np
 
@@ -133,7 +133,19 @@ class SnapshotWriter:
         total = 0
         for rev_id, cands in review_candidates_map.items():
             per_review[rev_id] = [
-                {"span": c.span, "sentence": c.sentence, "token_indices": list(c.token_indices)}
+                {
+                    "span": c.span,
+                    "sentence": c.sentence,
+                    "token_indices": list(c.token_indices),
+                    "review_id": getattr(c, "review_id", ""),
+                    "candidate_id": getattr(c, "candidate_id", ""),
+                    "source_span": getattr(c, "source_span", None),
+                    "head_lemma": getattr(c, "head_lemma", ""),
+                    "modifier_text": getattr(c, "modifier_text", ""),
+                    "modifier_lemma": getattr(c, "modifier_lemma", ""),
+                    "modifier_type": getattr(c, "modifier_type", None),
+                    "dep_label": getattr(c, "dep_label", ""),
+                }
                 for c in cands
             ]
             total += len(cands)
@@ -155,6 +167,9 @@ class SnapshotWriter:
                 "span": s.span,
                 "score": round(float(s.score), 6),
                 "sentence": s.sentence,
+                "review_id": getattr(s, "review_id", ""),
+                "candidate_id": getattr(s, "candidate_id", ""),
+                "source_span": getattr(s, "source_span", None),
             }
             if self.save_embeddings and s.embedding is not None:
                 item["embedding"] = s.embedding.tolist() if hasattr(s.embedding, "tolist") else list(s.embedding)
@@ -296,6 +311,14 @@ def load_candidates_snapshot(path: str | Path) -> list:
                 span=c["span"],
                 sentence=c["sentence"],
                 token_indices=tuple(c["token_indices"]),
+                review_id=c.get("review_id", rev_id),
+                candidate_id=c.get("candidate_id", ""),
+                source_span=c.get("source_span"),
+                head_lemma=c.get("head_lemma", ""),
+                modifier_text=c.get("modifier_text", c.get("modifiers_text", "")),
+                modifier_lemma=c.get("modifier_lemma", ""),
+                modifier_type=c.get("modifier_type"),
+                dep_label=c.get("dep_label", ""),
             ))
     return result
 
@@ -315,6 +338,9 @@ def load_scored_snapshot(path: str | Path) -> list:
             score=item["score"],
             sentence=item["sentence"],
             embedding=emb,
+            review_id=item.get("review_id", ""),
+            candidate_id=item.get("candidate_id", ""),
+            source_span=item.get("source_span"),
         ))
     return result
 

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import defaultdict
 from typing import TYPE_CHECKING, Dict, List, Tuple
 
 import numpy as np
@@ -36,7 +37,10 @@ def extract_all_with_mapping(
 
     for text, review_id in zip(texts, review_ids):
         candidates = extractor.extract(text)
-        for cand in candidates:
+        for idx, cand in enumerate(candidates):
+            cand.review_id = review_id
+            if not getattr(cand, "candidate_id", ""):
+                cand.candidate_id = f"{review_id}:{idx}"
             sentence_to_review[cand.sentence.strip()] = review_id
             sentence_to_review[cand.sentence.lower().strip()] = review_id
         all_candidates.extend(candidates)
@@ -101,24 +105,40 @@ def build_sentiment_pairs(
 
 def build_review_level_pairs(
     review_text_by_id: Dict[str, str],
+    scored_candidates: List["ScoredCandidate"],
+    candidate_assignments: Dict[str, str],
     aspects: Dict[str, "AspectInfo"],
-    anchor_embeddings: Dict[str, np.ndarray],
 ) -> List[SentimentPair]:
     """
-    Review-level режим: одна NLI-пара на (review, aspect из product_anchors).
+    Review-level режим: одна NLI-пара на (review, aspect), но только для аспектов,
+    в которые реально попали кандидаты из этого отзыва.
     Вес = 1.0, premise = clean_text отзыва.
     """
-    if not aspects or not review_text_by_id:
+    if not aspects or not review_text_by_id or not scored_candidates or not candidate_assignments:
         return []
 
-    product_anchors = _resolve_product_anchors(aspects, anchor_embeddings)
-    if not product_anchors:
-        return []
+    aspect_to_nli: Dict[str, str] = {
+        aspect_name: (info.nli_label or aspect_name).strip() or aspect_name
+        for aspect_name, info in aspects.items()
+    }
+
+    review_aspects: Dict[str, Dict[str, str]] = defaultdict(dict)
+    for candidate in scored_candidates:
+        candidate_id = str(getattr(candidate, "candidate_id", "") or "")
+        review_id = str(getattr(candidate, "review_id", "") or "")
+        if not candidate_id or not review_id:
+            continue
+        aspect_name = candidate_assignments.get(candidate_id, "")
+        if not aspect_name:
+            continue
+        nli_label = aspect_to_nli.get(aspect_name, aspect_name)
+        review_aspects[review_id][aspect_name] = nli_label
 
     pairs: List[SentimentPair] = []
-    for review_id, text in review_text_by_id.items():
+    for review_id, aspect_map in review_aspects.items():
+        text = review_text_by_id.get(review_id, "")
         if not text:
             continue
-        for aspect_name in sorted(product_anchors):
-            pairs.append((review_id, text, aspect_name, aspect_name, 1.0))
+        for aspect_name in sorted(aspect_map):
+            pairs.append((review_id, text, aspect_name, aspect_map[aspect_name], 1.0))
     return pairs

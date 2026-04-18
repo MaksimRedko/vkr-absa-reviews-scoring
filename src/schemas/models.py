@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Dict, List, Literal, Optional
 
 import numpy as np
 
@@ -49,6 +49,14 @@ class Candidate:
     span: str
     sentence: str
     token_indices: tuple[int, int]
+    review_id: str = ""
+    candidate_id: str = ""
+    source_span: Optional[str] = None
+    head_lemma: str = ""
+    modifier_text: str = ""
+    modifier_lemma: str = ""
+    modifier_type: Optional[Literal["amod", "xcomp", "copular", "predicative", "event", "nominal"]] = None
+    dep_label: str = ""
 
 
 @dataclass
@@ -57,6 +65,9 @@ class ScoredCandidate:
     score: float
     sentence: str
     embedding: np.ndarray
+    review_id: str = ""
+    candidate_id: str = ""
+    source_span: Optional[str] = None
 
 
 @dataclass

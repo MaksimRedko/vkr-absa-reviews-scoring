@@ -1,18 +1,14 @@
 """
-Модуль NLI Sentiment (v4 — одна гипотеза, entailment vs contradiction)
+Модуль NLI Sentiment (v5 — dual hypothesis, ONNX/PyTorch + LRU cache).
 
-Полярность (позитив/негатив) через одну гипотезу на пару (sentence, aspect):
-  H = "{aspect} — это хорошо"  (шаблон из config.sentiment.hypothesis_template_pos)
+Полярность через две гипотезы на пару (sentence, aspect):
+  H_pos = "{aspect} — это хорошо"
+  H_neg = "{aspect} — это плохо"
 
-Из одного трёхклассового прогона берём вероятности всех классов и считаем
-матожидание на шкале 1..5:
+Для каждой гипотезы берём P(entailment) и считаем:
+  Score = 1 + 4 * P_ent_pos / (P_ent_pos + P_ent_neg + eps)
 
-  Score = 5·P(entailment) + 3·P(neutral) + 1·P(contradiction)
-
-В SentimentResult: p_ent_pos = P(entailment), p_ent_neg = P(contradiction)
-(имена полей сохранены для совместимости с фильтром релевантности и снепшотами).
-
-Кэш LRU по паре (premise, hypothesis) на уровне инстанса (см. sentiment.nli_pair_cache_max).
+Кэш LRU хранит логиты по ключу (premise, hypothesis) и работает для ONNX/PyTorch.
 """
 
 from __future__ import annotations
@@ -42,10 +38,11 @@ except ImportError:  # pragma: no cover
 
 class SentimentEngine(SentimentStage):
     """
-    NLI-based sentiment engine v4 (single hypothesis).
+    NLI-based sentiment engine v5 (dual hypothesis).
 
-    Один forward на батч пар (premise, hypothesis).
-    Score = 5·P(entailment) + 3·P(neutral) + 1·P(contradiction)
+    Два сравниваемых утверждения для каждого аспекта:
+    положительное (H_pos) и отрицательное (H_neg).
+    Score = 1 + 4 * P_ent_pos / (P_ent_pos + P_ent_neg + eps)
 
     Инференс: PyTorch (GPU/CPU) или ONNX Runtime INT8 на CPU, если задан
     `config.models.nli_onnx_quantized_path` и файл существует.
@@ -67,7 +64,8 @@ class SentimentEngine(SentimentStage):
             self.id2label, self.num_labels
         )
 
-        self.h_template: str = config.sentiment.hypothesis_template_pos
+        self.h_pos: str = config.sentiment.hypothesis_template_pos
+        self.h_neg: str = config.sentiment.hypothesis_template_neg
         self.batch_size: int = config.sentiment.batch_size
         self.epsilon: float = config.sentiment.score_epsilon
         self.temperature: float = float(config.sentiment.temperature)
@@ -108,7 +106,7 @@ class SentimentEngine(SentimentStage):
             self._use_onnx = True
             onnx_kind = "INT8" if "int8" in onnx_path.name.lower() else "FP32"
             print(
-                f"[SentimentEngine v4] ONNX {onnx_kind}, {self.num_labels} classes, "
+                f"[SentimentEngine v5] ONNX {onnx_kind}, dual-hypothesis, {self.num_labels} classes, "
                 f"ent_idx={self.ent_idx}, neu_idx={self.neu_idx}, contra_idx={self.contra_idx}, "
                 f"model={onnx_path.name}"
             )
@@ -128,7 +126,7 @@ class SentimentEngine(SentimentStage):
             ).to(self.device)
             self.model.eval()
             print(
-                f"[SentimentEngine v4] PyTorch, single-hypothesis, {self.num_labels} classes, "
+                f"[SentimentEngine v5] PyTorch, dual-hypothesis, {self.num_labels} classes, "
                 f"ent_idx={self.ent_idx}, neu_idx={self.neu_idx}, contra_idx={self.contra_idx}, device={self.device}"
             )
 
@@ -271,14 +269,17 @@ class SentimentEngine(SentimentStage):
                 Tuple[str, str, str, str, float],
             ]
         ],
-    ) -> np.ndarray:
+    ) -> Tuple[np.ndarray, np.ndarray]:
         """
-        Логиты одного прогона на пару: (N, num_labels), порядок строк = порядок pairs.
+        Логиты для dual-hypothesis:
+        возвращает (logits_pos, logits_neg), оба размером (N, num_labels).
         """
         if not pairs:
-            return np.zeros((0, self.num_labels), dtype=np.float32)
+            empty = np.zeros((0, self.num_labels), dtype=np.float32)
+            return empty, empty
 
-        blocks: List[np.ndarray] = []
+        blocks_pos: List[np.ndarray] = []
+        blocks_neg: List[np.ndarray] = []
         batch_indices = range(0, len(pairs), self.batch_size)
         for i in tqdm(
             batch_indices,
@@ -290,11 +291,14 @@ class SentimentEngine(SentimentStage):
             batch = pairs[i : i + self.batch_size]
             premises = [p[1] for p in batch]
             hyp_aspects = self._hypothesis_aspects(batch)
-            hyp_texts = [self.h_template.format(aspect=a) for a in hyp_aspects]
-            logits = self._forward_logits_tensor(premises, hyp_texts)
-            blocks.append(logits.cpu().numpy())
+            hyp_pos = [self.h_pos.format(aspect=a) for a in hyp_aspects]
+            hyp_neg = [self.h_neg.format(aspect=a) for a in hyp_aspects]
+            logits_pos = self._forward_logits_tensor(premises, hyp_pos)
+            logits_neg = self._forward_logits_tensor(premises, hyp_neg)
+            blocks_pos.append(logits_pos.cpu().numpy())
+            blocks_neg.append(logits_neg.cpu().numpy())
 
-        return np.vstack(blocks)
+        return np.vstack(blocks_pos), np.vstack(blocks_neg)
 
     @staticmethod
     def _hypothesis_aspects(
@@ -340,21 +344,22 @@ class SentimentEngine(SentimentStage):
             else:
                 confidences.append(1.0)
 
-        hyp_texts = [self.h_template.format(aspect=a) for a in nli_for_hyp]
-        logits = self._forward_logits_tensor(premises, hyp_texts)
-        probs = torch.softmax(logits / self.temperature, dim=1).cpu().numpy()
-        p_ent = probs[:, self.ent_idx]
-        p_neu = probs[:, self.neu_idx]
-        p_contra = probs[:, self.contra_idx]
+        hyp_pos = [self.h_pos.format(aspect=a) for a in nli_for_hyp]
+        hyp_neg = [self.h_neg.format(aspect=a) for a in nli_for_hyp]
+        logits_pos = self._forward_logits_tensor(premises, hyp_pos)
+        logits_neg = self._forward_logits_tensor(premises, hyp_neg)
+        probs_pos = torch.softmax(logits_pos / self.temperature, dim=1).cpu().numpy()
+        probs_neg = torch.softmax(logits_neg / self.temperature, dim=1).cpu().numpy()
+        p_ent_pos = probs_pos[:, self.ent_idx]
+        p_ent_neg = probs_neg[:, self.ent_idx]
 
         results = []
         for idx, (review_id, sentence, aspect_orig) in enumerate(
             zip(review_ids, premises, aspects_tag)
         ):
-            pe = float(p_ent[idx])
-            pn = float(p_neu[idx])
-            pc = float(p_contra[idx])
-            score = 5.0 * pe + 3.0 * pn + 1.0 * pc
+            pp = float(p_ent_pos[idx])
+            pn = float(p_ent_neg[idx])
+            score = 1.0 + 4.0 * pp / (pp + pn + self.epsilon)
             score = max(1.0, min(5.0, score))
 
             results.append(
@@ -363,8 +368,8 @@ class SentimentEngine(SentimentStage):
                     aspect=aspect_orig,
                     sentence=sentence,
                     score=score,
-                    p_ent_pos=pe,
-                    p_ent_neg=pc,
+                    p_ent_pos=pp,
+                    p_ent_neg=pn,
                     confidence=confidences[idx],
                 )
             )

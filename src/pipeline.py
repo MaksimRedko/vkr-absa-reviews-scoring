@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 import time
+from collections import Counter
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -37,7 +38,7 @@ from src.stages import (
 )
 from src.stages.aggregation import RatingMathEngine
 from src.stages.clustering import AspectClusterer
-from src.stages.extraction import CandidateExtractor
+from src.stages.extraction import build_extraction_stage
 from src.stages.fraud import AntiFraudEngine
 from src.stages.pairing import (
     build_review_level_pairs,
@@ -47,6 +48,63 @@ from src.stages.pairing import (
 from src.stages.scoring import KeyBERTScorer
 from src.stages.sentiment import SentimentEngine
 from src.snapshots import SnapshotWriter
+
+
+def _extract_pair_head_label(label: str) -> Optional[str]:
+    normalized = str(label or "").strip().lower()
+    if not normalized or normalized.startswith("event_") or "_" not in normalized:
+        return None
+    head = normalized.split("_", 1)[0].strip()
+    return head or None
+
+
+def build_aspect_eval_labels(
+    aspects: Dict[str, object],
+    scored_candidates: List[object],
+) -> Dict[str, str]:
+    keyword_source_counts: Dict[str, Counter[str]] = {}
+    for candidate in scored_candidates:
+        span = str(getattr(candidate, "span", "") or "").strip()
+        source_span = str(getattr(candidate, "source_span", "") or "").strip().lower()
+        if not span or not source_span:
+            continue
+        keyword_source_counts.setdefault(span, Counter())[source_span] += 1
+
+    aspect_eval_labels: Dict[str, str] = {}
+    for aspect_name, info in aspects.items():
+        keywords = list(getattr(info, "keywords", []) or [])
+        head_counts: Counter[str] = Counter()
+        for keyword in keywords:
+            head = _extract_pair_head_label(str(keyword))
+            if head:
+                head_counts[head] += 1
+
+        if head_counts:
+            best_count = max(head_counts.values())
+            best_heads = sorted(
+                head for head, count in head_counts.items()
+                if count == best_count
+            )
+            aspect_eval_labels[str(aspect_name)] = best_heads[0]
+            continue
+
+        source_counts: Counter[str] = Counter()
+        for keyword in keywords:
+            source_counts.update(keyword_source_counts.get(str(keyword), Counter()))
+
+        if source_counts:
+            best_count = max(source_counts.values())
+            best_labels = sorted(
+                label for label, count in source_counts.items()
+                if count == best_count
+            )
+            aspect_eval_labels[str(aspect_name)] = best_labels[0]
+        elif keywords:
+            aspect_eval_labels[str(aspect_name)] = str(keywords[0])
+        else:
+            aspect_eval_labels[str(aspect_name)] = str(aspect_name)
+
+    return aspect_eval_labels
 
 
 @dataclass
@@ -95,7 +153,7 @@ class ABSAPipeline:
         self._encoder = encoder or SentenceTransformer(config.models.encoder_path)
 
         # Стандартные реализации как дефолт; заменяются через DI-параметры выше
-        self.candidate_extractor: ExtractionStage  = extraction_stage  or CandidateExtractor()
+        self.candidate_extractor: ExtractionStage  = extraction_stage  or build_extraction_stage()
         self.scorer:              ScoringStage      = scoring_stage     or KeyBERTScorer(model=self._encoder)
         self.clusterer:           ClusteringStage   = clustering_stage  or AspectClusterer(model=self._encoder)
         self.fraud_engine:        FraudStage        = fraud_stage       or AntiFraudEngine(model=self._encoder)
@@ -347,6 +405,10 @@ class ABSAPipeline:
         print("[5/7] Кластеризация аспектов...")
         aspects = self.clusterer.cluster(scored_candidates)
         diagnostics = self._collect_clusterer_diagnostics()
+        diagnostics["aspect_eval_labels"] = build_aspect_eval_labels(
+            aspects,
+            scored_candidates,
+        )
         aspect_names = list(aspects.keys())
         print(f"       Найдено аспектов: {len(aspect_names)} — {aspect_names}")
         _tick("кластеризация", 5)
@@ -378,8 +440,13 @@ class ABSAPipeline:
             }
             sentiment_pairs = build_review_level_pairs(
                 review_text_by_id=review_text_by_id,
+                scored_candidates=scored_candidates,
+                candidate_assignments=getattr(
+                    self.clusterer,
+                    "last_candidate_assignments",
+                    {},
+                ),
                 aspects=aspects,
-                anchor_embeddings=anchor_embeddings,
             )
         else:
             sentiment_pairs = build_sentiment_pairs(
