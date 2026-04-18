@@ -19,6 +19,7 @@ if str(_ROOT) not in sys.path:
 _DEFAULT_CSV = _ROOT / "benchmark" / "eval_datasets" / "combined_benchmark.csv"
 _DEFAULT_MAPPING = "auto"
 _DEFAULT_CLUSTERER = "divisive"
+_DEFAULT_TARGET_NM_IDS = [1809358565, 165234215]
 
 from eval_pipeline import (
     load_markup,
@@ -113,12 +114,27 @@ def main() -> None:
             "divisive — UMAP + рекурсивное k-means, имена через MedoidNamer (без LLM)."
         ),
     )
+    parser.add_argument(
+        "--only-target-products",
+        action="store_true",
+        help=(
+            "Запустить benchmark только на фиксированном наборе товаров: "
+            f"{_DEFAULT_TARGET_NM_IDS}."
+        ),
+    )
     args = parser.parse_args()
 
     set_global_seed(args.seed)
 
     csv_path = args.csv
     df = load_markup(csv_path)
+    if args.only_target_products:
+        df = df[df["nm_id"].isin(_DEFAULT_TARGET_NM_IDS)].copy()
+        if df.empty:
+            raise ValueError(
+                f"В CSV нет целевых nm_id: {_DEFAULT_TARGET_NM_IDS}"
+            )
+        print(f"[benchmark] Ограничение по nm_id: {_DEFAULT_TARGET_NM_IDS}")
     stats = df.groupby("nm_id").size().reset_index(name="n")
     nm_ids: List[int] = stats["nm_id"].astype(int).tolist()
     n_reviews = int(len(df))
@@ -166,15 +182,18 @@ def main() -> None:
     results_dir = _ROOT / "benchmark" / "eval_datasets" / "results"
     results_dir.mkdir(parents=True, exist_ok=True)
     out_suffix = f"_{args.clusterer}" if args.clusterer != "aspect" else ""
+    limited_suffix = "_limited_products" if args.only_target_products else ""
     run_dt = datetime.now()
     # Имя файла: дата и время локальные, напр. benchmark_results_divisive_2026_04_17_22_05_31.yaml
     dt_name = run_dt.strftime("%Y_%m_%d_%H_%M_%S")
-    out_path = results_dir / f"benchmark_results{out_suffix}_{dt_name}.yaml"
+    out_path = results_dir / f"benchmark_results{out_suffix}{limited_suffix}_{dt_name}.yaml"
     payload = {
         "saved_at": run_dt.isoformat(timespec="seconds"),
         "csv_path": csv_path,
         "nm_ids": nm_ids,
         "n_reviews": n_reviews,
+        "limited_products_mode": bool(args.only_target_products),
+        "limited_products_nm_ids": _DEFAULT_TARGET_NM_IDS if args.only_target_products else None,
         "clusterer": args.clusterer,
         "mapping_mode": args.mapping,
         "auto_threshold": args.auto_threshold if args.mapping == "auto" else None,
