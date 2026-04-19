@@ -1,5 +1,0 @@
-{
-  "name": "no_fraud",
-  "description": "Тот же baseline-конфиг; антифрод отключается только флагом CLI: --no-fraud",
-  "overrides": {}
-}
