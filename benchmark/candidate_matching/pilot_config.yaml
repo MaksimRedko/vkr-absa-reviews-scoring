@@ -1,0 +1,28 @@
+# Candidate-level matching pilot — конфигурация
+# 12 продуктов из размеченных данных (8 WB + 4 Yandex).
+# Примечание: 12 WB-продуктов из ТЗ недоступны — в разметке только 8.
+
+products:
+  wb: [15430704, 54581151, 117808756, 254445126, 311233470, 441378025, 506358703, 619500952]
+  # 4 Yandex-продукта с наибольшим покрытием в combined_benchmark.csv
+  yandex: [9675256, 165234215, 209269133, 1809358565]
+
+data_sources:
+  wb_checked:  "parser/razmetka/checked_reviews.csv"
+  wb_merged:   "parser/reviews_batches/merged_checked_reviews.csv"
+  yandex_benchmark: "benchmark/eval_datasets/combined_benchmark.csv"
+
+encoder_model_path: "./scripts/models/models--cointegrated--rubert-tiny2/snapshots/e8ed3b0c8bbf4fb6984c3de043bf7d2f4e5969ae"
+vocab_path: "src/vocabulary/universal_aspects_v1.yaml"
+
+matching:
+  tau_softmax: 0.1        # температура softmax-ранжирования
+  tau_match: 0.15         # порог вероятности для принятия матча (фиксирован до Задачи 4)
+  ngram_range: [1, 2]
+  min_word_length: 3
+  batch_size: 64
+
+alignment:
+  cosine_threshold: 0.75  # порог cosine для признания пары (predicted, true) валидной
+
+output_dir: "benchmark/candidate_matching/results"

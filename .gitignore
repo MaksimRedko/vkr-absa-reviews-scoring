@@ -84,3 +84,5 @@ coverage.xml
 # OS
 .DS_Store
 Thumbs.db
+
+benchmark/candidate_matching/results/

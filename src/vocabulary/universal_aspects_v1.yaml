@@ -1,0 +1,200 @@
+yamlversion: "1.0-provisional"
+language: "ru"
+notes: |
+  Provisional vocabulary assembled from aspect concepts documented in
+  SentiRuEval-2015/2016, ROMIP-2012, and RuSentiment-2018 aspect schemas.
+  Formal extraction procedure is scheduled as separate deliverable.
+  This file MUST be regenerated through the formal procedure before thesis defence.
+
+aspects:
+  # ============== GENERAL (12) ==============
+  - id: quality
+    canonical_name: "Качество"
+    synonyms: ["качество", "качественный", "исполнение", "изготовление", "сделано", "сделан", "брак"]
+    level: "general"
+    domains: ["all"]
+    hypothesis_template: "В этом отзыве обсуждается качество"
+
+  - id: price
+    canonical_name: "Цена"
+    synonyms: ["цена", "стоимость", "дорогой", "дешёвый", "ценник", "переплата", "дорого", "дёшево"]
+    level: "general"
+    domains: ["all"]
+    hypothesis_template: "В этом отзыве обсуждается цена"
+
+  - id: value_for_money
+    canonical_name: "Соотношение цена-качество"
+    synonyms: ["соотношение", "цена-качество", "за свои деньги", "оправдано", "стоит своих денег"]
+    level: "general"
+    domains: ["all"]
+    hypothesis_template: "В этом отзыве обсуждается соотношение цены и качества"
+
+  - id: service
+    canonical_name: "Обслуживание"
+    synonyms: ["обслуживание", "сервис", "персонал", "сотрудники", "администратор", "обслужили"]
+    level: "general"
+    domains: ["services", "hospitality"]
+    hypothesis_template: "В этом отзыве обсуждается обслуживание"
+
+  - id: speed
+    canonical_name: "Скорость"
+    synonyms: ["скорость", "быстро", "медленно", "долго", "оперативно", "оперативность", "быстрый"]
+    level: "general"
+    domains: ["all"]
+    hypothesis_template: "В этом отзыве обсуждается скорость"
+
+  - id: convenience
+    canonical_name: "Удобство"
+    synonyms: ["удобно", "неудобно", "удобство", "комфорт", "практичный", "практично", "удобный"]
+    level: "general"
+    domains: ["all"]
+    hypothesis_template: "В этом отзыве обсуждается удобство"
+
+  - id: cleanliness
+    canonical_name: "Чистота"
+    synonyms: ["чистота", "чисто", "грязно", "грязь", "уборка", "пыль", "грязный", "чистый", "убрано", "мусор", "пятно", "пятна", "аккуратный", "опрятный"]
+    level: "general"
+    domains: ["hospitality", "services"]
+    hypothesis_template: "В этом отзыве обсуждается чистота"
+
+  - id: reliability
+    canonical_name: "Надёжность"
+    synonyms: ["надёжный", "ненадёжный", "ломается", "сломался", "долговечный", "прочный", "поломка"]
+    level: "general"
+    domains: ["e-commerce", "services"]
+    hypothesis_template: "В этом отзыве обсуждается надёжность"
+
+  - id: appearance
+    canonical_name: "Внешний вид"
+    synonyms: ["внешний вид", "дизайн", "выглядит", "красиво", "стильный", "симпатичный", "цвет", "красивый"]
+    level: "general"
+    domains: ["e-commerce"]
+    hypothesis_template: "В этом отзыве обсуждается внешний вид"
+
+  - id: expectations
+    canonical_name: "Соответствие ожиданиям"
+    synonyms: ["ожидание", "ожидал", "разочаровал", "оправдал", "как описано", "соответствует описанию", "соответствие"]
+    level: "general"
+    domains: ["all"]
+    hypothesis_template: "В этом отзыве обсуждается соответствие ожиданиям"
+
+  - id: recommendation
+    canonical_name: "Рекомендация"
+    synonyms: ["рекомендую", "советую", "не советую", "стоит брать", "не стоит", "рекомендовать"]
+    level: "general"
+    domains: ["all"]
+    hypothesis_template: "В этом отзыве содержится рекомендация"
+
+  - id: overall_impression
+    canonical_name: "Общее впечатление"
+    synonyms: ["впечатление", "впечатления", "в целом", "общее", "понравилось", "не понравилось", "отлично", "ужасно", "хорошо", "плохо"]
+    level: "general"
+    domains: ["all"]
+    hypothesis_template: "В этом отзыве обсуждается общее впечатление"
+
+  # ============== E-COMMERCE / PHYSICAL GOODS (9) ==============
+  - id: delivery
+    canonical_name: "Доставка"
+    synonyms: ["доставка", "доставили", "курьер", "логистика", "сроки", "пришло", "пришла", "пришло быстро", "долго шло"]
+    level: "specific"
+    domains: ["e-commerce"]
+    hypothesis_template: "В этом отзыве обсуждается доставка"
+
+  - id: packaging
+    canonical_name: "Упаковка"
+    synonyms: ["упаковка", "упаковано", "коробка", "пакет", "пупырка", "фирменная упаковка", "порвана"]
+    level: "specific"
+    domains: ["e-commerce"]
+    hypothesis_template: "В этом отзыве обсуждается упаковка"
+
+  - id: size
+    canonical_name: "Размер"
+    synonyms: ["размер", "размеры", "большой", "маленький", "мелкий", "крупный", "широкий", "узкий", "габариты", "подошёл", "не подошёл", "размерчик"]
+    level: "specific"
+    domains: ["e-commerce"]
+    hypothesis_template: "В этом отзыве обсуждается размер"
+
+  - id: material
+    canonical_name: "Материал"
+    synonyms: ["материал", "ткань", "пластик", "металл", "дерево", "кожа", "состав"]
+    level: "specific"
+    domains: ["e-commerce"]
+    hypothesis_template: "В этом отзыве обсуждается материал"
+
+  - id: colour
+    canonical_name: "Цвет"
+    synonyms: ["цвет", "оттенок", "окрас", "цвета", "окраска", "расцветка"]
+    level: "specific"
+    domains: ["e-commerce"]
+    hypothesis_template: "В этом отзыве обсуждается цвет"
+
+  - id: smell
+    canonical_name: "Запах"
+    synonyms: ["запах", "пахнет", "аромат", "воняет", "душистый", "без запаха", "душный"]
+    level: "specific"
+    domains: ["e-commerce", "hospitality"]
+    hypothesis_template: "В этом отзыве обсуждается запах"
+
+  - id: functionality
+    canonical_name: "Функционал"
+    synonyms: ["функции", "функционал", "функциональность", "работает", "не работает", "не включается", "возможности"]
+    level: "specific"
+    domains: ["e-commerce"]
+    hypothesis_template: "В этом отзыве обсуждается функционал"
+
+  - id: assortment
+    canonical_name: "Ассортимент"
+    synonyms: ["ассортимент", "выбор", "разнообразие", "большой выбор", "комплектация", "комплект"]
+    level: "specific"
+    domains: ["e-commerce", "services"]
+    hypothesis_template: "В этом отзыве обсуждается ассортимент"
+
+  - id: compliance
+    canonical_name: "Соответствие"
+    synonyms: ["соответствует", "не соответствует", "как на фото", "как в описании", "не как на картинке"]
+    level: "specific"
+    domains: ["e-commerce"]
+    hypothesis_template: "В этом отзыве обсуждается соответствие фото и описанию"
+
+  # ============== SERVICES / LOCATIONS (6) ==============
+  - id: location
+    canonical_name: "Расположение"
+    synonyms: ["расположение", "находится", "центр", "удалённо", "рядом", "далеко", "близко", "местоположение"]
+    level: "specific"
+    domains: ["services", "hospitality"]
+    hypothesis_template: "В этом отзыве обсуждается расположение"
+
+  - id: atmosphere
+    canonical_name: "Атмосфера"
+    synonyms: ["атмосфера", "обстановка", "уютно", "неуютно", "приятная", "неприятная", "настроение"]
+    level: "specific"
+    domains: ["services", "hospitality"]
+    hypothesis_template: "В этом отзыве обсуждается атмосфера"
+
+  - id: crowdedness
+    canonical_name: "Загруженность"
+    synonyms: ["очередь", "очереди", "людно", "толпа", "много людей", "пусто", "загруженность"]
+    level: "specific"
+    domains: ["services", "hospitality"]
+    hypothesis_template: "В этом отзыве обсуждается загруженность или очереди"
+
+  - id: safety
+    canonical_name: "Безопасность"
+    synonyms: ["безопасность", "безопасный", "опасный", "опасно", "травма", "риск"]
+    level: "specific"
+    domains: ["services", "hospitality"]
+    hypothesis_template: "В этом отзыве обсуждается безопасность"
+
+  - id: infrastructure
+    canonical_name: "Инфраструктура"
+    synonyms: ["инфраструктура", "оборудование", "оснащение", "оснащён", "оборудован"]
+    level: "specific"
+    domains: ["services", "hospitality"]
+    hypothesis_template: "В этом отзыве обсуждается инфраструктура"
+
+  - id: temperature
+    canonical_name: "Температура"
+    synonyms: ["температура", "тепло", "холодно", "жарко", "прохладно", "душно"]
+    level: "specific"
+    domains: ["services", "hospitality"]
+    hypothesis_template: "В этом отзыве обсуждается температура"
