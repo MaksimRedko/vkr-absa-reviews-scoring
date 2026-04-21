@@ -1,0 +1,57 @@
+yamlversion: "1.0"
+language: "ru"
+notes: |
+  Domain sub-vocabulary for physical_goods.
+  Broad layer for material consumer goods only.
+  Coverage-first revision: frequent cross-product aspects only.
+  Core duplicates and narrow micro-domain aspects were intentionally excluded.
+
+aspects:
+  - id: assembly_installation
+    canonical_name: "Сборка и установка"
+    synonyms: ["сборка", "собрать", "установка", "монтаж", "собирать"]
+    level: "specific"
+    domains: ["physical_goods"]
+    hypothesis_template: "В этом отзыве обсуждаются сборка или установка товара"
+
+  - id: instructions_manual
+    canonical_name: "Инструкция"
+    synonyms: ["инструкция", "руководство", "памятка", "схема", "manual"]
+    level: "specific"
+    domains: ["physical_goods"]
+    hypothesis_template: "В этом отзыве обсуждаются инструкция или руководство по использованию"
+
+  - id: fit_applicability
+    canonical_name: "Подходит / не подходит"
+    synonyms: ["подходит", "не подходит", "подошло", "не подошло", "посадка"]
+    level: "specific"
+    domains: ["physical_goods"]
+    hypothesis_template: "В этом отзыве обсуждается, подходит ли товар под задачу, человека или другой предмет"
+
+  - id: ease_of_use
+    canonical_name: "Удобство использования"
+    synonyms: ["пользоваться", "в использовании", "удобно использовать", "неудобно использовать", "эксплуатация"]
+    level: "specific"
+    domains: ["physical_goods"]
+    hypothesis_template: "В этом отзыве обсуждается удобство использования товара"
+
+  - id: care_maintenance
+    canonical_name: "Уход и обслуживание"
+    synonyms: ["уход", "чистка", "стирать", "мыть", "обслуживать"]
+    level: "specific"
+    domains: ["physical_goods"]
+    hypothesis_template: "В этом отзыве обсуждаются уход или обслуживание товара"
+
+  - id: connections_fasteners
+    canonical_name: "Крепления и соединения"
+    synonyms: ["крепление", "застёжка", "молния", "соединение", "фиксатор"]
+    level: "specific"
+    domains: ["physical_goods"]
+    hypothesis_template: "В этом отзыве обсуждаются крепления или соединения частей товара"
+
+  - id: repairability
+    canonical_name: "Ремонтопригодность"
+    synonyms: ["ремонт", "починить", "запчасть", "замена детали", "разборный"]
+    level: "specific"
+    domains: ["physical_goods"]
+    hypothesis_template: "В этом отзыве обсуждаются ремонт или замена деталей товара"
