@@ -1,0 +1,43 @@
+yamlversion: "1.0"
+language: "ru"
+notes: |
+  Domain sub-vocabulary for consumables.
+  Broad layer for food/feed consumables only.
+  High-baseline category: this file intentionally stays compact.
+  Core duplicates and low-value additions were intentionally excluded.
+
+aspects:
+  - id: palatability_acceptance
+    canonical_name: "Поедаемость"
+    synonyms: ["поедаемость", "ест с удовольствием", "аппетит", "хорошо ест", "не ест"]
+    level: "specific"
+    domains: ["consumables"]
+    hypothesis_template: "В этом отзыве обсуждается, насколько охотно продукт едят или употребляют"
+
+  - id: digestibility_tolerance
+    canonical_name: "Усвояемость и переносимость"
+    synonyms: ["усваивается", "пищеварение", "переносимость"]
+    level: "specific"
+    domains: ["consumables"]
+    hypothesis_template: "В этом отзыве обсуждаются усвояемость или переносимость продукта"
+
+  - id: nutritional_adequacy
+    canonical_name: "Питательная ценность"
+    synonyms: ["питательный", "полноценный", "сбалансированный", "питательность", "полнорационный"]
+    level: "specific"
+    domains: ["consumables"]
+    hypothesis_template: "В этом отзыве обсуждается питательная ценность продукта"
+
+  - id: caloric_satiety
+    canonical_name: "Калорийность и сытость"
+    synonyms: ["калорийность", "сытный", "наедается", "контроль веса"]
+    level: "specific"
+    domains: ["consumables"]
+    hypothesis_template: "В этом отзыве обсуждаются калорийность, сытость или влияние продукта на вес"
+
+  - id: feeding_portion
+    canonical_name: "Норма кормления"
+    synonyms: ["норма кормления", "порция", "сколько давать", "хватает надолго", "расход"]
+    level: "specific"
+    domains: ["consumables"]
+    hypothesis_template: "В этом отзыве обсуждаются рекомендуемая порция или норма употребления продукта"

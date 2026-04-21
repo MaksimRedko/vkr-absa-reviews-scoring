@@ -1,0 +1,64 @@
+yamlversion: "1.0"
+language: "ru"
+notes: |
+  Domain sub-vocabulary for services.
+  Broad layer for service interaction and service process only.
+  Built from stable service-quality literature and official service schemas.
+  Core duplicates and hospitality-overlap aspects were intentionally excluded.
+
+aspects:
+  - id: appointment_scheduling
+    canonical_name: "Запись на услугу"
+    synonyms: ["запись", "записаться", "запись на приём", "слот", "расписание"]
+    level: "specific"
+    domains: ["services"]
+    hypothesis_template: "В этом отзыве обсуждаются запись или доступность слотов"
+
+  - id: waiting_process
+    canonical_name: "Ожидание"
+    synonyms: ["ожидание", "очередь", "время ожидания"]
+    level: "specific"
+    domains: ["services"]
+    hypothesis_template: "В этом отзыве обсуждаются ожидание или очередь в процессе оказания услуги"
+
+  - id: communication_updates
+    canonical_name: "Информирование и коммуникация"
+    synonyms: ["информирование", "объяснили", "обратная связь", "уведомление", "связались"]
+    level: "specific"
+    domains: ["services"]
+    hypothesis_template: "В этом отзыве обсуждаются информирование или коммуникация с клиентом"
+
+  - id: support_help
+    canonical_name: "Поддержка и сопровождение"
+    synonyms: ["поддержка", "техподдержка", "оператор", "саппорт", "сопровождение"]
+    level: "specific"
+    domains: ["services"]
+    hypothesis_template: "В этом отзыве обсуждается поддержка"
+
+  - id: problem_resolution
+    canonical_name: "Решение проблемы"
+    synonyms: ["решили проблему", "разобрались", "урегулировали", "исправили", "помогли решить"]
+    level: "specific"
+    domains: ["services"]
+    hypothesis_template: "В этом отзыве обсуждается решение проблемы клиента"
+
+  - id: competence_professionalism
+    canonical_name: "Компетентность"
+    synonyms: ["компетентность", "профессионализм", "квалификация", "грамотный", "разбирается"]
+    level: "specific"
+    domains: ["services"]
+    hypothesis_template: "В этом отзыве обсуждаются компетентность или профессионализм исполнителя"
+
+  - id: payment_billing
+    canonical_name: "Оплата и расчёты"
+    synonyms: ["оплата", "платёж", "списание", "чек", "расчёт"]
+    level: "specific"
+    domains: ["services"]
+    hypothesis_template: "В этом отзыве обсуждаются оплата или расчёты за услугу"
+
+  - id: cancellation_refund
+    canonical_name: "Отмена и возврат"
+    synonyms: ["отмена", "отменить", "возврат", "вернули деньги", "перенос записи"]
+    level: "specific"
+    domains: ["services"]
+    hypothesis_template: "В этом отзыве обсуждаются отмена услуги, перенос или возврат"

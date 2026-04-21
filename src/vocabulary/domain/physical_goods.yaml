@@ -23,14 +23,14 @@ aspects:
 
   - id: fit_applicability
     canonical_name: "Подходит / не подходит"
-    synonyms: ["подходит", "не подходит", "подошло", "не подошло", "посадка"]
+    synonyms: ["подходит", "не подходит", "не подошло"]
     level: "specific"
     domains: ["physical_goods"]
     hypothesis_template: "В этом отзыве обсуждается, подходит ли товар под задачу, человека или другой предмет"
 
   - id: ease_of_use
     canonical_name: "Удобство использования"
-    synonyms: ["пользоваться", "в использовании", "удобно использовать", "неудобно использовать", "эксплуатация"]
+    synonyms: ["в использовании", "удобно использовать", "неудобно использовать", "эксплуатация"]
     level: "specific"
     domains: ["physical_goods"]
     hypothesis_template: "В этом отзыве обсуждается удобство использования товара"
@@ -44,14 +44,14 @@ aspects:
 
   - id: connections_fasteners
     canonical_name: "Крепления и соединения"
-    synonyms: ["крепление", "застёжка", "молния", "соединение", "фиксатор"]
+    synonyms: ["крепление", "фиксатор", "соединение", "молния"]
     level: "specific"
     domains: ["physical_goods"]
     hypothesis_template: "В этом отзыве обсуждаются крепления или соединения частей товара"
 
   - id: repairability
     canonical_name: "Ремонтопригодность"
-    synonyms: ["ремонт", "починить", "запчасть", "замена детали", "разборный"]
+    synonyms: ["ремонтопригодный", "запчасть", "замена детали", "разборный"]
     level: "specific"
     domains: ["physical_goods"]
     hypothesis_template: "В этом отзыве обсуждаются ремонт или замена деталей товара"

@@ -149,6 +149,75 @@
 - Интерпретация: это согласуется с уже сильным baseline `core-only` для `physical_goods`.
 - Основной вклад дали аспекты: `Инструкция`, `Сборка`, `Уход`.
 
+## Результат шага 2
+- Эксперимент: `phase1_step2_hospitality_draft`
+- Изменение: добавлен `src/vocabulary/domain/hospitality.yaml`
+- Результат для категории `hospitality`:
+  - `coverage(core) = 0.2222`
+  - `coverage(core + hospitality) = 0.3077`
+  - абсолютный прирост: `+0.0855` (`+8.55 p.p.`)
+- Вывод: `hospitality` дал сильный прирост coverage.
+- Интерпретация: эффект значительно выше, чем у `physical_goods`, что подтверждает гипотезу о большей эффективности domain vocabulary в слабых категориях.
+- Дополнительное наблюдение: есть заметное перекрытие broad аспектов между `hospitality` и `services`; при добавлении `hospitality` vocabulary выросло и покрытие в `services`, что указывает на частично общий слой review semantics для location/service experience.
+
+## Результат шага 3
+- Эксперимент: `phase1_step3_services_draft`
+- Изменение: добавлен `src/vocabulary/domain/services.yaml`
+- Результат для категории `services`:
+  - `coverage(core) = 0.3276`
+  - `coverage(core + services) = 0.3879`
+  - абсолютный прирост: `+0.0603` (`+6.03 p.p.`)
+- Вывод: `services` дал заметный положительный прирост coverage.
+- Интерпретация: эффект ниже, чем у `hospitality`, но выше, чем у `physical_goods`, что подтверждает зависимость эффективности domain vocabulary от baseline категории.
+
+## Результат шага 4
+- Эксперимент: `phase1_step4_consumables_draft`
+- Изменение: добавлен `src/vocabulary/domain/consumables.yaml`
+- Результат для категории `consumables`:
+  - `coverage(core) = 0.7647`
+  - `coverage(core + consumables) = 0.8235`
+  - абсолютный прирост: `+0.0588` (`+5.88 p.p.`)
+- Вывод: `consumables` дал положительный, но точечный прирост coverage.
+- Интерпретация: прирост обеспечен фактически одним новым аспектом - `Поедаемость`.
+- Подтверждённая гипотеза: в high-baseline категории domain vocabulary даёт точечное улучшение, а не системный скачок.
+
+## Сводка По Категориям
+
+| Category | Coverage Core | Coverage Core+Domain | Absolute Gain |
+|---|---:|---:|---:|
+| `physical_goods` | `0.6240` | `0.6560` | `+0.0320` |
+| `hospitality` | `0.2222` | `0.3077` | `+0.0855` |
+| `services` | `0.3276` | `0.3879` | `+0.0603` |
+| `consumables` | `0.7647` | `0.8235` | `+0.0588` |
+
+## Общий Вывод По Фазе 1
+- Domain sub-vocabularies дали положительный прирост coverage во всех четырёх категориях.
+- Сила эффекта зависит от baseline `core-only`: чем слабее исходное покрытие категории, тем больше выигрыш от domain vocabulary.
+- Итоговый порядок эффекта:
+  - `hospitality`: `+8.55 p.p.`
+  - `services`: `+6.03 p.p.`
+  - `consumables`: `+5.88 p.p.`
+  - `physical_goods`: `+3.2 p.p.`
+- При этом `consumables` показывает важную качественную разницу: при высоком baseline улучшение оказалось не системным, а фактически точечным и было обеспечено одним аспектом.
+- Это подтверждает, что hybrid vocabulary path работает как ожидается: core даёт общий слой, а domain vocabulary закрывает оставшиеся доменные пробелы в разной степени в зависимости от baseline категории.
+
+## Наблюдение О Перекрытии Аспектов
+- Между категориями есть частичное перекрытие broad аспектов, особенно между `hospitality` и `services`.
+- Это перекрытие не отменяет полезность отдельных domain sub-vocabularies, но показывает, что часть review semantics лежит в промежуточной зоне между доменами.
+- Практический вывод: при проектировании следующих sub-vocabularies нужно явно отделять
+  - truly domain-specific aspects
+  - cross-domain service-process aspects
+  чтобы не раздувать словарь и не дублировать сигналы.
+
+## Наблюдение О Межкатегориальном Шуме
+- В ходе построения domain sub-vocabularies проявился межкатегориальный шум: отдельные лексические единицы и аспекты могут случайно повышать coverage вне целевой категории.
+- Наиболее заметно это проявилось между `hospitality` и `services`, а также точечно в `consumables` через лексику, которая может интерпретироваться шире целевого домена.
+- Практический вывод: перед переходом к следующей фазе нужна финальная проверка межкатегориальной чистоты domain словарей.
+- Цель этой проверки:
+  - выявить нежелательные cross-category matches
+  - убрать слишком общие или шумные доменные термы
+  - зафиксировать, какие overlaps допустимы концептуально, а какие являются артефактом словаря
+
 ## Следующий шаг
 
 ### Шаг 2. Собрать broad sub-vocabulary для `hospitality`
@@ -165,6 +234,21 @@
   - измерение `coverage(core)` vs `coverage(core + hospitality)` показывает положительный прирост для категории `hospitality`
   - аспекты остаются broad и защитимыми, а не сводятся к узким микродоменам
 
+### Шаг 3. Собрать broad sub-vocabulary для `services`
+- Имя: `phase1_step3_services_draft`
+- Цель: добавить broad domain-specific аспекты сервисного взаимодействия, которых не хватает ядру, и поднять coverage для категории `services`.
+- Baseline: только core vocabulary (`src/vocabulary/universal_aspects_v1.yaml`), `coverage(core) = 0.3276` для `services`.
+- Гипотеза: broad services sub-vocabulary, собранный из стабильных внешних источников и не дублирующий core, даст положительный прирост coverage относительно `core-only`, но при проектировании нужно учитывать частичное семантическое перекрытие с `hospitality`.
+- Файлы для изменения:
+  - `src/vocabulary/domain/services.yaml`
+  - `docs/vocabulary_reproducibility_log.md`
+- Критерий успеха:
+  - собран broad services vocabulary без leakage из gold labels
+  - используются только стабильные и воспроизводимые источники
+  - не дублируется core vocabulary
+  - измерение `coverage(core)` vs `coverage(core + services)` показывает положительный прирост для категории `services`
+  - аспекты остаются broad, защитимыми и не распадаются на узкие микродомены
+
 ## Что изменилось
 - Появился рабочий план в `.opencode/plans/current.md`.
 - Появился воспроизводимый coverage script с поддержкой:
@@ -180,3 +264,55 @@
 - После этого можно начинать шаг 1 без смешивания с изменениями loader.
 - Шаг 0 закрыт.
 - Следом можно переходить к шагу 1 и собирать первый domain vocabulary, но с учётом baseline разумно после этого быстро проверить, не стоит ли приоритизировать `hospitality` и `services` раньше по ожидаемому приросту coverage.
+
+## Апдейт: завершение микрозачистки словарей
+
+### Эксперимент
+- Имя: `phase1_step8_domain_micro_cleanup_finalization`
+- Цель: убрать межкатегориальный шум в domain vocabularies без потери рабочего coverage.
+- Baseline: версия словарей до микрозачистки с зафиксированным `hospitality coverage = 0.3077`.
+- Изменяемая переменная: точечная чистка термов в domain словарях; затем локальный `micro-rollback` только для `hospitality`.
+- Ожидаемый эффект: сохранить coverage по категориям после чистки, вернуть просадку `hospitality` к рабочему уровню без полного возврата шумных термов.
+
+### Результат
+- Микрозачистка завершена.
+- Межкатегориальный шум в domain vocabularies удалён.
+- Coverage после зачистки в целом сохранён.
+- Единственная заметная просадка была в `hospitality`.
+- Выполнен локальный `micro-rollback` только для аспекта `breakfast_food`.
+- Возвращены термы `еда` и `буфет`.
+- `hospitality coverage` восстановлен до `0.3077`.
+- Остальные словари не изменялись в rollback-шаге.
+
+### Статус для следующей фазы
+- Текущая версия domain словарей зафиксирована как рабочая для перехода к фазе matching.
+
+## Закрытие ФАЗЫ 1 (Vocabulary)
+- Фаза 1 считается завершённой.
+- Финальное состояние словарей после микрозачистки зафиксировано.
+- Для `hospitality` выполнен локальный rollback только в `breakfast_food` (`еда`, `буфет`) с восстановлением `coverage = 0.3077`.
+- Версия словарей признана рабочей для перехода к matching stage.
+
+## Переходный план: ФАЗА 2 (baseline matching на current extractor)
+
+### Эксперимент
+- Имя: `phase2_step1_baseline_matching_current_extractor`
+- Цель: получить воспроизводимый baseline по детекции аспектов на текущем extractor с текущим hybrid vocabulary (`core + domain`).
+- Baseline: текущий extractor pipeline до segmentation и без ensemble; зафиксированная версия словарей после микрозачистки и локального rollback `hospitality`.
+- Гипотеза: даже single-signal baseline matching на текущем extractor с hybrid vocabulary даст измеримый прирост recall/F1 относительно reference `core-only` и создаст стабильную точку сравнения для следующих A/B шагов.
+- Файлы для изменения:
+  - `benchmark/candidate_matching/pilot_config.yaml`
+  - `benchmark/candidate_matching/run_candidate_pilot.py`
+  - `benchmark/candidate_matching/data_loaders.py`
+  - при необходимости: `src/vocabulary/loader.py` (только если нужно явно зафиксировать выбор `core + domain` по `category_id`)
+  - артефакты прогона в `.opencode/artifacts/phase2_step1_baseline_matching_current_extractor/`
+- Метрики:
+  - review-level `precision`, `recall`, `F1` по aspect detection на 16 товарах
+  - per-category `precision`, `recall`, `F1` (`physical_goods`, `consumables`, `hospitality`, `services`)
+  - coverage hit-rate matched aspects against vocabulary (диагностическая)
+  - время прогона (диагностическая)
+- Критерий успеха:
+  - получен полностью воспроизводимый baseline-отчёт по `precision/recall/F1` на 16 товарах
+  - baseline стабильно запускается на current extractor и текущем hybrid vocabulary
+  - в эксперименте не задействованы segmentation и ensemble сигналы
+  - сформирован reference point для следующего A/B шага (`candidates vs segmentation`)

@@ -1,0 +1,71 @@
+yamlversion: "1.0"
+language: "ru"
+notes: |
+  Domain sub-vocabulary for hospitality.
+  Broad hospitality layer for lodging and hotel stay experience only.
+  Built from stable hotel criteria and lodging schemas.
+  Core duplicates and narrow micro-domain aspects were intentionally excluded.
+
+aspects:
+  - id: room
+    canonical_name: "Номер"
+    synonyms: ["гостиничный номер", "комната", "апартаменты"]
+    level: "specific"
+    domains: ["hospitality"]
+    hypothesis_template: "В этом отзыве обсуждается номер"
+
+  - id: bed_sleep
+    canonical_name: "Кровать и сон"
+    synonyms: ["кровать", "матрас", "подушка", "сон", "спать"]
+    level: "specific"
+    domains: ["hospitality"]
+    hypothesis_template: "В этом отзыве обсуждаются кровать или качество сна"
+
+  - id: bathroom
+    canonical_name: "Ванная комната"
+    synonyms: ["ванная", "санузел", "душ", "сантехника"]
+    level: "specific"
+    domains: ["hospitality"]
+    hypothesis_template: "В этом отзыве обсуждается ванная комната"
+
+  - id: checkin_checkout
+    canonical_name: "Заселение и выезд"
+    synonyms: ["заселение", "выселение", "check-in", "check-out"]
+    level: "specific"
+    domains: ["hospitality"]
+    hypothesis_template: "В этом отзыве обсуждаются заселение или выезд"
+
+  - id: breakfast_food
+    canonical_name: "Завтрак и питание"
+    synonyms: ["завтрак", "питание", "шведский стол", "еда", "буфет"]
+    level: "specific"
+    domains: ["hospitality"]
+    hypothesis_template: "В этом отзыве обсуждаются завтрак или питание"
+
+  - id: wifi_internet
+    canonical_name: "Wi-Fi и интернет"
+    synonyms: ["wifi", "wi-fi", "интернет", "сеть", "сигнал"]
+    level: "specific"
+    domains: ["hospitality"]
+    hypothesis_template: "В этом отзыве обсуждаются Wi-Fi или интернет"
+
+  - id: parking
+    canonical_name: "Парковка"
+    synonyms: ["парковка", "паркинг", "стоянка", "парковочное место", "машину поставить"]
+    level: "specific"
+    domains: ["hospitality"]
+    hypothesis_template: "В этом отзыве обсуждается парковка"
+
+  - id: reservation_booking
+    canonical_name: "Бронирование"
+    synonyms: ["бронирование", "бронь", "забронировать", "резервация"]
+    level: "specific"
+    domains: ["hospitality"]
+    hypothesis_template: "В этом отзыве обсуждается бронирование"
+
+  - id: noise_insulation
+    canonical_name: "Шумоизоляция"
+    synonyms: ["шумоизоляция", "слышимость", "шумно", "тихо", "соседей слышно"]
+    level: "specific"
+    domains: ["hospitality"]
+    hypothesis_template: "В этом отзыве обсуждаются шум или шумоизоляция"
