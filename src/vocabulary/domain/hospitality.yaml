@@ -9,7 +9,7 @@ notes: |
 aspects:
   - id: room
     canonical_name: "Номер"
-    synonyms: ["гостиничный номер", "комната", "апартаменты"]
+    synonyms: ["гостиничный номер", "апартаменты"]
     level: "specific"
     domains: ["hospitality"]
     hypothesis_template: "В этом отзыве обсуждается номер"
@@ -37,14 +37,14 @@ aspects:
 
   - id: breakfast_food
     canonical_name: "Завтрак и питание"
-    synonyms: ["завтрак", "питание", "шведский стол", "еда", "буфет"]
+    synonyms: ["завтрак", "питание", "шведский стол", "буфет"]
     level: "specific"
     domains: ["hospitality"]
     hypothesis_template: "В этом отзыве обсуждаются завтрак или питание"
 
   - id: wifi_internet
     canonical_name: "Wi-Fi и интернет"
-    synonyms: ["wifi", "wi-fi", "интернет", "сеть", "сигнал"]
+    synonyms: ["wifi", "wi-fi", "интернет"]
     level: "specific"
     domains: ["hospitality"]
     hypothesis_template: "В этом отзыве обсуждаются Wi-Fi или интернет"

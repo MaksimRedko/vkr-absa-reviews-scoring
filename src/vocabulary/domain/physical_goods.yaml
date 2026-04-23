@@ -16,7 +16,7 @@ aspects:
 
   - id: instructions_manual
     canonical_name: "Инструкция"
-    synonyms: ["инструкция", "руководство", "памятка", "схема", "manual"]
+    synonyms: ["инструкция", "руководство", "памятка"]
     level: "specific"
     domains: ["physical_goods"]
     hypothesis_template: "В этом отзыве обсуждаются инструкция или руководство по использованию"
@@ -30,21 +30,21 @@ aspects:
 
   - id: ease_of_use
     canonical_name: "Удобство использования"
-    synonyms: ["в использовании", "удобно использовать", "неудобно использовать", "эксплуатация"]
+    synonyms: ["в использовании", "удобно использовать", "неудобно использовать"]
     level: "specific"
     domains: ["physical_goods"]
     hypothesis_template: "В этом отзыве обсуждается удобство использования товара"
 
   - id: care_maintenance
     canonical_name: "Уход и обслуживание"
-    synonyms: ["уход", "чистка", "стирать", "мыть", "обслуживать"]
+    synonyms: ["уход", "чистка", "стирать", "мыть"]
     level: "specific"
     domains: ["physical_goods"]
     hypothesis_template: "В этом отзыве обсуждаются уход или обслуживание товара"
 
   - id: connections_fasteners
     canonical_name: "Крепления и соединения"
-    synonyms: ["крепление", "фиксатор", "соединение", "молния"]
+    synonyms: ["крепление", "фиксатор", "молния"]
     level: "specific"
     domains: ["physical_goods"]
     hypothesis_template: "В этом отзыве обсуждаются крепления или соединения частей товара"

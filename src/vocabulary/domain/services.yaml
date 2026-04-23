@@ -9,7 +9,7 @@ notes: |
 aspects:
   - id: appointment_scheduling
     canonical_name: "Запись на услугу"
-    synonyms: ["запись", "записаться", "запись на приём", "слот", "расписание"]
+    synonyms: ["запись", "записаться", "запись на приём", "слот"]
     level: "specific"
     domains: ["services"]
     hypothesis_template: "В этом отзыве обсуждаются запись или доступность слотов"
@@ -30,7 +30,7 @@ aspects:
 
   - id: support_help
     canonical_name: "Поддержка и сопровождение"
-    synonyms: ["поддержка", "техподдержка", "оператор", "саппорт", "сопровождение"]
+    synonyms: ["поддержка", "техподдержка", "оператор", "саппорт"]
     level: "specific"
     domains: ["services"]
     hypothesis_template: "В этом отзыве обсуждается поддержка"
