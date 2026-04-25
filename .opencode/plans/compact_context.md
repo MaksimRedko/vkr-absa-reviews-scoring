@@ -455,3 +455,10 @@ _clean_clusters
 - did not work: consumables MAE=0.5342 missed <0.50; correction count below broad target 50-150
 - fixed: per_aspect has `negation_correction_applied`; summary has negation stats and sanity block
 - next step: separate broader negation experiment only if false-positive risk is reviewed
+
+- цель этапа: discovery_v3_snapshot_reuse
+- что проверяли: можно ли кешировать per-product discovery v3 без изменения clustering
+- что получилось: добавлен fingerprint по reviews/gold/vocab/config/filter mode и JSON snapshot cache
+- что не сработало: полный discovery run не запускался по условию задачи
+- что зафиксировано: runner v3 пишет cache hit/miss и reuse готовый ProductDiscoveryReport
+- следующий шаг: при следующем реальном discovery прогоне проверить, что второй запуск даёт cache hits

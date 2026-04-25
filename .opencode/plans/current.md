@@ -2229,3 +2229,13 @@ _excluded_reviews
 - Negation corrections: 31/5363 predictions; eligible low-high=549; inversion_rate=5.65%; MAE before/after on Track B matched rows 0.9943 -> 0.9563.
 - Sanity: vocab MAE within requested upper band (0.72-0.85), consumables MAE=0.5342 missed <0.50, correction count below broad target 50-150 but above hard lower check 30.
 - Decision: rule helps but is too narrow for target count; broadening needs separate experiment to avoid false positives.
+
+## discovery_v3_snapshot_reuse
+- Имя: discovery_v3_snapshot_reuse
+- Цель: не пересчитывать v3 clustering при неизменных входах.
+- Baseline: `benchmark/discovery/run_discovery_v3.py` всегда заново считал HDBSCAN для `no_filter` и `filtered`.
+- Изменяемая переменная: добавлен snapshot cache вокруг готового `ProductDiscoveryReport`; алгоритм discovery не менялся.
+- Гипотеза: одинаковые reviews + gold + vocabulary + config + filter mode дают тот же результат, значит можно reuse JSON.
+- Метрика: техническая; повторный запуск должен давать cache hit и пропускать `pipeline.run` для совпавших товаров.
+- Файлы: `src/discovery/snapshot_cache.py`, `src/discovery/__init__.py`, `benchmark/discovery/run_discovery_v3.py`, `tests/test_discovery_snapshot_cache.py`.
+- Проверка: `py_compile` OK; `tests/test_discovery_snapshot_cache.py` -> 2 passed.

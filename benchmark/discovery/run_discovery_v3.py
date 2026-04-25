@@ -34,6 +34,10 @@ from src.discovery.per_product_pipeline_v3 import (  # noqa: E402
     ProductDiscoveryReport,
 )
 from src.discovery.residual_extractor import ResidualExtractor  # noqa: E402
+from src.discovery.snapshot_cache import (  # noqa: E402
+    DiscoverySnapshotCache,
+    compute_product_snapshot_key,
+)
 
 
 def _json_default(obj: object) -> object:
@@ -234,10 +238,79 @@ def _fmt(value: object) -> str:
     return str(value)
 
 
+def _snapshot_config() -> dict[str, object]:
+    return {
+        "encoder_model": ENCODER_MODEL,
+        "encoder_batch_size": ENCODER_BATCH_SIZE,
+        "min_unique_phrases_to_cluster": MIN_UNIQUE_PHRASES_TO_CLUSTER,
+        "top_n_phrases_per_cluster": TOP_N_PHRASES_PER_CLUSTER,
+        "hdbscan": dict(HDBSCAN_PARAMS),
+    }
+
+
+def _run_or_load_product(
+    *,
+    cache: DiscoverySnapshotCache | None,
+    pipeline: PerProductDiscoveryV3,
+    nm_id: int,
+    category_id: str,
+    reviews: list,
+    gold_labels: dict,
+    vocabulary: object,
+    apply_filter: bool,
+) -> tuple[ProductDiscoveryReport, bool]:
+    if cache is None:
+        return (
+            pipeline.run(
+                nm_id=nm_id,
+                category_id=category_id,
+                reviews=reviews,
+                gold_labels=gold_labels,
+                vocabulary=vocabulary,
+                apply_filter=apply_filter,
+            ),
+            False,
+        )
+
+    key = compute_product_snapshot_key(
+        nm_id=nm_id,
+        category_id=category_id,
+        reviews=reviews,
+        gold_labels=gold_labels,
+        vocabulary=vocabulary,
+        apply_filter=apply_filter,
+        config=_snapshot_config(),
+    )
+    cached = cache.load(key, nm_id=nm_id, apply_filter=apply_filter)
+    if cached is not None:
+        return cached, True
+
+    report = pipeline.run(
+        nm_id=nm_id,
+        category_id=category_id,
+        reviews=reviews,
+        gold_labels=gold_labels,
+        vocabulary=vocabulary,
+        apply_filter=apply_filter,
+    )
+    cache.save(report, key, apply_filter=apply_filter)
+    return report, False
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run discovery v3 A/B per product.")
     parser.add_argument("--dataset-csv", default="./data/dataset_final.csv")
     parser.add_argument("--output-dir", default="./benchmark/discovery/results")
+    parser.add_argument(
+        "--snapshot-cache-dir",
+        default="./benchmark/discovery/snapshots/v3",
+        help="Directory for deterministic per-product discovery snapshots.",
+    )
+    parser.add_argument(
+        "--no-snapshot-cache",
+        action="store_true",
+        help="Disable snapshot reuse and recompute all discovery artifacts.",
+    )
     args = parser.parse_args()
 
     start = datetime.now()
@@ -245,6 +318,11 @@ def main() -> None:
     output_root = _resolve_repo_path(args.output_dir)
     output_dir = output_root / f"{start.strftime('%Y%m%d_%H%M%S')}_v3"
     output_dir.mkdir(parents=True, exist_ok=True)
+    snapshot_cache = (
+        None
+        if args.no_snapshot_cache
+        else DiscoverySnapshotCache(_resolve_repo_path(args.snapshot_cache_dir))
+    )
 
     df = pd.read_csv(dataset_csv)
     category_column = "category_id" if "category_id" in df.columns else "category"
@@ -268,6 +346,8 @@ def main() -> None:
     rows: list[dict[str, Any]] = []
     filtered_reports: list[ProductDiscoveryReport] = []
     template_reports: dict[int, ProductDiscoveryReport] = {}
+    cache_hits = 0
+    cache_misses = 0
     for (category_id, nm_id), product_df in df.groupby([category_column, "nm_id"], sort=True):
         category_id = str(category_id)
         nm_id = int(nm_id)
@@ -277,7 +357,9 @@ def main() -> None:
             str(row["id"]): _parse_gold_labels(row.get("true_labels"))
             for _, row in product_df.iterrows()
         }
-        no_filter_report = pipeline.run(
+        no_filter_report, no_filter_hit = _run_or_load_product(
+            cache=snapshot_cache,
+            pipeline=pipeline,
             nm_id=nm_id,
             category_id=category_id,
             reviews=reviews,
@@ -285,13 +367,23 @@ def main() -> None:
             vocabulary=vocabulary,
             apply_filter=False,
         )
-        filtered_report = pipeline.run(
+        filtered_report, filtered_hit = _run_or_load_product(
+            cache=snapshot_cache,
+            pipeline=pipeline,
             nm_id=nm_id,
             category_id=category_id,
             reviews=reviews,
             gold_labels=gold_labels,
             vocabulary=vocabulary,
             apply_filter=True,
+        )
+        cache_hits += int(no_filter_hit) + int(filtered_hit)
+        cache_misses += int(not no_filter_hit) + int(not filtered_hit)
+        print(
+            "[discovery-v3] "
+            f"{category_id}/{nm_id}: "
+            f"no_filter={'cache' if no_filter_hit else 'computed'}, "
+            f"filtered={'cache' if filtered_hit else 'computed'}"
         )
         filtered_reports.append(filtered_report)
         template_reports[nm_id] = filtered_report
@@ -326,6 +418,8 @@ def main() -> None:
     print(f"[discovery-v3] Saved artifacts to {output_dir}")
     print(f"[discovery-v3] Products: {len(filtered_reports)}")
     print(f"[discovery-v3] Rows: {len(rows)}")
+    print(f"[discovery-v3] Snapshot cache hits: {cache_hits}")
+    print(f"[discovery-v3] Snapshot cache misses: {cache_misses}")
     print(f"[discovery-v3] Runtime: {elapsed}")
 
 

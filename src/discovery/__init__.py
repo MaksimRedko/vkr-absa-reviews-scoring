@@ -20,6 +20,11 @@ from .per_product_pipeline import (
 from .per_product_pipeline_v3 import ProductDiscoveryReport, run_discovery_v3_per_product
 from .phrase_filter import FilterReport, PhraseFilter
 from .residual_extractor import ResidualExtractor, ResidualResult
+from .snapshot_cache import (
+    DiscoverySnapshotCache,
+    compute_product_snapshot_key,
+    load_product_report,
+)
 from .representation import ReviewRepresentation, ReviewRepresentationBatch
 
 __all__ = [
@@ -44,6 +49,9 @@ __all__ = [
     "run_discovery_v3_per_product",
     "ResidualExtractor",
     "ResidualResult",
+    "DiscoverySnapshotCache",
+    "compute_product_snapshot_key",
+    "load_product_report",
     "ReviewClusterer",
     "ReviewRepresentation",
     "ReviewRepresentationBatch",
