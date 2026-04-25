@@ -2215,3 +2215,17 @@ _excluded_reviews
 - Sanity failed vs reference 0.7116 by +0.2449.
 - Root cause found: phase3 reference 0.7116 is not reproduced by faad23a v4; common-pair score diff vs phase3 is large, phase3 artifact indicates dual-hypothesis behavior (`nli_hypothesis_calls=2*pairs`).
 - Decision: do not accept faad23a run as final-quality sentiment; next isolated check should use current/v5 SentimentEngine.batch_analyze if target is 0.65-0.75.
+
+## Update 2026-04-25: final_e2e_negation_absence_correction
+
+- Goal: isolated sentiment-only post-process for absence-positive negation cases after NLI.
+- Baseline: final_e2e_sentiment_engine_v4, output `benchmark/end_to_end/results/20260425_154958_final_e2e`.
+- Changed variable: adaptive correction only when raw_rating<=2.0, review.rating>=4.0, and clear absence negation matches an absence-positive aspect lemma.
+- Files changed: `benchmark/end_to_end/run_final_pipeline.py`; detection/discovery/aggregation formula unchanged.
+- Full run output: `benchmark/end_to_end/results/20260425_165408_final_e2e`; runtime=1789.5 sec.
+- Track A: P/R/F1=0.4767/0.4198/0.4279; review MAE=0.8466; product MAE n>=3=0.7841.
+- Track B: P/R/F1=0.5698/0.4545/0.4847; review MAE=0.9250; product MAE n>=3=0.9140.
+- Star baseline unchanged: review MAE=0.6398; product MAE n>=3=0.5503.
+- Negation corrections: 31/5363 predictions; eligible low-high=549; inversion_rate=5.65%; MAE before/after on Track B matched rows 0.9943 -> 0.9563.
+- Sanity: vocab MAE within requested upper band (0.72-0.85), consumables MAE=0.5342 missed <0.50, correction count below broad target 50-150 but above hard lower check 30.
+- Decision: rule helps but is too narrow for target count; broadening needs separate experiment to avoid false positives.

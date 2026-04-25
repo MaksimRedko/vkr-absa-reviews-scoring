@@ -445,3 +445,13 @@ _clean_clusters
 - root cause: phase3 0.7116 artifact looks like v5 dual-hypothesis, not faad23a v4; common-pair scores differ strongly
 - fixed artifacts: benchmark/end_to_end/results/20260425_154958_final_e2e
 - next step: isolated rerun with current/v5 SentimentEngine.batch_analyze if target MAE 0.65-0.75 is required
+
+- goal: final_e2e_negation_absence_correction
+- checked: sentiment-only correction for absence-positive negation after NLI; detection/discovery/aggregation unchanged
+- got: output `benchmark/end_to_end/results/20260425_165408_final_e2e`, runtime 1789.5 sec
+- got: Track A P/R/F1=0.4767/0.4198/0.4279; review MAE=0.8466; product MAE=0.7841
+- got: Track B P/R/F1=0.5698/0.4545/0.4847; review MAE=0.9250; product MAE=0.9140
+- got: corrections=31/5363, eligible low-high=549, inversion_rate=5.65%, MAE before/after=0.9943->0.9563
+- did not work: consumables MAE=0.5342 missed <0.50; correction count below broad target 50-150
+- fixed: per_aspect has `negation_correction_applied`; summary has negation stats and sanity block
+- next step: separate broader negation experiment only if false-positive risk is reviewed

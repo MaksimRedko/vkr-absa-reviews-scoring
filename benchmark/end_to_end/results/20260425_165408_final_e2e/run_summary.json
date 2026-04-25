@@ -1,0 +1,72 @@
+{
+  "status": "OK",
+  "out_dir": "D:\\diploma\\benchmark\\end_to_end\\results\\20260425_165408_final_e2e",
+  "elapsed_sec": 1789.4889,
+  "track_a": {
+    "detection_precision": 0.4766942777867863,
+    "detection_recall": 0.41975839143830057,
+    "detection_f1": 0.42785587000967257,
+    "sentiment_mae_review": 0.8466375650595329,
+    "sentiment_mae_review_round": 0.8005263157894735,
+    "sentiment_mae_vocab_pairs": 0.8274340772166949,
+    "sentiment_mae_discovery_pairs": NaN,
+    "n_sentiment_review_matches": 665,
+    "n_discovery_sentiment_pairs": 0,
+    "product_mae_n3": 0.7840990291262134,
+    "n_aspects_matched": 132,
+    "n_aspects_matched_n3": 103
+  },
+  "track_b": {
+    "detection_precision": 0.5698024103529211,
+    "detection_recall": 0.4544891308086541,
+    "detection_f1": 0.4846919650103831,
+    "sentiment_mae_review": 0.925010996713382,
+    "sentiment_mae_review_round": 0.8856162650983368,
+    "sentiment_mae_vocab_pairs": 0.8274340772166949,
+    "sentiment_mae_discovery_pairs": 1.0686364181406223,
+    "n_sentiment_review_matches": 1004,
+    "n_discovery_sentiment_pairs": 1071,
+    "product_mae_n3": 0.9140458333333332,
+    "n_aspects_matched": 283,
+    "n_aspects_matched_n3": 192
+  },
+  "track_c_review": {
+    "sentiment_mae_review": 0.6397522804880962,
+    "sentiment_mae_review_round": 0.6397522804880962
+  },
+  "track_c_product": {
+    "product_mae_n3": 0.5502970212765956,
+    "n_aspects_matched": 375
+  },
+  "negation_correction": {
+    "total_predictions": 5363,
+    "corrections_applied": 31,
+    "correction_rate": 0.005780346820809248,
+    "per_category": {
+      "hospitality": 1,
+      "physical_goods": 28,
+      "services": 2
+    },
+    "avg_mae_before_correction": 0.9942610778443114,
+    "avg_mae_after_correction": 0.9563408183632734,
+    "mae_improvement": 0.03792025948103794,
+    "eligible_low_high_predictions": 549,
+    "inversion_rate": 0.056466302367941715
+  },
+  "params": {
+    "NLI_TEMPERATURE": 0.7,
+    "SENTIMENT_RATING_MIN": 1.0,
+    "SENTIMENT_RATING_MAX": 5.0,
+    "SENTIMENT_RELEVANCE_THRESHOLD": 0.2,
+    "SENTIMENT_RELEVANCE_MODE": "p_ent_plus_p_contra_faad23a",
+    "NEGATION_RAW_RATING_MAX": 2.0,
+    "NEGATION_REVIEW_RATING_MIN": 4.0,
+    "SENTIMENT_ENGINE_SOURCE": "D:\\diploma\\.opencode\\artifacts\\sentiment_search_20260425\\sentiment_faad23a_v4_single_hypothesis.py",
+    "SENTIMENT_HYPOTHESIS_TEMPLATE_POS": "{aspect} — это хорошо",
+    "SENTIMENT_SCORE_FORMULA": "5*P(entailment)+3*P(neutral)+1*P(contradiction)",
+    "DISCOVERY_PHRASE_TO_CLUSTER_THRESHOLD": 0.5,
+    "DISCOVERY_TO_GOLD_MATCH_THRESHOLD": 0.65,
+    "PRODUCT_AGGREGATION_MIN_REVIEWS": 3,
+    "USE_LEDOIT_WOLF_SHRINKAGE": true
+  }
+}

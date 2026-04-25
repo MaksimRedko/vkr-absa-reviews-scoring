@@ -4,6 +4,7 @@ import argparse
 import ast
 import importlib.util
 import json
+import re
 import sys
 import time
 from collections import defaultdict
@@ -14,6 +15,7 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
+import pymorphy3
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
@@ -32,6 +34,8 @@ SENTIMENT_RATING_MAX = 5.0
 SENTIMENT_RELEVANCE_THRESHOLD = 0.2
 SENTIMENT_RELEVANCE_MODE = "p_ent_plus_p_contra_faad23a"
 REFERENCE_FAAD23A_REVIEW_MAE = 0.7116
+NEGATION_RAW_RATING_MAX = 2.0
+NEGATION_REVIEW_RATING_MIN = 4.0
 DISCOVERY_PHRASE_TO_CLUSTER_THRESHOLD = 0.5
 DISCOVERY_TO_GOLD_MATCH_THRESHOLD = 0.65
 PRODUCT_AGGREGATION_MIN_REVIEWS = 3
@@ -48,6 +52,35 @@ REFERENCE_DETECTION = {
     "precision": 0.4806,
     "recall": 0.4130,
     "f1": 0.4251,
+}
+
+_WORD_RE = re.compile(r"\w+", flags=re.UNICODE)
+_MORPH = pymorphy3.MorphAnalyzer()
+_LEMMA_CACHE: dict[str, tuple[str, ...]] = {}
+_POSITIVE_ABSENCE_LEMMAS = {
+    "аромат",
+    "брак",
+    "вонь",
+    "горечь",
+    "грязь",
+    "дефект",
+    "задержка",
+    "запах",
+    "мусор",
+    "насекомое",
+    "ожидание",
+    "очередь",
+    "плесень",
+    "повреждение",
+    "поломка",
+    "проблема",
+    "пыль",
+    "пятно",
+    "ржавчина",
+    "скол",
+    "таракан",
+    "царапина",
+    "шум",
 }
 
 
@@ -366,6 +399,65 @@ def _load_v4_sentiment_engine_class() -> Any:
     return module.SentimentEngine
 
 
+def _lemmas(text: str) -> tuple[str, ...]:
+    cached = _LEMMA_CACHE.get(text)
+    if cached is not None:
+        return cached
+    out: list[str] = []
+    for token in _WORD_RE.findall(text.lower()):
+        if not any(ch.isalpha() for ch in token):
+            continue
+        out.append(_MORPH.parse(token)[0].normal_form)
+    result = tuple(out)
+    _LEMMA_CACHE[text] = result
+    return result
+
+
+def _aspect_lemmas(terms: list[str]) -> set[str]:
+    lemmas: set[str] = set()
+    for term in terms:
+        for lemma in _lemmas(term):
+            if len(lemma) > 2:
+                lemmas.add(lemma)
+    return lemmas
+
+
+def _negation_match(text: str, aspect_lemmas: set[str]) -> tuple[bool, str, str]:
+    absence_lemmas = aspect_lemmas & _POSITIVE_ABSENCE_LEMMAS
+    if not absence_lemmas:
+        return False, "", ""
+
+    tokens = _lemmas(text)
+    n_tokens = len(tokens)
+    for index, token in enumerate(tokens):
+        prev_window = set(tokens[max(0, index - 4) : index])
+        next_window = set(tokens[index + 1 : index + 5])
+
+        if token in {"нет", "без"} and next_window & absence_lemmas:
+            hit = sorted(next_window & absence_lemmas)[0]
+            return True, token, hit
+        if token == "нет" and prev_window & absence_lemmas:
+            hit = sorted(prev_window & absence_lemmas)[0]
+            return True, "reverse нет", hit
+        if token == "не" and index + 1 < n_tokens and tokens[index + 1] == "быть":
+            after = set(tokens[index + 2 : index + 6])
+            hit_set = (after | prev_window) & absence_lemmas
+            if hit_set:
+                return True, "не было", sorted(hit_set)[0]
+        if token == "не" and index + 1 < n_tokens and tokens[index + 1] == "иметь":
+            after = set(tokens[index + 2 : index + 7])
+            if after & absence_lemmas:
+                return True, "не имеет", sorted(after & absence_lemmas)[0]
+        if token == "отсутствовать" and (next_window | prev_window) & absence_lemmas:
+            hit = sorted((next_window | prev_window) & absence_lemmas)[0]
+            return True, "отсутствует", hit
+        if token == "никакой" and next_window & absence_lemmas:
+            hit = sorted(next_window & absence_lemmas)[0]
+            return True, "никакой", hit
+
+    return False, "", ""
+
+
 def _sentiment_scores(pairs: list[SentimentPair], logger: TeeLogger) -> dict[tuple[str, str], dict[str, float]]:
     if not pairs:
         return {}
@@ -402,16 +494,92 @@ def _sentiment_scores(pairs: list[SentimentPair], logger: TeeLogger) -> dict[tup
         rating = float(np.clip(result.score, SENTIMENT_RATING_MIN, SENTIMENT_RATING_MAX))
         out[(str(result.review_id), str(result.aspect))] = {
             "rating": rating,
+            "raw_rating": rating,
             "p_ent_pos": p_ent,
             "p_ent_neg": p_contra,
             "p_ent_plus_contra": relevance,
             "polarity": rating - 3.0,
+            "raw_polarity": rating - 3.0,
+            "negation_corrected": False,
+            "negation_pattern": "",
+            "negation_hit_lemma": "",
         }
     logger.log(
         f"[sentiment] kept={len(out)} skipped={skipped} "
         f"elapsed={time.perf_counter() - started:.1f}s"
     )
     return out
+
+
+def _apply_negation_corrections(
+    sentiment_by_pair: dict[tuple[str, str], dict[str, float]],
+    reviews: list[ReviewRecord],
+    aspect_by_id_by_category: dict[str, dict[str, AspectDefinition]],
+    discovery_by_product: dict[int, ProductDiscoveryInfo],
+    logger: TeeLogger,
+) -> dict[str, Any]:
+    review_by_id = {review.review_id: review for review in reviews}
+    per_category: dict[str, int] = defaultdict(int)
+    applied = 0
+    eligible_low_high = 0
+
+    for (review_id, aspect_key), scores in sentiment_by_pair.items():
+        review = review_by_id.get(review_id)
+        if review is None:
+            continue
+        raw_rating = float(scores.get("raw_rating", scores["rating"]))
+        if raw_rating > NEGATION_RAW_RATING_MAX or review.rating < NEGATION_REVIEW_RATING_MIN:
+            continue
+        eligible_low_high += 1
+
+        terms: list[str] = []
+        if aspect_key.startswith("vocab::"):
+            aspect_id = aspect_key.split("::", 1)[1]
+            aspect = aspect_by_id_by_category.get(review.category_id, {}).get(aspect_id)
+            if aspect is not None:
+                terms = [aspect.canonical_name, *aspect.synonyms]
+        elif aspect_key.startswith("discovery::"):
+            parts = aspect_key.split("::")
+            if len(parts) == 3:
+                discovery = discovery_by_product.get(int(parts[1]))
+                cluster = discovery.clusters.get(int(parts[2])) if discovery else None
+                if cluster is not None:
+                    terms = [cluster.medoid]
+        if not terms:
+            continue
+
+        matched, pattern, hit_lemma = _negation_match(review.text, _aspect_lemmas(terms))
+        if not matched:
+            continue
+
+        corrected = float(np.clip(6.0 - raw_rating, SENTIMENT_RATING_MIN, SENTIMENT_RATING_MAX))
+        scores["rating"] = corrected
+        scores["polarity"] = corrected - 3.0
+        scores["negation_corrected"] = True
+        scores["negation_pattern"] = pattern
+        scores["negation_hit_lemma"] = hit_lemma
+        applied += 1
+        per_category[review.category_id] += 1
+
+    total = len(sentiment_by_pair)
+    stats = {
+        "total_predictions": total,
+        "eligible_low_high_predictions": eligible_low_high,
+        "corrections_applied": applied,
+        "correction_rate": applied / total if total else 0.0,
+        "inversion_rate": applied / eligible_low_high if eligible_low_high else 0.0,
+        "per_category": dict(sorted(per_category.items())),
+    }
+    logger.log(
+        "[negation] total_predictions={total} eligible_low_high={eligible} "
+        "corrections={applied} inversion_rate={inversion:.2%}".format(
+            total=total,
+            eligible=eligible_low_high,
+            applied=applied,
+            inversion=stats["inversion_rate"],
+        )
+    )
+    return stats
 
 
 def _build_sentiment_pairs(
@@ -540,11 +708,19 @@ def _review_metric_rows(
         round_errors: list[float] = []
         for gold_label, gold_rating in review.true_labels.items():
             mapped_ids = sorted(term_to_aspects.get(lexical._normalize(gold_label), set()))
-            predicted: list[tuple[str, str, float]] = []
+            predicted: list[tuple[str, str, float, float, bool]] = []
             for aspect_id in mapped_ids:
                 key = (review.review_id, f"vocab::{aspect_id}")
                 if key in sentiment_by_pair:
-                    predicted.append(("vocab", aspect_id, sentiment_by_pair[key]["rating"]))
+                    predicted.append(
+                        (
+                            "vocab",
+                            aspect_id,
+                            sentiment_by_pair[key]["rating"],
+                            sentiment_by_pair[key].get("raw_rating", sentiment_by_pair[key]["rating"]),
+                            bool(sentiment_by_pair[key].get("negation_corrected", False)),
+                        )
+                    )
             if include_discovery and not mapped_ids:
                 discovery = discovery_by_product.get(review.nm_id)
                 if discovery:
@@ -554,11 +730,21 @@ def _review_metric_rows(
                             continue
                         key = (review.review_id, f"discovery::{review.nm_id}::{cluster_id}")
                         if key in sentiment_by_pair:
-                            predicted.append(("discovery", str(cluster_id), sentiment_by_pair[key]["rating"]))
+                            predicted.append(
+                                (
+                                    "discovery",
+                                    str(cluster_id),
+                                    sentiment_by_pair[key]["rating"],
+                                    sentiment_by_pair[key].get("raw_rating", sentiment_by_pair[key]["rating"]),
+                                    bool(sentiment_by_pair[key].get("negation_corrected", False)),
+                                )
+                            )
             if not predicted:
                 continue
             pred_rating = float(np.mean([item[2] for item in predicted]))
+            raw_pred_rating = float(np.mean([item[3] for item in predicted]))
             error = abs(pred_rating - float(gold_rating))
+            raw_error = abs(raw_pred_rating - float(gold_rating))
             errors.append(error)
             round_errors.append(abs(round(pred_rating) - float(gold_rating)))
             if any(item[0] == "discovery" for item in predicted):
@@ -574,7 +760,10 @@ def _review_metric_rows(
                     "aspect_source": "discovery" if any(item[0] == "discovery" for item in predicted) else "vocab",
                     "gold_rating": float(gold_rating),
                     "predicted_rating": round(pred_rating, 4),
+                    "raw_predicted_rating": round(raw_pred_rating, 4),
                     "abs_error": round(error, 4),
+                    "raw_abs_error": round(raw_error, 4),
+                    "negation_correction_applied": any(item[4] for item in predicted),
                     "review_rating": review.rating,
                     "review_text": review.text,
                 }
@@ -650,6 +839,7 @@ def _product_metric_rows(
     aspect_by_id_by_category: dict[str, dict[str, AspectDefinition]],
     discovery_by_product: dict[int, ProductDiscoveryInfo],
     aggregated: dict[int, dict[str, Any]],
+    sentiment_by_pair: dict[tuple[str, str], dict[str, float]],
     include_discovery: bool,
 ) -> tuple[pd.DataFrame, dict[str, Any]]:
     by_product: dict[int, list[ReviewRecord]] = defaultdict(list)
@@ -669,12 +859,18 @@ def _product_metric_rows(
 
         for gold_label, gold_scores in sorted(gold_scores_by_label.items()):
             mapped_ids = sorted(term_to_aspects.get(lexical._normalize(gold_label), set()))
-            pred_scores: list[tuple[str, str, float]] = []
+            pred_scores: list[tuple[str, str, float, bool]] = []
             for aspect_id in mapped_ids:
                 canonical = aspect_by_id[aspect_id].canonical_name if aspect_id in aspect_by_id else aspect_id
                 key = f"vocab::{aspect_id}::{canonical}"
                 if key in product_scores:
-                    pred_scores.append(("vocab", canonical, float(product_scores[key])))
+                    corrected = any(
+                        sentiment_by_pair.get((review.review_id, f"vocab::{aspect_id}"), {}).get(
+                            "negation_corrected", False
+                        )
+                        for review in product_reviews
+                    )
+                    pred_scores.append(("vocab", canonical, float(product_scores[key]), corrected))
             if include_discovery and not mapped_ids:
                 discovery = discovery_by_product.get(nm_id)
                 if discovery:
@@ -683,7 +879,14 @@ def _product_metric_rows(
                             continue
                         key = f"discovery::{cluster.cluster_id}::{cluster.medoid}"
                         if key in product_scores:
-                            pred_scores.append(("discovery", cluster.medoid, float(product_scores[key])))
+                            corrected = any(
+                                sentiment_by_pair.get(
+                                    (review.review_id, f"discovery::{nm_id}::{cluster.cluster_id}"),
+                                    {},
+                                ).get("negation_corrected", False)
+                                for review in product_reviews
+                            )
+                            pred_scores.append(("discovery", cluster.medoid, float(product_scores[key]), corrected))
             if not pred_scores:
                 continue
             predicted = float(np.mean([item[2] for item in pred_scores]))
@@ -698,6 +901,7 @@ def _product_metric_rows(
                     "predicted_rating": round(predicted, 4),
                     "gold_rating": round(gold, 4),
                     "abs_error": round(abs(predicted - gold), 4),
+                    "negation_correction_applied": any(item[3] for item in pred_scores),
                 }
             )
 
@@ -753,6 +957,7 @@ def _star_metrics(reviews: list[ReviewRecord]) -> tuple[pd.DataFrame, dict[str, 
                 "predicted_rating": round(pred, 4),
                 "gold_rating": round(gold, 4),
                 "abs_error": round(abs(pred - gold), 4),
+                "negation_correction_applied": False,
             }
         )
     review_df = pd.DataFrame(review_rows)
@@ -832,7 +1037,11 @@ def _write_predictions(
                         "aspect_id": aspect_id,
                         "aspect": aspect.canonical_name if aspect else aspect_id,
                         "rating": round(float(sentiment_by_pair[key]["rating"]), 4),
+                        "raw_rating": round(float(sentiment_by_pair[key].get("raw_rating", sentiment_by_pair[key]["rating"])), 4),
                         "polarity": round(float(sentiment_by_pair[key]["polarity"]), 4),
+                        "negation_corrected": bool(sentiment_by_pair[key].get("negation_corrected", False)),
+                        "negation_pattern": sentiment_by_pair[key].get("negation_pattern", ""),
+                        "negation_hit_lemma": sentiment_by_pair[key].get("negation_hit_lemma", ""),
                     }
                 )
             discovery_items: list[dict[str, Any]] = []
@@ -847,7 +1056,11 @@ def _write_predictions(
                             "cluster_id": cluster_id,
                             "medoid": cluster.medoid,
                             "rating": round(float(sentiment_by_pair[key]["rating"]), 4),
+                            "raw_rating": round(float(sentiment_by_pair[key].get("raw_rating", sentiment_by_pair[key]["rating"])), 4),
                             "polarity": round(float(sentiment_by_pair[key]["polarity"]), 4),
+                            "negation_corrected": bool(sentiment_by_pair[key].get("negation_corrected", False)),
+                            "negation_pattern": sentiment_by_pair[key].get("negation_pattern", ""),
+                            "negation_hit_lemma": sentiment_by_pair[key].get("negation_hit_lemma", ""),
                             "gold_matches": cluster.gold_matches,
                         }
                     )
@@ -903,6 +1116,7 @@ def _write_summary(
     per_product_a: pd.DataFrame,
     per_product_b: pd.DataFrame,
     hard_cases: pd.DataFrame,
+    negation_stats: dict[str, Any],
 ) -> None:
     discovery_added = aggregate_b.get("n_aspects_matched", 0) - aggregate_a.get("n_aspects_matched", 0)
     vocab_mae = aggregate_b.get("sentiment_mae_vocab_pairs")
@@ -926,6 +1140,19 @@ def _write_summary(
         "works in checked range"
         if a_review is not None and 0.65 <= float(a_review) <= 0.75
         else "outside checked range"
+    )
+    consumables_mae = np.nan
+    if not per_product_a.empty and "category_id" in per_product_a.columns:
+        consumables_rows = per_product_a[per_product_a["category_id"] == "consumables"]
+        if not consumables_rows.empty:
+            consumables_mae = float(consumables_rows["sentiment_mae_review"].mean())
+    correction_count = int(negation_stats.get("corrections_applied", 0))
+    correction_target_status = (
+        "inside broad target"
+        if 50 <= correction_count <= 150
+        else "below broad target"
+        if correction_count < 50
+        else "above broad target"
     )
     lines = [
         "# Final End-to-End Pipeline Results",
@@ -986,6 +1213,32 @@ def _write_summary(
             f"- Difference: {_fmt(a_review)} - {_fmt(REFERENCE_FAAD23A_REVIEW_MAE)} = {_fmt(sanity_diff)}",
             f"- Status: {sanity_status}; {sanity_range}.",
             "",
+            "## Negation correction stats",
+            "",
+            f"Total predictions: {int(negation_stats.get('total_predictions', 0))}",
+            "Corrections applied: {n} ({rate})".format(
+                n=int(negation_stats.get("corrections_applied", 0)),
+                rate=_fmt(float(negation_stats.get("correction_rate", 0.0)) * 100.0) + "%",
+            ),
+            f"Avg MAE before correction: {_fmt(negation_stats.get('avg_mae_before_correction'))}",
+            f"Avg MAE after correction: {_fmt(negation_stats.get('avg_mae_after_correction'))}",
+            f"Improvement: {_fmt(negation_stats.get('mae_improvement'))}",
+            f"Inversion rate: {_fmt(float(negation_stats.get('inversion_rate', 0.0)) * 100.0)}%",
+            f"Correction target status: {correction_target_status}",
+            "",
+            "Per-category corrections:",
+            *[
+                f"- {category}: {count} corrections"
+                for category, count in sorted(negation_stats.get("per_category", {}).items())
+            ],
+            "",
+            "## Negation sanity check",
+            "",
+            f"- Vocab-only sentiment MAE: {_fmt(a_review)} (expected 0.72-0.85)",
+            f"- Consumables MAE: {_fmt(consumables_mae)} (expected <0.50)",
+            f"- Inversion rate: {_fmt(float(negation_stats.get('inversion_rate', 0.0)) * 100.0)}% (expected <12%)",
+            f"- Corrections applied: {correction_count} (target 50-150; hard lower check is >=30)",
+            "",
             "## Hard cases (10 worst predictions)",
             "",
         ]
@@ -1020,6 +1273,23 @@ def _write_track_csv(path: Path, per_product: pd.DataFrame) -> None:
         "n_aspects_matched",
     ]
     per_product.to_csv(path, index=False, encoding="utf-8", columns=columns)
+
+
+def _finalize_negation_stats(negation_stats: dict[str, Any], hard_rows: list[dict[str, Any]]) -> dict[str, Any]:
+    out = dict(negation_stats)
+    hard_df = pd.DataFrame(hard_rows)
+    if hard_df.empty or "raw_abs_error" not in hard_df.columns:
+        out["avg_mae_before_correction"] = np.nan
+        out["avg_mae_after_correction"] = np.nan
+        out["mae_improvement"] = np.nan
+        return out
+
+    before = float(hard_df["raw_abs_error"].mean())
+    after = float(hard_df["abs_error"].mean())
+    out["avg_mae_before_correction"] = before
+    out["avg_mae_after_correction"] = after
+    out["mae_improvement"] = before - after
+    return out
 
 
 def run(args: argparse.Namespace) -> Path:
@@ -1063,6 +1333,13 @@ def run(args: argparse.Namespace) -> Path:
 
         pairs = _build_sentiment_pairs(reviews, aspect_by_id_by_category, discovery_by_product)
         sentiment_by_pair = _sentiment_scores(pairs, logger)
+        negation_stats = _apply_negation_corrections(
+            sentiment_by_pair,
+            reviews,
+            aspect_by_id_by_category,
+            discovery_by_product,
+            logger,
+        )
 
         aggregated = _aggregate_product_scores(
             reviews,
@@ -1085,6 +1362,7 @@ def run(args: argparse.Namespace) -> Path:
             aspect_by_id_by_category,
             discovery_by_product,
             aggregated,
+            sentiment_by_pair,
             include_discovery=False,
         )
         aggregate_a.update(product_metrics_a)
@@ -1102,6 +1380,7 @@ def run(args: argparse.Namespace) -> Path:
             aspect_by_id_by_category,
             discovery_by_product,
             aggregated,
+            sentiment_by_pair,
             include_discovery=True,
         )
         aggregate_b.update(product_metrics_b)
@@ -1137,6 +1416,7 @@ def run(args: argparse.Namespace) -> Path:
         per_aspect.to_csv(out_dir / "per_aspect_breakdown.csv", index=False, encoding="utf-8")
         hard_cases = pd.DataFrame(hard_b).sort_values(["abs_error", "review_id"], ascending=[False, True]).head(30)
         hard_cases.to_csv(out_dir / "hard_cases.csv", index=False, encoding="utf-8")
+        negation_stats = _finalize_negation_stats(negation_stats, hard_b)
 
         _write_predictions(
             out_dir,
@@ -1155,6 +1435,7 @@ def run(args: argparse.Namespace) -> Path:
             per_product_a,
             per_product_b,
             hard_cases,
+            negation_stats,
         )
 
         summary_payload = {
@@ -1165,12 +1446,15 @@ def run(args: argparse.Namespace) -> Path:
             "track_b": aggregate_b,
             "track_c_review": star_review_metrics,
             "track_c_product": star_product_metrics,
+            "negation_correction": negation_stats,
             "params": {
                 "NLI_TEMPERATURE": NLI_TEMPERATURE,
                 "SENTIMENT_RATING_MIN": SENTIMENT_RATING_MIN,
                 "SENTIMENT_RATING_MAX": SENTIMENT_RATING_MAX,
                 "SENTIMENT_RELEVANCE_THRESHOLD": SENTIMENT_RELEVANCE_THRESHOLD,
                 "SENTIMENT_RELEVANCE_MODE": SENTIMENT_RELEVANCE_MODE,
+                "NEGATION_RAW_RATING_MAX": NEGATION_RAW_RATING_MAX,
+                "NEGATION_REVIEW_RATING_MIN": NEGATION_REVIEW_RATING_MIN,
                 "SENTIMENT_ENGINE_SOURCE": str(V4_SENTIMENT_ENGINE_PATH),
                 "SENTIMENT_HYPOTHESIS_TEMPLATE_POS": "{aspect} — это хорошо",
                 "SENTIMENT_SCORE_FORMULA": "5*P(entailment)+3*P(neutral)+1*P(contradiction)",

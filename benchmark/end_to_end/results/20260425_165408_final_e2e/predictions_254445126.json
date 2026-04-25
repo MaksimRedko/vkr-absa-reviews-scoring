@@ -1,0 +1,4121 @@
+{
+  "nm_id": 254445126,
+  "category": "physical_goods",
+  "reviews": [
+    {
+      "review_id": "PZefZjlNkC8W1OfoaT6C",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 1.254,
+          "raw_rating": 1.254,
+          "polarity": -1.746,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.8556,
+          "raw_rating": 4.8556,
+          "polarity": 1.8556,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 1.9351,
+          "raw_rating": 1.9351,
+          "polarity": -1.0649,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.0224,
+          "raw_rating": 3.0224,
+          "polarity": 0.0224,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.4202,
+          "raw_rating": 3.4202,
+          "polarity": 0.4202,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "J5yAV5HNNhYWSthdnIdc",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 1.0093,
+          "raw_rating": 1.0093,
+          "polarity": -1.9907,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 1.046,
+          "raw_rating": 1.046,
+          "polarity": -1.954,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 1.0443,
+          "raw_rating": 1.0443,
+          "polarity": -1.9557,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 1.0408,
+          "raw_rating": 1.0408,
+          "polarity": -1.9592,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 1.0242,
+          "raw_rating": 1.0242,
+          "polarity": -1.9758,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 1.0472,
+          "raw_rating": 1.0472,
+          "polarity": -1.9528,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "77SYJiMMeAaSkMCK9soq",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 1.3269,
+          "raw_rating": 1.3269,
+          "polarity": -1.6731,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 1.0558,
+          "raw_rating": 1.0558,
+          "polarity": -1.9442,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 1.0127,
+          "raw_rating": 1.0127,
+          "polarity": -1.9873,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.3029,
+          "raw_rating": 1.3029,
+          "polarity": -1.6971,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 1.1222,
+          "raw_rating": 1.1222,
+          "polarity": -1.8778,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 1.1723,
+          "raw_rating": 1.1723,
+          "polarity": -1.8277,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "gnmqtegY30GBf1iS3wHR",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "assortment",
+          "aspect": "Ассортимент",
+          "rating": 4.0022,
+          "raw_rating": 4.0022,
+          "polarity": 1.0022,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.3012,
+          "raw_rating": 4.3012,
+          "polarity": 1.3012,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 3.7402,
+          "raw_rating": 3.7402,
+          "polarity": 0.7402,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.0038,
+          "raw_rating": 4.0038,
+          "polarity": 1.0038,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.0041,
+          "raw_rating": 4.0041,
+          "polarity": 1.0041,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 1.3252,
+          "raw_rating": 1.3252,
+          "polarity": -1.6748,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "V81VqdxBcdDDxf2jfhwQ",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.9686,
+          "raw_rating": 4.9686,
+          "polarity": 1.9686,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 4.3264,
+          "raw_rating": 4.3264,
+          "polarity": 1.3264,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.9269,
+          "raw_rating": 4.9269,
+          "polarity": 1.9269,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.6082,
+          "raw_rating": 4.6082,
+          "polarity": 1.6082,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.4669,
+          "raw_rating": 4.4669,
+          "polarity": 1.4669,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.1872,
+          "raw_rating": 3.1872,
+          "polarity": 0.1872,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Pc6SFUQBSwVapKPSIrpg",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 2.1079,
+          "raw_rating": 2.1079,
+          "polarity": -0.8921,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 1.8463,
+          "raw_rating": 1.8463,
+          "polarity": -1.1537,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "gZZQNdd7bo0EmxKEeks9",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 2.6922,
+          "raw_rating": 2.6922,
+          "polarity": -0.3078,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 2.7152,
+          "raw_rating": 2.7152,
+          "polarity": -0.2848,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 1.8283,
+          "raw_rating": 1.8283,
+          "polarity": -1.1717,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "YJTOaOxpMRFVhU3EMTRv",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.9527,
+          "raw_rating": 4.9527,
+          "polarity": 1.9527,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 4.4838,
+          "raw_rating": 4.4838,
+          "polarity": 1.4838,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9769,
+          "raw_rating": 4.9769,
+          "polarity": 1.9769,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.8972,
+          "raw_rating": 4.8972,
+          "polarity": 1.8972,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.9659,
+          "raw_rating": 4.9659,
+          "polarity": 1.9659,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 2.9919,
+          "raw_rating": 2.9919,
+          "polarity": -0.0081,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "8A9QlKD65oqHuD4kMBMd",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 3.5985,
+          "raw_rating": 3.5985,
+          "polarity": 0.5985,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 3.2827,
+          "raw_rating": 3.2827,
+          "polarity": 0.2827,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 2.9459,
+          "raw_rating": 2.9459,
+          "polarity": -0.0541,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.1081,
+          "raw_rating": 4.1081,
+          "polarity": 1.1081,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.4519,
+          "raw_rating": 3.4519,
+          "polarity": 0.4519,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 2.7515,
+          "raw_rating": 2.7515,
+          "polarity": -0.2485,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "D22BqY1FqFyp8Ds8lrsv",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 4.9314,
+          "raw_rating": 4.9314,
+          "polarity": 1.9314,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9791,
+          "raw_rating": 4.9791,
+          "polarity": 1.9791,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.3099,
+          "raw_rating": 4.3099,
+          "polarity": 1.3099,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "jKgQD9HbS0s3fTkYdVZU",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.8552,
+          "raw_rating": 4.8552,
+          "polarity": 1.8552,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 3.4779,
+          "raw_rating": 3.4779,
+          "polarity": 0.4779,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.4849,
+          "raw_rating": 4.4849,
+          "polarity": 1.4849,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.7008,
+          "raw_rating": 4.7008,
+          "polarity": 1.7008,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.3396,
+          "raw_rating": 3.3396,
+          "polarity": 0.3396,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "b9LCXgHdUIGvG4mL1HDG",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.9025,
+          "raw_rating": 4.9025,
+          "polarity": 1.9025,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 4.7602,
+          "raw_rating": 4.7602,
+          "polarity": 1.7602,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.953,
+          "raw_rating": 4.953,
+          "polarity": 1.953,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.2696,
+          "raw_rating": 4.2696,
+          "polarity": 1.2696,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.5535,
+          "raw_rating": 3.5535,
+          "polarity": 0.5535,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "BAKpdQJEWJdyRDPUtbYa",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.4059,
+          "raw_rating": 4.4059,
+          "polarity": 1.4059,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 4.5307,
+          "raw_rating": 4.5307,
+          "polarity": 1.5307,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.1278,
+          "raw_rating": 4.1278,
+          "polarity": 1.1278,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 3.9723,
+          "raw_rating": 3.9723,
+          "polarity": 0.9723,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 3.7474,
+          "raw_rating": 3.7474,
+          "polarity": 0.7474,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.0333,
+          "raw_rating": 4.0333,
+          "polarity": 1.0333,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "B3Da8XxRqsT7t1g_vzAv",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.9467,
+          "raw_rating": 4.9467,
+          "polarity": 1.9467,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.8895,
+          "raw_rating": 4.8895,
+          "polarity": 1.8895,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 4.111,
+          "raw_rating": 4.111,
+          "polarity": 1.111,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "8jAVKZF9eN4VTR0A0EDx",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "UsjJvZlq87yjcH7VaXxw",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.9455,
+          "raw_rating": 4.9455,
+          "polarity": 1.9455,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 4.793,
+          "raw_rating": 4.793,
+          "polarity": 1.793,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.9292,
+          "raw_rating": 4.9292,
+          "polarity": 1.9292,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9581,
+          "raw_rating": 4.9581,
+          "polarity": 1.9581,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.6806,
+          "raw_rating": 4.6806,
+          "polarity": 1.6806,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.2503,
+          "raw_rating": 4.2503,
+          "polarity": 1.2503,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 4.2066,
+          "raw_rating": 4.2066,
+          "polarity": 1.2066,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "XDgOinuPLhYPekwntRFw",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.9637,
+          "raw_rating": 4.9637,
+          "polarity": 1.9637,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 4.9859,
+          "raw_rating": 4.9859,
+          "polarity": 1.9859,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.8976,
+          "raw_rating": 4.8976,
+          "polarity": 1.8976,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9724,
+          "raw_rating": 4.9724,
+          "polarity": 1.9724,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.6352,
+          "raw_rating": 4.6352,
+          "polarity": 1.6352,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.4728,
+          "raw_rating": 3.4728,
+          "polarity": 0.4728,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "CCfGXfW3ER3WFB1g3yRb",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9745,
+          "raw_rating": 4.9745,
+          "polarity": 1.9745,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.3403,
+          "raw_rating": 4.3403,
+          "polarity": 1.3403,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.2409,
+          "raw_rating": 3.2409,
+          "polarity": 0.2409,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "LufZRA9fKqrKjQPHA5Mm",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.6942,
+          "raw_rating": 4.6942,
+          "polarity": 1.6942,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.7178,
+          "raw_rating": 4.7178,
+          "polarity": 1.7178,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.6764,
+          "raw_rating": 4.6764,
+          "polarity": 1.6764,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.1304,
+          "raw_rating": 4.1304,
+          "polarity": 1.1304,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "RG4tlUStX0M99QX2jcpA",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 1.2097,
+          "raw_rating": 1.2097,
+          "polarity": -1.7903,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 2.8308,
+          "raw_rating": 2.8308,
+          "polarity": -0.1692,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 1.0136,
+          "raw_rating": 1.0136,
+          "polarity": -1.9864,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 1.1043,
+          "raw_rating": 1.1043,
+          "polarity": -1.8957,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ussCdutb9OE4U4Df7jpA",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.8415,
+          "raw_rating": 4.8415,
+          "polarity": 1.8415,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.9194,
+          "raw_rating": 4.9194,
+          "polarity": 1.9194,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.424,
+          "raw_rating": 3.424,
+          "polarity": 0.424,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "o0Q6yxjhxbHVGg9KUM4a",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 1.6258,
+          "raw_rating": 1.6258,
+          "polarity": -1.3742,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "pMBl9CyvLNip4c8eaL2F",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.5787,
+          "raw_rating": 4.5787,
+          "polarity": 1.5787,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 2.5053,
+          "raw_rating": 2.5053,
+          "polarity": -0.4947,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "pFGvwSi4GKXQ7evPHugc",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 3.5596,
+          "raw_rating": 3.5596,
+          "polarity": 0.5596,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 3.3775,
+          "raw_rating": 3.3775,
+          "polarity": 0.3775,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 3.6389,
+          "raw_rating": 3.6389,
+          "polarity": 0.6389,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 2.5811,
+          "raw_rating": 2.5811,
+          "polarity": -0.4189,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.5121,
+          "raw_rating": 3.5121,
+          "polarity": 0.5121,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "bEQMvBwXqnG2mtPIvQxY",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 3.6876,
+          "raw_rating": 3.6876,
+          "polarity": 0.6876,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 2.5967,
+          "raw_rating": 2.5967,
+          "polarity": -0.4033,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "TFZGqygxE5pyF0JjwSxf",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.7408,
+          "raw_rating": 4.7408,
+          "polarity": 1.7408,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 3.7625,
+          "raw_rating": 3.7625,
+          "polarity": 0.7625,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.4241,
+          "raw_rating": 4.4241,
+          "polarity": 1.4241,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.6128,
+          "raw_rating": 3.6128,
+          "polarity": 0.6128,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "cwiUBkHkKFvOPr5tKYsQ",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 2.8801,
+          "raw_rating": 2.8801,
+          "polarity": -0.1199,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 2.5543,
+          "raw_rating": 2.5543,
+          "polarity": -0.4457,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "gsgHtvZGkajquujS19Ve",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.1963,
+          "raw_rating": 4.1963,
+          "polarity": 1.1963,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.0499,
+          "raw_rating": 4.0499,
+          "polarity": 1.0499,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "nQAxHRis8wUocVIPdoFc",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 1.8125,
+          "raw_rating": 1.8125,
+          "polarity": -1.1875,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "hV4dkUFRIUzIM3ngJeDs",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 2.3782,
+          "raw_rating": 2.3782,
+          "polarity": -0.6218,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 1.9449,
+          "raw_rating": 1.9449,
+          "polarity": -1.0551,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 2.4162,
+          "raw_rating": 2.4162,
+          "polarity": -0.5838,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 2.268,
+          "raw_rating": 2.268,
+          "polarity": -0.732,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 2.2537,
+          "raw_rating": 2.2537,
+          "polarity": -0.7463,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "m1sbbQ5ac9ONmYcbwXH4",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.6722,
+          "raw_rating": 4.6722,
+          "polarity": 1.6722,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.7822,
+          "raw_rating": 4.7822,
+          "polarity": 1.7822,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.6145,
+          "raw_rating": 3.6145,
+          "polarity": 0.6145,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "o40GVWOc6aMXBaQ9wyNi",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 3.0051,
+          "raw_rating": 3.0051,
+          "polarity": 0.0051,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 2.5669,
+          "raw_rating": 2.5669,
+          "polarity": -0.4331,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 2.4001,
+          "raw_rating": 2.4001,
+          "polarity": -0.5999,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "iTYn1G9GUnMTxJKqirpp",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 3.5642,
+          "raw_rating": 3.5642,
+          "polarity": 0.5642,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.1232,
+          "raw_rating": 4.1232,
+          "polarity": 1.1232,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.1895,
+          "raw_rating": 4.1895,
+          "polarity": 1.1895,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.2143,
+          "raw_rating": 3.2143,
+          "polarity": 0.2143,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "E435o19PmiVnA5v3v4af",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 2.9742,
+          "raw_rating": 2.9742,
+          "polarity": -0.0258,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "YlG6m2uITS6sKpo7Doou",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 3.2206,
+          "raw_rating": 3.2206,
+          "polarity": 0.2206,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.2529,
+          "raw_rating": 4.2529,
+          "polarity": 1.2529,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.3057,
+          "raw_rating": 3.3057,
+          "polarity": 0.3057,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "vBAaGoHI8zH3vT9PU2cZ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.3309,
+          "raw_rating": 4.3309,
+          "polarity": 1.3309,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "jQOzSfiH6e3joHKND7E2",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.334,
+          "raw_rating": 1.334,
+          "polarity": -1.666,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 1.2674,
+          "raw_rating": 1.2674,
+          "polarity": -1.7326,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 2.6441,
+          "raw_rating": 2.6441,
+          "polarity": -0.3559,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 1.3661,
+          "raw_rating": 1.3661,
+          "polarity": -1.6339,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "W428GiPet51BEOu3e1qx",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 1.597,
+          "raw_rating": 1.597,
+          "polarity": -1.403,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 1.0465,
+          "raw_rating": 1.0465,
+          "polarity": -1.9535,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 1.4369,
+          "raw_rating": 1.4369,
+          "polarity": -1.5631,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 1.3391,
+          "raw_rating": 1.3391,
+          "polarity": -1.6609,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "dCOP4OEM2gjLoSdBzJWB",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.784,
+          "raw_rating": 4.784,
+          "polarity": 1.784,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.2917,
+          "raw_rating": 3.2917,
+          "polarity": 0.2917,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "7Q7PbmIWkh5hefaaHUuO",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.6893,
+          "raw_rating": 4.6893,
+          "polarity": 1.6893,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.6181,
+          "raw_rating": 4.6181,
+          "polarity": 1.6181,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.7039,
+          "raw_rating": 4.7039,
+          "polarity": 1.7039,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.8708,
+          "raw_rating": 4.8708,
+          "polarity": 1.8708,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "vqCDLhUd4vTZCmHz0maS",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 2.8992,
+          "raw_rating": 2.8992,
+          "polarity": -0.1008,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 1.5612,
+          "raw_rating": 1.5612,
+          "polarity": -1.4388,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "5CstswS2RFWgmVF5scdM",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 2.1551,
+          "raw_rating": 2.1551,
+          "polarity": -0.8449,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 1.6973,
+          "raw_rating": 1.6973,
+          "polarity": -1.3027,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 1.2815,
+          "raw_rating": 1.2815,
+          "polarity": -1.7185,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 2.648,
+          "raw_rating": 2.648,
+          "polarity": -0.352,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 2.2244,
+          "raw_rating": 2.2244,
+          "polarity": -0.7756,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ZpN1gvFa7EOxQLbuG0c9",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9889,
+          "raw_rating": 4.9889,
+          "polarity": 1.9889,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.8714,
+          "raw_rating": 4.8714,
+          "polarity": 1.8714,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.3798,
+          "raw_rating": 4.3798,
+          "polarity": 1.3798,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 4.9364,
+          "raw_rating": 4.9364,
+          "polarity": 1.9364,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Xlp0FIcSP7Z25epRcSdW",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.7878,
+          "raw_rating": 3.7878,
+          "polarity": 0.7878,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "HfwzVck2VfqzGCZauiQU",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 3.851,
+          "raw_rating": 3.851,
+          "polarity": 0.851,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.5586,
+          "raw_rating": 4.5586,
+          "polarity": 1.5586,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.8715,
+          "raw_rating": 3.8715,
+          "polarity": 0.8715,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "bbk2yONNL23MLjWzhjv8",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.9426,
+          "raw_rating": 4.9426,
+          "polarity": 1.9426,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 4.4646,
+          "raw_rating": 4.4646,
+          "polarity": 1.4646,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.8016,
+          "raw_rating": 3.8016,
+          "polarity": 0.8016,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.763,
+          "raw_rating": 3.763,
+          "polarity": 0.763,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "5VAocnpXwusEhcZ4sBk6",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.3198,
+          "raw_rating": 4.3198,
+          "polarity": 1.3198,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 4.6722,
+          "raw_rating": 4.6722,
+          "polarity": 1.6722,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.0086,
+          "raw_rating": 4.0086,
+          "polarity": 1.0086,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 3.9721,
+          "raw_rating": 3.9721,
+          "polarity": 0.9721,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.5195,
+          "raw_rating": 3.5195,
+          "polarity": 0.5195,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "vzVAaw1gLiKn0WmwdWhb",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 2.7345,
+          "raw_rating": 2.7345,
+          "polarity": -0.2655,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.3519,
+          "raw_rating": 3.3519,
+          "polarity": 0.3519,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "io6DjClB41oasE2jpjG4",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.4307,
+          "raw_rating": 4.4307,
+          "polarity": 1.4307,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 1.5997,
+          "raw_rating": 1.5997,
+          "polarity": -1.4003,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "MB9ak4A6gaCBCX8r0TC0",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.7298,
+          "raw_rating": 4.7298,
+          "polarity": 1.7298,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 3.9039,
+          "raw_rating": 3.9039,
+          "polarity": 0.9039,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.6857,
+          "raw_rating": 4.6857,
+          "polarity": 1.6857,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 3.8527,
+          "raw_rating": 3.8527,
+          "polarity": 0.8527,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.8583,
+          "raw_rating": 3.8583,
+          "polarity": 0.8583,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "v711hxZWJgGSIND34I0k",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 4.2716,
+          "raw_rating": 4.2716,
+          "polarity": 1.2716,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.6536,
+          "raw_rating": 3.6536,
+          "polarity": 0.6536,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "9ZU1A1WQRzLt2vigeOtU",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.0541,
+          "raw_rating": 4.0541,
+          "polarity": 1.0541,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.7281,
+          "raw_rating": 3.7281,
+          "polarity": 0.7281,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "QrlGKIxf8HtV6olerHmt",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.901,
+          "raw_rating": 4.901,
+          "polarity": 1.901,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.8154,
+          "raw_rating": 4.8154,
+          "polarity": 1.8154,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.5109,
+          "raw_rating": 3.5109,
+          "polarity": 0.5109,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "5qtYtIw8wLQ9LcXtFYdH",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.8446,
+          "raw_rating": 4.8446,
+          "polarity": 1.8446,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 4.6405,
+          "raw_rating": 4.6405,
+          "polarity": 1.6405,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.8083,
+          "raw_rating": 4.8083,
+          "polarity": 1.8083,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.9537,
+          "raw_rating": 3.9537,
+          "polarity": 0.9537,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.3126,
+          "raw_rating": 3.3126,
+          "polarity": 0.3126,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "3IFK2eoe2dzPRPluUAuL",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 2.6857,
+          "raw_rating": 2.6857,
+          "polarity": -0.3143,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 2.3428,
+          "raw_rating": 2.3428,
+          "polarity": -0.6572,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "IZRlXoPFjnv3I2tPfYNt",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.6739,
+          "raw_rating": 4.6739,
+          "polarity": 1.6739,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 3.7182,
+          "raw_rating": 3.7182,
+          "polarity": 0.7182,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.3488,
+          "raw_rating": 4.3488,
+          "polarity": 1.3488,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.8063,
+          "raw_rating": 3.8063,
+          "polarity": 0.8063,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.9046,
+          "raw_rating": 3.9046,
+          "polarity": 0.9046,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "h0A1sXol44Yzbq6G3MP1",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.3088,
+          "raw_rating": 4.3088,
+          "polarity": 1.3088,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.1745,
+          "raw_rating": 4.1745,
+          "polarity": 1.1745,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.1611,
+          "raw_rating": 3.1611,
+          "polarity": 0.1611,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "1JEYfVhgtEkQW9a8Xs7r",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.2231,
+          "raw_rating": 3.2231,
+          "polarity": 0.2231,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "xnZo0BN9g7rXEv1WhUTd",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.7632,
+          "raw_rating": 4.7632,
+          "polarity": 1.7632,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.7771,
+          "raw_rating": 4.7771,
+          "polarity": 1.7771,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.7509,
+          "raw_rating": 4.7509,
+          "polarity": 1.7509,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "uUjeUc70bCeeaUSE3zRt",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.1577,
+          "raw_rating": 4.1577,
+          "polarity": 1.1577,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.3921,
+          "raw_rating": 3.3921,
+          "polarity": 0.3921,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "04FSgGeDMrkLdDjcaMZZ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.3868,
+          "raw_rating": 3.3868,
+          "polarity": 0.3868,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 4.3556,
+          "raw_rating": 4.3556,
+          "polarity": 1.3556,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "v5g21LDPV6D1fC8rQyCw",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "hiITbvPzIO4ptU30fLcm",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.061,
+          "raw_rating": 4.061,
+          "polarity": 1.061,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.4081,
+          "raw_rating": 4.4081,
+          "polarity": 1.4081,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Zc5U8L3C3OQSbHNS4HCH",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.7903,
+          "raw_rating": 4.7903,
+          "polarity": 1.7903,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.6111,
+          "raw_rating": 4.6111,
+          "polarity": 1.6111,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.7605,
+          "raw_rating": 3.7605,
+          "polarity": 0.7605,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "yJWxSXcwvbe0kT2NK1rN",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 3.9776,
+          "raw_rating": 3.9776,
+          "polarity": 0.9776,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 3.9117,
+          "raw_rating": 3.9117,
+          "polarity": 0.9117,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.2219,
+          "raw_rating": 3.2219,
+          "polarity": 0.2219,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "kxpKm6FFSXvajjs9eVdL",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.3446,
+          "raw_rating": 3.3446,
+          "polarity": 0.3446,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "JLbTD24DMTCuSQBLtI88",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "pd3hGgeTkMhh4P9DBp5O",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.7037,
+          "raw_rating": 4.7037,
+          "polarity": 1.7037,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.1625,
+          "raw_rating": 4.1625,
+          "polarity": 1.1625,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "4ggI751By5pzVv2VCfqr",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.8519,
+          "raw_rating": 4.8519,
+          "polarity": 1.8519,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.3929,
+          "raw_rating": 4.3929,
+          "polarity": 1.3929,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "m7qTXPqshOAFHHZjaIRX",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.9136,
+          "raw_rating": 3.9136,
+          "polarity": 0.9136,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "q0gorvOyZC2TWDeYY9U3",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 1.4524,
+          "raw_rating": 1.4524,
+          "polarity": -1.5476,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 1.0603,
+          "raw_rating": 1.0603,
+          "polarity": -1.9397,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 1.1476,
+          "raw_rating": 1.1476,
+          "polarity": -1.8524,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 1.2659,
+          "raw_rating": 1.2659,
+          "polarity": -1.7341,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "CtQdS9rEHue1NTN1EqHb",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.4162,
+          "raw_rating": 4.4162,
+          "polarity": 1.4162,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 2.7575,
+          "raw_rating": 2.7575,
+          "polarity": -0.2425,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "cTgabu38GKANVw7DsCtW",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.5697,
+          "raw_rating": 3.5697,
+          "polarity": 0.5697,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "c72EI0fMN2QlhdQUT9dL",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 2.3507,
+          "raw_rating": 2.3507,
+          "polarity": -0.6493,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 2.2495,
+          "raw_rating": 2.2495,
+          "polarity": -0.7505,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "sNdU0r7qt8Tqixl70W10",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.5847,
+          "raw_rating": 4.5847,
+          "polarity": 1.5847,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.7998,
+          "raw_rating": 4.7998,
+          "polarity": 1.7998,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.55,
+          "raw_rating": 4.55,
+          "polarity": 1.55,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.9554,
+          "raw_rating": 3.9554,
+          "polarity": 0.9554,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "CQRlT46poS5ecSeFMEnP",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 1.013,
+          "raw_rating": 1.013,
+          "polarity": -1.987,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 1.5902,
+          "raw_rating": 1.5902,
+          "polarity": -1.4098,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 1.6907,
+          "raw_rating": 1.6907,
+          "polarity": -1.3093,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "a8z0dTpmAkoeF8f6kyxh",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.7591,
+          "raw_rating": 4.7591,
+          "polarity": 1.7591,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.1524,
+          "raw_rating": 3.1524,
+          "polarity": 0.1524,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "flf0tag2eDtyzpFzWRKU",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 2.9432,
+          "raw_rating": 2.9432,
+          "polarity": -0.0568,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 1.0664,
+          "raw_rating": 1.0664,
+          "polarity": -1.9336,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "ebhJMefuiYG7AzLg2JGi",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.6165,
+          "raw_rating": 4.6165,
+          "polarity": 1.6165,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.7817,
+          "raw_rating": 4.7817,
+          "polarity": 1.7817,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "8wqeXFEQ2IXFH6CZ4kXJ",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.6548,
+          "raw_rating": 4.6548,
+          "polarity": 1.6548,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.0011,
+          "raw_rating": 4.0011,
+          "polarity": 1.0011,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "5V4F6JMDD4wy4AOt68Tq",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.6187,
+          "raw_rating": 4.6187,
+          "polarity": 1.6187,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.2763,
+          "raw_rating": 4.2763,
+          "polarity": 1.2763,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.1266,
+          "raw_rating": 3.1266,
+          "polarity": 0.1266,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "aM4UBnl1ks2awmZxhQL4",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.759,
+          "raw_rating": 4.759,
+          "polarity": 1.759,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "z4nJLR1TmlmXDkw0bHqy",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.7808,
+          "raw_rating": 4.7808,
+          "polarity": 1.7808,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.3383,
+          "raw_rating": 4.3383,
+          "polarity": 1.3383,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 2.8654,
+          "raw_rating": 2.8654,
+          "polarity": -0.1346,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "qnIEmSKbadcWLx72fMwf",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 1.0047,
+          "raw_rating": 1.0047,
+          "polarity": -1.9953,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 1.0107,
+          "raw_rating": 1.0107,
+          "polarity": -1.9893,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "mjq17qUAAylOOWGfrlpj",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 3.82,
+          "raw_rating": 3.82,
+          "polarity": 0.82,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "YAY1Ei20FzpA8GgfXBdF",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 1.8661,
+          "raw_rating": 1.8661,
+          "polarity": -1.1339,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "H53C3901naFqkq6QpiTA",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.8481,
+          "raw_rating": 4.8481,
+          "polarity": 1.8481,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "wxkgOOaMAL6RhSG91wl2",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "vAOrxt0l6JMRYYIl7sjo",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9394,
+          "raw_rating": 4.9394,
+          "polarity": 1.9394,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "обхват",
+          "rating": 4.7837,
+          "raw_rating": 4.7837,
+          "polarity": 1.7837,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Качество": 0.7471935749053955,
+            "Комфорт": 0.657859206199646,
+            "Соответствие": 0.691523551940918,
+            "Цена": 0.6508576273918152
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "PVfuZdqlfIz1fBFVJgvr",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "t85FsErVlm9qDdH5dtOm",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 4.2012,
+          "raw_rating": 4.2012,
+          "polarity": 1.2012,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "c87GyY6ZskmtL45LBY0j",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.1307,
+          "raw_rating": 3.1307,
+          "polarity": 0.1307,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "wEiyPq7YYydihphG9ExG",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 1.1256,
+          "raw_rating": 1.1256,
+          "polarity": -1.8744,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "толстовка",
+          "rating": 1.041,
+          "raw_rating": 1.041,
+          "polarity": -1.959,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Внешний вид": 0.7348152995109558,
+            "Запах": 0.6845433712005615
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "fymoZvT75wsUHoDILtD9",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.7789,
+          "raw_rating": 4.7789,
+          "polarity": 1.7789,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "Q8rwiA9vzw1G5Q6NFwYf",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9018,
+          "raw_rating": 4.9018,
+          "polarity": 1.9018,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "o2X336pURbr7UJhC6HSq",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "3dlAv94yB6YSqc4yLakA",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.5109,
+          "raw_rating": 4.5109,
+          "polarity": 1.5109,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "eb55eANh0XdX8CRRRzL7",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.0666,
+          "raw_rating": 4.0666,
+          "polarity": 1.0666,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 3.72,
+          "raw_rating": 3.72,
+          "polarity": 0.72,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "eAQ4csg39Eyj1w76koTv",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "4okd8QDN5hONeqoeQWPL",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "оверсайз",
+          "rating": 3.1975,
+          "raw_rating": 3.1975,
+          "polarity": 0.1975,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Комплектация": 0.7557797431945801
+          }
+        }
+      ]
+    }
+  ],
+  "product_aggregated": {
+    "vocabulary": {
+      "Качество": 4.26,
+      "Размер": 3.24,
+      "Внешний вид": 3.59,
+      "Цвет": 3.33,
+      "Расположение": 2.02,
+      "Материал": 3.41,
+      "Ассортимент": 3.5,
+      "Цена": 3.57,
+      "Чистота": 3.97,
+      "Обслуживание": 3.89
+    },
+    "discovery": {
+      "обхват": 4.03,
+      "толстовка": 3.53,
+      "оверсайз": 2.85
+    }
+  }
+}
