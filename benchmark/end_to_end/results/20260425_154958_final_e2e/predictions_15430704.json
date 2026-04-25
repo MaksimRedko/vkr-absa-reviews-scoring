@@ -1,0 +1,2674 @@
+{
+  "nm_id": 15430704,
+  "category": "consumables",
+  "reviews": [
+    {
+      "review_id": "1gvH_IgBUvtK502_y7Yt",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.9957,
+          "polarity": 1.9957
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9875,
+          "polarity": 1.9875
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 4.9415,
+          "polarity": 1.9415,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.9588,
+          "polarity": 1.9588,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.9927,
+          "polarity": 1.9927,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "z4RKPYcBMJfQQSHDKDQo",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9917,
+          "polarity": 1.9917
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.9811,
+          "polarity": 1.9811
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 3.4924,
+          "polarity": 0.4924,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.993,
+          "polarity": 1.993,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.9871,
+          "polarity": 1.9871,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "сливочным сыром",
+          "rating": 4.6132,
+          "polarity": 1.6132,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "Dj0TYocBxpMXtsmO2T3t",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.1154,
+          "polarity": -1.8846
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.82,
+          "polarity": -1.18,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.9576,
+          "polarity": -1.0424,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "1UkAeowBI2GFApLnBFnb",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "assortment",
+          "aspect": "Ассортимент",
+          "rating": 2.7228,
+          "polarity": -0.2772
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "RVe3doQBbunnhI3greWF",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.737,
+          "polarity": 1.737,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "сливочным сыром",
+          "rating": 4.0652,
+          "polarity": 1.0652,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "or2HP4UBk9xzjhYZhQTZ",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 3.765,
+          "polarity": 0.765
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.7871,
+          "polarity": -1.2129,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.7965,
+          "polarity": 1.7965,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "dV-4iYQBbunnhI3gvP92",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 3.6497,
+          "polarity": 0.6497
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "4Gzm1ogBKNxVyjcCnm4y",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.2025,
+          "polarity": 1.2025
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.3679,
+          "polarity": -1.6321
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 2.3323,
+          "polarity": -0.6677,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.0764,
+          "polarity": -1.9236,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.0458,
+          "polarity": -1.9542,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "YTSv8HsZFfGJcliAfh0s",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 1.0015,
+          "polarity": -1.9985
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.0024,
+          "polarity": -1.9976
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.0041,
+          "polarity": -1.9959,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.0031,
+          "polarity": -1.9969,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.0047,
+          "polarity": -1.9953,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "сливочным сыром",
+          "rating": 1.0023,
+          "polarity": -1.9977,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "z6mgSIsB5HYuAcv3otFh",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 2.1537,
+          "polarity": -0.8463
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 2.36,
+          "polarity": -0.64
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.1849,
+          "polarity": -1.8151,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.3567,
+          "polarity": -1.6433,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "z7PHKYsBwbGU35ygZ1Kc",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 1.023,
+          "polarity": -1.977
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.0564,
+          "polarity": -1.9436,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.4995,
+          "polarity": -1.5005,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.0183,
+          "polarity": -1.9817,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "0vpPEYgBKNxVyjcCUv4P",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.0654,
+          "polarity": 1.0654
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 3.9321,
+          "polarity": 0.9321
+        },
+        {
+          "aspect_id": "value_for_money",
+          "aspect": "Соотношение цена-качество",
+          "rating": 4.4797,
+          "polarity": 1.4797
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 3.1538,
+          "polarity": 0.1538,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.9194,
+          "polarity": 1.9194,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "1z6u54cB4LCMYDfDBpS5",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.8387,
+          "polarity": 1.8387
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.2489,
+          "polarity": 1.2489,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.934,
+          "polarity": 1.934,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "2_OxgIsBo8kheRYZ9IES",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 2.3357,
+          "polarity": -0.6643,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "8JbykIwBGgl8_25MSrQI",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.6173,
+          "polarity": 1.6173
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 2.8492,
+          "polarity": -0.1508,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.018,
+          "polarity": -1.982,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "x1SHcIQBbunnhI3gJczX",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "digestibility_tolerance",
+          "aspect": "Усвояемость и переносимость",
+          "rating": 4.6239,
+          "polarity": 1.6239
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9884,
+          "polarity": 1.9884
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 3.5473,
+          "polarity": 0.5473,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.8295,
+          "polarity": 1.8295,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "сливочным сыром",
+          "rating": 4.5773,
+          "polarity": 1.5773,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "Ar0m74oBXuPSsPE1uIGo",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.0963,
+          "polarity": -1.9037
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 1.1023,
+          "polarity": -1.8977
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.0166,
+          "polarity": -1.9834,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.0459,
+          "polarity": -1.9541,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "Yrb5BIgBqVKcxP1mEvqO",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9783,
+          "polarity": 1.9783
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.9431,
+          "polarity": 1.9431
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "ljp35IUBheedNkNu2rv7",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 3.678,
+          "polarity": 0.678,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.7963,
+          "polarity": 1.7963,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "сливочным сыром",
+          "rating": 3.3476,
+          "polarity": 0.3476,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "CpC8_IcB3ieoZoqxT7Ze",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.7396,
+          "polarity": -1.2604,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.4487,
+          "polarity": -1.5513,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "zLzWS4YBxpMXtsmOijk7",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.4201,
+          "polarity": -1.5799
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 1.0954,
+          "polarity": -1.9046
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.0479,
+          "polarity": -1.9521,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.1888,
+          "polarity": -1.8112,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.496,
+          "polarity": -1.504,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "9_7QiYYBfnpWqlBenhK3",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9375,
+          "polarity": 1.9375
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.9897,
+          "polarity": 1.9897,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "VAmwVIUBheedNkNuVSeb",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.6349,
+          "polarity": 1.6349,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.0358,
+          "polarity": 1.0358,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "сливочным сыром",
+          "rating": 4.9301,
+          "polarity": 1.9301,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "vo12LocBk9xzjhYZpVbF",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 3.8898,
+          "polarity": 0.8898,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.1708,
+          "polarity": -1.8292,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "gpca64sBGgNwMUDvfCoy",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 2.2327,
+          "polarity": -0.7673,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "сливочным сыром",
+          "rating": 1.7365,
+          "polarity": -1.2635,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "sStQVoQBJjG5B9AruU-9",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.8522,
+          "polarity": 1.8522
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.5506,
+          "polarity": 1.5506,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.0631,
+          "polarity": 1.0631,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "GFSLSPiS9wRVVm4eXsHK",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 3.2617,
+          "polarity": 0.2617,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "0wcpcoQBE-Uw035eDdaF",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.0204,
+          "polarity": -1.9796
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.0239,
+          "polarity": -1.9761,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.1259,
+          "polarity": -1.8741,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.1538,
+          "polarity": -1.8462,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "сливочным сыром",
+          "rating": 1.0344,
+          "polarity": -1.9656,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "91_vLYYBTZEOO9f5G9wg",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.8495,
+          "polarity": 1.8495
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 3.187,
+          "polarity": 0.187,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.0129,
+          "polarity": -1.9871,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.7431,
+          "polarity": 1.7431,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "VZxAQIUB8a_hUs_o4M0E",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.9281,
+          "polarity": 1.9281
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9856,
+          "polarity": 1.9856
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 3.928,
+          "polarity": 0.928,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.4043,
+          "polarity": 1.4043,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "Vvfpno0BpaHl1LsbhWxW",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.8871,
+          "polarity": 1.8871
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 4.1998,
+          "polarity": 1.1998,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.7038,
+          "polarity": 1.7038,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.2867,
+          "polarity": 1.2867,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "uZ6JHIwBK9xQ7jEJkIOY",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 2.6185,
+          "polarity": -0.3815,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 3.1245,
+          "polarity": 0.1245,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 3.2826,
+          "polarity": 0.2826,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "сливочным сыром",
+          "rating": 4.0305,
+          "polarity": 1.0305,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "mmHduokBnnhI58-2jGsR",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.0758,
+          "polarity": -1.9242,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.1887,
+          "polarity": -1.8113,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "5hJLtRmTxjnPBFZgWBC2",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9679,
+          "polarity": 1.9679
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "pst3GYsBo8kheRYZnRUQ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "m-r32IwB_8RHzXwXWBkF",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.7647,
+          "polarity": 1.7647
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.8932,
+          "polarity": 1.8932
+        },
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.1022,
+          "polarity": -1.8978
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.7329,
+          "polarity": -1.2671,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.9105,
+          "polarity": -1.0895,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "j6RQyYcBqVKcxP1mS9z5",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 3.5981,
+          "polarity": 0.5981
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 3.3882,
+          "polarity": 0.3882,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "3cGd64oBuWYO9ah2cy4_",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.2259,
+          "polarity": -1.7741,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "5giZQYoBU2re2XP7dzSs",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9521,
+          "polarity": 1.9521
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 3.7529,
+          "polarity": 0.7529,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 3.9096,
+          "polarity": 0.9096,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "P548WIcBk9xzjhYZF2ra",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "feeding_portion",
+          "aspect": "Норма кормления",
+          "rating": 2.8723,
+          "polarity": -0.1277
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 2.3204,
+          "polarity": -0.6796,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.695,
+          "polarity": -1.305,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 2.6692,
+          "polarity": -0.3308,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ktrF4KpvNtR8qHbONd5A",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.8142,
+          "polarity": 1.8142
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 3.4785,
+          "polarity": 0.4785,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.8724,
+          "polarity": 1.8724,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "сливочным сыром",
+          "rating": 4.022,
+          "polarity": 1.022,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "HKqQN4wBK9xQ7jEJPmDy",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.6854,
+          "polarity": 1.6854
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.823,
+          "polarity": 1.823,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "VNd4kIUBv9_TjX_mHsE1",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 3.0128,
+          "polarity": 0.0128
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 3.5944,
+          "polarity": 0.5944,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 3.7434,
+          "polarity": 0.7434,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "TPO84YQBeiioYr22dvyD",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 2.6929,
+          "polarity": -0.3071,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 2.05,
+          "polarity": -0.95,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 3.3128,
+          "polarity": 0.3128,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "5aoSMJnPs7WqB4kBU0ge",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.0498,
+          "polarity": -1.9502,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.1114,
+          "polarity": -1.8886,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.1513,
+          "polarity": -1.8487,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "сливочным сыром",
+          "rating": 1.1942,
+          "polarity": -1.8058,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "6Cx894kBfuChzMpwE_vW",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.1123,
+          "polarity": -1.8877,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.0167,
+          "polarity": -1.9833,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "Vfr8aYYBT-IFIyX_plBV",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.7446,
+          "polarity": 1.7446
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.9093,
+          "polarity": 1.9093,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.3927,
+          "polarity": 1.3927,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "seAjtIcBqd2abVcyhkCs",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.1901,
+          "polarity": -1.8099
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.1696,
+          "polarity": -1.8304,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "WGpdWYUBMBFuPskotNse",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "rx5nP40B_8RHzXwXslJe",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.0234,
+          "polarity": -1.9766,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "qISYvIkBuX2t2Z2-wcOq",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 2.8675,
+          "polarity": -0.1325,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "RhnEhYwBSe9L3QWIH1hv",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 1.5522,
+          "polarity": -1.4478
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 2.5152,
+          "polarity": -0.4848,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "tPUg0OE1yTiHUkO2pttQ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.8556,
+          "polarity": 1.8556,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.974,
+          "polarity": 1.974,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "x1TGHYcBT-IFIyX_SQJo",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.4459,
+          "polarity": 1.4459,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "XFyyztHTlrmEuueHMCv8",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9299,
+          "polarity": 1.9299
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.8981,
+          "polarity": 1.8981,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "-l9lJYgBqdFzcemqOP4c",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 3.5661,
+          "polarity": 0.5661,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 3.3042,
+          "polarity": 0.3042,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "OZx924wBpaHl1Lsb7g72",
+      "rating": 2.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.0916,
+          "polarity": -1.9084,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.1246,
+          "polarity": -1.8754,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.0169,
+          "polarity": -1.9831,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "VCHZTqMdNQgqn6NpeDzz",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9581,
+          "polarity": 1.9581
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.9765,
+          "polarity": 1.9765,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "H7cwXYkBl47NwnZ1uF0p",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.9541,
+          "polarity": 1.9541,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.6292,
+          "polarity": 1.6292,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "9ER3PYgBG4PPbu1tCD9e",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 3.6189,
+          "polarity": 0.6189,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "nBW4tIcBG4PPbu1tuj-L",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 3.8334,
+          "polarity": 0.8334
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 3.3448,
+          "polarity": 0.3448,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "сливочным сыром",
+          "rating": 2.8865,
+          "polarity": -0.1135,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "yaILJIwBwX70cIf6QHvA",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "value_for_money",
+          "aspect": "Соотношение цена-качество",
+          "rating": 4.666,
+          "polarity": 1.666
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.7978,
+          "polarity": 1.7978,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.9245,
+          "polarity": 1.9245,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "сливочным сыром",
+          "rating": 2.6888,
+          "polarity": -0.3112,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "7oIDjokBqd2abVcyVo-k",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9578,
+          "polarity": 1.9578
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.3654,
+          "polarity": 1.3654,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.1554,
+          "polarity": 1.1554,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "2b6Ol4gBfuChzMpwceKk",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.6124,
+          "polarity": 1.6124,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.0669,
+          "polarity": 1.0669,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "UQFLExIc5LSJmMhP6dGz",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 3.0126,
+          "polarity": 0.0126,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 3.3272,
+          "polarity": 0.3272,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "tmdndYsBGgNwMUDv-Ghk",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.9905,
+          "polarity": 1.9905
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 4.8157,
+          "polarity": 1.8157,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.1016,
+          "polarity": -1.8984,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "K7IsHo0Bo8kheRYZaYT-",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.8662,
+          "polarity": 1.8662
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.7669,
+          "polarity": -1.2331,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 3.8512,
+          "polarity": 0.8512,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "RfFyRYYBtPujtG5shVdB",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.9332,
+          "polarity": 1.9332
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9559,
+          "polarity": 1.9559
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "8ORFZJbncKK4Wt03e0Kj",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.623,
+          "polarity": 1.623,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "D6ZJC4wBGgNwMUDvks21",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 2.1563,
+          "polarity": -0.8437,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "NHIK2IgBqd2abVcyQgOn",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.0066,
+          "polarity": -1.9934
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.0026,
+          "polarity": -1.9974,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "C8NeS4YBQOOSTxXoEXvu",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.2353,
+          "polarity": -1.7647
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 2.6538,
+          "polarity": -0.3462,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "1mJL0cadlY1HKPfU8X3w",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.947,
+          "polarity": 1.947,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "u5GTP4UBtPujtG5sBzgZ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.8994,
+          "polarity": 1.8994,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "pOdO24kBqdFzcemq94cg",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.0548,
+          "polarity": -1.9452,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.0403,
+          "polarity": -1.9597,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "B3NIIokBKNxVyjcCgWRC",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 3.6631,
+          "polarity": 0.6631,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "U6XhU4gBpT2rITcG8Q0t",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.915,
+          "polarity": 1.915
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 2.7349,
+          "polarity": -0.2651,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 3.8193,
+          "polarity": 0.8193,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.5227,
+          "polarity": 1.5227,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "сливочным сыром",
+          "rating": 1.5616,
+          "polarity": -1.4384,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "zcXraRrdTetqknB3oSCP",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.7697,
+          "polarity": 1.7697
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.3567,
+          "polarity": -1.6433,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.8694,
+          "polarity": 1.8694,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.9488,
+          "polarity": 1.9488,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "W5FE9ooB9EWzc-N2cD6f",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 2.9757,
+          "polarity": -0.0243
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 3.4229,
+          "polarity": 0.4229
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 3.0695,
+          "polarity": 0.0695,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ZwaO0YoBwM8MKVou__8G",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "rkz06ocBqdFzcemqeliU",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.908,
+          "polarity": 1.908,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "amtcRokBlM6cTg_RUKc8",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.8558,
+          "polarity": -1.1442,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "0yCzFYgBUdF-4nlzWrHQ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.084,
+          "polarity": 1.084,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "_NCPj4oBKNxVyjcC-Ofd",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "WiKS1vQ948qhMdfchGum",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 1.0118,
+          "polarity": -1.9882
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 1.0029,
+          "polarity": -1.9971
+        },
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0075,
+          "polarity": -1.9925
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.0021,
+          "polarity": -1.9979,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.0192,
+          "polarity": -1.9808,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "dj7Hio0B_8RHzXwXp7O9",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 3.59,
+          "polarity": 0.59,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "WJBGjYoBqVKcxP1mFcwi",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.1571,
+          "polarity": -1.8429,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.1336,
+          "polarity": -1.8664,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 2.2775,
+          "polarity": -0.7225,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "MKca8YgBBgFQoSo0hJpQ",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.0113,
+          "polarity": -1.9887
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 1.1398,
+          "polarity": -1.8602
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.2342,
+          "polarity": -1.7658,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 1.2006,
+          "polarity": -1.7994,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Y8AWQ4UBc4LImbbGrf1P",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 3.5128,
+          "polarity": 0.5128,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 3.6146,
+          "polarity": 0.6146,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "N54Q8OGanGei721gqEJB",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.6018,
+          "polarity": 1.6018,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "i26HfIoBYE-HFOZ5q9aV",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9655,
+          "polarity": 1.9655
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.8568,
+          "polarity": 1.8568,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "NbWpiYcB5g4sVs4DMLss",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 3.8601,
+          "polarity": 0.8601,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "HCEPPIYB7nVCbHkCZR61",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 3.2765,
+          "polarity": 0.2765
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 1.4302,
+          "polarity": -1.5698,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "Khn8xqoSfyRywEXW1Rs6",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.8445,
+          "polarity": 1.8445,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "csPoOoUB7nVCbHkCI5Zb",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.4362,
+          "polarity": 1.4362
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 3.5698,
+          "polarity": 0.5698,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.9368,
+          "polarity": 1.9368,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "oeQ7k40BCHbHmjvYrfsb",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 3.9955,
+          "polarity": 0.9955,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "CdPkzJDVDKtFFBDP32J7",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 3.5886,
+          "polarity": 0.5886,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "T70veI0Bqc_1CWBPnv2l",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "вкус при",
+          "rating": 4.0548,
+          "polarity": 1.0548,
+          "gold_matches": {
+            "Качество": 0.765570342540741,
+            "Логистика": 0.6752661466598511,
+            "Сервис": 0.6577426791191101,
+            "Упаковка": 0.7459383010864258
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "гречка",
+          "rating": 4.4521,
+          "polarity": 1.4521,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ScnDuYcB5g4sVs4DBtNh",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "часов",
+          "rating": 1.8437,
+          "polarity": -1.1563,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "h5vh54UBMBFuPskoP6K0",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 3.7573,
+          "polarity": 0.7573
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 3.4324,
+          "polarity": 0.4324
+        }
+      ],
+      "discovery_aspects": []
+    }
+  ],
+  "product_aggregated": {
+    "vocabulary": {
+      "Доставка": 4.02,
+      "Упаковка": 3.48,
+      "Цена": 3.6,
+      "Ассортимент": 2.86,
+      "Чистота": 1.85,
+      "Качество": 3.76,
+      "Соотношение цена-качество": 4.05,
+      "Обслуживание": 2.98,
+      "Усвояемость и переносимость": 3.81,
+      "Запах": 1.7,
+      "Норма кормления": 2.94,
+      "Внешний вид": 2.01,
+      "Цвет": 2.0,
+      "Размер": 3.22
+    },
+    "discovery": {
+      "часов": 2.39,
+      "вкус при": 3.12,
+      "гречка": 3.23,
+      "сливочным сыром": 2.98
+    }
+  }
+}

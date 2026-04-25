@@ -1,0 +1,155 @@
+[start] final_e2e out_dir=D:\diploma\benchmark\end_to_end\results\20260425_154958_final_e2e
+[load] reviews=1762 products=16
+[load] vocab_categories=['consumables', 'hospitality', 'physical_goods', 'services']
+[load] discovery_products=16 source=benchmark/discovery/results/20260424_231742_v3
+[detect] product 1/16 nm_id=9675256 review 1/200 product_elapsed=0.0s product_eta=0.4s total_eta=7.0s
+[detect] product 1/16 nm_id=9675256 review 25/200 product_elapsed=3.5s product_eta=24.4s total_eta=441.8s
+[detect] product 1/16 nm_id=9675256 review 50/200 product_elapsed=6.7s product_eta=20.1s total_eta=422.6s
+[detect] product 1/16 nm_id=9675256 review 75/200 product_elapsed=10.3s product_eta=17.2s total_eta=429.3s
+[detect] product 1/16 nm_id=9675256 review 100/200 product_elapsed=15.0s product_eta=15.0s total_eta=465.1s
+[detect] product 1/16 nm_id=9675256 review 125/200 product_elapsed=17.6s product_eta=10.6s total_eta=433.3s
+[detect] product 1/16 nm_id=9675256 review 150/200 product_elapsed=21.5s product_eta=7.2s total_eta=436.2s
+[detect] product 1/16 nm_id=9675256 review 175/200 product_elapsed=24.4s product_eta=3.5s total_eta=421.1s
+[detect] product 1/16 nm_id=9675256 review 200/200 product_elapsed=27.3s product_eta=0.0s total_eta=409.1s
+[detect] product 2/16 nm_id=15430704 review 1/100 product_elapsed=0.7s product_eta=72.8s total_eta=415.7s
+[detect] product 2/16 nm_id=15430704 review 25/100 product_elapsed=11.1s product_eta=33.4s total_eta=453.2s
+[detect] product 2/16 nm_id=15430704 review 50/100 product_elapsed=18.2s product_eta=18.2s total_eta=440.0s
+[detect] product 2/16 nm_id=15430704 review 75/100 product_elapsed=23.6s product_eta=7.9s total_eta=414.6s
+[detect] product 2/16 nm_id=15430704 review 100/100 product_elapsed=28.2s product_eta=0.0s total_eta=388.4s
+[detect] product 3/16 nm_id=54581151 review 1/100 product_elapsed=1.1s product_eta=112.3s total_eta=394.1s
+[detect] product 3/16 nm_id=54581151 review 25/100 product_elapsed=21.8s product_eta=65.3s total_eta=472.0s
+[detect] product 3/16 nm_id=54581151 review 50/100 product_elapsed=35.9s product_eta=35.9s total_eta=493.4s
+[detect] product 3/16 nm_id=54581151 review 75/100 product_elapsed=44.9s product_eta=15.0s total_eta=483.4s
+[detect] product 3/16 nm_id=54581151 review 100/100 product_elapsed=53.4s product_eta=0.0s total_eta=471.8s
+[detect] product 4/16 nm_id=117808756 review 1/89 product_elapsed=1.5s product_eta=129.0s total_eta=475.9s
+[detect] product 4/16 nm_id=117808756 review 25/89 product_elapsed=8.7s product_eta=22.2s total_eta=455.8s
+[detect] product 4/16 nm_id=117808756 review 50/89 product_elapsed=12.5s product_eta=9.8s total_eta=424.0s
+[detect] product 4/16 nm_id=117808756 review 75/89 product_elapsed=15.1s product_eta=2.8s total_eta=392.1s
+[detect] product 4/16 nm_id=117808756 review 89/89 product_elapsed=15.6s product_eta=0.0s total_eta=373.4s
+[detect] product 5/16 nm_id=165234215 review 1/200 product_elapsed=0.0s product_eta=0.5s total_eta=372.8s
+[detect] product 5/16 nm_id=165234215 review 25/200 product_elapsed=4.5s product_eta=31.4s total_eta=371.2s
+[detect] product 5/16 nm_id=165234215 review 50/200 product_elapsed=9.3s product_eta=27.9s total_eta=369.9s
+[detect] product 5/16 nm_id=165234215 review 75/200 product_elapsed=14.2s product_eta=23.6s total_eta=368.4s
+[detect] product 5/16 nm_id=165234215 review 100/200 product_elapsed=17.6s product_eta=17.6s total_eta=363.2s
+[detect] product 5/16 nm_id=165234215 review 125/200 product_elapsed=22.2s product_eta=13.3s total_eta=360.7s
+[detect] product 5/16 nm_id=165234215 review 150/200 product_elapsed=27.3s product_eta=9.1s total_eta=359.5s
+[detect] product 5/16 nm_id=165234215 review 175/200 product_elapsed=31.4s product_eta=4.5s total_eta=355.8s
+[detect] product 5/16 nm_id=165234215 review 200/200 product_elapsed=34.5s product_eta=0.0s total_eta=349.8s
+[detect] product 6/16 nm_id=209269133 review 1/120 product_elapsed=0.0s product_eta=0.0s total_eta=348.9s
+[detect] product 6/16 nm_id=209269133 review 25/120 product_elapsed=2.2s product_eta=8.4s total_eta=334.0s
+[detect] product 6/16 nm_id=209269133 review 50/120 product_elapsed=5.9s product_eta=8.3s total_eta=322.2s
+[detect] product 6/16 nm_id=209269133 review 75/120 product_elapsed=8.9s product_eta=5.3s total_eta=309.6s
+[detect] product 6/16 nm_id=209269133 review 100/120 product_elapsed=12.0s product_eta=2.4s total_eta=298.0s
+[detect] product 6/16 nm_id=209269133 review 120/120 product_elapsed=13.6s product_eta=0.0s total_eta=287.7s
+[detect] product 7/16 nm_id=254445126 review 1/100 product_elapsed=0.5s product_eta=50.4s total_eta=287.8s
+[detect] product 7/16 nm_id=254445126 review 25/100 product_elapsed=7.1s product_eta=21.4s total_eta=280.4s
+[detect] product 7/16 nm_id=254445126 review 50/100 product_elapsed=12.0s product_eta=12.0s total_eta=269.8s
+[detect] product 7/16 nm_id=254445126 review 75/100 product_elapsed=15.4s product_eta=5.1s total_eta=257.6s
+[detect] product 7/16 nm_id=254445126 review 100/100 product_elapsed=17.7s product_eta=0.0s total_eta=244.7s
+[detect] product 8/16 nm_id=311233470 review 1/100 product_elapsed=1.2s product_eta=115.1s total_eta=245.5s
+[detect] product 8/16 nm_id=311233470 review 25/100 product_elapsed=12.2s product_eta=36.6s total_eta=244.4s
+[detect] product 8/16 nm_id=311233470 review 50/100 product_elapsed=18.6s product_eta=18.6s total_eta=236.8s
+[detect] product 8/16 nm_id=311233470 review 75/100 product_elapsed=23.5s product_eta=7.8s total_eta=227.6s
+[detect] product 8/16 nm_id=311233470 review 100/100 product_elapsed=27.4s product_eta=0.0s total_eta=217.6s
+[detect] product 9/16 nm_id=441378025 review 1/85 product_elapsed=0.6s product_eta=50.7s total_eta=217.6s
+[detect] product 9/16 nm_id=441378025 review 25/85 product_elapsed=6.1s product_eta=14.7s total_eta=207.9s
+[detect] product 9/16 nm_id=441378025 review 50/85 product_elapsed=9.1s product_eta=6.4s total_eta=195.7s
+[detect] product 9/16 nm_id=441378025 review 75/85 product_elapsed=10.5s product_eta=1.4s total_eta=182.8s
+[detect] product 9/16 nm_id=441378025 review 85/85 product_elapsed=10.7s product_eta=0.0s total_eta=177.6s
+[detect] product 10/16 nm_id=506358703 review 1/100 product_elapsed=1.4s product_eta=142.5s total_eta=178.3s
+[detect] product 10/16 nm_id=506358703 review 25/100 product_elapsed=8.0s product_eta=24.1s total_eta=172.5s
+[detect] product 10/16 nm_id=506358703 review 50/100 product_elapsed=13.4s product_eta=13.4s total_eta=165.4s
+[detect] product 10/16 nm_id=506358703 review 75/100 product_elapsed=18.1s product_eta=6.0s total_eta=158.0s
+[detect] product 10/16 nm_id=506358703 review 100/100 product_elapsed=23.3s product_eta=0.0s total_eta=151.0s
+[detect] product 11/16 nm_id=619500952 review 1/100 product_elapsed=1.2s product_eta=117.4s total_eta=151.3s
+[detect] product 11/16 nm_id=619500952 review 25/100 product_elapsed=18.6s product_eta=55.7s total_eta=151.6s
+[detect] product 11/16 nm_id=619500952 review 50/100 product_elapsed=27.2s product_eta=27.2s total_eta=146.1s
+[detect] product 11/16 nm_id=619500952 review 75/100 product_elapsed=34.2s product_eta=11.4s total_eta=139.6s
+[detect] product 11/16 nm_id=619500952 review 100/100 product_elapsed=39.8s product_eta=0.0s total_eta=132.5s
+[detect] product 12/16 nm_id=1504973191 review 1/58 product_elapsed=1.2s product_eta=69.1s total_eta=132.3s
+[detect] product 12/16 nm_id=1504973191 review 25/58 product_elapsed=28.9s product_eta=38.2s total_eta=128.0s
+[detect] product 12/16 nm_id=1504973191 review 50/58 product_elapsed=53.6s product_eta=8.6s total_eta=120.4s
+[detect] product 12/16 nm_id=1504973191 review 58/58 product_elapsed=58.8s product_eta=0.0s total_eta=116.7s
+[detect] product 13/16 nm_id=1526918294 review 1/82 product_elapsed=1.0s product_eta=83.2s total_eta=116.6s
+[detect] product 13/16 nm_id=1526918294 review 25/82 product_elapsed=14.4s product_eta=32.8s total_eta=109.5s
+[detect] product 13/16 nm_id=1526918294 review 50/82 product_elapsed=29.9s product_eta=19.1s total_eta=102.2s
+[detect] product 13/16 nm_id=1526918294 review 75/82 product_elapsed=41.7s product_eta=3.9s total_eta=93.6s
+[detect] product 13/16 nm_id=1526918294 review 82/82 product_elapsed=44.3s product_eta=0.0s total_eta=91.0s
+[detect] product 14/16 nm_id=1645864865 review 1/99 product_elapsed=0.2s product_eta=20.6s total_eta=90.7s
+[detect] product 14/16 nm_id=1645864865 review 25/99 product_elapsed=22.2s product_eta=65.8s total_eta=86.4s
+[detect] product 14/16 nm_id=1645864865 review 50/99 product_elapsed=46.3s product_eta=45.4s total_eta=81.4s
+[detect] product 14/16 nm_id=1645864865 review 75/99 product_elapsed=62.4s product_eta=20.0s total_eta=74.5s
+[detect] product 14/16 nm_id=1645864865 review 99/99 product_elapsed=76.6s product_eta=0.0s total_eta=67.3s
+[detect] product 15/16 nm_id=1733494834 review 1/90 product_elapsed=0.3s product_eta=28.2s total_eta=66.9s
+[detect] product 15/16 nm_id=1733494834 review 25/90 product_elapsed=12.5s product_eta=32.4s total_eta=58.3s
+[detect] product 15/16 nm_id=1733494834 review 50/90 product_elapsed=22.8s product_eta=18.2s total_eta=49.0s
+[detect] product 15/16 nm_id=1733494834 review 75/90 product_elapsed=35.8s product_eta=7.2s total_eta=39.9s
+[detect] product 15/16 nm_id=1733494834 review 90/90 product_elapsed=42.4s product_eta=0.0s total_eta=34.2s
+[detect] product 16/16 nm_id=1809358565 review 1/139 product_elapsed=0.5s product_eta=63.1s total_eta=34.0s
+[detect] product 16/16 nm_id=1809358565 review 25/139 product_elapsed=14.8s product_eta=67.3s total_eta=28.5s
+[detect] product 16/16 nm_id=1809358565 review 50/139 product_elapsed=36.8s product_eta=65.5s total_eta=22.9s
+[detect] product 16/16 nm_id=1809358565 review 75/139 product_elapsed=55.9s product_eta=47.7s total_eta=16.9s
+[detect] product 16/16 nm_id=1809358565 review 100/139 product_elapsed=77.5s product_eta=30.2s total_eta=10.5s
+[detect] product 16/16 nm_id=1809358565 review 125/139 product_elapsed=91.1s product_eta=10.2s total_eta=3.8s
+[detect] product 16/16 nm_id=1809358565 review 139/139 product_elapsed=99.3s product_eta=0.0s total_eta=0.0s
+[discovery] gold matches computed
+[sentiment] pairs=6211 nli_calls=6211 T=0.7 relevance=P_ent+P_contra>=0.2
+[sentiment] kept=5363 skipped=848 elapsed=1231.4s
+[aggregation] product scores computed
+{
+  "status": "OK",
+  "out_dir": "D:\\diploma\\benchmark\\end_to_end\\results\\20260425_154958_final_e2e",
+  "elapsed_sec": 1886.3165,
+  "track_a": {
+    "detection_precision": 0.4766942777867863,
+    "detection_recall": 0.41975839143830057,
+    "detection_f1": 0.42785587000967257,
+    "sentiment_mae_review": 0.9564706103720418,
+    "sentiment_mae_review_round": 0.9103007518796992,
+    "sentiment_mae_vocab_pairs": 0.908883858460033,
+    "sentiment_mae_discovery_pairs": NaN,
+    "n_sentiment_review_matches": 665,
+    "n_discovery_sentiment_pairs": 0,
+    "product_mae_n3": 0.821776699029126,
+    "n_aspects_matched": 132,
+    "n_aspects_matched_n3": 103
+  },
+  "track_b": {
+    "detection_precision": 0.5698024103529211,
+    "detection_recall": 0.4544891308086541,
+    "detection_f1": 0.4846919650103831,
+    "sentiment_mae_review": 0.9769621225286396,
+    "sentiment_mae_review_round": 0.9380731044077658,
+    "sentiment_mae_vocab_pairs": 0.908883858460033,
+    "sentiment_mae_discovery_pairs": 1.0686364181406223,
+    "n_sentiment_review_matches": 1004,
+    "n_discovery_sentiment_pairs": 1071,
+    "product_mae_n3": 0.9342583333333333,
+    "n_aspects_matched": 283,
+    "n_aspects_matched_n3": 192
+  },
+  "track_c_review": {
+    "sentiment_mae_review": 0.6397522804880962,
+    "sentiment_mae_review_round": 0.6397522804880962
+  },
+  "track_c_product": {
+    "product_mae_n3": 0.5502970212765956,
+    "n_aspects_matched": 375
+  },
+  "params": {
+    "NLI_TEMPERATURE": 0.7,
+    "SENTIMENT_RATING_MIN": 1.0,
+    "SENTIMENT_RATING_MAX": 5.0,
+    "SENTIMENT_RELEVANCE_THRESHOLD": 0.2,
+    "SENTIMENT_RELEVANCE_MODE": "p_ent_plus_p_contra_faad23a",
+    "SENTIMENT_ENGINE_SOURCE": "D:\\diploma\\.opencode\\artifacts\\sentiment_search_20260425\\sentiment_faad23a_v4_single_hypothesis.py",
+    "SENTIMENT_HYPOTHESIS_TEMPLATE_POS": "{aspect} — это хорошо",
+    "SENTIMENT_SCORE_FORMULA": "5*P(entailment)+3*P(neutral)+1*P(contradiction)",
+    "DISCOVERY_PHRASE_TO_CLUSTER_THRESHOLD": 0.5,
+    "DISCOVERY_TO_GOLD_MATCH_THRESHOLD": 0.65,
+    "PRODUCT_AGGREGATION_MIN_REVIEWS": 3,
+    "USE_LEDOIT_WOLF_SHRINKAGE": true
+  }
+}
+[sanity] detection P/R/F1=0.4767/0.4198/0.4279 reference=0.4806/0.4130/0.4251
+[done] elapsed=1886.3s

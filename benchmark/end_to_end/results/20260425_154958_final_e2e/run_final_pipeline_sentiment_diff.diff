@@ -1,0 +1,41 @@
+﻿diff --git a/benchmark/end_to_end/run_final_pipeline.py b/benchmark/end_to_end/run_final_pipeline.py
+--- a/benchmark/end_to_end/run_final_pipeline.py
++++ b/benchmark/end_to_end/run_final_pipeline.py
+@@
++import importlib.util
+-import torch
+@@
+-from src.stages.sentiment import SentimentEngine
+@@
+ SENTIMENT_RATING_MIN = 1.0
+ SENTIMENT_RATING_MAX = 5.0
++SENTIMENT_RELEVANCE_THRESHOLD = 0.2
++SENTIMENT_RELEVANCE_MODE = "p_ent_plus_p_contra_faad23a"
++REFERENCE_FAAD23A_REVIEW_MAE = 0.7116
++V4_SENTIMENT_ENGINE_PATH = ROOT / ".opencode" / "artifacts" / "sentiment_search_20260425" / "sentiment_faad23a_v4_single_hypothesis.py"
+@@
++def _load_v4_sentiment_engine_class() -> Any:
++    spec = importlib.util.spec_from_file_location("sentiment_faad23a_v4", V4_SENTIMENT_ENGINE_PATH)
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module.SentimentEngine
++
+ def _sentiment_scores(...):
+-    overrides = {"sentiment": {"temperature": 0.7, "hypothesis_template_pos": "В этом отзыве {aspect} оценивается положительно", "hypothesis_template_neg": "В этом отзыве {aspect} оценивается отрицательно", "relevance_threshold": 0.0}}
+-    engine = SentimentEngine()
+-    logits_pos, logits_neg = engine.batch_collect_logits(pairs)
+-    p_ent_pos = softmax(logits_pos / 0.7)[:, engine.ent_idx]
+-    p_ent_neg = softmax(logits_neg / 0.7)[:, engine.ent_idx]
+-    rating = clip(3.0 + 2.0 * (p_ent_pos - p_ent_neg), 1.0, 5.0)
++    overrides = {"sentiment": {"temperature": 0.7, "hypothesis_template_pos": "{aspect} — это хорошо", "relevance_threshold": 0.2}}
++    engine = _load_v4_sentiment_engine_class()()
++    tuple_pairs = [(pair.review_id, pair.sentence, pair.aspect, pair.nli_label, pair.weight) for pair in pairs]
++    results = engine.batch_analyze(tuple_pairs)
++    relevance = result.p_ent_pos + result.p_ent_neg  # faad23a: p_ent_neg is P(contradiction)
++    if relevance >= 0.2:
++        rating = clip(result.score, 1.0, 5.0)
+@@
++## Sanity check vs old baseline
++Old code (commit faad23a): Vocab-only sentiment MAE review: 0.7116
++New code (this run): Vocab-only sentiment MAE review: X
++Difference: X - 0.7116 = Y

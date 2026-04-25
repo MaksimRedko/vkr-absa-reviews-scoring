@@ -1,0 +1,6072 @@
+{
+  "nm_id": 619500952,
+  "category": "physical_goods",
+  "reviews": [
+    {
+      "review_id": "JuCC78oQR4RrCDsiIAgb",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.5462,
+          "polarity": -1.4538
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 2.5755,
+          "polarity": -0.4245,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 2.7217,
+          "polarity": -0.2783,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.7269,
+          "polarity": -1.2731,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 2.4311,
+          "polarity": -0.5689,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 2.3551,
+          "polarity": -0.6449,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 3.0135,
+          "polarity": 0.0135,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 2.7989,
+          "polarity": -0.2011,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.2592,
+          "polarity": -1.7408,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.986,
+          "polarity": 1.986,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 3.5457,
+          "polarity": 0.5457,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "68ooMK5InxvM024co78r",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 1.7613,
+          "polarity": -1.2387
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 1.312,
+          "polarity": -1.688
+        },
+        {
+          "aspect_id": "instructions_manual",
+          "aspect": "Инструкция",
+          "rating": 2.4389,
+          "polarity": -0.5611
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 2.6236,
+          "polarity": -0.3764
+        },
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.7292,
+          "polarity": -1.2708
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.9948,
+          "polarity": -1.0052,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 2.1992,
+          "polarity": -0.8008,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.4101,
+          "polarity": -1.5899,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 2.4735,
+          "polarity": -0.5265,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 1.1554,
+          "polarity": -1.8446,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 2.0134,
+          "polarity": -0.9866,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.1965,
+          "polarity": -1.8035,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.042,
+          "polarity": -1.958,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 3.7836,
+          "polarity": 0.7836,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 2.9367,
+          "polarity": -0.0633,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 2.3851,
+          "polarity": -0.6149,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.6162,
+          "polarity": -1.3838,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "xRLyMbL078vsKD4Rbxsv",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 4.0596,
+          "polarity": 1.0596
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.5594,
+          "polarity": 1.5594
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 3.3234,
+          "polarity": 0.3234,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9359,
+          "polarity": 1.9359,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 4.4689,
+          "polarity": 1.4689,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 2.3612,
+          "polarity": -0.6388,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.4919,
+          "polarity": 1.4919,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 3.8738,
+          "polarity": 0.8738,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 3.4179,
+          "polarity": 0.4179,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 3.5072,
+          "polarity": 0.5072,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.8686,
+          "polarity": 1.8686,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.9314,
+          "polarity": 1.9314,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 4.5945,
+          "polarity": 1.5945,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 3.4295,
+          "polarity": 0.4295,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "LSorNX3xj4epKUcpBrFM",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "instructions_manual",
+          "aspect": "Инструкция",
+          "rating": 3.001,
+          "polarity": 0.001
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 2.6753,
+          "polarity": -0.3247,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 1.5063,
+          "polarity": -1.4937,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 2.4156,
+          "polarity": -0.5844,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 2.9727,
+          "polarity": -0.0273,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 1.089,
+          "polarity": -1.911,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 1.8991,
+          "polarity": -1.1009,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 3.4208,
+          "polarity": 0.4208,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 3.1152,
+          "polarity": 0.1152,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.1283,
+          "polarity": -1.8717,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.5475,
+          "polarity": 1.5475,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 1.5062,
+          "polarity": -1.4938,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 2.6798,
+          "polarity": -0.3202,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.4024,
+          "polarity": -1.5976,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "5jKzT2VTSDnQ8WTMleEQ",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 4.7582,
+          "polarity": 1.7582
+        },
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0128,
+          "polarity": -1.9872
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 2.6939,
+          "polarity": -0.3061,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.997,
+          "polarity": 1.997,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 4.1694,
+          "polarity": 1.1694,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.8569,
+          "polarity": 1.8569,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 4.6882,
+          "polarity": 1.6882,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 2.7195,
+          "polarity": -0.2805,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 4.423,
+          "polarity": 1.423,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9944,
+          "polarity": 1.9944,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.2488,
+          "polarity": 1.2488,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 4.8647,
+          "polarity": 1.8647,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "nz8F40yM5U8cOodqtbYD",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 3.5805,
+          "polarity": 0.5805
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.2592,
+          "polarity": -1.7408,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 2.5636,
+          "polarity": -0.4364,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.2109,
+          "polarity": -1.7891,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 1.1235,
+          "polarity": -1.8765,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 1.0158,
+          "polarity": -1.9842,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 1.058,
+          "polarity": -1.942,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.0324,
+          "polarity": -1.9676,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.2097,
+          "polarity": -1.7903,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9339,
+          "polarity": 1.9339,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 2.8328,
+          "polarity": -0.1672,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 2.3158,
+          "polarity": -0.6842,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.337,
+          "polarity": -1.663,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "kBTna30WanrvIfHK5N94",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "functionality",
+          "aspect": "Функционал",
+          "rating": 4.2348,
+          "polarity": 1.2348
+        },
+        {
+          "aspect_id": "instructions_manual",
+          "aspect": "Инструкция",
+          "rating": 2.9512,
+          "polarity": -0.0488
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 2.7034,
+          "polarity": -0.2966,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.1161,
+          "polarity": 1.1161,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 2.1114,
+          "polarity": -0.8886,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 3.3063,
+          "polarity": 0.3063,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 2.792,
+          "polarity": -0.208,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 2.2647,
+          "polarity": -0.7353,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 1.1091,
+          "polarity": -1.8909,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.4015,
+          "polarity": -1.5985,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 3.5134,
+          "polarity": 0.5134,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 2.5052,
+          "polarity": -0.4948,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "6JTyUVKALVU7Qrj0hz7W",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.1762,
+          "polarity": -1.8238
+        },
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0017,
+          "polarity": -1.9983
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.8339,
+          "polarity": 1.8339,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 2.3941,
+          "polarity": -0.6059,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 1.2429,
+          "polarity": -1.7571,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.0524,
+          "polarity": -1.9476,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.7899,
+          "polarity": -1.2101,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.8026,
+          "polarity": 1.8026,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 3.7215,
+          "polarity": 0.7215,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.937,
+          "polarity": -1.063,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "3EpqaxXOWSqdChhYvZ5U",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 3.8459,
+          "polarity": 0.8459
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.569,
+          "polarity": -1.431,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 2.3214,
+          "polarity": -0.6786,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 2.0439,
+          "polarity": -0.9561,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 1.5714,
+          "polarity": -1.4286,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 1.1194,
+          "polarity": -1.8806,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 2.5784,
+          "polarity": -0.4216,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 2.3993,
+          "polarity": -0.6007,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.2952,
+          "polarity": -1.7048,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 3.0799,
+          "polarity": 0.0799,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 3.8962,
+          "polarity": 0.8962,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.7012,
+          "polarity": -1.2988,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "44SZXsQ0O5j3d4J0e8iv",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0109,
+          "polarity": -1.9891
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 2.7388,
+          "polarity": -0.2612,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.927,
+          "polarity": -1.073,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 2.572,
+          "polarity": -0.428,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 1.4735,
+          "polarity": -1.5265,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 1.8653,
+          "polarity": -1.1347,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 1.0065,
+          "polarity": -1.9935,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.5321,
+          "polarity": -1.4679,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.2244,
+          "polarity": -0.7756,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 3.1895,
+          "polarity": 0.1895,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.5096,
+          "polarity": -1.4904,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "YvFZJfmOHb5lyOfMWw7j",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.6768,
+          "polarity": -1.3232,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.2387,
+          "polarity": 1.2387,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 2.131,
+          "polarity": -0.869,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 2.6436,
+          "polarity": -0.3564,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 1.7408,
+          "polarity": -1.2592,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 3.3738,
+          "polarity": 0.3738,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.2658,
+          "polarity": -1.7342,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.772,
+          "polarity": -1.228,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.9209,
+          "polarity": -1.0791,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "BfO90RQssQ28jCEXLZyh",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.9722,
+          "polarity": 1.9722
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 3.9159,
+          "polarity": 0.9159,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.975,
+          "polarity": 1.975,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.5119,
+          "polarity": 0.5119,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.2772,
+          "polarity": 1.2772,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 4.9584,
+          "polarity": 1.9584,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 2.7765,
+          "polarity": -0.2235,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.925,
+          "polarity": 1.925,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 2.8081,
+          "polarity": -0.1919,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "jFUev6hN4zQjHj8HcxZN",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.1057,
+          "polarity": -1.8943,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 2.2313,
+          "polarity": -0.7687,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.1879,
+          "polarity": -1.8121,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 1.6078,
+          "polarity": -1.3922,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.3408,
+          "polarity": -1.6592,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 1.7793,
+          "polarity": -1.2207,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 1.019,
+          "polarity": -1.981,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.4016,
+          "polarity": -1.5984,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ZTq2kLPySNLJBdbqiFOU",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.201,
+          "polarity": -1.799,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 2.104,
+          "polarity": -0.896,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.7776,
+          "polarity": -1.2224,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.0689,
+          "polarity": -1.9311,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.3642,
+          "polarity": -1.6358,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 3.5831,
+          "polarity": 0.5831,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 2.586,
+          "polarity": -0.414,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "c0JUuyrbWIademmehmvq",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "instructions_manual",
+          "aspect": "Инструкция",
+          "rating": 3.2177,
+          "polarity": 0.2177
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 3.8022,
+          "polarity": 0.8022,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.904,
+          "polarity": 1.904,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 2.2361,
+          "polarity": -0.7639,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 2.9757,
+          "polarity": -0.0243,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.2948,
+          "polarity": -1.7052,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.7654,
+          "polarity": -1.2346,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.2162,
+          "polarity": 1.2162,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "1zXYeebbiHUYESmRQSOJ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.9504,
+          "polarity": -1.0496,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9356,
+          "polarity": 1.9356,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 2.1243,
+          "polarity": -0.8757,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 1.9875,
+          "polarity": -1.0125,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 3.7062,
+          "polarity": 0.7062,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.1039,
+          "polarity": -1.8961,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.3539,
+          "polarity": -0.6461,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 2.1615,
+          "polarity": -0.8385,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.957,
+          "polarity": -1.043,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Oj0HyENioo8VFcQJ9q5c",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.3146,
+          "polarity": -1.6854
+        },
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0106,
+          "polarity": -1.9894
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 1.1971,
+          "polarity": -1.8029,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 1.0341,
+          "polarity": -1.9659,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.019,
+          "polarity": -1.981,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 1.1226,
+          "polarity": -1.8774,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 1.0854,
+          "polarity": -1.9146,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 1.6149,
+          "polarity": -1.3851,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "jCjs9vqLKyZhrPMxVJgZ",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 4.9558,
+          "polarity": 1.9558
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.0295,
+          "polarity": -1.9705,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.5158,
+          "polarity": 0.5158,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 2.3874,
+          "polarity": -0.6126,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 3.8316,
+          "polarity": 0.8316,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 3.6448,
+          "polarity": 0.6448,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9914,
+          "polarity": 1.9914,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 3.4402,
+          "polarity": 0.4402,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "25oxlJEEIv66u2XgoqiL",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "instructions_manual",
+          "aspect": "Инструкция",
+          "rating": 4.7638,
+          "polarity": 1.7638
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 2.227,
+          "polarity": -0.773,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9554,
+          "polarity": 1.9554,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 4.129,
+          "polarity": 1.129,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.745,
+          "polarity": 1.745,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.3592,
+          "polarity": -1.6408,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.6212,
+          "polarity": -0.3788,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.982,
+          "polarity": 1.982,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.9432,
+          "polarity": 1.9432,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 3.3098,
+          "polarity": 0.3098,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 3.2681,
+          "polarity": 0.2681,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "lDbTZIcIBHVzwDYzx78K",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 1.481,
+          "polarity": -1.519,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.255,
+          "polarity": -1.745,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 1.5467,
+          "polarity": -1.4533,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 1.1958,
+          "polarity": -1.8042,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 2.1335,
+          "polarity": -0.8665,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.9206,
+          "polarity": -1.0794,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.5199,
+          "polarity": -1.4801,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 3.6847,
+          "polarity": 0.6847,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 2.1505,
+          "polarity": -0.8495,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "6p9mwg8L2V3rvaOKL4TT",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.8723,
+          "polarity": 1.8723,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 2.4521,
+          "polarity": -0.5479,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 3.8844,
+          "polarity": 0.8844,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.4774,
+          "polarity": 1.4774,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.4191,
+          "polarity": -1.5809,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.1227,
+          "polarity": -0.8773,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "NAyjt9oEXxzuyb3mZMZr",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0597,
+          "polarity": -1.9403
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 2.5135,
+          "polarity": -0.4865,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 4.0175,
+          "polarity": 1.0175,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 3.782,
+          "polarity": 0.782,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.9322,
+          "polarity": 1.9322,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.1442,
+          "polarity": -1.8558,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.7098,
+          "polarity": -0.2902,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9082,
+          "polarity": 1.9082,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 3.8154,
+          "polarity": 0.8154,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 4.873,
+          "polarity": 1.873,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "rYBznfoMj5cdgynR4OFP",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0077,
+          "polarity": -1.9923
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.0141,
+          "polarity": -1.9859,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 1.0525,
+          "polarity": -1.9475,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.0444,
+          "polarity": -1.9556,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 1.213,
+          "polarity": -1.787,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 1.0048,
+          "polarity": -1.9952,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 1.0109,
+          "polarity": -1.9891,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.0542,
+          "polarity": -1.9458,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 1.0126,
+          "polarity": -1.9874,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 1.0062,
+          "polarity": -1.9938,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 1.931,
+          "polarity": -1.069,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "bEYcpzuZt6d6AF6EuT4s",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.0298,
+          "polarity": -1.9702,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 1.2826,
+          "polarity": -1.7174,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 1.0123,
+          "polarity": -1.9877,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.0147,
+          "polarity": -1.9853,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.0941,
+          "polarity": -1.9059,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 1.3012,
+          "polarity": -1.6988,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 1.4786,
+          "polarity": -1.5214,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 1.715,
+          "polarity": -1.285,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.0826,
+          "polarity": -1.9174,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ybIanQydzNaJZaGSY1jS",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 1.1593,
+          "polarity": -1.8407,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 2.1208,
+          "polarity": -0.8792,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 1.138,
+          "polarity": -1.862,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 3.477,
+          "polarity": 0.477,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.4248,
+          "polarity": -1.5752,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 2.339,
+          "polarity": -0.661,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 2.2773,
+          "polarity": -0.7227,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.9442,
+          "polarity": -1.0558,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "my5PyDuZkD7ywTiIDOw4",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "instructions_manual",
+          "aspect": "Инструкция",
+          "rating": 3.2932,
+          "polarity": 0.2932
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.344,
+          "polarity": 1.344
+        },
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 3.5223,
+          "polarity": 0.5223
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 3.058,
+          "polarity": 0.058,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.84,
+          "polarity": -1.16,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 3.3857,
+          "polarity": 0.3857,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 1.3475,
+          "polarity": -1.6525,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 2.1061,
+          "polarity": -0.8939,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.4935,
+          "polarity": -1.5065,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 3.3949,
+          "polarity": 0.3949,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 2.3275,
+          "polarity": -0.6725,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ro5p27XgHa48n8VTpJcv",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.2729,
+          "polarity": -1.7271,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 2.059,
+          "polarity": -0.941,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 1.1376,
+          "polarity": -1.8624,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 1.9619,
+          "polarity": -1.0381,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 1.3545,
+          "polarity": -1.6455,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.0251,
+          "polarity": -1.9749,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.7858,
+          "polarity": -1.2142,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 1.3391,
+          "polarity": -1.6609,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.6631,
+          "polarity": -1.3369,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "1KlPyUILE8Cd9xkAOtCh",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.1196,
+          "polarity": 1.1196,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.755,
+          "polarity": 1.755,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 3.8068,
+          "polarity": 0.8068,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 4.4912,
+          "polarity": 1.4912,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.8231,
+          "polarity": 1.8231,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "S8y2VvJ4LbmnM4qBYYSN",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0223,
+          "polarity": -1.9777
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9128,
+          "polarity": 1.9128,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 4.6063,
+          "polarity": 1.6063,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 4.5166,
+          "polarity": 1.5166,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 3.9142,
+          "polarity": 0.9142,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.8955,
+          "polarity": 1.8955,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 4.3864,
+          "polarity": 1.3864,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "a0PwcZkmIRbDysHAZqr6",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.7289,
+          "polarity": 1.7289,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.11,
+          "polarity": 0.11,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 4.2853,
+          "polarity": 1.2853,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 3.92,
+          "polarity": 0.92,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 3.0257,
+          "polarity": 0.0257,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 2.7841,
+          "polarity": -0.2159,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9112,
+          "polarity": 1.9112,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ckmR9UU02I47VEhNSuNx",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.0748,
+          "polarity": -1.9252,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.1864,
+          "polarity": 0.1864,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 3.5776,
+          "polarity": 0.5776,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 4.1282,
+          "polarity": 1.1282,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 4.7263,
+          "polarity": 1.7263,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.6345,
+          "polarity": 1.6345,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.1353,
+          "polarity": -0.8647,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9831,
+          "polarity": 1.9831,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 3.5326,
+          "polarity": 0.5326,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "HY61iTgHtRJSSeH3I2I0",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.7969,
+          "polarity": 1.7969,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 2.3058,
+          "polarity": -0.6942,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 2.5874,
+          "polarity": -0.4126,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 2.2837,
+          "polarity": -0.7163,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.5037,
+          "polarity": -1.4963,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.4352,
+          "polarity": -1.5648,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 2.9881,
+          "polarity": -0.0119,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.9935,
+          "polarity": -1.0065,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "qtGmlBZoqHpCxD51FWK8",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.1773,
+          "polarity": 1.1773,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 2.8483,
+          "polarity": -0.1517,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 2.6819,
+          "polarity": -0.3181,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 3.2991,
+          "polarity": 0.2991,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 3.7371,
+          "polarity": 0.7371,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "zWyoH3VQ6xa4Ffxzsyrk",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 2.126,
+          "polarity": -0.874,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.0414,
+          "polarity": -1.9586,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 2.2496,
+          "polarity": -0.7504,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 1.0326,
+          "polarity": -1.9674,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 1.0757,
+          "polarity": -1.9243,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.0751,
+          "polarity": -1.9249,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.0599,
+          "polarity": -1.9401,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.1871,
+          "polarity": -1.8129,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "2jDhfei4qs1HjTMHDTZe",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.7281,
+          "polarity": 1.7281
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 2.3401,
+          "polarity": -0.6599,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.258,
+          "polarity": 1.258,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 2.57,
+          "polarity": -0.43,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 2.2013,
+          "polarity": -0.7987,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 3.3842,
+          "polarity": 0.3842,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.0759,
+          "polarity": -1.9241,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 3.505,
+          "polarity": 0.505,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 2.5741,
+          "polarity": -0.4259,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ZoxstTKSBD0BBCFbY5wJ",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0273,
+          "polarity": -1.9727
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.2037,
+          "polarity": -1.7963,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.1057,
+          "polarity": 0.1057,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 4.9475,
+          "polarity": 1.9475,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 3.9927,
+          "polarity": 0.9927,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9376,
+          "polarity": 1.9376,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "sY3hy42OZPqxzS9ToOwm",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9597,
+          "polarity": 1.9597,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.4979,
+          "polarity": 0.4979,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 4.9331,
+          "polarity": 1.9331,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.9714,
+          "polarity": 1.9714,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.9244,
+          "polarity": 1.9244,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9862,
+          "polarity": 1.9862,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "MxoWyyzApDLrYieW23ji",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9929,
+          "polarity": 1.9929,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.9528,
+          "polarity": 0.9528,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 4.9222,
+          "polarity": 1.9222,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.8657,
+          "polarity": 1.8657,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.9525,
+          "polarity": 1.9525,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9832,
+          "polarity": 1.9832,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 2.7307,
+          "polarity": -0.2693,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "waPBr6S10uSqaKrTMzTa",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9732,
+          "polarity": 1.9732,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.6682,
+          "polarity": 0.6682,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.5221,
+          "polarity": 1.5221,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.1501,
+          "polarity": 1.1501,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.2824,
+          "polarity": -0.7176,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9913,
+          "polarity": 1.9913,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "Z7ER43aOZakS1bCjxymA",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "instructions_manual",
+          "aspect": "Инструкция",
+          "rating": 4.9246,
+          "polarity": 1.9246
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 2.8078,
+          "polarity": -0.1922,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9781,
+          "polarity": 1.9781,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.7672,
+          "polarity": 1.7672,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 4.9899,
+          "polarity": 1.9899,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 3.715,
+          "polarity": 0.715,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9909,
+          "polarity": 1.9909,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "kIylMOf93Ob4hmTreJnp",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 2.9268,
+          "polarity": -0.0732,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9747,
+          "polarity": 1.9747,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 2.8503,
+          "polarity": -0.1497,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 3.5636,
+          "polarity": 0.5636,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.847,
+          "polarity": 1.847,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "KQ7iMLA6YJuqtKvzMcDT",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 2.3586,
+          "polarity": -0.6414
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 2.5775,
+          "polarity": -0.4225,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 2.3501,
+          "polarity": -0.6499,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.2989,
+          "polarity": -1.7011,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "kK6tiO96RocLUOP0qatw",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.4466,
+          "polarity": 1.4466,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.3038,
+          "polarity": 1.3038,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "0Cfg9bil9UtIj2eUT8fF",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.6372,
+          "polarity": -1.3628
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.2714,
+          "polarity": 1.2714,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 2.5457,
+          "polarity": -0.4543,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.7127,
+          "polarity": 1.7127,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.2711,
+          "polarity": -0.7289,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 2.983,
+          "polarity": -0.017,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "pPWH3rCMTh8UJe88yf76",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0231,
+          "polarity": -1.9769
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 2.2675,
+          "polarity": -0.7325,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.5247,
+          "polarity": 1.5247,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 2.8916,
+          "polarity": -0.1084,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 1.059,
+          "polarity": -1.941,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "xllJpPtG1Nym14EOWGsp",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9915,
+          "polarity": 1.9915
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.127,
+          "polarity": -1.873,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.4741,
+          "polarity": 0.4741,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 4.1698,
+          "polarity": 1.1698,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.992,
+          "polarity": 1.992,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.8751,
+          "polarity": 1.8751,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 4.2244,
+          "polarity": 1.2244,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 4.4569,
+          "polarity": 1.4569,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "fcOe1ECQoASUoEmxo97z",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "expectations",
+          "aspect": "Соответствие ожиданиям",
+          "rating": 4.9669,
+          "polarity": 1.9669
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.1194,
+          "polarity": -1.8806,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9781,
+          "polarity": 1.9781,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.4182,
+          "polarity": 0.4182,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 3.6042,
+          "polarity": 0.6042,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 4.9925,
+          "polarity": 1.9925,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.5121,
+          "polarity": -1.4879,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9913,
+          "polarity": 1.9913,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.8848,
+          "polarity": 1.8848,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 2.7795,
+          "polarity": -0.2205,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Vt4i0Yt03ACTX7OgBV0s",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.2686,
+          "polarity": 1.2686
+        },
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0836,
+          "polarity": -1.9164
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.7348,
+          "polarity": 1.7348,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.2462,
+          "polarity": 0.2462,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 2.9083,
+          "polarity": -0.0917,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 4.6421,
+          "polarity": 1.6421,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.6459,
+          "polarity": 1.6459,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.3779,
+          "polarity": 1.3779,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "qzLgmKKIJiostERjCNlB",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.0836,
+          "polarity": -1.9164,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 1.0127,
+          "polarity": -1.9873,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 1.1151,
+          "polarity": -1.8849,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 1.1027,
+          "polarity": -1.8973,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.0352,
+          "polarity": -1.9648,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "FfQUgXvtAgbb0tE3mJto",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9897,
+          "polarity": 1.9897,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.4582,
+          "polarity": 0.4582,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 4.7507,
+          "polarity": 1.7507,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9833,
+          "polarity": 1.9833,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 4.878,
+          "polarity": 1.878,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "0GxwnOG665W1tQLEgDfn",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 2.0103,
+          "polarity": -0.9897
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.8538,
+          "polarity": 1.8538,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 4.5496,
+          "polarity": 1.5496,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 4.9953,
+          "polarity": 1.9953,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.8384,
+          "polarity": 1.8384,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9817,
+          "polarity": 1.9817,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.8889,
+          "polarity": -1.1111,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "IpbFYTiLmvs4L6v9zGt2",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.8647,
+          "polarity": -1.1353
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9329,
+          "polarity": 1.9329,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 4.2984,
+          "polarity": 1.2984,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 4.9495,
+          "polarity": 1.9495,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.6636,
+          "polarity": 1.6636,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.5089,
+          "polarity": 1.5089,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.6473,
+          "polarity": 1.6473,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "OBdzpri2PtLHepOW7Avl",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 4.9374,
+          "polarity": 1.9374,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.9589,
+          "polarity": 1.9589,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 3.986,
+          "polarity": 0.986,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9738,
+          "polarity": 1.9738,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.5029,
+          "polarity": 1.5029,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "tfRkmHwcrBv1tfYTpdo0",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "recommendation",
+          "aspect": "Рекомендация",
+          "rating": 2.6799,
+          "polarity": -0.3201
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 3.4575,
+          "polarity": 0.4575,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 1.6679,
+          "polarity": -1.3321,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 2.0606,
+          "polarity": -0.9394,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.1884,
+          "polarity": -0.8116,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 1.1208,
+          "polarity": -1.8792,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "N48uyN1OuUsY80w6TuZH",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.5283,
+          "polarity": -1.4717
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9355,
+          "polarity": 1.9355,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 2.2867,
+          "polarity": -0.7133,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 3.4329,
+          "polarity": 0.4329,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9426,
+          "polarity": 1.9426,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 3.7479,
+          "polarity": 0.7479,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.8061,
+          "polarity": -1.1939,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "wyJaDjIXJuvkTOmOkbyt",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 3.8608,
+          "polarity": 0.8608,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.6005,
+          "polarity": 1.6005,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 3.4666,
+          "polarity": 0.4666,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 3.8717,
+          "polarity": 0.8717,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "qvlK59YfX0MgFLbM983p",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0652,
+          "polarity": -1.9348
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9845,
+          "polarity": 1.9845,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.2297,
+          "polarity": 0.2297,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.6942,
+          "polarity": 1.6942,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9499,
+          "polarity": 1.9499,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 2.8167,
+          "polarity": -0.1833,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "zTTQd8XzUgUjtSX7Vz34",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.5943,
+          "polarity": -1.4057,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 1.0646,
+          "polarity": -1.9354,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.071,
+          "polarity": -1.929,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 1.5535,
+          "polarity": -1.4465,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 1.1077,
+          "polarity": -1.8923,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.0606,
+          "polarity": -1.9394,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 1.6276,
+          "polarity": -1.3724,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 1.0572,
+          "polarity": -1.9428,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Vblq4D5b2jxA1oWGgBzf",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 3.2504,
+          "polarity": 0.2504,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.8208,
+          "polarity": -1.1792,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.2109,
+          "polarity": -0.7891,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.4313,
+          "polarity": 1.4313,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 2.6543,
+          "polarity": -0.3457,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "3Yc9ZPVS3rfqN8rkQzHl",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.896,
+          "polarity": 1.896,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 2.742,
+          "polarity": -0.258,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 3.5177,
+          "polarity": 0.5177,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 2.1531,
+          "polarity": -0.8469,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9645,
+          "polarity": 1.9645,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "lVwwBBjE6ILhtgRVjDy0",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 2.1523,
+          "polarity": -0.8477,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 1.0068,
+          "polarity": -1.9932,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.6237,
+          "polarity": -1.3763,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.2727,
+          "polarity": -1.7273,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.5438,
+          "polarity": -1.4562,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "I1iwLtZZJjqLt4W3KhBK",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.2557,
+          "polarity": 0.2557,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.8533,
+          "polarity": 1.8533,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.7719,
+          "polarity": -0.2281,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9668,
+          "polarity": 1.9668,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 3.54,
+          "polarity": 0.54,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "hH4lhz5bKuTwPyqWt8M3",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 3.3881,
+          "polarity": 0.3881,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.7526,
+          "polarity": 1.7526,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.1591,
+          "polarity": 0.1591,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.1795,
+          "polarity": 1.1795,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 3.9025,
+          "polarity": 0.9025,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 3.8088,
+          "polarity": 0.8088,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "7yuQ1kTIACy2LkYz9zLk",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.6532,
+          "polarity": 1.6532,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.697,
+          "polarity": 1.697,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.2417,
+          "polarity": -1.7583,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.8011,
+          "polarity": 1.8011,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "lmBFkrDO05yGeurKdIri",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.6137,
+          "polarity": 1.6137,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.3454,
+          "polarity": 1.3454,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "P0JYb7FsWV84wvrIXjmW",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9759,
+          "polarity": 1.9759,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.9813,
+          "polarity": 1.9813,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.9498,
+          "polarity": 1.9498,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9507,
+          "polarity": 1.9507,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "2flBy0BhU0QJetWajcsD",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.6186,
+          "polarity": -1.3814,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 1.3226,
+          "polarity": -1.6774,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 1.7487,
+          "polarity": -1.2513,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 1.2638,
+          "polarity": -1.7362,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.1938,
+          "polarity": -1.8062,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 2.6252,
+          "polarity": -0.3748,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 2.1008,
+          "polarity": -0.8992,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "LyTBmifropEknewfTjWn",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.0046,
+          "polarity": -1.9954,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.4982,
+          "polarity": -0.5018,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.8133,
+          "polarity": 1.8133,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "3rICp1ZDtK5gbeMfh0Tf",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 4.9684,
+          "polarity": 1.9684
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9824,
+          "polarity": 1.9824,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.0532,
+          "polarity": 0.0532,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9833,
+          "polarity": 1.9833,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "BJdzvJ4ofdaTr1J1XLjx",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9013,
+          "polarity": 1.9013,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.5048,
+          "polarity": 1.5048,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.2496,
+          "polarity": 1.2496,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 3.3758,
+          "polarity": 0.3758,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9194,
+          "polarity": 1.9194,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "FRCiT3tw3dD5MmGNt7q4",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0247,
+          "polarity": -1.9753
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.6562,
+          "polarity": 1.6562,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 1.031,
+          "polarity": -1.969,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.0471,
+          "polarity": 1.0471,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.731,
+          "polarity": -1.269,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 3.9627,
+          "polarity": 0.9627,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "FEDdaaYce6tm6v5Xcxz3",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.7825,
+          "polarity": 1.7825,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 4.7806,
+          "polarity": 1.7806,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 3.088,
+          "polarity": 0.088,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.8362,
+          "polarity": 1.8362,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "3CkZfaSRteYOR1UmHymA",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9502,
+          "polarity": 1.9502,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.7854,
+          "polarity": 0.7854,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 4.8968,
+          "polarity": 1.8968,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.7348,
+          "polarity": 1.7348,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.7705,
+          "polarity": 1.7705,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.86,
+          "polarity": 1.86,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "fQtAATuCG50dCoIHnQa0",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 4.1702,
+          "polarity": 1.1702,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 2.7799,
+          "polarity": -0.2201,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.6099,
+          "polarity": -1.3901,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 2.26,
+          "polarity": -0.74,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.6757,
+          "polarity": -1.3243,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 1.7354,
+          "polarity": -1.2646,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.2477,
+          "polarity": -1.7523,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "wQdcRedVtOBqNOasOv3h",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.3898,
+          "polarity": 0.3898,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.9002,
+          "polarity": 1.9002,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.8102,
+          "polarity": 1.8102,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "1IGWO9WgFePXh2jqLBJd",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0135,
+          "polarity": -1.9865
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.2748,
+          "polarity": -1.7252,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 1.254,
+          "polarity": -1.746,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.1092,
+          "polarity": -1.8908,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 1.7555,
+          "polarity": -1.2445,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 1.243,
+          "polarity": -1.757,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 1.0064,
+          "polarity": -1.9936,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.2937,
+          "polarity": -1.7063,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 3.4039,
+          "polarity": 0.4039,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 1.8125,
+          "polarity": -1.1875,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 2.3596,
+          "polarity": -0.6404,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "e8pyvh1bwoxgj1ne4zhn",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.236,
+          "polarity": 1.236,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 3.1437,
+          "polarity": 0.1437,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.8842,
+          "polarity": 1.8842,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "i0eyuKoKKpUXns9DKVCx",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.1704,
+          "polarity": -1.8296,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 3.0954,
+          "polarity": 0.0954,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.222,
+          "polarity": 1.222,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.7585,
+          "polarity": -0.2415,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.5375,
+          "polarity": 1.5375,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "pkXkyGAiqgz1BSTl64UN",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.6141,
+          "polarity": 1.6141,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 2.5872,
+          "polarity": -0.4128,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 2.8827,
+          "polarity": -0.1173,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.7977,
+          "polarity": 1.7977,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 3.1962,
+          "polarity": 0.1962,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "OpmjrQ9wYuDHqu5HaB8v",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 2.2352,
+          "polarity": -0.7648,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.3396,
+          "polarity": 1.3396,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.7575,
+          "polarity": -1.2425,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.7234,
+          "polarity": 1.7234,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "1oYdajfK1Q12mCypX0B8",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 3.5193,
+          "polarity": 0.5193,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 1.9488,
+          "polarity": -1.0512,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.2029,
+          "polarity": -1.7971,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 3.7834,
+          "polarity": 0.7834,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "vwpW5lX7JlQWUCx6kVLH",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9777,
+          "polarity": 1.9777,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.7884,
+          "polarity": 1.7884,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.8076,
+          "polarity": -0.1924,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.9826,
+          "polarity": 1.9826,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "9XhgfJITbBjVqmFyt7nR",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 3.2005,
+          "polarity": 0.2005,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.9022,
+          "polarity": -1.0978,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.7363,
+          "polarity": -1.2637,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.6339,
+          "polarity": 1.6339,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 2.2654,
+          "polarity": -0.7346,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "HNsjnuBbhyiSqUk23CGI",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.578,
+          "polarity": -1.422
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.8971,
+          "polarity": -1.1029,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9712,
+          "polarity": 1.9712,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 4.9809,
+          "polarity": 1.9809,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.7444,
+          "polarity": 1.7444,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "sgimUlpx3cyguXl08gJB",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.471,
+          "polarity": -1.529
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 3.4998,
+          "polarity": 0.4998,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "LCNis6drnyuE6Ufuj1iX",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 3.2299,
+          "polarity": 0.2299,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.5664,
+          "polarity": 1.5664,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 1.81,
+          "polarity": -1.19,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.8862,
+          "polarity": 1.8862,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "AoKAkZXxE0o24UFHxbPi",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.9386,
+          "polarity": 1.9386
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.98,
+          "polarity": 1.98,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 4.7179,
+          "polarity": 1.7179,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.9655,
+          "polarity": 1.9655,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.9366,
+          "polarity": 1.9366,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9829,
+          "polarity": 1.9829,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.9538,
+          "polarity": 1.9538,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 3.4838,
+          "polarity": 0.4838,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "d3O893MrazAcHB79d9hi",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.8172,
+          "polarity": 1.8172
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.5968,
+          "polarity": 1.5968,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.5684,
+          "polarity": 1.5684,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.7527,
+          "polarity": 1.7527,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.1609,
+          "polarity": 1.1609,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "pmkYV5RRimfkWfGkxOSR",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "instructions_manual",
+          "aspect": "Инструкция",
+          "rating": 4.7888,
+          "polarity": 1.7888
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9682,
+          "polarity": 1.9682,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.7921,
+          "polarity": 1.7921,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.8472,
+          "polarity": 1.8472,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "9IjQdFQ5mUF1ATqSnEvm",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9795,
+          "polarity": 1.9795,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 1.353,
+          "polarity": -1.647,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.6621,
+          "polarity": 1.6621,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.6848,
+          "polarity": 1.6848,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "v9w1azMIwgcBcm0wtM5v",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "instructions_manual",
+          "aspect": "Инструкция",
+          "rating": 3.665,
+          "polarity": 0.665
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.4228,
+          "polarity": 1.4228,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.5524,
+          "polarity": 1.5524,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "sojbJ4MHeJlattT0vyZj",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 1.0629,
+          "polarity": -1.9371,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.7369,
+          "polarity": -1.2631,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.0565,
+          "polarity": -0.9435,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 2.4817,
+          "polarity": -0.5183,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 2.2628,
+          "polarity": -0.7372,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "L4KL4Dx26Lg5PImTNBA0",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.7711,
+          "polarity": 1.7711,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 2.723,
+          "polarity": -0.277,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "кошмар",
+          "rating": 2.4266,
+          "polarity": -0.5734,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 4.8805,
+          "polarity": 1.8805,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 3.3778,
+          "polarity": 0.3778,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "52FHoMGMmYj67JSFeMoB",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 3.0906,
+          "polarity": 0.0906,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 3.872,
+          "polarity": 0.872,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "yYtHNV8HQYAmT7xXWD5s",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0166,
+          "polarity": -1.9834
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 3.7066,
+          "polarity": 0.7066,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.7619,
+          "polarity": 1.7619,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.4575,
+          "polarity": 1.4575,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "uZcMuHf45JsVxU3hTB9r",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 4.8211,
+          "polarity": 1.8211
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9776,
+          "polarity": 1.9776,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 7,
+          "medoid": "виден результат",
+          "rating": 4.9034,
+          "polarity": 1.9034,
+          "gold_matches": {
+            "Цена": 0.6539943218231201
+          }
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.8907,
+          "polarity": 1.8907,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 3.445,
+          "polarity": 0.445,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9701,
+          "polarity": 1.9701,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "4S4LthtITjFQ5KOMEkJb",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0061,
+          "polarity": -1.9939
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "одной обработки",
+          "rating": 4.9786,
+          "polarity": 1.9786,
+          "gold_matches": {
+            "Комплектация": 0.6602639555931091,
+            "Логистика": 0.684773325920105
+          }
+        },
+        {
+          "cluster_id": 6,
+          "medoid": "мощный эффект",
+          "rating": 4.4181,
+          "polarity": 1.4181,
+          "gold_matches": {
+            "Использование": 0.7504377365112305,
+            "Эффективность": 0.8106234073638916
+          }
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.9881,
+          "polarity": 1.9881,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "FuZtzXzwt1HtvH9YyrHy",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.8138,
+          "polarity": -1.1862,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "часов",
+          "rating": 1.8302,
+          "polarity": -1.1698,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 2.1656,
+          "polarity": -0.8344,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 1.3621,
+          "polarity": -1.6379,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 13,
+          "medoid": "дверные откосы",
+          "rating": 1.4773,
+          "polarity": -1.5227,
+          "gold_matches": {
+            "Следы": 0.7197737693786621
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "NZ2hpj7oerDQStSAmfLq",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "safety",
+          "aspect": "Безопасность",
+          "rating": 4.6818,
+          "polarity": 1.6818
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.4297,
+          "polarity": 1.4297
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.4058,
+          "polarity": -1.5942,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "твари",
+          "rating": 2.658,
+          "polarity": -0.342,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 2.0444,
+          "polarity": -0.9556,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.9522,
+          "polarity": -0.0478,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.7519,
+          "polarity": 1.7519,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.8935,
+          "polarity": 1.8935,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        },
+        {
+          "cluster_id": 12,
+          "medoid": "ловушки гели",
+          "rating": 3.6033,
+          "polarity": 0.6033,
+          "gold_matches": {
+            "Безопасность": 0.6953035593032837
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "67Wa4LtYYrUANarCZ93j",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 3.9365,
+          "polarity": 0.9365
+        },
+        {
+          "aspect_id": "convenience",
+          "aspect": "Удобство",
+          "rating": 4.1527,
+          "polarity": 1.1527
+        },
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.1336,
+          "polarity": -1.8664
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "недоверие",
+          "rating": 1.2583,
+          "polarity": -1.7417,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 5,
+          "medoid": "обычным распылителем",
+          "rating": 2.8367,
+          "polarity": -0.1633,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 8,
+          "medoid": "тараканов",
+          "rating": 4.4571,
+          "polarity": 1.4571,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 9,
+          "medoid": "шкафу",
+          "rating": 2.7905,
+          "polarity": -0.2095,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 10,
+          "medoid": "хорошее средство",
+          "rating": 4.4792,
+          "polarity": 1.4792,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 11,
+          "medoid": "эффективный концентрат",
+          "rating": 4.6047,
+          "polarity": 1.6047,
+          "gold_matches": {
+            "Запах": 0.8015121221542358,
+            "Упаковка": 0.774998664855957
+          }
+        }
+      ]
+    }
+  ],
+  "product_aggregated": {
+    "vocabulary": {
+      "Запах": 1.53,
+      "Внешний вид": 2.38,
+      "Цвет": 2.79,
+      "Инструкция": 3.6,
+      "Цена": 3.73,
+      "Размер": 3.64,
+      "Чистота": 3.97,
+      "Функционал": 3.62,
+      "Упаковка": 2.09,
+      "Материал": 3.42,
+      "Качество": 4.25,
+      "Соответствие ожиданиям": 3.98,
+      "Рекомендация": 2.84,
+      "Доставка": 3.91,
+      "Безопасность": 3.84,
+      "Удобство": 3.58
+    },
+    "discovery": {
+      "недоверие": 2.15,
+      "одной обработки": 4.02,
+      "часов": 2.62,
+      "твари": 3.04,
+      "обычным распылителем": 3.03,
+      "мощный эффект": 3.14,
+      "виден результат": 3.55,
+      "тараканов": 2.81,
+      "хорошее средство": 4.17,
+      "эффективный концентрат": 3.49,
+      "кошмар": 2.52,
+      "шкафу": 2.28,
+      "ловушки гели": 2.65,
+      "дверные откосы": 2.3
+    }
+  }
+}

@@ -1,0 +1,1422 @@
+{
+  "nm_id": 441378025,
+  "category": "physical_goods",
+  "reviews": [
+    {
+      "review_id": "FK3BB1iyRyku4W5aMeKG",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.6068,
+          "polarity": 1.6068
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.9844,
+          "polarity": 1.9844
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 2.4167,
+          "polarity": -0.5833,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 2.5369,
+          "polarity": -0.4631,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "eBYVVTvaD1fEDjWy9PXv",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.7019,
+          "polarity": 1.7019
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 4.8609,
+          "polarity": 1.8609,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "JVlJRzD9egOIu2mnXciF",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 4.8882,
+          "polarity": 1.8882,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 4.8645,
+          "polarity": 1.8645,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "PGaGVCtUW6EPhaPg1fq8",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.0439,
+          "polarity": -1.9561
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 2.0711,
+          "polarity": -0.9289,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Lq61kAdQ8xIx5H09CExQ",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 3.0376,
+          "polarity": 0.0376,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "eCPxkLmoVpt2eaU9Uaqr",
+      "rating": 2.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.2739,
+          "polarity": -1.7261,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 1.5941,
+          "polarity": -1.4059,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "JXUpzU0dLLcWXFgXyC4K",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 4.8472,
+          "polarity": 1.8472,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "AaniHNBcicDwW0NPImbc",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 4.1407,
+          "polarity": 1.1407,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "9z9ysbuCcxaHeBv6vs98",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.1898,
+          "polarity": 1.1898
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "YE5DYuuuphqbrq9XeJGt",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.0211,
+          "polarity": -1.9789,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "G2mV8pmbLcZiyg7qkbF6",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 4.9588,
+          "polarity": 1.9588,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 4.5207,
+          "polarity": 1.5207,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "FUaXfsHYJyrRs6LoVXgs",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.5234,
+          "polarity": -1.4766,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 1.4443,
+          "polarity": -1.5557,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "4ZQABKs2x03S0jGNb85U",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.0595,
+          "polarity": -1.9405,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 1.8365,
+          "polarity": -1.1635,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "Oxc3acOR6hquVuvFYF0X",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 3.5974,
+          "polarity": 0.5974,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "jhQsM0DNFNCYYKxIGcaC",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.4722,
+          "polarity": 1.4722
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 2.7763,
+          "polarity": -0.2237,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 4.1928,
+          "polarity": 1.1928,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "GZv08r5u1zwSf8ZwcZWv",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.6731,
+          "polarity": -1.3269,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 4.7979,
+          "polarity": 1.7979,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "0UHLTXu5vArOC3K5RvEH",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 4.9418,
+          "polarity": 1.9418,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "jYr1HbV0mhOEZPk1fcL2",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.9769,
+          "polarity": -1.0231,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 2.8224,
+          "polarity": -0.1776,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "gC1UCOZHbOkyyNl7L58Z",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "convenience",
+          "aspect": "Удобство",
+          "rating": 4.7336,
+          "polarity": 1.7336
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 4.14,
+          "polarity": 1.14,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "viAKG38LJrZSiarovceg",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.802,
+          "polarity": -1.198,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "0aUkrCxPCCBcgKH1YP2R",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.5042,
+          "polarity": -1.4958,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 2.4698,
+          "polarity": -0.5302,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "27Zn5FNBibuDjY0n7CAY",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.4028,
+          "polarity": -1.5972,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 1.5767,
+          "polarity": -1.4233,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "G1a0JcKknY56Z1D4tTMq",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 2.3278,
+          "polarity": -0.6722
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 2.5145,
+          "polarity": -0.4855,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "S4i8awKPyCOww4foH2dN",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 4.6497,
+          "polarity": 1.6497,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ZdjRLk1NYJJ5DbapYlY7",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 4.8496,
+          "polarity": 1.8496,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 4.4436,
+          "polarity": 1.4436,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "6VLhdLbkXybiRYr1hZY9",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.918,
+          "polarity": 1.918
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 4.8633,
+          "polarity": 1.8633,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "AlF91915hoqXlvwiHtRs",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "connections_fasteners",
+          "aspect": "Крепления и соединения",
+          "rating": 4.1843,
+          "polarity": 1.1843
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 4.873,
+          "polarity": 1.873,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "64H1r2eCroeZdSFpIq9U",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.5907,
+          "polarity": -1.4093,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "3LPKX0Hu32lM88drLIlr",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 2.5891,
+          "polarity": -0.4109,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "11u4AzztEFzYGwd8bvj3",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.8985,
+          "polarity": -1.1015,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "pp0cPr0AuKNq3WjW38Aw",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 3.6601,
+          "polarity": 0.6601,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "2qqQ1wopkmc5i9m1ZzV6",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 2.0709,
+          "polarity": -0.9291,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "AYPXa55VihielWvfX9We",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.943,
+          "polarity": 1.943
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 4.089,
+          "polarity": 1.089,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ETpB6SGdMALlmIhJjDGF",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 2.1471,
+          "polarity": -0.8529,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "y2PIfJpr1l9bnEAPVVS7",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.4927,
+          "polarity": -1.5073,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "NMucArvV6zcJWBZMWEKB",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 3.949,
+          "polarity": 0.949,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "k5B0PExhsrXvoj7ujYt0",
+      "rating": 2.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.9092,
+          "polarity": -1.0908,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 1.6655,
+          "polarity": -1.3345,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "htb8Ck9ItpSNZzENeOHY",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "q7qtYqCtNrZaIRKe7y7f",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 3.8265,
+          "polarity": 0.8265
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 3.9655,
+          "polarity": 0.9655,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "mcnSwoWJMPqLiY2IeUOc",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.3084,
+          "polarity": -1.6916,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "7b7PzQ1LHz3OZHojKKF8",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 1.4833,
+          "polarity": -1.5167
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.0216,
+          "polarity": -1.9784,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Qoqc9RUz6Mr2iiZwljss",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.2724,
+          "polarity": -1.7276,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "K5LnWWP7VKYtJ6KvvD7f",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "6gAAbiUfa5QFNFC0gMvI",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.7331,
+          "polarity": 1.7331
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 2.3113,
+          "polarity": -0.6887,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "YUejVPng4zyD4drh4HkC",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "SemZZpAmFxtHeau0WFCp",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.3749,
+          "polarity": -1.6251,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 1.6676,
+          "polarity": -1.3324,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "xSA56AgOMicobaNwKoI2",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.2739,
+          "polarity": -1.7261,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "bLlSDo9rgzvyBcnPXWCa",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.2556,
+          "polarity": -1.7444
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 2.2736,
+          "polarity": -0.7264,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "iCUwEIE3V81t2pQRWeKl",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "iTqleIeblEzyGvCQD03f",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.8955,
+          "polarity": 1.8955
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "qzdbwijwmv4kLcCrL98o",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 4.2615,
+          "polarity": 1.2615,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "CpcTzM26fqwCTlb1HerT",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.8634,
+          "polarity": -1.1366,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "vwtnxvYoX1tHL555L1Nw",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "ABL3dvKnbdlXzZd6cf6I",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "WFTmfH8LJQdanutZ7luh",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "b1GOO3aDMYZQHUIzTzIB",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.0749,
+          "polarity": -1.9251,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "qfZBfogZ0SstiFl2JCVI",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "L4mwXjzdKQQu8xmGHEEP",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.6073,
+          "polarity": -1.3927,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "5NM33p2PPRvTXj50UC9w",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 2.3427,
+          "polarity": -0.6573,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "o5whyInszBECWPNDFnTQ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "Je8WO9Ec4SKXA7ObXpaO",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "icygEav6ThkNKvH1LOL4",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "91BkBDs3eGzEBJfUNHFN",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "пит закрытии",
+          "rating": 4.7923,
+          "polarity": 1.7923,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "u69j7XTQgaeLeniMT4KM",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "33bzr06JVePfOdmfWt0K",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "DYnFk3rZoHuFQ8ZWiYCr",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.4803,
+          "polarity": -1.5197,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "DnRc5i9mhrcn6gMIKIjt",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "XABjMjmbSCDT45u5UID6",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "zNXLmmSpDFb6MnLF29cb",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.3461,
+          "polarity": -1.6539,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "G7WQgF4GEK25lBHBNvJ6",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "hIskDIucuLlTCxERY1Nc",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 2.0664,
+          "polarity": -0.9336,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "tGZNwRry9a0GEcWM0NgN",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "mw6rRLGRzBuL6Y6nlGfC",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.8923,
+          "polarity": -1.1077,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "BdCbSKOUzyxv9rXILIaK",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 2.3535,
+          "polarity": -0.6465,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "K2TP7YRF9CN7XWmAOSNl",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.0868,
+          "polarity": -1.9132,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "TjsuGpnEsbXV5oiB7WkT",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "qQmxUMVJ5mQ8uh4Tkhvi",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 2.2765,
+          "polarity": -0.7235,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "SBbyJI2rKORk0uOgAqYc",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "bV0f5wiICwEEFLKyZpUJ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "Cf04v7dddVrkAs12lHuQ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "зажигалка",
+          "rating": 1.9037,
+          "polarity": -1.0963,
+          "gold_matches": {
+            "Вместимость": 0.6885058879852295,
+            "Состояние": 0.6610698103904724,
+            "Упаковка": 0.7739449739456177
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "jiuAYfktuMtFqMzYTpQa",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "S94zDmrOWopCBXIrRj9U",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "Zrg4boX23nArg1qrsLgQ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "tSVIMep9RHliSZJ0cgty",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "iQwNNKU3wUVjb3ZfPwid",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    }
+  ],
+  "product_aggregated": {
+    "vocabulary": {
+      "Доставка": 3.31,
+      "Цена": 3.94,
+      "Материал": 3.85,
+      "Упаковка": 2.02,
+      "Качество": 4.39,
+      "Размер": 2.91,
+      "Удобство": 3.87,
+      "Крепления и соединения": 3.59,
+      "Внешний вид": 3.07
+    },
+    "discovery": {
+      "зажигалка": 2.54,
+      "пит закрытии": 3.09
+    }
+  }
+}

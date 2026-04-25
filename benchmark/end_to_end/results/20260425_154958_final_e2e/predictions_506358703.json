@@ -1,0 +1,2185 @@
+{
+  "nm_id": 506358703,
+  "category": "consumables",
+  "reviews": [
+    {
+      "review_id": "wdJ9f6MQZsipY0k01ko9",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "caloric_satiety",
+          "aspect": "Калорийность и сытость",
+          "rating": 3.3036,
+          "polarity": 0.3036
+        },
+        {
+          "aspect_id": "palatability_acceptance",
+          "aspect": "Поедаемость",
+          "rating": 4.3477,
+          "polarity": 1.3477
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.5036,
+          "polarity": 1.5036
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.3227,
+          "polarity": 1.3227,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "RS8VPkoLZvTKbm9c8dT9",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.275,
+          "polarity": 1.275
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 2.2814,
+          "polarity": -0.7186
+        },
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.1169,
+          "polarity": 1.1169
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.7786,
+          "polarity": 0.7786,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "зоо магазинах",
+          "rating": 3.3481,
+          "polarity": 0.3481,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "yPqH7sYxF02rLpGzBVEi",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "feeding_portion",
+          "aspect": "Норма кормления",
+          "rating": 4.8654,
+          "polarity": 1.8654
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9887,
+          "polarity": 1.9887
+        },
+        {
+          "aspect_id": "recommendation",
+          "aspect": "Рекомендация",
+          "rating": 4.955,
+          "polarity": 1.955
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.9869,
+          "polarity": 1.9869
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.9193,
+          "polarity": 1.9193,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "DbZNvcF6hRWlWQJgLoII",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.7997,
+          "polarity": 1.7997
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8049,
+          "polarity": 1.8049,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "зоо магазинах",
+          "rating": 4.7013,
+          "polarity": 1.7013,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "zHSrtWLN6bWulJnJZPio",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "feeding_portion",
+          "aspect": "Норма кормления",
+          "rating": 4.9394,
+          "polarity": 1.9394
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.6841,
+          "polarity": 1.6841
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.9787,
+          "polarity": 1.9787,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "vyqEiWHUXTHJcLHLHzEd",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "digestibility_tolerance",
+          "aspect": "Усвояемость и переносимость",
+          "rating": 4.856,
+          "polarity": 1.856
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8266,
+          "polarity": 1.8266,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "zB3iwzaybimdRFE1pF1h",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "digestibility_tolerance",
+          "aspect": "Усвояемость и переносимость",
+          "rating": 4.9718,
+          "polarity": 1.9718
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.7567,
+          "polarity": 1.7567,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "bQzJ7c8XfrKVqEljAjrR",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.9192,
+          "polarity": 1.9192,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "зоо магазинах",
+          "rating": 3.6023,
+          "polarity": 0.6023,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "MhhISl5AKPpJVYYs5hVF",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 2.5151,
+          "polarity": -0.4849,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "mD3FvgwI5CapEAxYgFYZ",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 3.7901,
+          "polarity": 0.7901
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.5884,
+          "polarity": 1.5884
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.0227,
+          "polarity": 1.0227
+        },
+        {
+          "aspect_id": "value_for_money",
+          "aspect": "Соотношение цена-качество",
+          "rating": 4.8929,
+          "polarity": 1.8929
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 2.4228,
+          "polarity": -0.5772,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "101VbtTD1YKllxLo4UJA",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.3723,
+          "polarity": 1.3723
+        },
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.1256,
+          "polarity": 1.1256
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 1.2157,
+          "polarity": -1.7843,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "69EBIbsyM5n6q27PnaOl",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.9502,
+          "polarity": 1.9502
+        },
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.8956,
+          "polarity": 1.8956
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.7886,
+          "polarity": 1.7886
+        },
+        {
+          "aspect_id": "recommendation",
+          "aspect": "Рекомендация",
+          "rating": 4.8517,
+          "polarity": 1.8517
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.9864,
+          "polarity": 1.9864,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ChpJHyoPi5tFGGGJYf5S",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.7077,
+          "polarity": 1.7077
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "0kg6aOq18TLqJJeoB5wG",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "caloric_satiety",
+          "aspect": "Калорийность и сытость",
+          "rating": 4.4647,
+          "polarity": 1.4647
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9218,
+          "polarity": 1.9218
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.9757,
+          "polarity": 1.9757,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "6FBUIDwCI6tMlrd1bQvy",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.642,
+          "polarity": 0.642,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "w3VzQkCzbEoINQiUrg43",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8597,
+          "polarity": 1.8597,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "9MaGD7ufhUe5ZkcNISwK",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 3.8333,
+          "polarity": 0.8333
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 3.8117,
+          "polarity": 0.8117
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.9434,
+          "polarity": 1.9434,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "X4NvDMTlnKdHZ66S8ONg",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.5438,
+          "polarity": 1.5438
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.4519,
+          "polarity": 1.4519
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.714,
+          "polarity": 1.714
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "зоо магазинах",
+          "rating": 3.6429,
+          "polarity": 0.6429,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "KhXka32p3fXkqETSO7Dk",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.303,
+          "polarity": 1.303,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Ei2LSyfmtsee7hgdLSn6",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "зоо магазинах",
+          "rating": 2.9174,
+          "polarity": -0.0826,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "5wFACU4lUXtWC8UacR0F",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "digestibility_tolerance",
+          "aspect": "Усвояемость и переносимость",
+          "rating": 4.4674,
+          "polarity": 1.4674
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.5169,
+          "polarity": 1.5169,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "HDpApWTuODmzdNogzYLt",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8497,
+          "polarity": 1.8497,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "зоо магазинах",
+          "rating": 3.6648,
+          "polarity": 0.6648,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "FulFANGOTeu5mXND1sal",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.615,
+          "polarity": 1.615
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "g3w05YgdzpjQbwjaDO87",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.8613,
+          "polarity": 1.8613
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.9883,
+          "polarity": 1.9883
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "iJmupgm54XR7Wypgk0tL",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.9832,
+          "polarity": 1.9832
+        },
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.9809,
+          "polarity": 1.9809
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.3876,
+          "polarity": 0.3876,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "a7wXOFDGFAxgDe9g121J",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.6737,
+          "polarity": 1.6737
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.6583,
+          "polarity": 1.6583
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.6538,
+          "polarity": 1.6538,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "00NhRiMR31BSX73L4WLz",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.9554,
+          "polarity": 1.9554
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "yJPxpYxEVmNhF1gZr4Xx",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.7577,
+          "polarity": 1.7577
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.998,
+          "polarity": 0.998,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "P8TNjeJbRVwfUTMr1ZAd",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.1673,
+          "polarity": 1.1673
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.5604,
+          "polarity": 1.5604,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "зоо магазинах",
+          "rating": 3.4935,
+          "polarity": 0.4935,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "hX7g0sk0ThV3MxUwWOJv",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.6511,
+          "polarity": 1.6511
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.6397,
+          "polarity": 0.6397,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "9Y9zk8VOSKAfv4E4GcWk",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.2471,
+          "polarity": 1.2471
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.6388,
+          "polarity": 0.6388,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "PM14TUcdihHCyWiayob5",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8024,
+          "polarity": 1.8024,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "d793iQ2HQnDC072V1yOU",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8337,
+          "polarity": 1.8337,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "bj9V03Ztx5rqF0oeSePm",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8789,
+          "polarity": 1.8789,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "wU8J9rpQdP6ZjDDnNkU0",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9178,
+          "polarity": 1.9178
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.6751,
+          "polarity": 1.6751,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "y7HtKaGPRG1mmdtaAaTX",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.4579,
+          "polarity": 1.4579,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Vu38MXwVcl2C6bAL7xbX",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.5974,
+          "polarity": 1.5974
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8207,
+          "polarity": 1.8207,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "HaH06klVGDzkYPfvaJ14",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "palatability_acceptance",
+          "aspect": "Поедаемость",
+          "rating": 4.8323,
+          "polarity": 1.8323
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.6135,
+          "polarity": 1.6135
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "UvfeKnKtahzcNV5g1S7u",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 1.1589,
+          "polarity": -1.8411,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "0DlHkPfGGtwd38cwWrho",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.3415,
+          "polarity": 0.3415,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "9xleBoehJDeoLWN9z59Y",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.8999,
+          "polarity": 1.8999
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.813,
+          "polarity": 1.813,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "AZX8w1IeJRGXQZA6db8D",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "nutritional_adequacy",
+          "aspect": "Питательная ценность",
+          "rating": 4.7,
+          "polarity": 1.7
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.7778,
+          "polarity": 0.7778,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "hMR817Zhqhwd5UhIdjg4",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "caloric_satiety",
+          "aspect": "Калорийность и сытость",
+          "rating": 4.257,
+          "polarity": 1.257
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 2.9694,
+          "polarity": -0.0306,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "GRaKymlPSi6kEPv3z4Z8",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "feeding_portion",
+          "aspect": "Норма кормления",
+          "rating": 4.6359,
+          "polarity": 1.6359
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.7184,
+          "polarity": 1.7184,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "7HQ8yZanP9Gpn4Ogfl1e",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.7961,
+          "polarity": 1.7961,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "TaCunSBY6xFWZDuZDioY",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.6326,
+          "polarity": 1.6326,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "зоо магазинах",
+          "rating": 3.9832,
+          "polarity": 0.9832,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "bnSgq2JWDfBauQU4bhtB",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.4687,
+          "polarity": 1.4687,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "VuSppcCW6hSfqmHMKQq9",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "qpc3M4vFkKSntspwUhgj",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 3.9504,
+          "polarity": 0.9504
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.4791,
+          "polarity": 1.4791,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "2fE71yPijgFXz9xVRY98",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.6803,
+          "polarity": 1.6803
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.3477,
+          "polarity": 1.3477,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "eAO4fZJjQCZYgkl6UH5X",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.0219,
+          "polarity": 1.0219
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.1333,
+          "polarity": 1.1333,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "254g2jJNJ87qLxjgjm1X",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "Ee7liVJY5zlbgxn2TFxs",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.7469,
+          "polarity": 1.7469,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "WB2jMal5e0sSD7sS8Dxm",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.7437,
+          "polarity": 1.7437
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.8124,
+          "polarity": 1.8124
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.8052,
+          "polarity": 0.8052,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "eM8of31eLwRkeqCmiulk",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.1039,
+          "polarity": 1.1039,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "uPOfnkzBK8znT9NXUk5v",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.826,
+          "polarity": 0.826,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "JBz4Bau9yIkEq4202t4n",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.2824,
+          "polarity": 1.2824,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "LXQ2QbaS3Ce7vuDqtfUR",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 3.6513,
+          "polarity": 0.6513
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 3.4633,
+          "polarity": 0.4633
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.7656,
+          "polarity": 1.7656,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "BV6WDSe1BmpVo17cTkod",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.3786,
+          "polarity": 1.3786,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "QM6cJXa64BsnW3MEDPn2",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 3.2918,
+          "polarity": 0.2918
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.7963,
+          "polarity": 1.7963,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "A9Tsa8FAXGtWZQMKIwqg",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.7926,
+          "polarity": 1.7926,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "зоо магазинах",
+          "rating": 3.5031,
+          "polarity": 0.5031,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "BTiolhzeHq1gfNBy1HiY",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.5186,
+          "polarity": 0.5186,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "oBAk9yt202Mt4BgnWBrE",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.9783,
+          "polarity": 1.9783
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.2387,
+          "polarity": 1.2387,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "coQ0aQdLtxbR2CNRanqO",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.8639,
+          "polarity": 1.8639
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.917,
+          "polarity": 1.917,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "qm6pE6SzYDad2Gd1wc3B",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.6472,
+          "polarity": 1.6472,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "3xpzBw5Y6gv8oh6rC7fA",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.6886,
+          "polarity": 1.6886,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "vc1jonsQFi4scqyj22on",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.1456,
+          "polarity": 1.1456
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 1.0627,
+          "polarity": -1.9373,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "0KHkCQNmGFMeFrm66UQR",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.7141,
+          "polarity": 1.7141
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.6591,
+          "polarity": 1.6591,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "7m8JlNDaoP9cgkX1w5wy",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.444,
+          "polarity": 1.444
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 2.3756,
+          "polarity": -0.6244,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "o6WIbLF8SkBQPefWWNqt",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.9426,
+          "polarity": 0.9426,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "aioJRGo3HEyA48iPnQOC",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.8841,
+          "polarity": 1.8841
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.8997,
+          "polarity": 1.8997
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8851,
+          "polarity": 1.8851,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "kpGJgfClUpXkX3Q8fAJu",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 1.01,
+          "polarity": -1.99,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "8l8haxooDQ9OU1SY1Vjk",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.0482,
+          "polarity": 1.0482,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "pONr8eH6Z5zR9GTDu2dy",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.7611,
+          "polarity": 1.7611
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.7871,
+          "polarity": 1.7871,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "pYG71Gk0JMA9xgWv0bXJ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8915,
+          "polarity": 1.8915,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "4f1lLTCKh65VjgjJvRkH",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.4016,
+          "polarity": 1.4016
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.1575,
+          "polarity": 1.1575,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Q9kCBJZrpwENtwP9jiEO",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "9WVB08skB11A6KzB6l6W",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8302,
+          "polarity": 1.8302,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "XJiWkMIDO8BVSkX1FAET",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.4775,
+          "polarity": 1.4775,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "CxbnynyKvR6JIKEfSs5y",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.4532,
+          "polarity": 1.4532,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "a77kaQrwRxoH9inNH8oq",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.0079,
+          "polarity": 1.0079
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.781,
+          "polarity": 0.781,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Db7H3oAuhBhr3SDjGLHa",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.0702,
+          "polarity": 1.0702,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "PiJjsmo6gyUQRaDuD2rS",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8321,
+          "polarity": 1.8321,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "1ivS7h9cjR3H2SdQ3pRI",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.8436,
+          "polarity": 1.8436
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.937,
+          "polarity": 1.937,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "DaMGzU4kih2DiXT9arQ7",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 1.5212,
+          "polarity": -1.4788,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "DSEfmWPYlTGKGgIrchuQ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8549,
+          "polarity": 1.8549,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "7jaOJdSFWw0N4ORykFAO",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 4.8944,
+          "polarity": 1.8944
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.5357,
+          "polarity": 1.5357,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ytkslwzjLXhrrmKnqdfK",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.9711,
+          "polarity": 0.9711,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "gln5vffyLGnRFJW5XYqi",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.8321,
+          "polarity": 0.8321,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "BcPv4nZnJ9T1vuhcbmhF",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.7907,
+          "polarity": 1.7907,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "xLmdvJnzoUkVIoVnNEQG",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.9067,
+          "polarity": 1.9067
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.6722,
+          "polarity": 1.6722,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "EuDrWg8MpiiTg8QF4nXM",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.6308,
+          "polarity": 1.6308,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "8sIbpdh22BcKhabetjwm",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 2.6088,
+          "polarity": -0.3912,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "im27FSVq7PxK8dE67BRP",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.5491,
+          "polarity": 1.5491
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8441,
+          "polarity": 1.8441,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "yBtnNje8QNwpfo019cLj",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.2123,
+          "polarity": 1.2123
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.2487,
+          "polarity": 1.2487
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "C7z73U3Pqwh4J3i4QN0o",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.7913,
+          "polarity": 1.7913
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "PmPKyC25iyuFn38Jw9XJ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.8753,
+          "polarity": 1.8753,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "D6H6AJ8ThNcnwrQd8jSa",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 3.6295,
+          "polarity": 0.6295,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "lSvzRepiRWrskcW9nd9a",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кот",
+          "rating": 4.5404,
+          "polarity": 1.5404,
+          "gold_matches": {
+            "Запах": 0.7060450315475464,
+            "Поедаемость": 0.7030299305915833
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "AEAZdFZpIKa9uafBjGUc",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.7778,
+          "polarity": 1.7778
+        }
+      ],
+      "discovery_aspects": []
+    }
+  ],
+  "product_aggregated": {
+    "vocabulary": {
+      "Калорийность и сытость": 3.76,
+      "Поедаемость": 4.06,
+      "Размер": 4.49,
+      "Внешний вид": 3.64,
+      "Цвет": 2.64,
+      "Материал": 4.32,
+      "Норма кормления": 4.36,
+      "Упаковка": 4.55,
+      "Рекомендация": 4.27,
+      "Доставка": 4.49,
+      "Усвояемость и переносимость": 4.32,
+      "Цена": 4.31,
+      "Качество": 3.81,
+      "Соотношение цена-качество": 3.95,
+      "Питательная ценность": 3.85,
+      "Запах": 3.73
+    },
+    "discovery": {
+      "кот": 4.15,
+      "зоо магазинах": 3.59
+    }
+  }
+}

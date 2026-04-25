@@ -420,3 +420,28 @@ _clean_clusters
 - что не сработало: нет; draft найден в benchmark/ и скопирован в benchmark/discovery/manual_labels
 - что зафиксировано: 86/86 labeled; valid=53 (61.6%), valid_novel=32, mixed=22, noise=11
 - следующий шаг: использовать final_report.md и metrics_summary_final.csv в ВКР
+
+- goal: final_e2e_pipeline_run
+- checked: frozen lexical detection + filtered v3 discovery + fixed NLI formula + Bayesian aggregation
+- got: output `benchmark/end_to_end/results/20260425_110116_final_e2e/`, runtime 2388.0 sec
+- got: Track A P/R/F1=0.4767/0.4198/0.4279; review MAE=1.1528; product MAE n>=3=0.8755
+- got: Track B P/R/F1=0.5698/0.4545/0.4847; review MAE=1.2677; product MAE n>=3=0.9397
+- got: Track C star review MAE=0.6398; product MAE n>=3=0.5503
+- did not work: sentiment sanity failed vs expected 0.65-0.75; discovery worsened sentiment/product MAE
+- fixed: detection close to frozen baseline; no temperature tuning, no LLM, no discovery recompute
+- checked: NLI label mapping correct; hard cases show fixed hypothesis-template inversions
+- next step: use results honestly; any sentiment repair must be a separate isolated experiment- цель этапа: sentiment_mae_search
+- что проверяли: current/main/origin refs, git history, .opencode artifacts for review-level MAE <=0.5
+- что получилось: global review-level <=0.5 not found
+- что не сработало: найденные <=0.5 относятся к category/product/per-product, not global review-level
+- что зафиксировано: phase3 baseline 0.7116; local sentence 0.6262; candidate code copied to sentiment_search artifact
+- следующий шаг: if needed, run isolated A/B old SentimentEngine formula vs final_e2e formula on same matched pairs
+
+- goal: final_e2e_sentiment_engine_v4
+- checked: custom final_e2e sentiment -> faad23a v4 batch_analyze, review-level premise
+- got: P_ent+P_neutral run Track A MAE=0.9934; exact faad23a P_ent+P_contra run Track A MAE=0.9565
+- did not work: sanity vs 0.7116 failed by +0.2449; product MAE stayed high 0.8218
+- fixed: detection unchanged 0.4767/0.4198/0.4279; star unchanged 0.6398
+- root cause: phase3 0.7116 artifact looks like v5 dual-hypothesis, not faad23a v4; common-pair scores differ strongly
+- fixed artifacts: benchmark/end_to_end/results/20260425_154958_final_e2e
+- next step: isolated rerun with current/v5 SentimentEngine.batch_analyze if target MAE 0.65-0.75 is required

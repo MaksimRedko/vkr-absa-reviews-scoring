@@ -2179,3 +2179,39 @@ _excluded_reviews
 - Manual valid clusters: 53/86 = 61.6%; valid_known=21, valid_novel=32, mixed=22, noise=11.
 - Category valid_rate: services=68.4%, physical_goods=64.8%, consumables=50.0%, hospitality=28.6%.
 - Checks: py_compile OK; final CSV/report/category CSV generated.
+
+## final_e2e_pipeline_run
+- Goal: run final full ABSA pipeline on 16 labeled products with frozen lexical detection, filtered v3 discovery, NLI sentiment, and product aggregation.
+- Pre-run checkpoint commit: `b6cad1a checkpoint before final e2e pipeline`.
+- Script: `benchmark/end_to_end/run_final_pipeline.py`.
+- Input discovery: `benchmark/discovery/results/20260424_231742_v3/*_filtered.json`.
+- Output: `benchmark/end_to_end/results/20260425_110116_final_e2e/`.
+- Runtime: 2388.0 sec.
+- Track A vocab-only: P/R/F1=0.4767/0.4198/0.4279; review MAE=1.1528; product MAE n>=3=0.8755.
+- Track B vocab+discovery: P/R/F1=0.5698/0.4545/0.4847; review MAE=1.2677; product MAE n>=3=0.9397.
+- Track C star baseline: review MAE=0.6398; product MAE n>=3=0.5503.
+- Sanity: detection is close to frozen baseline; sentiment is much worse than expected.
+- Check performed: NLI label mapping is correct (`entailment=0`, `contradiction=1`, `neutral=2`); hard cases show hypothesis-template inversions under the fixed requested formula.
+- Decision: keep metrics as honest final run; do not tune temperature or sentiment after the fact.
+## 2026-04-25 15:00:36 sentiment_mae_search
+- Goal: find sentiment implementation that produced review-level MAE <= 0.5.
+- Scope: current branch, main, origin/*, git history, .opencode artifacts/log-like files.
+- Result: no documented global review-level MAE <= 0.5 found.
+- Best documented NLI review-level results: phase3 baseline MAE=0.7116; local sentence ablation MAE=0.6262.
+- Low <=0.5 numbers found are per-category/per-product/product-level, not global review-level.
+- Candidate implementation saved: .opencode/artifacts/sentiment_search_20260425/sentiment_faad23a_v4_single_hypothesis.py.
+- Key difference vs final_e2e: old code uses single hypothesis/expectation or engine ratio path; final_e2e used custom 3 + 2*(P_pos-P_neg).
+
+## Update 2026-04-25: final_e2e_sentiment_engine_v4
+
+- Goal: replace custom final_e2e sentiment formula with faad23a single-hypothesis SentimentEngine.batch_analyze and rerun 16 products.
+- Files changed: benchmark/end_to_end/run_final_pipeline.py.
+- Run 1: requested P_ent+P_neutral relevance; output benchmark/end_to_end/results/20260425_151534_final_e2e; Track A MAE=0.9934.
+- Diagnosis: faad23a stores p_ent_neg as P(contradiction); old phase3 relevance used P_ent+P_contra, not P_ent+P_neutral.
+- Run 2: exact faad23a relevance P_ent+P_contra; output benchmark/end_to_end/results/20260425_154958_final_e2e; runtime=1886.3 sec.
+- Result: Track A P/R/F1=0.4767/0.4198/0.4279; review MAE=0.9565; product MAE n>=3=0.8218.
+- Track B: P/R/F1=0.5698/0.4545/0.4847; review MAE=0.9770; discovery-pair MAE=1.0686; product MAE=0.9343.
+- Star baseline unchanged: review MAE=0.6398; product MAE=0.5503.
+- Sanity failed vs reference 0.7116 by +0.2449.
+- Root cause found: phase3 reference 0.7116 is not reproduced by faad23a v4; common-pair score diff vs phase3 is large, phase3 artifact indicates dual-hypothesis behavior (`nli_hypothesis_calls=2*pairs`).
+- Decision: do not accept faad23a run as final-quality sentiment; next isolated check should use current/v5 SentimentEngine.batch_analyze if target is 0.65-0.75.
