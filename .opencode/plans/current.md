@@ -821,10 +821,10 @@
 - `scripts/run_phase3_step8_repair_current_segmenter.py`
 
 ### Rules added / fixed
-- added contrast markers: `Ò Ó‰ÌÓÈ ÒÚÓÓÌ˚`, `Ò ‰Û„ÓÈ ÒÚÓÓÌ˚`
-- added label split for marketplace headings: `ƒÓÒÚÓËÌÒÚ‚‡:` / `ÕÂ‰ÓÒÚ‡ÚÍË:` / `œÂËÏÛ˘ÂÒÚ‚‡:` / ` ÓÏÏÂÌÚ‡ËÈ:`
+- added contrast markers: `  `, `  `
+- added label split for marketplace headings: `:` / `:` / `:` / `:`
 - stopped converting ellipses into hard sentence-final dots
-- extended abbreviation protection: `„.`, `ÛÎ.`, `ÒÚ.`
+- extended abbreviation protection: `.`, `.`, `.`
 - relaxed contrast split guard for short evaluative fragments (`1/1` content)
 - merged trivial marker-only tails back into neighbors
 
@@ -1211,3 +1211,971 @@
 ### Decision
 - `kill_contextual_hdbscan_branch`
 - current bottleneck is not bare-word input anymore; it is poor separability of short context-window embeddings for residual discovery.
+
+
+## Planned 2026-04-24: discovery_step1_add_sbert_large_encoder
+
+- Goal: add a separate discovery encoder only.
+- Baseline: current discovery semantic probes rely on the old encoder family and show poor separability.
+- Variable: encoder only. New model = `ai-forever/sbert_large_nlu_ru`.
+- Hypothesis: stronger RU sentence embeddings will improve future discovery clustering input without touching the main pipeline.
+- Scope fixed:
+  - no vocabulary changes
+  - no matching changes
+  - no sentiment changes
+  - no clustering logic yet
+  - only model download + isolated wrapper + tests
+- Files to change:
+  - `.opencode/plans/current.md`
+  - `.opencode/plans/compact_context.md`
+  - `src/discovery/__init__.py`
+  - `src/discovery/encoder.py`
+  - `tests/test_discovery_encoder.py`
+- Required checks:
+  - lazy load on first use
+  - `encode(list[str]) -> np.ndarray`
+  - shape `(N, 1024)`
+  - L2 norm approx `1.0`
+  - similar cosine `> 0.7`
+  - different cosine `< 0.5`
+- Implementation note:
+  - use direct `transformers` + mean pooling
+  - keep old `rubert-tiny2` unchanged
+
+
+## Update 2026-04-24: discovery_step1_add_sbert_large_encoder
+
+- Goal: add isolated discovery encoder `ai-forever/sbert_large_nlu_ru` without touching the main ABSA pipeline.
+- Scope respected:
+  - old `rubert-tiny2` pipeline unchanged
+  - no vocabulary / matching / sentiment / clustering logic changes
+  - only local model wrapper + tests
+
+### Files changed
+- `src/discovery/__init__.py`
+- `src/discovery/encoder.py`
+- `tests/test_discovery_encoder.py`
+
+### Model status
+- local model present in `models/discovery_sbert_large_nlu_ru`
+- weights found:
+  - `model.safetensors`
+  - `pytorch_model.bin`
+
+### Implementation
+- lazy load on first `encode()` call
+- backend: `transformers` + mean pooling
+- output: L2-normalized `np.ndarray` with shape `(N, 1024)`
+- CPU batch mode enabled, default `batch_size=8`
+- local-first loading from `models/discovery_sbert_large_nlu_ru`
+
+### Verification
+- `tests/test_discovery_encoder.py`: `5 passed`
+- single text shape: `(1, 1024)`
+- batch of 5 texts shape: `(5, 1024)`
+- norm check passed
+- similarity sanity check passed after replacing an unstable negative pair with a more separable one
+- observed cosine:
+  - similar pair: `0.7956`
+  - different pair: `0.4001`
+
+### Decision
+- `PASS`
+- discovery encoder step is ready
+- next step can start discovery clustering logic on top of this encoder
+
+
+## Planned 2026-04-24: discovery_step2_residual_phrase_extraction
+
+- Goal: add isolated residual phrase extraction for discovery.
+- Baseline: current project has candidate extraction and vocabulary, but no module that splits covered vs uncovered phrases per review.
+- Variable: lexical residual routing only; no clustering, no encoder changes, no main ABSA pipeline changes.
+- Hypothesis: lemmatized token-overlap between candidate phrases and aspect synonym lemmas is enough to separate `covered` from `residual` phrases for discovery input.
+- Scope fixed:
+  - use existing `CandidateExtractor`
+  - use existing `ReviewInput` and `Vocabulary`
+  - no vocabulary edits
+  - no matching / sentiment / clustering edits
+- Files to change:
+  - `src/discovery/residual_extractor.py`
+  - `src/discovery/__init__.py`
+  - `tests/test_residual_extractor.py`
+- Required checks:
+  - mixed review -> correct split into covered and residual phrases
+  - no residual case -> `residual_phrases == []`
+  - fully uncovered case -> `covered_phrases == []`
+- Implementation note:
+  - default runtime path must use the real `CandidateExtractor`
+  - tests may stub extractor to isolate residual routing logic
+
+
+## Update 2026-04-24: discovery_step2_residual_phrase_extraction
+
+- Goal: add isolated residual phrase extraction for discovery.
+- Scope respected:
+  - existing `CandidateExtractor` kept as default runtime extractor
+  - existing `ReviewInput` and `Vocabulary` reused
+  - no vocabulary / matching / sentiment / clustering / main pipeline changes
+
+### Files changed
+- `src/discovery/residual_extractor.py`
+- `src/discovery/__init__.py`
+- `tests/test_residual_extractor.py`
+
+### Implementation
+- added `ResidualResult` dataclass with:
+  - `review_id`
+  - `covered_phrases`
+  - `covered_aspects`
+  - `residual_phrases`
+- added `ResidualExtractor.extract(review, category_id, vocabulary)`
+- logic:
+  - takes `review.clean_text`
+  - runs `CandidateExtractor`
+  - lemmatizes candidate phrases with `pymorphy3`
+  - builds lemma sets for relevant aspect synonyms + canonical names
+  - routes phrases to `covered` if there is lemma overlap with at least one aspect
+  - otherwise routes phrases to `residual`
+- domain handling:
+  - supports `all`
+  - supports direct `category_id`
+  - includes alias bridge `physical_goods -> e-commerce`
+  - falls back to all aspects only if domain filtering produces an empty set
+
+### Verification
+- `tests/test_residual_extractor.py`: `3 passed`
+- combined discovery tests: `8 passed`
+- tested cases:
+  - mixed covered/residual review
+  - fully covered review
+  - fully residual review
+
+### Environment note
+- initial test version using `tmp_path` failed due local temp directory permissions
+- tests were rewritten to build `Vocabulary` in memory and no longer depend on external temp dirs
+
+### Decision
+- `PASS`
+- residual phrase extraction step is ready
+- next step can use `ResidualExtractor` as input for review grouping / clustering
+
+## Planned 2026-04-24: discovery_step3_review_representation
+
+- Goal: build review-level representation from residual phrases only.
+- Baseline: residual extraction exists, but there is no batched review embedding layer for clustering input.
+- Variable: representation only; no clustering, no vocabulary, no matching, no sentiment changes.
+- Hypothesis: mean pooling of residual phrase embeddings per review will preserve enough signal for clustering while keeping CPU cost manageable if the encoder is called once on the flattened phrase list.
+- Scope fixed:
+  - use ResidualResult as input
+  - use DiscoveryEncoder as embedding backend
+  - skip reviews with empty residuals
+  - one encoder call for all phrases in the batch
+- Files to change:
+  - .opencode/plans/current.md
+  - .opencode/plans/compact_context.md
+  - src/discovery/representation.py
+  - src/discovery/__init__.py
+  - 	ests/test_representation.py
+- Required checks:
+  - correct (N_reviews, 1024) shape
+  - empty-residual reviews go to excluded_review_ids
+  - final review vectors are L2-normalized
+  - encoder is invoked once for the flattened phrase list
+
+## Update 2026-04-24: discovery_step3_review_representation
+
+- Goal: build review-level representation from residual phrases only.
+- Scope respected:
+  - used ResidualResult as input
+  - used discovery encoder interface only as embedding backend
+  - skipped reviews with empty residuals
+  - encoder called once on the flattened phrase list
+  - no vocabulary / matching / sentiment / clustering changes
+
+### Files changed
+- src/discovery/representation.py
+- src/discovery/__init__.py
+- 	ests/test_representation.py
+
+### Implementation
+- added ReviewRepresentationBatch with:
+  - eview_ids
+  - embeddings
+  - excluded_review_ids
+- added ReviewRepresentation.build(residuals, encoder)
+- logic:
+  - filters empty esidual_phrases
+  - flattens all residual phrases across reviews
+  - calls encoder.encode() once on the full flattened list
+  - groups phrase embeddings back by review
+  - averages phrase embeddings per review
+  - L2-normalizes final review vectors
+  - returns empty (0, 1024) matrix when all reviews are excluded
+
+### Verification
+- 	ests/test_representation.py: 3 passed
+- combined discovery tests: 11 passed
+- checked cases:
+  - mixed batch of 5 residual results -> output shape (4, 1024)
+  - empty-residual review routed to excluded_review_ids
+  - final review embeddings are L2-normalized
+  - stub encoder confirmed exactly one encode() call for the flattened phrase list
+
+### Environment note
+- pytest still warns about .pytest_cache write permissions
+- warning is non-blocking; tests pass
+
+### Decision
+- PASS
+- review-level residual representation is ready
+- next step can build clustering on top of these review embeddings
+
+## Planned 2026-04-24: discovery_step4_hdbscan_review_clustering
+
+- Goal: add isolated HDBSCAN clustering on review-level residual embeddings.
+- Baseline: review representation exists, but there is no clustering module for discovery batches yet.
+- Variable: clustering only; no residual extraction, no encoder, no vocabulary, no sentiment changes.
+- Hypothesis: dense groups of review embeddings will form stable HDBSCAN clusters, while heterogeneous reviews will be marked as noise.
+- Scope fixed:
+  - input = ReviewRepresentationBatch
+  - algorithm = HDBSCAN
+  - params fixed by spec: min_cluster_size=15, min_samples=5, metric='euclidean', cluster_selection_method='eom'
+  - no top-phrase extraction yet
+- Files to change:
+  - .opencode/plans/current.md
+  - .opencode/plans/compact_context.md
+  - src/discovery/clusterer.py
+  - src/discovery/__init__.py
+  - 	ests/test_clusterer.py
+- Required checks:
+  - synthetic 3-group data -> about 3 clusters found
+  - heterogeneous data -> all noise
+  - eview_to_cluster, cluster_sizes, 
+_clusters, 
+_noise, 
+oise_rate computed correctly
+
+## Update 2026-04-24: discovery_step4_hdbscan_review_clustering
+
+- Goal: add isolated HDBSCAN clustering on review-level residual embeddings.
+- Scope respected:
+  - input = ReviewRepresentationBatch
+  - clustering only; no residual extraction / encoder / vocabulary / sentiment changes
+  - fixed params kept by default: min_cluster_size=15, min_samples=5, metric='euclidean', cluster_selection_method='eom'
+
+### Files changed
+- src/discovery/clusterer.py
+- src/discovery/__init__.py
+- 	ests/test_clusterer.py
+
+### Implementation
+- added ClusteringResult with:
+  - eview_to_cluster
+  - cluster_sizes
+  - 
+_clusters
+  - 
+_noise
+  - 
+oise_rate
+- added ReviewClusterer.cluster(batch)
+- logic:
+  - returns empty result for empty batch
+  - runs hdbscan.HDBSCAN on review embeddings
+  - maps each eview_id to cluster label
+  - counts non-noise cluster sizes
+  - computes noise count and noise rate
+
+### Verification
+- 	ests/test_clusterer.py: 2 passed
+- combined discovery tests: 13 passed
+- checked cases:
+  - synthetic 100-review data in 3 groups -> 2..4 clusters accepted, low noise, cluster sizes >= 15
+  - heterogeneous identity-like embeddings -> all 100 reviews marked as noise
+
+### Environment note
+- pytest still warns about .pytest_cache write permissions
+- warning is non-blocking; tests pass
+
+### Decision
+- PASS
+- review-level HDBSCAN clustering is ready
+- next step can add cluster summaries: top residual phrases per cluster and comparison against gold labels
+
+## Planned 2026-04-24: discovery_step5_cluster_phrase_aggregation
+
+- Goal: add cluster-level summaries from residual phrases.
+- Baseline: clustering returns review labels, but there is no summary layer with top phrases per cluster yet.
+- Variable: aggregation only; no clustering / encoder / residual extraction / vocabulary changes.
+- Hypothesis: frequency aggregation of esidual_phrases inside each non-noise cluster will produce stable top phrases for manual inspection.
+- Scope fixed:
+  - input = ResidualResult + ClusteringResult
+  - aggregate only non-noise clusters
+  - output top phrases with counts + sample review ids
+  - no gold evaluation yet
+- Files to change:
+  - .opencode/plans/current.md
+  - .opencode/plans/compact_context.md
+  - src/discovery/aggregator.py
+  - src/discovery/__init__.py
+  - 	ests/test_aggregator.py
+- Required checks:
+  - known cluster phrases -> correct top frequency order
+  - cluster_id = -1 is not aggregated
+  - sample review ids capped at 5
+
+## Update 2026-04-24: discovery_step5_cluster_phrase_aggregation
+
+- Goal: add cluster-level summaries from residual phrases.
+- Scope respected:
+  - input = ResidualResult + ClusteringResult
+  - aggregation only; no clustering / encoder / residual extraction / vocabulary changes
+  - only non-noise clusters are summarized
+  - no gold evaluation yet
+
+### Files changed
+- src/discovery/aggregator.py
+- src/discovery/__init__.py
+- 	ests/test_aggregator.py
+
+### Implementation
+- added ClusterSummary with:
+  - cluster_id
+  - 
+_reviews
+  - 	op_phrases
+  - sample_review_ids
+- added ClusterAggregator.aggregate(residuals, clustering)
+- logic:
+  - joins residuals to eview_to_cluster
+  - skips cluster_id = -1
+  - counts phrase frequencies inside each cluster
+  - sorts top phrases by req desc, phrase asc
+  - returns up to 20 phrases by default
+  - returns up to 5 sample review ids by default
+  - sampling is deterministic via fixed seed for reproducibility
+
+### Verification
+- 	ests/test_aggregator.py: 2 passed
+- combined discovery tests: 15 passed
+- checked cases:
+  - known cluster phrases -> correct top frequencies
+  - noise-only clustering -> empty summaries
+
+### Environment note
+- pytest still warns about .pytest_cache write permissions
+- warning is non-blocking; tests pass
+
+### Decision
+- PASS
+- cluster phrase aggregation is ready
+- next step can implement comparison with gold labels for clustering quality
+
+## Planned 2026-04-24: discovery_step6_gold_cluster_evaluation
+
+- Goal: evaluate discovery clusters against gold labels after removing vocabulary-covered aspects.
+- Baseline: discovery now produces residuals, review embeddings, clusters, and cluster summaries, but has no formal quality metric against gold.
+- Variable: evaluation only; no changes to extractor / representation / clustering / aggregation.
+- Hypothesis: cluster purity by dominant uncovered gold aspect is a stable proxy for whether discovery clusters recover real uncovered aspects.
+- Scope fixed:
+  - input = ClusteringResult + ResidualResult + gold labels + Vocabulary
+  - remove vocabulary-covered gold aspects first
+  - compute dominant uncovered aspect and purity per cluster
+  - define clean cluster by purity >= 0.7
+  - no pipeline reruns, no threshold tuning
+- Files to change:
+  - .opencode/plans/current.md
+  - .opencode/plans/compact_context.md
+  - src/discovery/evaluator.py
+  - src/discovery/__init__.py
+  - 	ests/test_evaluator.py
+- Required checks:
+  - synthetic 2-cluster case -> correct dominant aspects and purity
+  - all-noise case -> coverage_via_clustering = 0
+  - 
+_excluded_reviews counts reviews with empty esidual_phrases
+"@; Add-Content -Path '.opencode/plans/compact_context.md' -Value @"
+
+- ˆÂÎ¸ ˝Ú‡Ô‡: discovery_step6_gold_cluster_evaluation
+- ˜ÚÓ ÔÓ‚ÂˇÎË: quality discovery clusters vs gold labels ÔÓÒÎÂ Û‰‡ÎÂÌËˇ ÒÎÓ‚‡ÌÓ-ÔÓÍ˚Ú˚ı ‡ÒÔÂÍÚÓ‚
+- „ËÔÓÚÂÁ‡: purity ÔÓ ‰ÓÏËÌËÛ˛˘ÂÏÛ uncovered gold aspect ‰‡ÒÚ ˜ÂÒÚÌÛ˛ ÏÂÚËÍÛ Í‡˜ÂÒÚ‚‡ discovery
+- Ó„‡ÌË˜ÂÌËˇ: ·ÂÁ ËÁÏÂÌÂÌËÈ extractor / representation / clusterer / aggregator
+- Ù‡ÈÎ˚: src/discovery/evaluator.py, src/discovery/__init__.py, 	ests/test_evaluator.py
+- ÔÓ‚ÂÍ‡: synthetic 2-cluster case, all-noise case, 
+_excluded_reviews
+- ÒÎÂ‰Û˛˘ËÈ ¯‡„: Â‡ÎËÁÓ‚‡Ú¸ evaluator Ë unit tests
+
+## Update 2026-04-24: discovery_step6_gold_cluster_evaluation
+
+- Goal: evaluate discovery clusters against gold labels after removing vocabulary-covered aspects.
+- Scope respected:
+  - input = ClusteringResult + ResidualResult + gold labels + Vocabulary
+  - evaluation only; no extractor / representation / clustering / aggregation changes
+  - vocabulary-covered gold aspects removed before scoring
+  - clean cluster rule fixed at purity >= 0.7
+
+### Files changed
+- src/discovery/evaluator.py
+- src/discovery/__init__.py
+- 	ests/test_evaluator.py
+
+### Implementation
+- added EvaluationReport with:
+  - 
+_clusters
+  - 
+_clean_clusters
+  - coverage_via_clustering
+  - purity_per_cluster
+  - dominant_aspect_per_cluster
+  - 
+oise_rate
+  - 
+_excluded_reviews
+- added ClusterEvaluator.evaluate(clustering, residuals, gold_labels, vocabulary)
+- logic:
+  - normalizes review gold labels into aspect-name sets
+  - removes gold aspects covered by vocabulary via lemmatized overlap with canonical names + synonyms
+  - computes dominant uncovered gold aspect per cluster
+  - computes cluster purity as dominant_count / n_reviews_in_cluster
+  - marks clean clusters by purity >= 0.7
+  - computes coverage_via_clustering as share of uncovered review-aspect instances matched by the dominant aspect of a clean cluster
+  - counts excluded reviews as residuals with empty esidual_phrases
+
+### Verification
+- 	ests/test_evaluator.py: 2 passed
+- combined discovery tests: 17 passed
+- checked cases:
+  - synthetic 2-cluster case -> correct purity, dominant aspects, clean cluster count, coverage
+  - all-noise case -> coverage_via_clustering = 0
+
+### Environment note
+- pytest still warns about .pytest_cache write permissions
+- warning is non-blocking; tests pass
+
+### Decision
+- PASS
+- gold-based clustering evaluation is ready
+- next step can be an end-to-end discovery runner over category reviews
+
+## Planned 2026-04-24: discovery_step7_pipeline_wrapper
+
+- Goal: add end-to-end discovery pipeline wrapper over the existing discovery stages.
+- Baseline: all isolated discovery stages exist, but there is no single orchestration entrypoint returning one report.
+- Variable: orchestration only; no changes to residual extraction / representation / clustering / aggregation / evaluation logic.
+- Hypothesis: one thin wrapper will make the discovery experiment reproducible and easier to run per category without changing stage behavior.
+- Scope fixed:
+  - input = category_id, eviews, gold_labels, ocabulary
+  - sequentially call existing discovery stages only
+  - output = cluster summaries + evaluation report + metadata
+  - no CLI / no artifact writing yet
+- Files to change:
+  - .opencode/plans/current.md
+  - .opencode/plans/compact_context.md
+  - src/discovery/pipeline.py
+  - src/discovery/__init__.py
+  - 	ests/test_pipeline.py
+- Required checks:
+  - pipeline returns DiscoveryReport
+  - metadata includes model name, date, HDBSCAN params
+  - smoke test on synthetic reviews runs end-to-end with stub encoder
+
+## Update 2026-04-24: discovery_step7_pipeline_wrapper
+
+- Goal: add end-to-end discovery pipeline wrapper over the existing discovery stages.
+- Scope respected:
+  - orchestration only; no residual extraction / representation / clustering / aggregation / evaluation logic changes
+  - sequentially reuses existing discovery stages
+  - output = cluster summaries + evaluation report + metadata
+  - no CLI / artifact writing added
+
+### Files changed
+- src/discovery/pipeline.py
+- src/discovery/__init__.py
+- 	ests/test_pipeline.py
+
+### Implementation
+- added DiscoveryReport with:
+  - cluster_summaries
+  - evaluation
+  - metadata
+- added un_discovery(category_id, reviews, gold_labels, vocabulary)
+- pipeline order:
+  - ResidualExtractor.extract() for each review
+  - ReviewRepresentation.build()
+  - ReviewClusterer.cluster()
+  - ClusterAggregator.aggregate()
+  - ClusterEvaluator.evaluate()
+- metadata includes:
+  - category_id
+  - generated_at
+  - model_name
+  - hdbscan params
+- added optional dependency injection for tests / controlled runs:
+  - encoder
+  - esidual_extractor
+  - epresentation_builder
+  - clusterer
+  - ggregator
+  - evaluator
+
+### Verification
+- 	ests/test_pipeline.py: 1 passed
+- combined discovery tests: 18 passed
+- checked cases:
+  - end-to-end synthetic run returns DiscoveryReport
+  - metadata contains model name, date, HDBSCAN params
+  - wrapper correctly reports 
+_excluded_reviews
+
+### Environment note
+- pytest still warns about .pytest_cache write permissions
+- warning is non-blocking; tests pass
+
+### Decision
+- PASS
+- discovery pipeline wrapper is ready
+- next step can be a real category-level run script / notebook over dataset reviews
+
+## Update 2026-04-24: discovery_step8_runner_and_artifacts
+
+- Goal: add category-level discovery runner and artifact export.
+- Scope respected:
+  - discovery stage logic unchanged
+  - only config-driven runner + report export added
+  - no parameter tuning through code paths
+
+### Files changed
+- configs/configs.py
+- src/discovery/pipeline.py
+- enchmark/discovery/run_discovery.py
+- 	ests/test_discovery_run_script.py
+
+### Implementation
+- added config.discovery_runner with fixed defaults:
+  - encoder_model = ai-forever/sbert_large_nlu_ru
+  - encoder_batch_size = 8
+  - purity_threshold = 0.7
+  - 	op_n_phrases_per_cluster = 20
+  - hdbscan = {min_cluster_size=15, min_samples=5, metric=euclidean, cluster_selection_method=eom}
+- extended un_discovery() metadata with:
+  - 
+_reviews_total
+  - 
+_reviews_with_residual
+  - 
+_excluded_reviews
+  - excluded_review_ids
+- added enchmark/discovery/run_discovery.py
+- runner behavior:
+  - loads data/dataset_final.csv by default
+  - runs discovery separately for physical_goods, consumables, hospitality, services
+  - loads core + domain vocabulary per category
+  - saves per-category JSON + Markdown summary
+  - saves global metrics_summary.csv
+  - saves global excluded_reviews.csv
+- markdown includes:
+  - total reviews
+  - reviews with residuals
+  - cluster counts
+  - clean cluster counts
+  - coverage_via_clustering
+  - top phrases per cluster with purity + dominant aspect
+
+### Verification
+- 	ests/test_discovery_run_script.py: 2 passed
+- combined discovery tests: 20 passed
+- python benchmark/discovery/run_discovery.py --help works
+
+### Environment note
+- full category-level discovery run was not executed in this step
+- reason: heavy CPU job on the large RU encoder; implementation + smoke verification completed
+- pytest still warns about .pytest_cache write permissions; warning is non-blocking
+
+### Decision
+- PASS
+- runner and artifact export are ready
+- next step can be a real benchmark run over all 4 categories
+
+## Update 2026-04-24: discovery_step8_real_benchmark_run
+
+- Goal: execute the full discovery benchmark on all 4 categories with the frozen runner configuration.
+- Scope respected:
+  - no code changes in discovery stages
+  - no parameter tuning during the run
+  - run uses ai-forever/sbert_large_nlu_ru, batch_size=8, HDBSCAN defaults from config
+
+### Artifacts
+- output dir: `benchmark/discovery/results/20260424_171034`
+- files saved:
+  - `discovery_report_{category}.json`
+  - `cluster_summary_{category}.md`
+  - `metrics_summary.csv`
+  - `excluded_reviews.csv`
+
+### Result
+- `physical_goods`: residual=950/1094, clusters=4, clean=2, coverage=0.0707, noise=0.6747
+- `consumables`: residual=200/200, clusters=2, clean=0, coverage=0.0000, noise=0.7800
+- `hospitality`: residual=197/197, clusters=0, clean=0, coverage=0.0000, noise=1.0000
+- `services`: residual=270/271, clusters=0, clean=0, coverage=0.0000, noise=1.0000
+
+### Decision
+- RUN PASS / QUALITY FAIL
+- pipeline is operational, but current clustering quality is not sufficient as a useful discovery method
+- next step: inspect physical_goods clusters and residual quality before any parameter changes
+
+## Planned 2026-04-24: discovery_step9_encoder_sanity_check
+
+- Goal: measure cosine separation of fixed Russian phrase pairs for `rubert-tiny2` vs `sbert_large_nlu_ru`.
+- Baseline: earlier project diagnostics indicated `rubert-tiny2` has squashed cosine space for noun-like phrases.
+- Variable: encoder only; no residual extraction / clustering / evaluation / vocabulary changes.
+- Hypothesis: `sbert_large_nlu_ru` will show materially larger separation between similar and different pairs than `rubert-tiny2`.
+- Metric: `median(similar) - median(different)` and range overlap on fixed pair sets.
+- Files to change:
+  - `benchmark/discovery/encoder_sanity.py`
+  - `.opencode/plans/current.md`
+  - `.opencode/plans/compact_context.md`
+
+## Update 2026-04-24: discovery_step9_encoder_sanity_check
+
+- Goal: measure cosine separation of fixed Russian phrase pairs for `rubert-tiny2` vs `sbert_large_nlu_ru`.
+- Scope respected:
+  - encoder-only experiment
+  - no discovery pipeline changes
+  - fixed manually curated pairs only
+
+### Files changed
+- `benchmark/discovery/encoder_sanity.py`
+
+### Artifacts
+- output dir: `benchmark/discovery/results/20260424_204200_sanity`
+- files saved:
+  - `pair_similarities.csv`
+  - `stats_summary.md`
+
+### Result
+- `rubert-tiny2`: similar median=0.8407, different median=0.6499, random_nouns median=0.8217
+- `sbert_large_nlu_ru`: similar median=0.7594, different median=0.4343, random_nouns median=0.5694
+- `sbert_large_nlu_ru` separation = `0.3251`
+- full range overlap between `similar` and `different` for `sbert_large_nlu_ru`: `False`
+
+### Decision
+- PASS
+- verdict from summary: `ÏÓ‰ÂÎ¸ ‡Á‰ÂÎˇÂÚ`
+- next step can proceed to product-level or category-level clustering diagnostics with more confidence in the encoder space
+
+## Planned 2026-04-24: discovery_step10_product_level_runner
+
+- Goal: rerun discovery grouped by product (`nm_id`) instead of whole category.
+- Baseline: category-level run `benchmark/discovery/results/20260424_171034` had weak quality and high noise.
+- Variable: run grouping only; no changes to residual extraction / encoder / HDBSCAN params / evaluation / vocabulary.
+- Hypothesis: within-product clustering should reduce cross-product semantic mixing and improve clean cluster coverage.
+- Metric: per-product and category-weighted `coverage_via_clustering`, `noise_rate`, `n_clean_clusters`.
+- Files changed:
+  - `benchmark/discovery/run_discovery_by_product.py`
+  - `tests/test_discovery_product_run_script.py`
+  - `.opencode/plans/current.md`
+  - `.opencode/plans/compact_context.md`
+
+## Update 2026-04-24: discovery_step10_product_level_runner
+
+- Goal: rerun discovery grouped by product (`nm_id`) instead of whole category.
+- Scope respected:
+  - only runner/artifacts added
+  - discovery stages unchanged
+  - encoder/model/HDBSCAN params/vocabulary unchanged
+
+### Artifacts
+- output dir: `benchmark/discovery/results/20260424_210212_by_product`
+- files saved:
+  - `discovery_report_{category}_{nm_id}.json`
+  - `cluster_summary_{category}_{nm_id}.md`
+  - `metrics_summary_by_product.csv`
+  - `metrics_summary_by_category.csv`
+  - `excluded_reviews_by_product.csv`
+
+### Result
+- `physical_goods`: products=9, residual=950/1094, clusters=2, clean=2, weighted_coverage=0.0254, weighted_noise=0.9579
+- `consumables`: products=2, residual=200/200, clusters=0, clean=0, weighted_coverage=0.0000, weighted_noise=1.0000
+- `hospitality`: products=2, residual=197/197, clusters=0, clean=0, weighted_coverage=0.0000, weighted_noise=1.0000
+- `services`: products=3, residual=270/271, clusters=0, clean=0, weighted_coverage=0.0000, weighted_noise=1.0000
+- only product with clusters: `physical_goods/209269133`, clusters=2, clean=2, coverage=0.2317, noise=0.6154
+
+### Verification
+- product runner smoke tests: 2 passed
+- discovery suite: 22 passed
+- warning: pytest cache permission warning remains non-blocking
+
+### Decision
+- RUN PASS / QUALITY FAIL
+- product-level grouping did not rescue HDBSCAN discovery under frozen params
+- next step: inspect residual representation/evaluator or stop HDBSCAN discovery branch as candidate for final method
+
+## Planned 2026-04-24: discovery_step11_residual_quality_diagnostic
+
+- Goal: diagnose residual phrases before clustering.
+- Baseline: category-level and product-level HDBSCAN runs both failed quality under frozen params.
+- Variable: diagnostics only; no changes to extractor / encoder / HDBSCAN / evaluator / vocabulary.
+- Hypothesis: residual input is dominated by short object/entity phrases, so review embeddings are too sparse/noisy for stable HDBSCAN.
+- Metric: residual phrases per review, unigram share, duplicate/top phrase concentration, uncovered-gold overlap rate, top residual phrases by category/product.
+- Files to change:
+  - `benchmark/discovery/residual_quality.py`
+  - `tests/test_residual_quality.py`
+  - `.opencode/plans/current.md`
+  - `.opencode/plans/compact_context.md`
+
+## Planned 2026-04-24: discovery_step12_residual_domain_filter_fix
+
+- Goal: fix residual coverage to match the original spec: check all aspects from loaded hybrid vocabulary (`core + domain`), not only category-domain-filtered aspects.
+- Baseline: residual diagnostics show dictionary-covered phrases like `—É–ø–∞–∫–æ–≤–∫–∞`, `–¥–æ—Å—Ç–∞–≤–∫–∞`, `–≤–∫—É—Å` leaking into residuals.
+- Variable: residual aspect selection only.
+- Hypothesis: removing the extra domain filter will reduce false residual phrases and make residual input cleaner before any clustering changes.
+- Metric: residual phrase count, top false residual phrases, unigram share, residual_gold_hit_rate.
+- Files to change:
+  - `src/discovery/residual_extractor.py`
+  - `tests/test_residual_extractor.py`
+  - `.opencode/plans/current.md`
+  - `.opencode/plans/compact_context.md`
+
+## Update 2026-04-24: discovery_step11_residual_quality_diagnostic
+
+- Goal: diagnose residual phrases before clustering.
+- Scope respected:
+  - diagnostics only
+  - no discovery stage changes in this step
+
+### Files changed
+- `benchmark/discovery/residual_quality.py`
+- `tests/test_residual_quality.py`
+
+### Artifacts
+- before residual fix: `benchmark/discovery/results/20260424_212249_residual_quality`
+- after residual fix: `benchmark/discovery/results/20260424_212708_residual_quality`
+- files saved:
+  - `residual_review_diagnostics.csv`
+  - `residual_summary_by_category.csv`
+  - `top_residual_phrases_by_category.csv`
+  - `top_residual_phrases_by_product.csv`
+  - `residual_quality_summary.md`
+
+### Result before residual fix
+- `consumables`: residual_phrases=1771, unigram_share=0.6256, residual_gold_hit_rate=0.0294
+- `hospitality`: residual_phrases=6007, unigram_share=0.6591, residual_gold_hit_rate=0.8226
+- `physical_goods`: residual_phrases=8264, unigram_share=0.6416, residual_gold_hit_rate=0.4427
+- `services`: residual_phrases=6087, unigram_share=0.6359, residual_gold_hit_rate=0.6222
+
+### Diagnostic finding
+- residual top phrases included dictionary-covered terms such as delivery/packaging-like phrases
+- root cause: `ResidualExtractor` applied extra domain filtering inside already-loaded hybrid vocabulary
+- next step became isolated residual coverage fix
+
+## Update 2026-04-24: discovery_step12_residual_domain_filter_fix
+
+- Goal: align residual coverage with spec: check all aspects from loaded `core + domain` vocabulary.
+- Scope respected:
+  - changed only residual aspect selection
+  - no encoder / representation / HDBSCAN / evaluator / vocabulary changes
+
+### Files changed
+- `src/discovery/residual_extractor.py`
+- `tests/test_residual_extractor_domain_filter.py`
+
+### Implementation
+- `_select_relevant_aspects()` now returns all aspects from the provided `Vocabulary`
+- removed the extra category/domain filter from residual coverage
+- added regression test: `e-commerce` aspect must cover phrase even when `category_id=consumables`
+
+### Residual diagnostic after fix
+- `consumables`: residual_phrases 1771 -> 1489; residual_reviews 200 -> 197
+- `hospitality`: residual_phrases 6007 -> 5805
+- `physical_goods`: residual_phrases 8264 -> 8200
+- `services`: residual_phrases 6087 -> 5869
+- residual_gold_hit_rate unchanged across categories
+
+### Benchmark after fix
+- category-level artifacts: `benchmark/discovery/results/20260424_212937`
+- product-level artifacts: `benchmark/discovery/results/20260424_214335_by_product`
+- category-level `physical_goods`: coverage 0.0707 -> 0.0727; noise 0.6747 -> 0.6695
+- category-level `consumables`: dirty 2 clusters disappeared; now clusters=0, noise=1.0
+- product-level aggregate unchanged except `consumables` residual reviews 200 -> 197
+
+### Verification
+- discovery suite: 25 passed
+- warning: pytest cache permission warning remains non-blocking
+
+### Decision
+- FIX PASS / QUALITY STILL FAIL
+- residual coverage bug fixed, but HDBSCAN discovery remains too weak for final method under current representation/params
+- next step: stop HDBSCAN residual discovery as final path, or run a representation-specific diagnostic before killing it formally
+
+## Update 2026-04-24: discovery_v2_phrase_per_product
+
+- Goal: rebuild discovery at product level and cluster residual phrases, not reviews.
+- Baseline: v1 category/product review-level HDBSCAN had near-zero coverage and high noise.
+- Variable changed:
+  - clustering unit: review -> unique residual phrase
+  - grouping unit: product (`nm_id`)
+  - HDBSCAN params: min_cluster_size=5, min_samples=3
+- Scope respected:
+  - old `src/discovery/pipeline.py` untouched
+  - same `DiscoveryEncoder` and `ResidualExtractor`
+  - no vocabulary / sentiment / NLI changes
+
+### Files changed
+- `src/discovery/per_product_pipeline.py`
+- `benchmark/discovery/run_discovery_per_product.py`
+- `configs/configs.py`
+- `src/discovery/__init__.py`
+- `tests/test_per_product_pipeline.py`
+- `tests/test_discovery_per_product_run_script.py`
+
+### Artifacts
+- old `benchmark/discovery/results/*` removed before run
+- new artifacts: `benchmark/discovery/results/20260424_223317_per_product`
+- files saved:
+  - `discovery_<nm_id>.json` for 16 products
+  - `discovery_<nm_id>.md` for 16 products
+  - `metrics_per_product.csv`
+  - `summary.md`
+
+### Result
+- products: 16
+- products with clusters: 16
+- mean coverage_via_clustering: 0.0046
+- mean noise_rate: 0.6125
+- non-zero coverage only:
+  - services / 1526918294: 0.0455
+  - hospitality / 1809358565: 0.0286
+- runtime: 0:08:37
+
+### Manual cluster assessment
+- meaningful exploratory clusters found for some products: `–∫–∞—Ç—É—à–∫–∞/—Å–ø–∏–Ω–Ω–∏–Ω–≥/–ª–µ—Å–∫–∞`, `—Ö—É–¥–∏/–∫–æ—Ñ—Ç–∞/—à–≤—ã`, `—Ç–∞—Ä–∞–∫–∞–Ω—ã/—Ä–∞—Å–ø—ã–ª–∏—Ç–µ–ª—å/—ç—Ñ—Ñ–µ–∫—Ç`, `–∫–æ—Ä–º/–∫–æ—Ç/–≥—Ä–∞–Ω—É–ª—ã`, `—Ç—É–∞–ª–µ—Ç/–∑–∞–ª/—Ç–∞–∫—Å–∏`
+- many clusters are still noise-like: numbers, dates, time words, generic `—Ç–æ–≤–∞—Ä`, generic platform words
+
+### Verification
+- discovery-related tests: 29 passed
+- warning: pytest cache permission warning remains non-blocking
+
+### Decision
+- RUN PASS / QUALITY MIXED
+- v2 is useful as exploratory candidate-aspect mining, but not validated as automatic vocabulary expansion because gold coverage remains near zero.
+
+## Planned 2026-04-24: discovery_v3_filter_metrics_manual_eval
+
+- Goal: add isolated v3 over per-product phrase discovery with residual phrase filtering, intrinsic metrics, semantic gold metrics, and manual-label infrastructure.
+- Baseline: v2 phrase-level per-product discovery `benchmark/discovery/results/20260424_223317_per_product`.
+- Variable changed:
+  - preprocessing residual phrases before clustering
+  - evaluation metrics only
+- Scope:
+  - do not change encoder, vocabulary, sentiment, matching, or old `per_product_pipeline.py`
+  - add new v3 files and runner
+- Hypothesis: filtering numeric/date/money/service/context phrases improves noise_rate, cohesion, silhouette, and soft_purity.
+- Metric: A/B `no_filter` vs `filtered` on noise_rate, cohesion, separation, silhouette, concentration, coverage@0.65, avg_soft_purity, novel clusters.
+- Files to change:
+  - `src/discovery/phrase_filter.py`
+  - `src/discovery/metrics_l1_intrinsic.py`
+  - `src/discovery/metrics_l2_semantic.py`
+  - `src/discovery/manual_eval.py`
+  - `src/discovery/config_v3.py`
+  - `src/discovery/per_product_pipeline_v3.py`
+  - `benchmark/discovery/run_discovery_v3.py`
+  - `tests/test_discovery/*`
+
+## Update 2026-04-24: discovery_v3_filter_metrics_manual_eval
+
+- Goal: implement isolated v3 A/B over per-product phrase discovery with phrase filtering, intrinsic metrics, semantic gold metrics, and manual label template.
+- Scope respected:
+  - old `src/discovery/per_product_pipeline.py` unchanged
+  - encoder/vocabulary/sentiment/matching unchanged
+  - v3 added as separate modules and runner
+
+### Files changed
+- `src/discovery/config_v3.py`
+- `src/discovery/phrase_filter.py`
+- `src/discovery/metrics_l1_intrinsic.py`
+- `src/discovery/metrics_l2_semantic.py`
+- `src/discovery/manual_eval.py`
+- `src/discovery/per_product_pipeline_v3.py`
+- `benchmark/discovery/run_discovery_v3.py`
+- `src/discovery/__init__.py`
+- `pytest.ini`
+- `tests/test_discovery/*`
+
+### Artifacts
+- output dir: `benchmark/discovery/results/20260424_231742_v3`
+- files saved:
+  - `product_<nm_id>_no_filter.json` for 16 products
+  - `product_<nm_id>_filtered.json` for 16 products
+  - `product_<nm_id>_comparison.md` for 16 products
+  - `metrics_summary_v3.csv`
+  - `ab_comparison_summary.md`
+  - `filter_impact_report.md`
+  - `manual_cluster_labels.csv`
+
+### Result
+- runtime: `0:16:48.947971`
+- products: 16
+- rows: 32
+- filtered phrases: 4008 / 21363 = 18.76%
+- avg unique phrases: 743.1250 -> 611.8125
+- avg noise_rate: 0.6125 -> 0.5366
+- avg cohesion: 0.6994 -> 0.6692
+- avg separation: 0.5817 -> 0.6056
+- avg silhouette: 0.2327 -> 0.2185
+- coverage@0.65: 0.6600 -> 0.7466
+- avg soft_purity: 0.1499 -> 0.1706
+- novel clusters total: 70 -> 40
+
+### Filter impact
+- service_only: 2759
+- temporal: 480
+- context_stop: 446
+- numeric: 283
+- monetary: 40
+- too_short: 0
+
+### Verification
+- v3 runner help works
+- `pytest tests/test_discovery -q --basetemp .pytest_tmp`: 20 passed
+- discovery suite explicit files: 49 passed
+- warning: pytest cache permission warning remains non-blocking
+- note: 3 stale `tmp*` dirs created by failed tempfile test could not be removed due Windows ACL; `pytest.ini` excludes `tmp*` from collection
+
+### Decision
+- RUN PASS / FILTER MIXED
+- automatic verdict from v3 summary: `–§–ò–õ–¨–¢–† –í–†–ï–î–ò–¢, –ù–ï –∏—Å–ø–æ–ª—å–∑–æ–≤–∞—Ç—å`
+- interpretation: filter improves noise_rate, semantic coverage, and soft_purity, but hurts cohesion, separation, silhouette, and concentration enough that automatic verdict rejects it
+- next step: inspect `manual_cluster_labels.csv`; manual eval still useful, but filtered config should not replace v2 automatically without human review
+
+## Update 2026-04-24: discovery_gold_aspects_per_product_reference
+
+- Goal: create a static reference of unique gold aspect names per product for manual cluster labeling.
+- Scope respected:
+  - no CSV edits
+  - no filtering or normalization of aspect names
+  - no pipeline changes
+- Source: `data/dataset_final.csv`
+- Output: `benchmark/discovery/gold_aspects_per_product.md`
+- Products: 16 / 16
+- Reviews processed: 1762
+- Skipped empty/invalid `true_labels`: 0
+- Missing products: 0
+- Parsing: `ast.literal_eval`
+- Ordering: fixed category_mapping order from request; aspects sorted alphabetically inside product
+
+## discovery_v3_final_manual_metrics
+- –¶–µ–ª—å: –æ–±–æ–≥–∞—Ç–∏—Ç—å –≥–æ—Ç–æ–≤—ã–π v3 metrics_summary Level 3 —Ä—É—á–Ω—ã–º–∏ –º–µ—Ç—Ä–∏–∫–∞–º–∏ –±–µ–∑ –ø–µ—Ä–µ—Å—á—ë—Ç–∞ L1/L2.
+- Baseline: benchmark/discovery/results/20260424_231742_v3/metrics_summary_v3.csv.
+- –ò–∑–º–µ–Ω—è–µ–º–∞—è –ø–µ—Ä–µ–º–µ–Ω–Ω–∞—è: –¥–æ–±–∞–≤–ª—è–µ—Ç—Å—è —Ç–æ–ª—å–∫–æ post-processing manual labels –¥–ª—è filtered.
+- –ú–µ—Ç—Ä–∏–∫–∞: manual_valid_rate, manual_novel_count, manual_noise_rate, per-category valid/noise/novel.
+- –§–∞–π–ª—ã: –Ω–æ–≤—ã–π benchmark/discovery/run_discovery_final.py; output –≤ *_final.
+
+### discovery_v3_final_manual_metrics_result
+- –°–∫—Ä–∏–ø—Ç: benchmark/discovery/run_discovery_final.py.
+- Input: benchmark/discovery/results/20260424_231742_v3/metrics_summary_v3.csv + benchmark/discovery/manual_labels/manual_cluster_labels_draft.csv.
+- Output: benchmark/discovery/results/20260424_231742_final/.
+- Result: 32 CSV rows; 86/86 manual clusters labeled; filtered gets L3, no_filter L3 empty.
+- Manual valid clusters: 53/86 = 61.6%; valid_known=21, valid_novel=32, mixed=22, noise=11.
+- Category valid_rate: services=68.4%, physical_goods=64.8%, consumables=50.0%, hospitality=28.6%.
+- Checks: py_compile OK; final CSV/report/category CSV generated.
