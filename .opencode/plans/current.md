@@ -2239,3 +2239,24 @@ _excluded_reviews
 - Метрика: техническая; повторный запуск должен давать cache hit и пропускать `pipeline.run` для совпавших товаров.
 - Файлы: `src/discovery/snapshot_cache.py`, `src/discovery/__init__.py`, `benchmark/discovery/run_discovery_v3.py`, `tests/test_discovery_snapshot_cache.py`.
 - Проверка: `py_compile` OK; `tests/test_discovery_snapshot_cache.py` -> 2 passed.
+
+## Planned 2026-04-25: traced_pipeline_refactor_v1
+
+- Goal: refactor current e2e into compute-once/analyze-many traced artifacts without changing algorithms.
+- Source of truth: `benchmark/end_to_end/results/20260425_165408_final_e2e`.
+- Baseline metrics: Track A P/R/F1=0.4767/0.4198/0.4279; review MAE=0.8466; round MAE=0.8005; product MAE n>=3=0.7841; inversion_rate=0.0565.
+- Changed variable: orchestration and artifact persistence only.
+- Hypothesis: traced staged artifacts reproduce current e2e metrics within tolerance.
+- Scope: lexical-only matching; cosine is diagnostic only; frozen v3 discovery reuse with centroid cosine threshold 0.5; v4 sentiment + existing negation correction.
+- Files to change: `run_config.yaml`, `src/pipeline/`, `src/evaluation/`, `dashboard/`, `src/plotting/`, `src/ui_data/`, tests, README.
+- Sanity gate: review MAE 0.8466, round MAE 0.8005, product MAE n3 0.7841, P/R/F1 0.4767/0.4198/0.4279, inversion_rate 0.0565.
+
+## traced_pipeline_refactor_v1 — final status
+
+Hypothesis: compute-once traced artifacts can reproduce current e2e metrics without algorithm changes.
+Changed files: tracing/stages/orchestrator/evaluation/dashboard/plotting/ui_data, README, requirements, run_config.
+Metric target: all sanity metrics within approved tolerances.
+Result: PASS on results/20260425_183110_traced; reference parity preserved.
+Artifacts: MANIFEST, parquet/npy/csv/json stage artifacts, figures, dashboard screenshots.
+Moved: src/pipeline.py -> src/pipeline/legacy.py. Deleted/archived: none.
+Next: use traced artifacts for ВКР analysis; do not change algorithms unless a new isolated experiment is approved.

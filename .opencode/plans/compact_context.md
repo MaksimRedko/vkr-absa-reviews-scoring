@@ -462,3 +462,21 @@ _clean_clusters
 - что не сработало: полный discovery run не запускался по условию задачи
 - что зафиксировано: runner v3 пишет cache hit/miss и reuse готовый ProductDiscoveryReport
 - следующий шаг: при следующем реальном discovery прогоне проверить, что второй запуск даёт cache hits
+
+- цель этапа: traced_pipeline_refactor_v1
+- что проверяем: refactor current e2e into traced compute-once artifacts
+- baseline: `benchmark/end_to_end/results/20260425_165408_final_e2e`
+- переменная: orchestration/artifact layout only; algorithms frozen
+- зафиксировано: Stage3 lexical-only; cosine diagnostic; Stage4 frozen v3 centroid cosine threshold=0.5
+- gate: MAE review 0.8466, round 0.8005, product n3 0.7841, P/R/F1 0.4767/0.4198/0.4279, inversion 0.0565
+- следующий шаг: implement `src/pipeline/` traced runner + evaluation sanity tests
+
+## traced_pipeline_refactor_v1 — compact
+- цель этапа: compute once, analyze N times для текущего e2e
+- что проверяли: parity с 20260425_165408_final_e2e без смены алгоритмов
+- что получилось: full run results/20260425_183110_traced создан
+- что не сработало: нет; sanity gate прошёл
+- что зафиксировано: lexical-only, frozen v3 binding threshold 0.5, v4 sentiment, deterministic candidate_id
+- артефакты: MANIFEST, parquet/npy/csv/json, figures, dashboard screenshots
+- тесты: tracing/unit/sanity/core passed
+- следующий шаг: анализ ВКР на traced artifacts
