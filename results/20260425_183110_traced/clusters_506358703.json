@@ -1,0 +1,104 @@
+{
+  "nm_id": 506358703,
+  "category_id": "consumables",
+  "n_unmatched_candidates": null,
+  "n_clusters": 2,
+  "noise_rate": null,
+  "filter_applied": true,
+  "filter_report": {},
+  "clusters": [
+    {
+      "cluster_id": 0,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "корм",
+          84
+        ],
+        [
+          "кот",
+          40
+        ],
+        [
+          "кошка",
+          31
+        ],
+        [
+          "хороший корм",
+          16
+        ],
+        [
+          "этот корм",
+          15
+        ],
+        [
+          "котику",
+          13
+        ],
+        [
+          "аллергии",
+          7
+        ],
+        [
+          "гранул",
+          7
+        ],
+        [
+          "шерсть",
+          7
+        ],
+        [
+          "кошечки",
+          6
+        ]
+      ],
+      "medoid_phrase": "кот",
+      "cohesion": null,
+      "matched_to_gold_aspect": "Запах",
+      "is_novel": false,
+      "gold_matches": {
+        "Запах": 0.7060449719429016,
+        "Поедаемость": 0.7030299305915833
+      }
+    },
+    {
+      "cluster_id": 1,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "магазинах такой",
+          2
+        ],
+        [
+          "вашем магазине",
+          1
+        ],
+        [
+          "зоо магазинах",
+          1
+        ],
+        [
+          "зоомагазине",
+          1
+        ],
+        [
+          "зоомагазине это",
+          1
+        ],
+        [
+          "зоомаркетах",
+          1
+        ],
+        [
+          "магазине гранулы",
+          1
+        ]
+      ],
+      "medoid_phrase": "зоо магазинах",
+      "cohesion": null,
+      "matched_to_gold_aspect": null,
+      "is_novel": true,
+      "gold_matches": {}
+    }
+  ]
+}

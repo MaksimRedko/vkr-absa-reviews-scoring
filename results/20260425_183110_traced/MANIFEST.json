@@ -1,0 +1,164 @@
+{
+  "run_id": "20260425_183110_traced",
+  "timestamp": "2026-04-25T16:07:32.201217+00:00",
+  "git_commit": "efb06ada0e776b1c0a59cb61a49d883299a585be",
+  "config": {
+    "run_name": "traced_pipeline_refactor_v1",
+    "gold_dataset_csv": "data/dataset_final.csv",
+    "core_vocab": "src/vocabulary/universal_aspects_v1.yaml",
+    "domain_vocab_dir": "src/vocabulary/domain",
+    "discovery_dir": "benchmark/discovery/results/20260424_231742_v3",
+    "output_dir": "results",
+    "models": {
+      "encoder": "ai-forever/sbert_large_nlu_ru",
+      "nli": "rubert-base-cased-nli-threeway",
+      "sentiment_engine_source": ".opencode/artifacts/sentiment_search_20260425/sentiment_faad23a_v4_single_hypothesis.py"
+    },
+    "seeds": {
+      "python": 42,
+      "numpy": 42,
+      "torch": 42,
+      "hdbscan": 42
+    },
+    "extraction": {
+      "ngram_range": [
+        1,
+        2
+      ],
+      "min_word_length": 3,
+      "dependency_filter_enabled": false
+    },
+    "matching": {
+      "matching_mode": "lexical_only",
+      "cosine_fallback_enabled": false
+    },
+    "discovery": {
+      "reuse_frozen_v3": true,
+      "phrase_to_cluster_threshold": 0.5,
+      "discovery_to_gold_match_threshold": 0.65,
+      "discovery_phrase_filter_enabled": true,
+      "hdbscan_min_cluster_size": 5,
+      "hdbscan_min_samples": 3
+    },
+    "sentiment": {
+      "nli_temperature": 0.7,
+      "relevance_filter_threshold": 0.2,
+      "relevance_mode": "p_ent_plus_p_contra_faad23a",
+      "hypothesis_template": "{aspect} -- это хорошо",
+      "raw_formula": "5*P_entailment + 3*P_neutral + 1*P_contradiction",
+      "negation_correction": {
+        "enabled": true,
+        "raw_rating_max": 2.0,
+        "review_rating_min": 4.0,
+        "negation_keywords": [
+          "нет",
+          "без",
+          "не было",
+          "отсутствует",
+          "никакого"
+        ]
+      }
+    },
+    "aggregation": {
+      "shrinkage_method": "ledoit_wolf",
+      "product_aggregation_min_reviews": 3
+    },
+    "sanity_reference": {
+      "sentiment_mae_review": 0.8466,
+      "sentiment_mae_round": 0.8005,
+      "product_mae_n3": 0.7841,
+      "detection_precision_track_a": 0.4767,
+      "detection_recall_track_a": 0.4198,
+      "detection_f1_track_a": 0.4279,
+      "inversion_rate": 0.0565
+    }
+  },
+  "model_versions": {
+    "encoder": "ai-forever/sbert_large_nlu_ru",
+    "nli": "rubert-base-cased-nli-threeway"
+  },
+  "n_reviews_processed": 1762,
+  "n_products": 16,
+  "n_categories": 4,
+  "stages_completed": [
+    "s1",
+    "s2",
+    "s3",
+    "s4",
+    "s5",
+    "s6"
+  ],
+  "artifact_files": {
+    "candidates": "candidates.parquet",
+    "embeddings_candidates": "embeddings_candidates.npy",
+    "embedding_index_candidates": "embedding_index_candidates.csv",
+    "embeddings_vocab": "embeddings_vocab.npy",
+    "embedding_index_vocab": "embedding_index_vocab.csv",
+    "candidate_matches": "candidate_matches.parquet",
+    "clusters": "clusters_<nm_id>.json",
+    "cluster_centroids": "cluster_centroids_<nm_id>.npy",
+    "nli_predictions": "nli_predictions.parquet",
+    "product_aggregates": "product_aggregates.parquet"
+  },
+  "elapsed_seconds_per_stage": {
+    "s1": 15.5654,
+    "s2": 429.067,
+    "s3": 2.8221,
+    "s4": 499.2248,
+    "s5": 1231.0785,
+    "s6": 0.1375
+  },
+  "metrics": {
+    "track_a": {
+      "detection_precision": 0.4766942777867863,
+      "detection_recall": 0.41975839143830057,
+      "detection_f1": 0.42785587000967257,
+      "sentiment_mae_review": 0.8466375650595329,
+      "sentiment_mae_review_round": 0.8005263157894735,
+      "sentiment_mae_vocab_pairs": 0.8274340772166949,
+      "sentiment_mae_discovery_pairs": null,
+      "n_sentiment_review_matches": 665,
+      "n_discovery_sentiment_pairs": 0,
+      "product_mae_n3": 0.7840990291262134,
+      "n_aspects_matched": 132,
+      "n_aspects_matched_n3": 103
+    },
+    "track_b": {
+      "detection_precision": 0.5698024103529211,
+      "detection_recall": 0.4544891308086541,
+      "detection_f1": 0.4846919650103831,
+      "sentiment_mae_review": 0.925010996713382,
+      "sentiment_mae_review_round": 0.8856162650983368,
+      "sentiment_mae_vocab_pairs": 0.8274340772166949,
+      "sentiment_mae_discovery_pairs": 1.0686364181406223,
+      "n_sentiment_review_matches": 1004,
+      "n_discovery_sentiment_pairs": 1071,
+      "product_mae_n3": 0.9140458333333332,
+      "n_aspects_matched": 283,
+      "n_aspects_matched_n3": 192
+    },
+    "track_c_review": {
+      "sentiment_mae_review": 0.6397522804880962,
+      "sentiment_mae_review_round": 0.6397522804880962
+    },
+    "track_c_product": {
+      "product_mae_n3": 0.5502970212765956,
+      "n_aspects_matched": 375
+    },
+    "negation_correction": {
+      "total_predictions": 5363,
+      "eligible_low_high_predictions": 549,
+      "corrections_applied": 31,
+      "correction_rate": 0.005780346820809248,
+      "inversion_rate": 0.056466302367941715,
+      "per_category": {
+        "hospitality": 1,
+        "physical_goods": 28,
+        "services": 2
+      },
+      "avg_mae_before_correction": 0.9942610778443114,
+      "avg_mae_after_correction": 0.9563408183632734,
+      "mae_improvement": 0.03792025948103794
+    }
+  }
+}

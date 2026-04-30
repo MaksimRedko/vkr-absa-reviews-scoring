@@ -1,0 +1,355 @@
+{
+  "nm_id": 54581151,
+  "category_id": "physical_goods",
+  "n_unmatched_candidates": null,
+  "n_clusters": 9,
+  "noise_rate": null,
+  "filter_applied": true,
+  "filter_report": {},
+  "clusters": [
+    {
+      "cluster_id": 0,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "благодарность",
+          2
+        ],
+        [
+          "похвал",
+          2
+        ],
+        [
+          "благ",
+          1
+        ],
+        [
+          "благодарю эксмо",
+          1
+        ],
+        [
+          "огромная благодарность",
+          1
+        ],
+        [
+          "поклон",
+          1
+        ],
+        [
+          "спасибооооо",
+          1
+        ]
+      ],
+      "medoid_phrase": "благодарю эксмо",
+      "cohesion": null,
+      "matched_to_gold_aspect": null,
+      "is_novel": true,
+      "gold_matches": {}
+    },
+    {
+      "cluster_id": 1,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "ситуации",
+          2
+        ],
+        [
+          "всякий случай",
+          1
+        ],
+        [
+          "сложной ситуации",
+          1
+        ],
+        [
+          "случай",
+          1
+        ],
+        [
+          "такие ситуации",
+          1
+        ]
+      ],
+      "medoid_phrase": "ситуации",
+      "cohesion": null,
+      "matched_to_gold_aspect": null,
+      "is_novel": true,
+      "gold_matches": {}
+    },
+    {
+      "cluster_id": 2,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "продавцу все",
+          2
+        ],
+        [
+          "автору колоды",
+          1
+        ],
+        [
+          "всем коллегам",
+          1
+        ],
+        [
+          "клиентам",
+          1
+        ],
+        [
+          "колодой продавцу",
+          1
+        ],
+        [
+          "последующим покупателям",
+          1
+        ],
+        [
+          "продавцу уже",
+          1
+        ],
+        [
+          "продавцу этой",
+          1
+        ],
+        [
+          "производителю этого",
+          1
+        ]
+      ],
+      "medoid_phrase": "продавцу этой",
+      "cohesion": null,
+      "matched_to_gold_aspect": null,
+      "is_novel": true,
+      "gold_matches": {}
+    },
+    {
+      "cluster_id": 3,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "восторге",
+          12
+        ],
+        [
+          "рада",
+          4
+        ],
+        [
+          "полном восторге",
+          2
+        ],
+        [
+          "безумна рада",
+          1
+        ],
+        [
+          "бешенном восторге",
+          1
+        ],
+        [
+          "восхищении",
+          1
+        ]
+      ],
+      "medoid_phrase": "восторге",
+      "cohesion": null,
+      "matched_to_gold_aspect": null,
+      "is_novel": true,
+      "gold_matches": {}
+    },
+    {
+      "cluster_id": 4,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "продукт",
+          4
+        ],
+        [
+          "прекрасный продукт",
+          1
+        ],
+        [
+          "такой товар",
+          1
+        ],
+        [
+          "товар многие",
+          1
+        ],
+        [
+          "хрупкий товар",
+          1
+        ],
+        [
+          "шикарный товар",
+          1
+        ]
+      ],
+      "medoid_phrase": "хрупкий товар",
+      "cohesion": null,
+      "matched_to_gold_aspect": "Логистика",
+      "is_novel": false,
+      "gold_matches": {
+        "Логистика": 0.6752661466598511,
+        "Цена": 0.702367901802063
+      }
+    },
+    {
+      "cluster_id": 5,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "справедливости",
+          2
+        ],
+        [
+          "адекватности",
+          1
+        ],
+        [
+          "духовного развития",
+          1
+        ],
+        [
+          "потенциала",
+          1
+        ],
+        [
+          "равновесия",
+          1
+        ],
+        [
+          "уважения",
+          1
+        ]
+      ],
+      "medoid_phrase": "уважения",
+      "cohesion": null,
+      "matched_to_gold_aspect": null,
+      "is_novel": true,
+      "gold_matches": {}
+    },
+    {
+      "cluster_id": 6,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "дефект",
+          5
+        ],
+        [
+          "видимо дефект",
+          1
+        ],
+        [
+          "дефект при",
+          1
+        ],
+        [
+          "малюсенький дефект",
+          1
+        ],
+        [
+          "этот дефект",
+          1
+        ]
+      ],
+      "medoid_phrase": "дефект",
+      "cohesion": null,
+      "matched_to_gold_aspect": "Качество",
+      "is_novel": false,
+      "gold_matches": {
+        "Качество": 0.6831856966018677
+      }
+    },
+    {
+      "cluster_id": 7,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "карты",
+          165
+        ],
+        [
+          "колода",
+          110
+        ],
+        [
+          "коробочка",
+          22
+        ],
+        [
+          "ламинация",
+          22
+        ],
+        [
+          "эту колоду",
+          21
+        ],
+        [
+          "картон",
+          18
+        ],
+        [
+          "печать",
+          17
+        ],
+        [
+          "сами карты",
+          15
+        ],
+        [
+          "книжечка",
+          10
+        ],
+        [
+          "пленку",
+          10
+        ]
+      ],
+      "medoid_phrase": "карты",
+      "cohesion": null,
+      "matched_to_gold_aspect": "Инструкция",
+      "is_novel": false,
+      "gold_matches": {
+        "Инструкция": 0.7125874757766724,
+        "Комплектация": 0.7037476301193237,
+        "Упаковка": 0.8430008888244629
+      }
+    },
+    {
+      "cluster_id": 8,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "работников",
+          1
+        ],
+        [
+          "работников складов",
+          1
+        ],
+        [
+          "складов",
+          1
+        ],
+        [
+          "складов сортировщиков",
+          1
+        ],
+        [
+          "сортировщиков",
+          1
+        ]
+      ],
+      "medoid_phrase": "работников складов",
+      "cohesion": null,
+      "matched_to_gold_aspect": null,
+      "is_novel": true,
+      "gold_matches": {}
+    }
+  ]
+}

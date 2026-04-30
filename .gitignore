@@ -5,9 +5,11 @@
 *.sqlite
 *.sqlite3
 *.db
+
 data
 data/snapshots/
 datasets/
+results/
 
 .cache/
 __pycache__/
