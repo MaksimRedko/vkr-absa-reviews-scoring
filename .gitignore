@@ -33,6 +33,7 @@ experiments/registry.jsonl
 experiments/hypothesis_experiment.md
 tests/*
 !tests/test_sentiment_benchmark_common.py
+!tests/test_freeze_final_results.py
 
 benchmark/raw/
 benchmark/batches/

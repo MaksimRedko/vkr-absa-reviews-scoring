@@ -2354,3 +2354,38 @@ Next: use traced artifacts for ВКР analysis; do not change algorithms unless 
   - B still has slightly better round MAE `0.8702`
   - B is much better on discovery pair MAE `0.9611`
 - Decision: keep `mode_b_sentence_evidence` as reference; keep `mode_d_multi_evidence_weighted_relevance` as higher-coverage fallback only.
+
+## Update 2026-05-01: final_res_v2_sentence_evidence
+
+- Goal: fix the traced full-run launcher location and freeze stable `final_res_v1` / `final_res_v2`.
+- Entry point confirmed:
+  - `python -m src.pipeline.run_traced_pipeline --config run_config.yaml`
+  - `src/pipeline/run_traced_pipeline.py` -> `src/pipeline/orchestrator.py::run_traced_pipeline`
+- Baseline:
+  - frozen traced run `results/20260425_183110_traced`
+  - no stable `results/final_res_v1` / `results/final_res_v2` aliases existed
+- Changed variable:
+  - packaging only
+  - `final_res_v1` = frozen baseline copy
+  - `final_res_v2` = reused frozen S1-S4 + rebuilt S5-S6 from `mode_b_sentence_evidence`
+- Files changed:
+  - `scripts/freeze_final_results.py`
+  - `tests/test_freeze_final_results.py`
+  - `.gitignore`
+  - `README.md`
+- Artifacts created:
+  - `results/final_res_v1`
+  - `results/final_res_v2`
+  - `benchmark/manual_audit/final_v2`
+- Verification:
+  - `py_compile` OK
+  - `pytest tests/test_freeze_final_results.py -q --basetemp .pytest_tmp_manual` -> `2 passed`
+  - builder run OK; reused `benchmark/sentiment/mode_b_sentence_evidence/results/20260430_175836`
+- Result:
+  - `final_res_v1` Track A review MAE = `0.8466`
+  - `final_res_v2` Track A review MAE = `0.8616`
+  - `final_res_v2` Track B review MAE = `0.8878`
+  - detection Track A unchanged: `0.4767 / 0.4198 / 0.4279`
+- Decision:
+  - stable `final_res_v1` / `final_res_v2` are now frozen on disk
+  - `final_res_v2` intentionally uses exact benchmark mode B semantics, without old A negation post-correction

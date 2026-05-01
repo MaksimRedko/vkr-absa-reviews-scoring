@@ -505,3 +505,15 @@ _clean_clusters
 - artifacts: benchmark/sentiment/reference_summary.md
 - decision: keep B as reference
 - fallback: D_weighted only if higher localized-evidence coverage matters more than best MAE
+
+- goal: final_res_v2_sentence_evidence
+- checked: traced full-run launcher and stable final result aliases
+- got: entrypoint = `python -m src.pipeline.run_traced_pipeline --config run_config.yaml`
+- got: code path = `src/pipeline/run_traced_pipeline.py` -> `src/pipeline/orchestrator.py::run_traced_pipeline`
+- got: created `results/final_res_v1` from frozen `results/20260425_183110_traced`
+- got: created `results/final_res_v2` with reused S1-S4 and rebuilt S5-S6 from mode B
+- got: created `benchmark/manual_audit/final_v2`
+- got: `final_res_v1` Track A review MAE `0.8466`; `final_res_v2` Track A `0.8616`; `final_res_v2` Track B `0.8878`
+- did not work: `final_res_v2` does not beat `final_res_v1` on Track A vocab-only MAE
+- fixed: added `scripts/freeze_final_results.py`, README note, test `tests/test_freeze_final_results.py`
+- verified: `pytest tests/test_freeze_final_results.py -q --basetemp .pytest_tmp_manual` -> `2 passed`
