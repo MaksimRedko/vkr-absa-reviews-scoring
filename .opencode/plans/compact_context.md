@@ -517,3 +517,15 @@ _clean_clusters
 - did not work: `final_res_v2` does not beat `final_res_v1` on Track A vocab-only MAE
 - fixed: added `scripts/freeze_final_results.py`, README note, test `tests/test_freeze_final_results.py`
 - verified: `pytest tests/test_freeze_final_results.py -q --basetemp .pytest_tmp_manual` -> `2 passed`
+
+- goal: final_res_v1_vs_v2_comparison
+- checked: frozen `final_res_v1` vs `final_res_v2` on saved artifacts only
+- got: review MAE `0.8466 -> 0.8616`; round `0.8005 -> 0.8479`; vocab pair `0.8274 -> 0.8466`
+- got: discovery pair MAE `1.0686 -> 0.9611`; coverage `0.2249 -> 0.3163`
+- got: product MAE n3 nearly flat `0.7841 -> 0.7851`; star baseline unchanged
+- got: category winners = `consumables`, `services`; regressions = `physical_goods`, slight `hospitality`
+- got: per-product review MAE improved on `9/16`, worsened on `7/16`
+- got: hard-cases count unchanged `30`; source mix `discovery 24 -> 10`, `vocab 6 -> 20`
+- did not work: `final_res_v2` did not beat `final_res_v1` on main vocab-only review metrics
+- fixed: commit `2d89dce` saves freeze builder/test/manual-audit summary
+- decision: keep `final_res_v1` as safer final package; use `final_res_v2` as higher-coverage sentence-evidence variant

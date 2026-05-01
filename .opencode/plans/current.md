@@ -2389,3 +2389,29 @@ Next: use traced artifacts for ВКР analysis; do not change algorithms unless 
 - Decision:
   - stable `final_res_v1` / `final_res_v2` are now frozen on disk
   - `final_res_v2` intentionally uses exact benchmark mode B semantics, without old A negation post-correction
+
+## Update 2026-05-01: final_res_v1_vs_v2_comparison
+
+- Goal: compare frozen `results/final_res_v1` vs `results/final_res_v2` without reruns.
+- Baseline: `final_res_v1` = old A / current baseline; `final_res_v2` = B / sentence evidence.
+- Compared metrics:
+  - review MAE `0.8466 -> 0.8616`
+  - review MAE round `0.8005 -> 0.8479`
+  - vocab pair MAE `0.8274 -> 0.8466`
+  - discovery pair MAE `1.0686 -> 0.9611`
+  - evaluable pair coverage `0.2249 -> 0.3163`
+  - product MAE n3 `0.7841 -> 0.7851`
+  - star baseline unchanged `0.6398 / 0.5503`
+- Per-category:
+  - improved: `consumables`, `services`
+  - worsened: `physical_goods`, slight worsen `hospitality`
+- Per-product:
+  - review MAE improved on `9/16`, worsened on `7/16`
+  - product MAE improved on `8/16`, worsened on `8/16`
+  - biggest regression: `nm_id=619500952` (`0.6845 -> 2.8363`)
+- Hard cases:
+  - count unchanged `30 -> 30`
+  - source mix shifted from mostly discovery (`24/30`) to mostly vocab (`20/30`)
+- Decision:
+  - `final_res_v1` stays safer all-around final package
+  - `final_res_v2` is useful as higher-coverage sentence-evidence alternative with much better discovery sentiment
