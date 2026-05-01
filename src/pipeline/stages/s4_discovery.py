@@ -3,9 +3,11 @@ from __future__ import annotations
 from typing import Any
 
 import numpy as np
+import pandas as pd
 
 from src.discovery.encoder import DiscoveryEncoder
 from src.pipeline.reference import e2e
+from src.pipeline.stages.common import stable_id
 from src.pipeline.stages.s2_encoding import _encode_cached
 
 
@@ -19,12 +21,43 @@ def load_frozen_discovery(
 
 def bind_unmatched_to_clusters(
     reviews: list[Any],
+    candidates: pd.DataFrame,
+    matches: pd.DataFrame,
     discovery_by_product: dict[int, Any],
     encoder: DiscoveryEncoder,
     cache: dict[str, np.ndarray],
     *,
     threshold: float = 0.5,
-) -> None:
+) -> pd.DataFrame:
+    unmatched = matches[matches["is_unmatched"] == True][["candidate_id"]].drop_duplicates().copy()
+    if unmatched.empty:
+        return pd.DataFrame(
+            columns=[
+                "binding_id",
+                "review_id",
+                "candidate_id",
+                "cluster_id",
+                "cluster_score",
+            ]
+        )
+    unmatched = unmatched.merge(
+        candidates[
+            [
+                "candidate_id",
+                "review_id",
+                "text",
+                "start_offset",
+                "end_offset",
+            ]
+        ],
+        on="candidate_id",
+        how="inner",
+    )
+    rows_by_review = {
+        str(review_id): group.copy()
+        for review_id, group in unmatched.groupby("review_id", sort=False)
+    }
+    binding_rows: list[dict[str, Any]] = []
     for review in reviews:
         discovery = discovery_by_product.get(review.nm_id)
         if not discovery:
@@ -33,10 +66,13 @@ def bind_unmatched_to_clusters(
         if not cluster_ids:
             continue
         cluster_matrix = np.vstack([discovery.clusters[cid].centroid for cid in cluster_ids]).astype(np.float32)
-        if not review.unmatched_phrases or cluster_matrix.size == 0:
+        rows = rows_by_review.get(str(review.review_id))
+        if rows is None or rows.empty or cluster_matrix.size == 0:
             continue
-        vectors = _encode_cached(encoder, review.unmatched_phrases, cache)
-        for phrase in review.unmatched_phrases:
+        phrase_texts = rows["text"].astype(str).tolist()
+        vectors = _encode_cached(encoder, phrase_texts, cache)
+        for row in rows.itertuples(index=False):
+            phrase = str(row.text)
             vector = vectors.get(phrase)
             if vector is None:
                 continue
@@ -44,7 +80,38 @@ def bind_unmatched_to_clusters(
             best_idx = int(np.argmax(scores))
             best_score = float(scores[best_idx])
             if best_score >= threshold:
-                review.discovery_cluster_ids.add(int(cluster_ids[best_idx]))
+                cluster_id = int(cluster_ids[best_idx])
+                review.discovery_cluster_ids.add(cluster_id)
+                binding_rows.append(
+                    {
+                        "binding_id": stable_id(
+                            review.review_id,
+                            "discovery",
+                            row.candidate_id,
+                            int(row.start_offset),
+                            int(row.end_offset),
+                            cluster_id,
+                        ),
+                        "review_id": str(review.review_id),
+                        "candidate_id": str(row.candidate_id),
+                        "start_offset": int(row.start_offset),
+                        "end_offset": int(row.end_offset),
+                        "cluster_id": cluster_id,
+                        "cluster_score": best_score,
+                    }
+                )
+    return pd.DataFrame(
+        binding_rows,
+        columns=[
+            "binding_id",
+            "review_id",
+            "candidate_id",
+            "start_offset",
+            "end_offset",
+            "cluster_id",
+            "cluster_score",
+        ],
+    )
 
 
 def cluster_payloads(discovery_by_product: dict[int, Any]) -> dict[int, dict[str, Any]]:
@@ -93,6 +160,8 @@ def centroid_arrays(discovery_by_product: dict[int, Any]) -> dict[int, np.ndarra
 
 def run_stage(
     reviews: list[Any],
+    candidates: pd.DataFrame,
+    matches: pd.DataFrame,
     discovery_dir,
     encoder: DiscoveryEncoder,
     cache: dict[str, np.ndarray],
@@ -100,8 +169,10 @@ def run_stage(
     phrase_to_cluster_threshold: float = 0.5,
 ) -> dict[str, Any]:
     discovery_by_product = load_frozen_discovery(discovery_dir, encoder, cache)
-    bind_unmatched_to_clusters(
+    discovery_candidate_bindings = bind_unmatched_to_clusters(
         reviews,
+        candidates,
+        matches,
         discovery_by_product,
         encoder,
         cache,
@@ -112,4 +183,5 @@ def run_stage(
         "discovery_by_product": discovery_by_product,
         "cluster_payloads": cluster_payloads(discovery_by_product),
         "centroid_arrays": centroid_arrays(discovery_by_product),
+        "discovery_candidate_bindings": discovery_candidate_bindings,
     }

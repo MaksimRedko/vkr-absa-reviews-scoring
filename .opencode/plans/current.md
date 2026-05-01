@@ -2530,3 +2530,12 @@ Next: use traced artifacts for Р’РљР  analysis; do not change algorithms unless 
 - Decision:
   - this demo is the honest scheme we should mirror in the real pipeline
   - critical invariant = save aspect-to-fragment linkage before sentiment and restore contexts from that linkage only
+
+## Результат этапа: sentiment_assignment_freeze_full_run
+- Цель: зафиксировать общий список aspect-review assignments в full traced run и строить A/B/C из одного источника.
+- Гипотеза: после сохранения assignments по точным fragment pointers A/B/C перестанут стартовать из разных наборов пар.
+- Изменения: added `aspect_review_assignments.parquet` + `discovery_candidate_bindings.parquet`; benchmark `common.py` теперь читает assignments-артефакт и строит A/B/C из одного списка.
+- Техническая правка: `candidate_id` в s1 теперь включает `end_offset`, чтобы убрать коллизии фрагментов.
+- Проверка: smoke traced run `results/20260501_191353_traced` создал честные артефакты; `discovery_assignments_without_evidence = 0`; `len(A)=len(B)=len(C)=895`.
+- Тесты: `pytest tests/test_sentiment_benchmark_common.py -q --basetemp .pytest_tmp_manual` -> `4 passed`.
+- Следующий шаг: пересчитать benchmark A/B/C/D уже на новых traced artifacts и сравнивать mode-метрики только на одинаковом составе пар.

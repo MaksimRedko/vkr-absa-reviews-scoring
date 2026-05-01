@@ -41,7 +41,7 @@ def run_stage(reviews: list[Any], config: dict[str, Any]) -> pd.DataFrame:
                 continue
             start = _find_offset(clean_text, candidate.span, cursors)
             end = start + len(candidate.span) if start >= 0 else -1
-            candidate_id = stable_id(review.review_id, lemma, start)
+            candidate_id = stable_id(review.review_id, lemma, start, end)
             surfaces_by_lemma[lemma].append(candidate.span)
             rows.append(
                 {

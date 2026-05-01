@@ -22,7 +22,7 @@ from src.pipeline.stages import (
     s5_nli_sentiment,
     s6_aggregation,
 )
-from src.pipeline.stages.common import apply_random_seeds, repo_root
+from src.pipeline.stages.common import apply_random_seeds, repo_root, stable_id
 from src.pipeline.tracing import ArtifactWriter
 
 ROOT = repo_root()
@@ -50,6 +50,80 @@ def _git_commit() -> str:
         ).strip()
     except Exception:
         return "unknown"
+
+
+def _build_aspect_review_assignments(
+    candidates: pd.DataFrame,
+    matches: pd.DataFrame,
+    discovery_candidate_bindings: pd.DataFrame,
+) -> pd.DataFrame:
+    matched = matches[matches["matched_aspect_id"].notna()][["candidate_id", "matched_aspect_id"]].drop_duplicates().copy()
+    vocab_rows: list[dict[str, Any]] = []
+    if not matched.empty:
+        merged = candidates[["candidate_id", "review_id", "start_offset", "end_offset"]].merge(
+            matched,
+            on="candidate_id",
+            how="inner",
+        )
+        for row in merged.itertuples(index=False):
+            aspect_id = str(row.matched_aspect_id)
+            vocab_rows.append(
+                {
+                    "assignment_id": stable_id(
+                        row.review_id,
+                        "vocab",
+                        aspect_id,
+                        row.candidate_id,
+                        int(row.start_offset),
+                        int(row.end_offset),
+                    ),
+                    "review_id": str(row.review_id),
+                    "aspect_id": aspect_id,
+                    "aspect_type": "vocab",
+                    "candidate_id": str(row.candidate_id),
+                    "start_offset": int(row.start_offset),
+                    "end_offset": int(row.end_offset),
+                }
+            )
+
+    discovery_rows: list[dict[str, Any]] = []
+    if not discovery_candidate_bindings.empty:
+        deduped_bindings = discovery_candidate_bindings.drop_duplicates(
+            subset=["review_id", "candidate_id", "start_offset", "end_offset", "cluster_id"]
+        )
+        for row in deduped_bindings.itertuples(index=False):
+            cluster_id = str(int(row.cluster_id))
+            discovery_rows.append(
+                {
+                    "assignment_id": stable_id(
+                        row.review_id,
+                        "discovery",
+                        cluster_id,
+                        row.candidate_id,
+                        int(row.start_offset),
+                        int(row.end_offset),
+                    ),
+                    "review_id": str(row.review_id),
+                    "aspect_id": cluster_id,
+                    "aspect_type": "discovery",
+                    "candidate_id": str(row.candidate_id),
+                    "start_offset": int(row.start_offset),
+                    "end_offset": int(row.end_offset),
+                }
+            )
+
+    return pd.DataFrame(
+        vocab_rows + discovery_rows,
+        columns=[
+            "assignment_id",
+            "review_id",
+            "aspect_id",
+            "aspect_type",
+            "candidate_id",
+            "start_offset",
+            "end_offset",
+        ],
+    )
 
 
 def _write_e2e_compatible_outputs(
@@ -267,6 +341,8 @@ def run_traced_pipeline(
         t0 = time.perf_counter()
         disc = s4_discovery.run_stage(
             reviews,
+            candidates,
+            matches,
             _resolve(config["discovery_dir"]),
             enc["encoder"],
             enc["cache"],
@@ -278,8 +354,25 @@ def run_traced_pipeline(
         for nm_id, payload in disc["cluster_payloads"].items():
             writer.write_json(f"clusters_{nm_id}.json", payload)
             writer.write_npy(f"cluster_centroids_{nm_id}.npy", disc["centroid_arrays"][nm_id])
+        writer.write_dataframe(
+            "discovery_candidate_bindings.parquet",
+            disc["discovery_candidate_bindings"],
+            sort_by=["review_id", "candidate_id", "start_offset", "end_offset", "cluster_id"],
+        )
+        assignments = _build_aspect_review_assignments(
+            candidates,
+            matches,
+            disc["discovery_candidate_bindings"],
+        )
+        writer.write_dataframe(
+            "aspect_review_assignments.parquet",
+            assignments,
+            sort_by=["review_id", "aspect_type", "aspect_id", "candidate_id", "start_offset", "end_offset"],
+        )
         artifact_files["clusters"] = "clusters_<nm_id>.json"
         artifact_files["cluster_centroids"] = "cluster_centroids_<nm_id>.npy"
+        artifact_files["discovery_candidate_bindings"] = "discovery_candidate_bindings.parquet"
+        artifact_files["aspect_review_assignments"] = "aspect_review_assignments.parquet"
         logger.log(f"[s4] discovery_products={len(discovery_by_product)}")
 
         t0 = time.perf_counter()

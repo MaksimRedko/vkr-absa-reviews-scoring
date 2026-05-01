@@ -576,3 +576,11 @@ _clean_clusters
 - verified: `.venv\Scripts\python.exe test_end_to_end\demo_pipeline.py`
 - artifacts: `test_end_to_end/generated/*`
 - decision: this is the target honest data model for future real A/B sentiment runs
+- цель этапа: sentiment_assignment_freeze_full_run
+- что проверяли: честная общая база aspect-review assignments для full run и A/B/C
+- что получилось: traced run теперь пишет `aspect_review_assignments.parquet` и `discovery_candidate_bindings.parquet`
+- что получилось: benchmark A/B/C строятся из одного списка assignments, не из разных путей
+- что не сработало: старый `candidate_id` коллидировал на одинаковом lemma+start
+- что исправлено: `candidate_id = stable_id(review_id, lemma, start, end)`
+- что зафиксировано: smoke run `20260501_191353_traced`; `discovery_without_evidence=0`; `len(A)=len(B)=len(C)=895`
+- следующий шаг: пересчитать benchmark-метрики на новых traced artifacts и только потом выбирать final mode
