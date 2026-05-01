@@ -34,6 +34,8 @@ experiments/hypothesis_experiment.md
 tests/*
 !tests/test_sentiment_benchmark_common.py
 !tests/test_freeze_final_results.py
+!tests/test_compare_final_sentiment_runs.py
+!tests/test_compare_sentiment_benchmark_modes.py
 
 benchmark/raw/
 benchmark/batches/

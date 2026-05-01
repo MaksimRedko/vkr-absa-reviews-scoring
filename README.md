@@ -35,8 +35,14 @@ python scripts/freeze_final_results.py
 
 Скрипт создаёт:
 - `results/final_res_v1` = current baseline / mode A
-- `results/final_res_v2` = sentence evidence / mode B
+- `results/final_res_v2` = window evidence / mode C
 - `benchmark/manual_audit/final_v2` = manual audit queue для `final_res_v2`
+
+Если нужен другой сохранённый sentiment mode:
+
+```powershell
+python scripts/freeze_final_results.py --sentiment-mode-id mode_b_sentence_evidence --sentiment-run-dir benchmark/sentiment/mode_b_sentence_evidence/results/<timestamp>
+```
 
 Оценка прогона:
 

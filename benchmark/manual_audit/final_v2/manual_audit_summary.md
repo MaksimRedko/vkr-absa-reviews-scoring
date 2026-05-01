@@ -2,28 +2,28 @@
 
 - Source run: `D:\diploma\results\final_res_v2`
 - NLI rows total: 3446
-- Passed relevance filter: 2558
+- Passed relevance filter: 2606
 
 ## By aspect_source
 
 | aspect_source | count |
 |---|---:|
-| vocab | 1361 |
-| discovery | 1197 |
+| vocab | 1393 |
+| discovery | 1213 |
 
 ## By category
 
 | category | count |
 |---|---:|
-| physical_goods | 1427 |
-| services | 463 |
-| hospitality | 397 |
-| consumables | 271 |
+| physical_goods | 1444 |
+| services | 454 |
+| hospitality | 418 |
+| consumables | 290 |
 
 ## Exact auto-hit against gold aspect names
 
-- Exact hits: 661
-- Exact hit share among passed rows: 0.2584
+- Exact hits: 674
+- Exact hit share among passed rows: 0.2586
 
 ## How to use
 

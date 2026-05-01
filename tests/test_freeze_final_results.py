@@ -83,3 +83,12 @@ def test_sentiment_by_pair_uses_selected_evidence_row() -> None:
     assert scores["raw_rating"] == 4.7
     assert scores["p_ent_pos"] == 0.85
     assert scores["p_ent_neg"] == 0.05
+
+
+def test_derived_run_config_for_mode_c_sets_window_evidence() -> None:
+    config = freeze._derived_run_config({}, freeze.SOURCE_RUN_DEFAULT, freeze.sentiment_benchmark.MODE_C)
+
+    assert config["run_name"] == "final_res_v2_window_evidence"
+    assert config["sentiment"]["mode_id"] == freeze.sentiment_benchmark.MODE_C
+    assert config["sentiment"]["premise_kind"] == "window_evidence"
+    assert config["sentiment"]["hypothesis_mode"] == "dual_hypothesis"

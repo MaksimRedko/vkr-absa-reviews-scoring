@@ -529,3 +529,50 @@ _clean_clusters
 - did not work: `final_res_v2` did not beat `final_res_v1` on main vocab-only review metrics
 - fixed: commit `2d89dce` saves freeze builder/test/manual-audit summary
 - decision: keep `final_res_v1` as safer final package; use `final_res_v2` as higher-coverage sentence-evidence variant
+- goal: final_res_v1_vs_v2_sentiment_diagnostics_v1
+- checked: richer pair-level comparison for frozen `final_res_v1` vs `final_res_v2`
+- got: added metrics script `scripts/compare_final_sentiment_runs.py`
+- got: wrote `sentiment_metrics_comparison.csv`, `sentiment_metrics_by_product.csv`, `sentiment_metrics_by_category.csv`
+- got: own-pairs `v2` better on MAE `0.9563 -> 0.8953`, round MAE `0.9222 -> 0.8761`, `Acc@1` `0.6712 -> 0.7259`
+- got: common-pairs `v2` also better on MAE `0.9197 -> 0.8986` and `Acc@1` `0.6967 -> 0.7222`
+- got: `v2` worse on `RMSE` `1.4236 -> 1.5280`, strong wrong-polarity `0.1148 -> 0.1501`, direction accuracy `0.7595 -> 0.7521`
+- got: real trade-off = `vocab` worse `0.8274 -> 0.8466`, `discovery` better `1.0686 -> 0.9611`
+- got: `nm_id=619500952` systemic collapse, not one outlier: `MAE 1.03 -> 2.22`, bias `-0.94 -> -2.14`, wrong-polarity `0.25 -> 0.51`
+- got: hard-case source mix shifted from mostly `discovery` to mostly `vocab`
+- verified: `pytest tests/test_compare_final_sentiment_runs.py -q --basetemp .pytest_tmp_manual` -> `3 passed`
+- decision: keep `final_res_v1` as safer default; `v2` numerically closer but less safe on catastrophic polarity flips
+- goal: sentiment_benchmark_abcd_diagnostics_v1
+- checked: saved A/B/C/D benchmark artifacts only; no new inference runs
+- got: script `scripts/compare_sentiment_benchmark_modes.py`
+- got: output `benchmark/sentiment/mode_abcd_diagnostics/results/20260501_130143`
+- got: own-pairs MAE ranking `C 0.8851 < B 0.8953 < D 0.9373 < A 0.9943`
+- got: Acc@1 ranking `C 0.7408 > B 0.7259 > D 0.7132 > A 0.6612`
+- got: coverage ranking `A 0.4489 > D 0.3483 > C 0.3181 > B 0.3163`
+- got: common-pairs ranking stayed same: `C`, `B`, `D`, `A`
+- got: `B` best vocab MAE `0.8466`; `C` best discovery MAE `0.9262`
+- got: `A` best RMSE `1.4760`, but weak MAE/Acc@1 because full-review baseline is conservative and coverage-heavy
+- got: `D` keeps more localized pairs than `B/C`, but loses on MAE and strong wrong-polarity
+- verified: `pytest tests/test_compare_sentiment_benchmark_modes.py -q --basetemp .pytest_tmp_manual` -> `2 passed`
+- decision: `B` still strongest reference; `C` best pure numeric mode; `D` only for coverage-first fallback
+- goal: final_res_v2_window_evidence
+- checked: rebuild stable `final_res_v2` from saved mode C artifacts only
+- got: generalized `freeze_final_results.py` from hardcoded B to configurable mode
+- got: `results/final_res_v2` now points to `mode_c_window_evidence`
+- got: Track A worsened vs `final_v1`: review MAE `0.8466 -> 0.8696`, round `0.8005 -> 0.8528`, product n3 `0.7841 -> 0.8703`
+- got: Track B improved vs `final_v1`: review MAE `0.9250 -> 0.8934`, discovery pair `1.0686 -> 0.9262`
+- got: pair-level own-pairs improved strongly: MAE `0.9563 -> 0.8851`, `Acc@1` `0.6712 -> 0.7408`, median AE `0.5704 -> 0.1267`
+- got: safety worsened: wrong-polarity `0.1761 -> 0.1894`, strong wrong-polarity `0.1148 -> 0.1563`, RMSE `1.4236 -> 1.5380`
+- verified: `pytest tests/test_freeze_final_results.py -q --basetemp .pytest_tmp_manual` -> `3 passed`
+- artifacts: `results/final_res_v2`, `benchmark/manual_audit/final_v2`, `results/final_res_v1_vs_v2_diagnostics/20260501_132850`
+- decision: keep `final_v1 = A`, set `final_v2 = C`; use `v2` as stronger numeric alternative, not as safer replacement
+- goal: test_end_to_end_honest_ab_demo_v1
+- checked: minimal honest e2e on 20 hardcoded reviews
+- got: new folder `test_end_to_end/`
+- got: saved entities `reviews`, `aspects`, `fragments`, `aspect_assignments`
+- got: restored `mode_a`, `mode_b`, `mode_c` only from saved artifacts
+- got: 20 reviews, 47 fragments, 47 assignments
+- got: `A/B/C` all restored 47 inputs each
+- got: no repeated search of aspect text during restoration
+- verified: `.venv\Scripts\python.exe test_end_to_end\demo_pipeline.py`
+- artifacts: `test_end_to_end/generated/*`
+- decision: this is the target honest data model for future real A/B sentiment runs

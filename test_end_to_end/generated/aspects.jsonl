@@ -1,0 +1,34 @@
+{"aspect_id": "coil", "aspect_type": "vocab", "title": "Катушка"}
+{"aspect_id": "delivery", "aspect_type": "vocab", "title": "Доставка"}
+{"aspect_id": "battery", "aspect_type": "vocab", "title": "Батарея"}
+{"aspect_id": "screen", "aspect_type": "vocab", "title": "Экран"}
+{"aspect_id": "smell", "aspect_type": "vocab", "title": "Запах"}
+{"aspect_id": "packaging", "aspect_type": "vocab", "title": "Упаковка"}
+{"aspect_id": "cleanliness", "aspect_type": "vocab", "title": "Чистота"}
+{"aspect_id": "breakfast", "aspect_type": "vocab", "title": "Завтрак"}
+{"aspect_id": "staff", "aspect_type": "vocab", "title": "Персонал"}
+{"aspect_id": "waiting_time", "aspect_type": "vocab", "title": "Ожидание"}
+{"aspect_id": "problem_resolution", "aspect_type": "vocab", "title": "Решение проблемы"}
+{"aspect_id": "pet_reaction_cluster_1", "aspect_type": "discovery", "title": "Кот ест с удовольствием"}
+{"aspect_id": "buttons", "aspect_type": "vocab", "title": "Кнопки"}
+{"aspect_id": "plastic", "aspect_type": "vocab", "title": "Пластик"}
+{"aspect_id": "sound", "aspect_type": "vocab", "title": "Звук"}
+{"aspect_id": "refund_cluster_1", "aspect_type": "discovery", "title": "Деньги вернули без споров"}
+{"aspect_id": "absorption_cluster_1", "aspect_type": "discovery", "title": "Впитывается быстро"}
+{"aspect_id": "material", "aspect_type": "vocab", "title": "Материал"}
+{"aspect_id": "seams", "aspect_type": "vocab", "title": "Швы"}
+{"aspect_id": "checkin_cluster_1", "aspect_type": "discovery", "title": "Заселили без очереди"}
+{"aspect_id": "space", "aspect_type": "vocab", "title": "Простор"}
+{"aspect_id": "taste", "aspect_type": "vocab", "title": "Вкус"}
+{"aspect_id": "support", "aspect_type": "vocab", "title": "Поддержка"}
+{"aspect_id": "app_stability_cluster_1", "aspect_type": "discovery", "title": "Работает стабильно"}
+{"aspect_id": "freshness", "aspect_type": "vocab", "title": "Свежесть"}
+{"aspect_id": "internet", "aspect_type": "vocab", "title": "Интернет"}
+{"aspect_id": "operator", "aspect_type": "vocab", "title": "Оператор"}
+{"aspect_id": "bed", "aspect_type": "vocab", "title": "Постель"}
+{"aspect_id": "silence", "aspect_type": "vocab", "title": "Тишина"}
+{"aspect_id": "cleaning", "aspect_type": "vocab", "title": "Уборка"}
+{"aspect_id": "lid", "aspect_type": "vocab", "title": "Крышка"}
+{"aspect_id": "manual", "aspect_type": "vocab", "title": "Инструкция"}
+{"aspect_id": "fast_charge_cluster_1", "aspect_type": "discovery", "title": "Зарядка быстрая"}
+{"aspect_id": "body", "aspect_type": "vocab", "title": "Корпус"}

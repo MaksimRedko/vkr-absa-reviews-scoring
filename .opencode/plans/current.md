@@ -2415,3 +2415,118 @@ Next: use traced artifacts for ВКР analysis; do not change algorithms unless 
 - Decision:
   - `final_res_v1` stays safer all-around final package
   - `final_res_v2` is useful as higher-coverage sentence-evidence alternative with much better discovery sentiment
+
+## Update 2026-05-01: final_res_v1_vs_v2_sentiment_diagnostics_v1
+
+- Goal: compare `final_res_v1` vs `final_res_v2` with richer pair-level sentiment diagnostics, not one scalar metric.
+- Hypothesis: `v2` may be better on closeness/near-hit metrics but worse on polarity inversions and vocab stability.
+- Files:
+  - `scripts/compare_final_sentiment_runs.py`
+  - `tests/test_compare_final_sentiment_runs.py`
+- Added metrics:
+  - `MAE`, `MAE rounded`, `Median AE`, `RMSE`, `Mean signed error`
+  - `Accuracy@0.5`, `Accuracy@1.0`, `Accuracy@1.5`
+  - direction metrics, wrong-polarity metrics, over/under-shoot rates
+  - split by `vocab` / `discovery`
+  - `own_pairs` vs `common_pairs`
+  - per-category, per-product, hard-case summaries, `nm_id=619500952` diagnostics
+- Verification:
+  - `py_compile` OK
+  - `pytest tests/test_compare_final_sentiment_runs.py -q --basetemp .pytest_tmp_manual` -> `3 passed`
+  - full diagnostics run OK -> `results/final_res_v1_vs_v2_diagnostics/20260501_123334`
+- Result:
+  - own-pairs: `v2` better on pair MAE `0.9563 -> 0.8953`, round MAE `0.9222 -> 0.8761`, median AE `0.5704 -> 0.1659`, `Acc@1` `0.6712 -> 0.7259`
+  - own-pairs: `v2` worse on `RMSE` `1.4236 -> 1.5280`, strong wrong-polarity `0.1148 -> 0.1501`, direction accuracy `0.7595 -> 0.7521`
+  - common-pairs: `v2` still better on MAE `0.9197 -> 0.8986` and `Acc@1` `0.6967 -> 0.7222`, but worse on wrong-polarity and strong wrong-polarity
+  - source trade-off is real: `vocab` MAE worse `0.8274 -> 0.8466`; `discovery` MAE better `1.0686 -> 0.9611`
+  - `nm_id=619500952` is systemic failure, not one outlier: `MAE 1.03 -> 2.22`, bias `-0.94 -> -2.14`, wrong-polarity `0.25 -> 0.51`
+  - hard-case mix shifted: `v1` mostly `discovery (24/30)`, `v2` mostly `vocab (20/30)`
+- Decision:
+  - `v2` is not simply worse; it is closer numerically on many pairs
+  - `v2` is less safe because catastrophic polarity flips increased, especially on `physical_goods` and `nm_id=619500952`
+  - `final_res_v1` remains safer default final package
+
+## Update 2026-05-01: sentiment_benchmark_abcd_diagnostics_v1
+
+- Goal: compare saved sentiment benchmark modes A/B/C/D with richer pair-level diagnostics, without reruns.
+- Hypothesis: B/C should look best on near-hit metrics; D should keep better coverage among localized modes; A may keep highest coverage but weaker sentiment quality.
+- Files:
+  - `scripts/compare_sentiment_benchmark_modes.py`
+  - `tests/test_compare_sentiment_benchmark_modes.py`
+- Added metrics:
+  - `MAE`, `MAE rounded`, `Median AE`, `RMSE`, `Mean signed error`
+  - `Accuracy@0.5`, `Accuracy@1.0`, `Accuracy@1.5`
+  - direction metrics, wrong-polarity metrics, over/under-shoot rates
+  - split by `vocab` / `discovery`
+  - `own_pairs` vs `common_pairs` across all 4 modes
+  - per-category, per-product, confusion matrices, hard-case summaries
+- Verification:
+  - `py_compile` OK
+  - `pytest tests/test_compare_sentiment_benchmark_modes.py -q --basetemp .pytest_tmp_manual` -> `2 passed`
+  - full comparison run OK -> `benchmark/sentiment/mode_abcd_diagnostics/results/20260501_130143`
+- Result:
+  - own-pairs by MAE: `C 0.8851`, `B 0.8953`, `D 0.9373`, `A 0.9943`
+  - own-pairs by Acc@1: `C 0.7408`, `B 0.7259`, `D 0.7132`, `A 0.6612`
+  - own-pairs by RMSE: `A 1.4760`, `B 1.5280`, `C 1.5380`, `D 1.5702`
+  - own-pairs coverage: `A 0.4489`, `D 0.3483`, `C 0.3181`, `B 0.3163`
+  - common-pairs by MAE: `C 0.8684`, `B 0.8845`, `D 0.9176`, `A 0.9650`
+  - source trade-off: `B` best vocab MAE `0.8466`; `C` best discovery MAE `0.9262`; `D` highest localized coverage
+  - hard-case mix: `A 15/15 discovery-vocab`, `B 10/20`, `C 11/19`, `D 14/16`
+- Decision:
+  - `C` is best on numeric closeness and Acc@1
+  - `B` stays more balanced and safer than `C` on wrong-polarity while keeping best vocab MAE
+  - `D` helps coverage but loses on MAE and tails
+  - `A` remains coverage-heavy baseline, not competitive on sentiment quality
+
+## Update 2026-05-01: final_res_v2_window_evidence
+
+- Goal: redefine stable `final_res_v2` from mode B to mode C and compare it against frozen `final_res_v1`.
+- Hypothesis: `final_v2 = C` should improve numeric sentiment quality vs `A`, especially pair-level MAE / Acc@1 and discovery sentiment.
+- Files:
+  - `scripts/freeze_final_results.py`
+  - `tests/test_freeze_final_results.py`
+  - `README.md`
+- Change:
+  - generalized freeze builder from hardcoded mode B to configurable saved sentiment mode
+  - default `final_res_v2` switched to `mode_c_window_evidence`
+- Verification:
+  - `py_compile` OK
+  - `pytest tests/test_freeze_final_results.py -q --basetemp .pytest_tmp_manual` -> `3 passed`
+  - rebuild OK: `results/final_res_v2`
+  - rich compare OK: `results/final_res_v1_vs_v2_diagnostics/20260501_132850`
+- Result:
+  - `final_res_v2` now has `derived_sentiment_mode_id = mode_c_window_evidence`
+  - Track A: review MAE `0.8466 -> 0.8696`, round `0.8005 -> 0.8528`, vocab pair `0.8274 -> 0.8561`, product n3 `0.7841 -> 0.8703`
+  - Track B: review MAE `0.9250 -> 0.8934`, round `0.8856 -> 0.8749`, discovery pair `1.0686 -> 0.9262`
+  - pair-level own-pairs: MAE `0.9563 -> 0.8851`, `Acc@1` `0.6712 -> 0.7408`, median AE `0.5704 -> 0.1267`
+  - pair-level own-pairs worsened on safety: wrong-polarity `0.1761 -> 0.1894`, strong wrong-polarity `0.1148 -> 0.1563`, RMSE `1.4236 -> 1.5380`
+- Decision:
+  - `final_v2 = C` is a stronger numeric alternative to baseline `A`
+  - `final_v2 = C` is not safer than `A`; it trades higher local accuracy for more severe polarity flips and lower coverage
+
+## Update 2026-05-01: test_end_to_end_honest_ab_demo_v1
+
+- Goal: build a tiny idealized end-to-end demo on 20 hardcoded reviews to show honest A/B/C sentiment setup.
+- Hypothesis: if we save one common aspect-in-review entity with `review_id + fragment_id + start/end`, then A/B/C will start from the same assignments and differ only by context restoration.
+- Files:
+  - `test_end_to_end/demo_pipeline.py`
+  - `test_end_to_end/README.md`
+- Saved entities:
+  - `reviews.jsonl`
+  - `aspects.jsonl`
+  - `fragments.jsonl`
+  - `aspect_assignments.jsonl`
+  - restored `mode_a_inputs.jsonl`
+  - restored `mode_b_inputs.jsonl`
+  - restored `mode_c_inputs.jsonl`
+- Verification:
+  - `py_compile` OK
+  - demo run OK -> `test_end_to_end/generated`
+- Result:
+  - 20 reviews, 47 fragments, 47 aspect assignments
+  - restored `A/B/C` all have 47 inputs each
+  - restoration happens from saved artifacts, not from in-memory search rerun
+  - discovery demo also uses fragment linkage, not phrase re-search later
+- Decision:
+  - this demo is the honest scheme we should mirror in the real pipeline
+  - critical invariant = save aspect-to-fragment linkage before sentiment and restore contexts from that linkage only
