@@ -1,0 +1,29 @@
+{
+  "mode_id": "mode_d_multi_evidence_weighted_relevance",
+  "source_run_dir": "D:\\diploma\\results\\20260425_183110_traced",
+  "dataset_path": "D:\\diploma\\data\\dataset_final.csv",
+  "counts": {
+    "input_rows": 5096,
+    "predictions": 5096,
+    "kept_after_threshold": 3578,
+    "review_aspect_scores": 2691,
+    "discovery_assignments_without_evidence": 2053
+  },
+  "metrics": {
+    "sentiment_mae_review": 0.8891912364990336,
+    "sentiment_mae_review_round": 0.8707441643323997,
+    "sentiment_mae_vocab_pairs": 0.8456117861429436,
+    "sentiment_mae_discovery_pairs": 1.0223355886760095,
+    "n_sentiment_review_matches": 850,
+    "n_evaluable_gold_pairs": 1555,
+    "n_total_gold_pairs": 4464,
+    "evaluable_pair_coverage": 0.34834229390681004
+  },
+  "config": {
+    "window_tokens": 6,
+    "relevance_threshold": 0.2,
+    "temperature": 0.7,
+    "aggregation": "weighted_relevance"
+  },
+  "runtime_sec": 1084.2763
+}

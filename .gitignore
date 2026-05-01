@@ -31,7 +31,8 @@ experiments/runs/
 experiments/merged_suite_run/
 experiments/registry.jsonl
 experiments/hypothesis_experiment.md
-tests
+tests/*
+!tests/test_sentiment_benchmark_common.py
 
 benchmark/raw/
 benchmark/batches/

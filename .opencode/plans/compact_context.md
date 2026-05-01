@@ -480,3 +480,28 @@ _clean_clusters
 - артефакты: MANIFEST, parquet/npy/csv/json, figures, dashboard screenshots
 - тесты: tracing/unit/sanity/core passed
 - следующий шаг: анализ ВКР на traced artifacts
+- goal: sentiment_benchmark_evidence_modes_v1
+- checked: 4 isolated sentiment modes on frozen traced artifacts; no clustering rerun
+- got: A MAE=0.9770 cov=0.4489; B=0.8878 cov=0.3163; C=0.8934 cov=0.3181; D=0.9014 cov=0.3483
+- got: best review MAE = B
+- got: best discovery-pair MAE = C (0.9262)
+- got: D improves coverage vs B/C but stays worse on MAE
+- did not work: discovery evidence is incomplete; 2053 assigned discovery aspects have no recoverable phrase hit in traced artifacts
+- fixed: new benchmark/sentiment scaffold with per-mode runners, metrics, hard cases, and saved outputs
+- verified: py_compile OK; pytest 3 passed; smoke A/B/C/D passed; full A/B/C/D runs saved
+- artifacts: benchmark/sentiment/mode_a_current_baseline/results/20260430_174630
+- artifacts: benchmark/sentiment/mode_b_sentence_evidence/results/20260430_175836
+- artifacts: benchmark/sentiment/mode_c_window_evidence/results/20260430_180307
+- artifacts: benchmark/sentiment/mode_d_multi_evidence/results/20260430_181922
+- next: optional D weighted_relevance A/B; primary follow-up candidate = B
+- goal: sentiment_mode_d_weighted_relevance_v1
+- checked: final sentiment-only D rerun with weighted aggregation on frozen traced artifacts
+- got: output benchmark/sentiment/mode_d_multi_evidence_weighted_relevance/results/20260501_103909
+- got: review MAE 0.9014 -> 0.8892 vs D; round 0.8834 -> 0.8707; vocab pair 0.8573 -> 0.8456
+- got: discovery pair 1.0305 -> 1.0223; coverage unchanged 0.3483; kept_after_threshold unchanged 3578
+- did not work: B still keeps best primary review MAE 0.8878 and much better discovery pair MAE 0.9611
+- fixed: separate mode_id + runner for D_weighted; no extraction/matching/vocabulary/discovery changes
+- verified: full run completed; runtime 1084.28 sec
+- artifacts: benchmark/sentiment/reference_summary.md
+- decision: keep B as reference
+- fallback: D_weighted only if higher localized-evidence coverage matters more than best MAE

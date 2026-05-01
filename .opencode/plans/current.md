@@ -2260,3 +2260,97 @@ Result: PASS on results/20260425_183110_traced; reference parity preserved.
 Artifacts: MANIFEST, parquet/npy/csv/json stage artifacts, figures, dashboard screenshots.
 Moved: src/pipeline.py -> src/pipeline/legacy.py. Deleted/archived: none.
 Next: use traced artifacts for ВКР analysis; do not change algorithms unless a new isolated experiment is approved.
+
+## Planned 2026-04-30: sentiment_benchmark_evidence_modes_v1
+
+- Goal: build isolated `benchmark/sentiment` scaffolding for 4 sentiment evidence modes over frozen traced artifacts.
+- Baseline: `results/20260425_183110_traced` with current review-level premise sentiment (`premise = full review`, single evidence per aspect).
+- Changed variable: evidence construction only.
+  - Mode A: current baseline, full review premise.
+  - Mode B: sentence containing matched candidate / phrase evidence.
+  - Mode C: local token window around matched candidate / phrase evidence.
+  - Mode D: multi-evidence per aspect with post-NLI aggregation.
+- Scope lock:
+  - do not rerun clustering
+  - do not change detection / matching / sentiment model weights
+  - do not rewrite production pipeline
+- Hypothesis:
+  - localized evidence will reduce review-level sentiment MAE versus Mode A
+  - Mode B is the most plausible first winner
+  - Mode D may help repeated-aspect reviews if aggregation keeps only the strongest evidence
+- Metric:
+  - primary: review-level MAE on evaluable gold review-aspect pairs
+  - secondary: rounded MAE, evaluable-pair coverage, vocab/discovery split, per-mode NLI pair count
+- Files to change:
+  - `.opencode/plans/current.md`
+  - `benchmark/sentiment/common.py`
+  - `benchmark/sentiment/mode_a_current_baseline/run.py`
+  - `benchmark/sentiment/mode_b_sentence_evidence/run.py`
+  - `benchmark/sentiment/mode_c_window_evidence/run.py`
+  - `benchmark/sentiment/mode_d_multi_evidence/run.py`
+  - `tests/test_sentiment_benchmark*.py`
+
+## Update 2026-04-30: sentiment_benchmark_evidence_modes_v1
+
+- Goal: build isolated `benchmark/sentiment` scaffolding for 4 evidence modes on frozen traced artifacts.
+- Scope respected:
+  - no clustering rerun
+  - no detection / matching / production pipeline rewrite
+  - only benchmark-layer sentiment evidence construction
+- Files changed:
+  - `benchmark/sentiment/common.py`
+  - `benchmark/sentiment/mode_a_current_baseline/run.py`
+  - `benchmark/sentiment/mode_b_sentence_evidence/run.py`
+  - `benchmark/sentiment/mode_c_window_evidence/run.py`
+  - `benchmark/sentiment/mode_d_multi_evidence/run.py`
+  - `tests/test_sentiment_benchmark_common.py`
+- Full runs:
+  - A: `benchmark/sentiment/mode_a_current_baseline/results/20260430_174630`
+  - B: `benchmark/sentiment/mode_b_sentence_evidence/results/20260430_175836`
+  - C: `benchmark/sentiment/mode_c_window_evidence/results/20260430_180307`
+  - D: `benchmark/sentiment/mode_d_multi_evidence/results/20260430_181922`
+- Result:
+  - A review MAE = 0.9770, coverage = 0.4489
+  - B review MAE = 0.8878, coverage = 0.3163
+  - C review MAE = 0.8934, coverage = 0.3181
+  - D review MAE = 0.9014, coverage = 0.3483
+- Interpretation:
+  - best MAE: Mode B
+  - best discovery-pair MAE: Mode C (0.9262)
+  - best coverage: Mode A overall, Mode D among localized-evidence modes
+  - discovery bottleneck remains large: 2053 discovery assignments have no recoverable phrase evidence in traced artifacts
+- Verification:
+  - `py_compile` OK
+  - `pytest tests/test_sentiment_benchmark_common.py -q --basetemp .pytest_tmp_manual` -> 3 passed
+  - smoke runs on 30-review subset completed for A/B/C/D
+- Next:
+  - if continuing sentiment-only work, compare `mode_d_multi_evidence --aggregation weighted_relevance` against current `max_relevance`
+  - if keeping one main follow-up mode, take B as primary reference and C as narrow cross-check
+## Update 2026-05-01: sentiment_mode_d_weighted_relevance_v1
+
+- Goal: final sentiment-only check whether mode D can keep higher coverage but lower MAE with weighted aggregation.
+- Baseline: `benchmark/sentiment/mode_d_multi_evidence/results/20260430_181922` (`aggregation=max_relevance`).
+- Changed variable: aggregation only, `max_relevance -> weighted_relevance`.
+- Scope respected:
+  - no extraction changes
+  - no matching changes
+  - no vocabulary changes
+  - no discovery rerun
+- Files changed:
+  - `benchmark/sentiment/common.py`
+  - `benchmark/sentiment/mode_d_multi_evidence_weighted_relevance/run.py`
+  - `benchmark/sentiment/reference_summary.md`
+- Full run output: `benchmark/sentiment/mode_d_multi_evidence_weighted_relevance/results/20260501_103909`.
+- Result vs D:
+  - review MAE `0.9014 -> 0.8892`
+  - round review MAE `0.8834 -> 0.8707`
+  - vocab pair MAE `0.8573 -> 0.8456`
+  - discovery pair MAE `1.0305 -> 1.0223`
+  - evaluable pair coverage unchanged `0.3483`
+  - kept_after_threshold unchanged `3578`
+  - runtime `975.11 -> 1084.28 sec`
+- Comparison vs B:
+  - B still has best primary review MAE `0.8878`
+  - B still has slightly better round MAE `0.8702`
+  - B is much better on discovery pair MAE `0.9611`
+- Decision: keep `mode_b_sentence_evidence` as reference; keep `mode_d_multi_evidence_weighted_relevance` as higher-coverage fallback only.
