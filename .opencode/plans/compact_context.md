@@ -601,3 +601,16 @@ _clean_clusters
 - got: A remains safest on RMSE / strong wrong-polarity, but loses on MAE and Acc@1
 - decision: keep honest reference = `B`; keep `C` as best common-pair / fastest localized variant; keep `D_weighted` only as coverage-oriented fallback
 - next: if needed, freeze final package only after deciding whether priority is own-pairs MAE (`B`) or common-pair closeness (`C`)
+
+- goal: sentiment_global_cache_v1
+- checked: persistent sqlite NLI cache for full run and benchmark
+- got: shared cache backend for v4 and v5; stored value = raw logits
+- got: cache key = model_signature + premise_hash + hypothesis_hash
+- got: full traced summary now reports nli_cache stats
+- got: benchmark summary now reports nli_cache stats
+- verified: new cache tests + existing sentiment tests = 14 passed
+- verified: traced smoke run warm cache -> persistent_hits=458, misses=0
+- verified: benchmark mode C warm cache -> persistent_hits=914, misses=0
+- fixed: repeated reruns now add only unseen NLI pairs
+- decision: honest A/B remains honest; cache changes runtime only
+- next: use same cache for future final mode reruns

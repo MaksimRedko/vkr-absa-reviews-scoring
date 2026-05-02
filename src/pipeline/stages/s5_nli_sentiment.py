@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from typing import Any
 
 import numpy as np
@@ -30,6 +31,8 @@ def run_stage(
             "temperature": float(sent_cfg.get("nli_temperature", 0.7)),
             "hypothesis_template_pos": "{aspect} — это хорошо",
             "relevance_threshold": threshold,
+            "persistent_nli_cache_enabled": bool(sent_cfg.get("persistent_nli_cache_enabled", True)),
+            "persistent_nli_cache_path": str(sent_cfg.get("persistent_nli_cache_path", "./cache/nli_global.sqlite3")),
         }
     }
 
@@ -45,6 +48,7 @@ def run_stage(
             for pair in pairs
         ]
         results = engine.batch_analyze(tuple_pairs)
+        cache_stats = engine.get_cache_stats() if hasattr(engine, "get_cache_stats") else {}
 
     sentiment_by_pair: dict[tuple[str, str], dict[str, float]] = {}
     raw_rows: list[dict[str, Any]] = []
@@ -97,6 +101,8 @@ def run_stage(
             }
         )
     logger.log(f"[sentiment] kept={len(sentiment_by_pair)} skipped={skipped}")
+    if cache_stats:
+        logger.log(f"[sentiment] cache_stats={json.dumps(cache_stats, ensure_ascii=False, sort_keys=True)}")
 
     negation_stats = e2e()._apply_negation_corrections(
         sentiment_by_pair,
@@ -122,4 +128,5 @@ def run_stage(
         "sentiment_by_pair": sentiment_by_pair,
         "negation_stats": negation_stats,
         "nli_predictions": frame,
+        "cache_stats": cache_stats,
     }

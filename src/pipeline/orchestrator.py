@@ -464,6 +464,7 @@ def run_traced_pipeline(
             "out_dir": str(out_dir),
             "elapsed_sec": round(time.perf_counter() - started, 4),
             **metrics_payload,
+            "nli_cache": sent.get("cache_stats", {}),
             "params": {
                 "config_path": str(_resolve(config_path)),
                 "matching_mode": config.get("matching", {}).get("matching_mode"),
@@ -490,6 +491,7 @@ def run_traced_pipeline(
             "artifact_files": artifact_files,
             "elapsed_seconds_per_stage": {key: round(value, 4) for key, value in stage_times.items()},
             "metrics": metrics_payload,
+            "nli_cache": sent.get("cache_stats", {}),
         }
         writer.write_json("MANIFEST.json", manifest)
         logger.log(json.dumps(summary_payload, ensure_ascii=False, indent=2))

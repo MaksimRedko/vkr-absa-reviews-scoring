@@ -103,6 +103,8 @@ config = OmegaConf.create({
         # Потоки CPU для onnxruntime (только при nli_onnx_quantized_path)
         "ort_intra_op_num_threads": 4,
         "nli_pair_cache_max": 50000,  # LRU (premise, hypothesis) → logits в SentimentEngine
+        "persistent_nli_cache_enabled": True,
+        "persistent_nli_cache_path": "./cache/nli_global.sqlite3",
         "score_epsilon": 0.0001,
         "pairing_strategy": "review_provenance",
         # Review-level NLI (one pair per review/aspect) + post-NLI relevance filter

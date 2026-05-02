@@ -2574,3 +2574,32 @@ Next: use traced artifacts for ВКР analysis; do not change algorithms unless 
   - honest reference stays `B` as best own-pairs review MAE and strongest balanced choice
   - `C` is best on common-pair closeness and fastest localized mode
   - `D_weighted` is the only sensible multi-evidence variant, but still not enough to replace `B`
+
+
+## Update 2026-05-02: sentiment_global_cache_v1
+
+- Goal: add persistent cross-run NLI cache for full run and benchmark.
+- Baseline: only per-process LRU; new launches recompute the same NLI pairs.
+- Changed variable: caching layer only. No pair-building, model, or sentiment-formula changes.
+- Files:
+  - `src/stages/nli_persistent_cache.py`
+  - `src/stages/sentiment.py`
+  - `.opencode/artifacts/sentiment_search_20260425/sentiment_faad23a_v4_single_hypothesis.py`
+  - `src/pipeline/stages/s5_nli_sentiment.py`
+  - `src/pipeline/orchestrator.py`
+  - `benchmark/sentiment/common.py`
+  - `configs/configs.py`
+  - `run_config.yaml`
+  - `tests/test_nli_persistent_cache.py`
+- Implementation:
+  - sqlite cache with deduped text rows and cache-entry rows
+  - cache key = model_signature + premise_hash + hypothesis_hash
+  - cached value = raw logits, so later temperature scaling stays valid
+  - same backend reused by v4 single-hypothesis and v5 dual-hypothesis engines
+- Verification:
+  - `pytest tests/test_nli_persistent_cache.py tests/test_sentiment_benchmark_common.py tests/test_compare_sentiment_benchmark_modes.py tests/test_freeze_final_results.py -q --basetemp .pytest_tmp_manual` -> `14 passed`
+  - traced smoke x2 (`limit_products=1`): cold `persistent_hits=0`, warm `persistent_hits=458`, second run `misses=0`
+  - benchmark mode C smoke x2: cold `persistent_hits=0`, warm `persistent_hits=914`, second run `misses=0`
+- Decision:
+  - honest A/B from `sentiment_honest_abcd_weighted_fullrun_v1` stays valid
+  - persistent cache now appends only unseen premise+hypothesis pairs

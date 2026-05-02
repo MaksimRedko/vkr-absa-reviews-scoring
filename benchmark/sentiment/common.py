@@ -973,11 +973,14 @@ def _run_single_hypothesis(
     if frame.empty:
         return pd.DataFrame()
 
+    sent_cfg = context.run_config.get("sentiment", {})
     engine_cls = _load_single_hypothesis_engine_class(context.run_dir, context.run_config)
     overrides = {
         "sentiment": {
             "temperature": float(temperature),
             "hypothesis_template_pos": SINGLE_HYPOTHESIS_TEMPLATE,
+            "persistent_nli_cache_enabled": bool(sent_cfg.get("persistent_nli_cache_enabled", True)),
+            "persistent_nli_cache_path": str(sent_cfg.get("persistent_nli_cache_path", "./cache/nli_global.sqlite3")),
         }
     }
     tuples = [
@@ -987,6 +990,7 @@ def _run_single_hypothesis(
     with temporary_config_overrides(overrides):
         engine = engine_cls()
         results = engine.batch_analyze(tuples)
+        cache_stats = engine.get_cache_stats() if hasattr(engine, "get_cache_stats") else {}
 
     rows: list[dict[str, Any]] = []
     for source_row, result in zip(frame.itertuples(index=False), results, strict=True):
@@ -1019,11 +1023,14 @@ def _run_single_hypothesis(
                 "gold_matches_json": str(source_row.gold_matches_json),
             }
         )
-    return pd.DataFrame(rows)
+    out = pd.DataFrame(rows)
+    out.attrs["cache_stats"] = cache_stats
+    return out
 
 
 def _run_dual_hypothesis(
     frame: pd.DataFrame,
+    context: BenchmarkContext,
     *,
     temperature: float,
     relevance_threshold: float,
@@ -1031,6 +1038,7 @@ def _run_dual_hypothesis(
     if frame.empty:
         return pd.DataFrame()
 
+    sent_cfg = context.run_config.get("sentiment", {})
     from src.stages.sentiment import SentimentEngine
 
     overrides = {
@@ -1038,6 +1046,8 @@ def _run_dual_hypothesis(
             "temperature": float(temperature),
             "hypothesis_template_pos": DUAL_HYPOTHESIS_POS_TEMPLATE,
             "hypothesis_template_neg": DUAL_HYPOTHESIS_NEG_TEMPLATE,
+            "persistent_nli_cache_enabled": bool(sent_cfg.get("persistent_nli_cache_enabled", True)),
+            "persistent_nli_cache_path": str(sent_cfg.get("persistent_nli_cache_path", "./cache/nli_global.sqlite3")),
         }
     }
     pairs = [
@@ -1053,6 +1063,7 @@ def _run_dual_hypothesis(
     with temporary_config_overrides(overrides):
         engine = SentimentEngine()
         results = engine.batch_analyze(pairs)
+        cache_stats = engine.get_cache_stats() if hasattr(engine, "get_cache_stats") else {}
 
     rows: list[dict[str, Any]] = []
     for source_row, result in zip(frame.itertuples(index=False), results, strict=True):
@@ -1084,7 +1095,9 @@ def _run_dual_hypothesis(
                 "gold_matches_json": str(source_row.gold_matches_json),
             }
         )
-    return pd.DataFrame(rows)
+    out = pd.DataFrame(rows)
+    out.attrs["cache_stats"] = cache_stats
+    return out
 
 
 def run_inference(
@@ -1108,6 +1121,7 @@ def run_inference(
         )
     return _run_dual_hypothesis(
         frame,
+        context,
         temperature=temperature,
         relevance_threshold=relevance_threshold,
     )
@@ -1283,6 +1297,7 @@ def _summary_markdown(
     metrics: dict[str, Any],
     counts: dict[str, Any],
     config: dict[str, Any],
+    cache_stats: dict[str, Any] | None = None,
 ) -> str:
     lines = [
         f"# {mode_id}",
@@ -1309,6 +1324,17 @@ def _summary_markdown(
         "",
         f"- runtime_sec: {runtime_sec:.2f}",
     ]
+    if cache_stats:
+        lines.extend(
+            [
+                "",
+                "## NLI cache",
+                f"- memory_hits: {int(cache_stats.get('memory_hits', 0))}",
+                f"- persistent_hits: {int(cache_stats.get('persistent_hits', 0))}",
+                f"- misses: {int(cache_stats.get('misses', 0))}",
+                f"- writes: {int(cache_stats.get('writes', 0))}",
+            ]
+        )
     return "\n".join(lines) + "\n"
 
 
@@ -1336,6 +1362,7 @@ def run_mode(
         temperature=temperature,
         relevance_threshold=relevance_threshold,
     )
+    cache_stats = dict(predictions.attrs.get("cache_stats", {}))
     review_aspect_scores = aggregate_review_aspect_scores(
         predictions,
         aggregation=aggregation,
@@ -1370,6 +1397,7 @@ def run_mode(
             "temperature": float(temperature),
             "aggregation": str(aggregation),
         },
+        "nli_cache": cache_stats,
         "runtime_sec": round(time.perf_counter() - started, 4),
     }
     (out_dir / "summary.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -1380,6 +1408,7 @@ def run_mode(
             metrics=metrics,
             counts=counts,
             config=payload["config"],
+            cache_stats=cache_stats,
         ),
         encoding="utf-8",
     )

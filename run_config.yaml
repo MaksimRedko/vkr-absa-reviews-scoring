@@ -36,6 +36,8 @@ discovery:
 sentiment:
   nli_temperature: 0.7
   relevance_filter_threshold: 0.2
+  persistent_nli_cache_enabled: true
+  persistent_nli_cache_path: cache/nli_global.sqlite3
   relevance_mode: p_ent_plus_p_contra_faad23a
   hypothesis_template: "{aspect} -- это хорошо"
   raw_formula: "5*P_entailment + 3*P_neutral + 1*P_contradiction"
