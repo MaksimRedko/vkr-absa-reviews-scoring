@@ -2548,3 +2548,29 @@ Next: use traced artifacts for Р’РљР  analysis; do not change algorithms unless 
 - Проверка: `results/20260501_234150_traced` -> `A=459`, `B=459`, `C=459`, `D=895`, `discovery_without_evidence=0`.
 - Тесты: `pytest tests/test_sentiment_benchmark_common.py -q --basetemp .pytest_tmp_manual` -> `5 passed`.
 - Следующий шаг: полный traced run на всём датасете и честный rerun `A/B/C/D/D_weighted` уже на новой схеме.
+
+## Update 2026-05-02: sentiment_honest_abcd_weighted_fullrun_v1
+
+- Goal: rerun full honest sentiment benchmark A/B/C/D/D_weighted on shared review-aspect assignments after schema fix.
+- Hypothesis: with one common assignment list, A/B/C become directly comparable; D/D_weighted differ only by multi-evidence aggregation.
+- Inputs:
+  - traced run: `results/20260502_111627_traced`
+  - benchmark runs:
+    - `mode_a_current_baseline/results/20260502_091441`
+    - `mode_b_sentence_evidence/results/20260502_093932`
+    - `mode_c_window_evidence/results/20260502_095206`
+    - `mode_d_multi_evidence/results/20260502_104703`
+    - `mode_d_multi_evidence_weighted_relevance/results/20260502_114752`
+- Verification:
+  - shared artifacts: `6224` assignments, `24475` evidence, `24475` evidence rows across the same `6224` unique assignments
+  - full comparison: `benchmark/sentiment/mode_abcd_diagnostics/results/20260502_114842`
+- Result, legacy review MAE:
+  - own coverage: `A 0.4489`, `D/Dw 0.4194`, `C 0.3566`, `B 0.3506`
+  - best own-pairs MAE = `B 0.9256`
+  - best common-pairs MAE = `C 0.8960`, then `B 0.9016`, then `Dw 0.9041`
+  - weighted D improved plain D on both own/common MAE: `0.9885 -> 0.9627`, `0.9147 -> 0.9041`
+  - `A` still best on RMSE / strong wrong-polarity safety, but worst on MAE and Acc@1 among competitive modes
+- Decision:
+  - honest reference stays `B` as best own-pairs review MAE and strongest balanced choice
+  - `C` is best on common-pair closeness and fastest localized mode
+  - `D_weighted` is the only sensible multi-evidence variant, but still not enough to replace `B`
