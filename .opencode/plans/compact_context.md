@@ -614,3 +614,27 @@ _clean_clusters
 - fixed: repeated reruns now add only unseen NLI pairs
 - decision: honest A/B remains honest; cache changes runtime only
 - next: use same cache for future final mode reruns
+- goal: fullrun_baseline_a_cache_freeze_v1
+- checked: full baseline-A traced run twice on a new empty persistent cache
+- got: cold run `20260502_164247_traced`, warm run `20260502_171530_traced`
+- got: frozen cache `cache/nli_global_frozen_fullrun_20260502.sqlite3`
+- got: elapsed `1925.1165 -> 895.8639 sec` (`-53.46%`)
+- got: cold cache `hits=0 misses=6217 writes=6215`; warm cache `hits=6217 misses=0 writes=0`
+- got: cache file size `6094848` bytes; no wal/shm leftovers
+- got: Track A and Track B metrics identical across runs
+- got: hashes identical for `nli_predictions`, `product_aggregates`, `aspect_review_assignments`, `aspect_review_evidence`, `candidate_matches`, `candidates`
+- fixed: baseline A now has a frozen reusable global NLI cache for future tests
+- decision: keep variant A as full-run baseline reference
+- next: reuse this cache in future sentiment/full-pipeline reruns instead of cold recomputation
+- goal: stage_cache_s1_s4_v1
+- checked: persistent cache for traced `s1-s4` plus existing NLI cache in `s5`
+- got: new `src/pipeline/stage_cache.py` and restore helpers for `s1/s2/s3/s4`
+- got: `run_summary.json` and `MANIFEST.json` now expose `stage_cache`
+- got: root doc `CACHE_WORKFLOW.md`
+- verified: unit tests `11 passed`, py_compile OK
+- verified: smoke cold/warm on `limit-products=1`
+- got: cold `145.0399 sec`, warm `3.0485 sec`
+- got: `s1-s4` all `miss -> hit`; `s5` NLI `persistent_hits 0 -> 458`
+- got: identical hashes for `candidates`, `candidate_matches`, `aspect_review_assignments`, `nli_predictions`, `product_aggregates`
+- decision: keep `stage_cache.enabled = true` by default
+- next: future full reruns should reuse both `cache/pipeline_stages` and `cache/nli_global.sqlite3`

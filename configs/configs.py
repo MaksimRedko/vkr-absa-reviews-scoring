@@ -94,6 +94,10 @@ config = OmegaConf.create({
             "cluster_selection_method": "eom",
         },
     },
+    "stage_cache": {
+        "enabled": True,
+        "root_dir": "./cache/pipeline_stages",
+    },
     "sentiment": {
         # Baseline B: {aspect} = nli_label (якорь для medoid-кластеров)
         # Одна гипотеза (v4): используется только hypothesis_template_pos.

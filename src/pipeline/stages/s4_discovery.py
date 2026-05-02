@@ -158,6 +158,60 @@ def centroid_arrays(discovery_by_product: dict[int, Any]) -> dict[int, np.ndarra
     return arrays
 
 
+def restore_discovery_by_product(
+    cluster_payloads_by_product: dict[int | str, dict[str, Any]],
+    centroid_arrays_by_product: dict[int | str, np.ndarray],
+) -> dict[int, Any]:
+    ref = e2e()
+    ClusterInfo = ref.ClusterInfo
+    ProductDiscoveryInfo = ref.ProductDiscoveryInfo
+    restored: dict[int, Any] = {}
+    for raw_nm_id, payload in sorted(cluster_payloads_by_product.items(), key=lambda item: int(item[0])):
+        nm_id = int(raw_nm_id)
+        centroid_array = centroid_arrays_by_product.get(nm_id)
+        if centroid_array is None:
+            centroid_array = centroid_arrays_by_product.get(str(nm_id))
+        cluster_items = sorted(payload.get("clusters", []), key=lambda item: int(item["cluster_id"]))
+        clusters: dict[int, Any] = {}
+        for index, item in enumerate(cluster_items):
+            top_pairs = item.get("top_phrases", [])
+            top_phrases = [str(pair[0]).strip() for pair in top_pairs if pair and str(pair[0]).strip()]
+            centroid = None
+            if centroid_array is not None and getattr(centroid_array, "size", 0):
+                if index < int(len(centroid_array)):
+                    centroid = np.asarray(centroid_array[index], dtype=np.float32)
+            clusters[int(item["cluster_id"])] = ClusterInfo(
+                cluster_id=int(item["cluster_id"]),
+                top_phrases=top_phrases,
+                top_phrase_weights={str(pair[0]): int(pair[1]) for pair in top_pairs if pair},
+                centroid=centroid,
+                medoid=str(item.get("medoid_phrase", "") or ""),
+                gold_matches={str(key): float(value) for key, value in dict(item.get("gold_matches", {})).items()},
+            )
+        restored[nm_id] = ProductDiscoveryInfo(
+            nm_id=nm_id,
+            category_id=str(payload["category_id"]),
+            clusters=clusters,
+        )
+    return restored
+
+
+def apply_cached_results(
+    reviews: list[Any],
+    discovery_candidate_bindings: pd.DataFrame,
+) -> None:
+    cluster_ids_by_review = (
+        {
+            str(review_id): {int(cluster_id) for cluster_id in group["cluster_id"].astype(int).tolist()}
+            for review_id, group in discovery_candidate_bindings.groupby("review_id", sort=False)
+        }
+        if not discovery_candidate_bindings.empty
+        else {}
+    )
+    for review in reviews:
+        review.discovery_cluster_ids = set(cluster_ids_by_review.get(str(review.review_id), set()))
+
+
 def run_stage(
     reviews: list[Any],
     candidates: pd.DataFrame,

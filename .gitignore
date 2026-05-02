@@ -37,6 +37,7 @@ tests/*
 !tests/test_compare_final_sentiment_runs.py
 !tests/test_compare_sentiment_benchmark_modes.py
 !tests/test_nli_persistent_cache.py
+!tests/test_stage_cache.py
 
 benchmark/raw/
 benchmark/batches/

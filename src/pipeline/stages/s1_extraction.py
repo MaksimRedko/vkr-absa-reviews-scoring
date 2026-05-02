@@ -74,3 +74,22 @@ def run_stage(reviews: list[Any], config: dict[str, Any]) -> pd.DataFrame:
         "sentence",
     ]
     return pd.DataFrame(rows, columns=columns)
+
+
+def apply_cached_results(reviews: list[Any], candidates: pd.DataFrame) -> None:
+    rows_by_review = (
+        {str(review_id): group.copy() for review_id, group in candidates.groupby("review_id", sort=False)}
+        if not candidates.empty
+        else {}
+    )
+    for review in reviews:
+        surfaces_by_lemma: dict[str, list[str]] = defaultdict(list)
+        rows = rows_by_review.get(str(review.review_id))
+        if rows is not None and not rows.empty:
+            for row in rows.itertuples(index=False):
+                lemma = str(row.text_lemmatized)
+                text = str(row.text)
+                if lemma:
+                    surfaces_by_lemma[lemma].append(text)
+        review.candidate_surfaces_by_lemma = dict(surfaces_by_lemma)
+        review.candidate_lemmas = set(surfaces_by_lemma)

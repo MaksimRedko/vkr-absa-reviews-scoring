@@ -115,3 +115,45 @@ def run_stage(
             "is_unmatched",
         ],
     )
+
+
+def apply_cached_results(
+    reviews: list[Any],
+    candidates: pd.DataFrame,
+    matches: pd.DataFrame,
+    term_to_aspects_by_category: dict[str, dict[str, set[str]]],
+) -> None:
+    matched = matches[matches["matched_aspect_id"].notna()][["candidate_id", "matched_aspect_id"]].drop_duplicates().copy()
+    matched_with_terms = (
+        matched.merge(
+            candidates[["candidate_id", "review_id", "text_lemmatized"]],
+            on="candidate_id",
+            how="left",
+        )
+        if not matched.empty
+        else pd.DataFrame(columns=["candidate_id", "matched_aspect_id", "review_id", "text_lemmatized"])
+    )
+    matched_by_review = (
+        {str(review_id): group.copy() for review_id, group in matched_with_terms.groupby("review_id", sort=False)}
+        if not matched_with_terms.empty
+        else {}
+    )
+    for review in reviews:
+        rows = matched_by_review.get(str(review.review_id))
+        if rows is None or rows.empty:
+            review.vocab_aspect_ids = set()
+            unmatched_lemmas = sorted(review.candidate_lemmas)
+            review.unmatched_phrases = [
+                review.candidate_surfaces_by_lemma[lemma][0]
+                for lemma in unmatched_lemmas
+                if review.candidate_surfaces_by_lemma.get(lemma)
+            ]
+            continue
+        review.vocab_aspect_ids = {str(value) for value in rows["matched_aspect_id"].astype(str).tolist()}
+        matched_term_set = {str(value) for value in rows["text_lemmatized"].astype(str).tolist() if str(value)}
+        unmatched_lemmas = sorted(review.candidate_lemmas - matched_term_set)
+        review.unmatched_phrases = [
+            review.candidate_surfaces_by_lemma[lemma][0]
+            for lemma in unmatched_lemmas
+            if review.candidate_surfaces_by_lemma.get(lemma)
+        ]

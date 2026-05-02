@@ -30,6 +30,15 @@ def _encode_cached(
     return {text: cache[text] for text in texts if text in cache}
 
 
+def build_encoder(config: dict[str, Any]) -> DiscoveryEncoder:
+    model_cfg = config.get("models", {})
+    disc_cfg = config.get("discovery", {})
+    return DiscoveryEncoder(
+        model_name_or_path=str(model_cfg.get("encoder", "ai-forever/sbert_large_nlu_ru")),
+        batch_size=int(disc_cfg.get("encoder_batch_size", 8)),
+    )
+
+
 def run_stage(
     candidates: pd.DataFrame,
     aspects_by_category: dict[str, list[Any]],
@@ -38,12 +47,7 @@ def run_stage(
     encoder: DiscoveryEncoder | None = None,
     cache: dict[str, np.ndarray] | None = None,
 ) -> dict[str, Any]:
-    model_cfg = config.get("models", {})
-    disc_cfg = config.get("discovery", {})
-    encoder = encoder or DiscoveryEncoder(
-        model_name_or_path=str(model_cfg.get("encoder", "ai-forever/sbert_large_nlu_ru")),
-        batch_size=int(disc_cfg.get("encoder_batch_size", 8)),
-    )
+    encoder = encoder or build_encoder(config)
     cache = cache if cache is not None else {}
 
     cand_texts = candidates["text_lemmatized"].fillna("").astype(str).tolist() if not candidates.empty else []
@@ -104,5 +108,44 @@ def run_stage(
             row["candidate_id"]: candidate_embeddings[int(row["row_index"])]
             for row in cand_index_rows
         },
+        "aspect_vectors_by_category": aspect_vectors_by_category,
+    }
+
+
+def restore_stage(
+    candidates: pd.DataFrame,
+    aspects_by_category: dict[str, list[Any]],
+    config: dict[str, Any],
+    *,
+    candidate_embeddings: np.ndarray,
+    candidate_index: pd.DataFrame,
+    vocab_embeddings: np.ndarray,
+    vocab_index: pd.DataFrame,
+    encoder: DiscoveryEncoder | None = None,
+    cache: dict[str, np.ndarray] | None = None,
+) -> dict[str, Any]:
+    cache = cache if cache is not None else {}
+    candidate_vectors_by_id: dict[str, np.ndarray] = {}
+    if not candidate_index.empty and candidate_embeddings.size:
+        for row in candidate_index.itertuples(index=False):
+            candidate_vectors_by_id[str(row.candidate_id)] = candidate_embeddings[int(row.row_index)]
+
+    aspect_vectors_by_category: dict[str, dict[str, np.ndarray]] = {
+        str(category): {} for category in aspects_by_category
+    }
+    if not vocab_index.empty and vocab_embeddings.size:
+        for row in vocab_index.itertuples(index=False):
+            aspect_vectors_by_category.setdefault(str(row.category_id), {})[str(row.aspect_id)] = vocab_embeddings[
+                int(row.row_index)
+            ]
+
+    return {
+        "encoder": encoder,
+        "cache": cache,
+        "candidate_embeddings": candidate_embeddings,
+        "candidate_index": candidate_index.copy(),
+        "vocab_embeddings": vocab_embeddings,
+        "vocab_index": vocab_index.copy(),
+        "candidate_vectors_by_id": candidate_vectors_by_id,
         "aspect_vectors_by_category": aspect_vectors_by_category,
     }

@@ -2603,3 +2603,78 @@ Next: use traced artifacts for ВКР analysis; do not change algorithms unless 
 - Decision:
   - honest A/B from `sentiment_honest_abcd_weighted_fullrun_v1` stays valid
   - persistent cache now appends only unseen premise+hypothesis pairs
+
+## Update 2026-05-02: fullrun_baseline_a_cache_freeze_v1
+
+- Goal: freeze one clean persistent NLI cache from full baseline-A traced run and verify warm rerun parity.
+- Baseline:
+  - full traced pipeline with current baseline A sentiment
+  - no prefilled entries in target cache
+- Changed variable:
+  - cache state only: cold run -> warm run
+  - algorithms, seeds, config, model, inputs unchanged
+- Files:
+  - `tmp/fullrun_baseline_a_cache_freeze_20260502.yaml`
+- Runs:
+  - cold: `results/20260502_164247_traced`
+  - warm: `results/20260502_171530_traced`
+  - frozen cache: `cache/nli_global_frozen_fullrun_20260502.sqlite3`
+- Result:
+  - elapsed `1925.1165 -> 895.8639 sec` (`-53.46%`)
+  - cache cold: `persistent_hits=0`, `misses=6217`, `writes=6215`
+  - cache warm: `persistent_hits=6217`, `misses=0`, `writes=0`
+  - file size: `6094848 bytes`; no `-wal` / `-shm` remained after run
+  - key metrics identical across runs:
+    - Track A review MAE `0.8466375651`
+    - Track A round MAE `0.8005263158`
+    - Track A product n3 `0.7840990291`
+    - Track B review MAE `0.9250109967`
+  - artifact hashes identical for:
+    - `nli_predictions.parquet`
+    - `product_aggregates.parquet`
+    - `aspect_review_assignments.parquet`
+    - `aspect_review_evidence.parquet`
+    - `candidate_matches.parquet`
+    - `candidates.parquet`
+- Decision:
+  - baseline A stays frozen reference for full pipeline
+  - `cache/nli_global_frozen_fullrun_20260502.sqlite3` is a valid reusable persistent cache for future tests
+
+## Update 2026-05-02: stage_cache_s1_s4_v1
+
+- Goal: add persistent stage cache for `s1-s4` so full reruns do not recompute extraction / encoding / matching / discovery binding when inputs stay the same.
+- Baseline:
+  - traced pipeline always recomputed `s1-s4`
+  - only `s5` had persistent NLI cache
+- Changed variable:
+  - orchestration/cache layer only
+  - no algorithm changes in extraction / matching / discovery / sentiment
+- Files:
+  - `src/pipeline/stage_cache.py`
+  - `src/pipeline/orchestrator.py`
+  - `src/pipeline/stages/s1_extraction.py`
+  - `src/pipeline/stages/s2_encoding.py`
+  - `src/pipeline/stages/s3_vocab_matching.py`
+  - `src/pipeline/stages/s4_discovery.py`
+  - `configs/configs.py`
+  - `run_config.yaml`
+  - `tests/test_stage_cache.py`
+  - `CACHE_WORKFLOW.md`
+- Implementation:
+  - new fingerprinted cache root for `s1-s4`
+  - warm run copies cached artifacts into a fresh traced `out_dir`
+  - review/discovery runtime state is restored from cached artifacts, not recomputed
+  - run summaries now include `stage_cache` hit/miss info
+- Verification:
+  - `py_compile` OK
+  - `pytest tests/test_stage_cache.py tests/test_nli_persistent_cache.py tests/test_sentiment_benchmark_common.py -q --basetemp .pytest_tmp_manual` -> `11 passed`
+  - smoke cold/warm on `limit-products=1` with isolated caches:
+    - cold `145.0399 sec`
+    - warm `3.0485 sec`
+    - `s1-s4` all `miss -> hit`
+    - NLI `persistent_hits 0 -> 458`, `misses 458 -> 0`
+    - hashes identical for `candidates`, `candidate_matches`, `aspect_review_assignments`, `nli_predictions`, `product_aggregates`
+- Decision:
+  - `s1-s4` stage cache is valid and should stay enabled by default
+  - root usage doc saved as `CACHE_WORKFLOW.md`
+  - full traced reruns can now reuse both stage cache and NLI cache

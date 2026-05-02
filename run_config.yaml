@@ -33,6 +33,10 @@ discovery:
   hdbscan_min_cluster_size: 5
   hdbscan_min_samples: 3
 
+stage_cache:
+  enabled: true
+  root_dir: cache/pipeline_stages
+
 sentiment:
   nli_temperature: 0.7
   relevance_filter_threshold: 0.2
