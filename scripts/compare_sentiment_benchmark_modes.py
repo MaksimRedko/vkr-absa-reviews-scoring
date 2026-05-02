@@ -24,6 +24,7 @@ MODE_IDS = [
     sentiment_benchmark.MODE_B,
     sentiment_benchmark.MODE_C,
     sentiment_benchmark.MODE_D,
+    sentiment_benchmark.MODE_D_WEIGHTED,
 ]
 OUTPUT_ROOT_DEFAULT = ROOT / "benchmark" / "sentiment" / "mode_abcd_diagnostics" / "results"
 SCOPE_OWN = diagnostics.SCOPE_OWN
@@ -513,6 +514,7 @@ def main() -> None:
     parser.add_argument("--mode-b-dir", default=str(_latest_result_dir(sentiment_benchmark.MODE_B)))
     parser.add_argument("--mode-c-dir", default=str(_latest_result_dir(sentiment_benchmark.MODE_C)))
     parser.add_argument("--mode-d-dir", default=str(_latest_result_dir(sentiment_benchmark.MODE_D)))
+    parser.add_argument("--mode-d-weighted-dir", default=str(_latest_result_dir(sentiment_benchmark.MODE_D_WEIGHTED)))
     parser.add_argument("--out-root", default=str(OUTPUT_ROOT_DEFAULT))
     args = parser.parse_args()
 
@@ -521,6 +523,7 @@ def main() -> None:
         sentiment_benchmark.MODE_B: Path(args.mode_b_dir),
         sentiment_benchmark.MODE_C: Path(args.mode_c_dir),
         sentiment_benchmark.MODE_D: Path(args.mode_d_dir),
+        sentiment_benchmark.MODE_D_WEIGHTED: Path(args.mode_d_weighted_dir),
     }
     out_dir = run_comparison(
         benchmark_dirs=benchmark_dirs,

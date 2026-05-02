@@ -52,12 +52,14 @@ def _git_commit() -> str:
         return "unknown"
 
 
-def _build_aspect_review_assignments(
+def _build_aspect_review_artifacts(
     candidates: pd.DataFrame,
     matches: pd.DataFrame,
     discovery_candidate_bindings: pd.DataFrame,
-) -> pd.DataFrame:
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     matched = matches[matches["matched_aspect_id"].notna()][["candidate_id", "matched_aspect_id"]].drop_duplicates().copy()
+    assignment_rows: list[dict[str, Any]] = []
+    evidence_rows: list[dict[str, Any]] = []
     vocab_rows: list[dict[str, Any]] = []
     if not matched.empty:
         merged = candidates[["candidate_id", "review_id", "start_offset", "end_offset"]].merge(
@@ -67,9 +69,22 @@ def _build_aspect_review_assignments(
         )
         for row in merged.itertuples(index=False):
             aspect_id = str(row.matched_aspect_id)
-            vocab_rows.append(
+            assignment_id = stable_id(
+                row.review_id,
+                "vocab",
+                aspect_id,
+            )
+            assignment_rows.append(
                 {
-                    "assignment_id": stable_id(
+                    "assignment_id": assignment_id,
+                    "review_id": str(row.review_id),
+                    "aspect_id": aspect_id,
+                    "aspect_type": "vocab",
+                }
+            )
+            evidence_rows.append(
+                {
+                    "evidence_id": stable_id(
                         row.review_id,
                         "vocab",
                         aspect_id,
@@ -77,6 +92,7 @@ def _build_aspect_review_assignments(
                         int(row.start_offset),
                         int(row.end_offset),
                     ),
+                    "assignment_id": assignment_id,
                     "review_id": str(row.review_id),
                     "aspect_id": aspect_id,
                     "aspect_type": "vocab",
@@ -86,16 +102,28 @@ def _build_aspect_review_assignments(
                 }
             )
 
-    discovery_rows: list[dict[str, Any]] = []
     if not discovery_candidate_bindings.empty:
         deduped_bindings = discovery_candidate_bindings.drop_duplicates(
             subset=["review_id", "candidate_id", "start_offset", "end_offset", "cluster_id"]
         )
         for row in deduped_bindings.itertuples(index=False):
             cluster_id = str(int(row.cluster_id))
-            discovery_rows.append(
+            assignment_id = stable_id(
+                row.review_id,
+                "discovery",
+                cluster_id,
+            )
+            assignment_rows.append(
                 {
-                    "assignment_id": stable_id(
+                    "assignment_id": assignment_id,
+                    "review_id": str(row.review_id),
+                    "aspect_id": cluster_id,
+                    "aspect_type": "discovery",
+                }
+            )
+            evidence_rows.append(
+                {
+                    "evidence_id": stable_id(
                         row.review_id,
                         "discovery",
                         cluster_id,
@@ -103,6 +131,7 @@ def _build_aspect_review_assignments(
                         int(row.start_offset),
                         int(row.end_offset),
                     ),
+                    "assignment_id": assignment_id,
                     "review_id": str(row.review_id),
                     "aspect_id": cluster_id,
                     "aspect_type": "discovery",
@@ -112,9 +141,19 @@ def _build_aspect_review_assignments(
                 }
             )
 
-    return pd.DataFrame(
-        vocab_rows + discovery_rows,
+    assignments = pd.DataFrame(
+        assignment_rows,
         columns=[
+            "assignment_id",
+            "review_id",
+            "aspect_id",
+            "aspect_type",
+        ],
+    ).drop_duplicates(subset=["assignment_id"]).reset_index(drop=True)
+    evidence = pd.DataFrame(
+        evidence_rows,
+        columns=[
+            "evidence_id",
             "assignment_id",
             "review_id",
             "aspect_id",
@@ -123,7 +162,8 @@ def _build_aspect_review_assignments(
             "start_offset",
             "end_offset",
         ],
-    )
+    ).drop_duplicates(subset=["evidence_id"]).reset_index(drop=True)
+    return assignments, evidence
 
 
 def _write_e2e_compatible_outputs(
@@ -359,7 +399,7 @@ def run_traced_pipeline(
             disc["discovery_candidate_bindings"],
             sort_by=["review_id", "candidate_id", "start_offset", "end_offset", "cluster_id"],
         )
-        assignments = _build_aspect_review_assignments(
+        assignments, assignment_evidence = _build_aspect_review_artifacts(
             candidates,
             matches,
             disc["discovery_candidate_bindings"],
@@ -367,12 +407,18 @@ def run_traced_pipeline(
         writer.write_dataframe(
             "aspect_review_assignments.parquet",
             assignments,
-            sort_by=["review_id", "aspect_type", "aspect_id", "candidate_id", "start_offset", "end_offset"],
+            sort_by=["review_id", "aspect_type", "aspect_id", "assignment_id"],
+        )
+        writer.write_dataframe(
+            "aspect_review_evidence.parquet",
+            assignment_evidence,
+            sort_by=["review_id", "aspect_type", "aspect_id", "assignment_id", "start_offset", "end_offset", "candidate_id"],
         )
         artifact_files["clusters"] = "clusters_<nm_id>.json"
         artifact_files["cluster_centroids"] = "cluster_centroids_<nm_id>.npy"
         artifact_files["discovery_candidate_bindings"] = "discovery_candidate_bindings.parquet"
         artifact_files["aspect_review_assignments"] = "aspect_review_assignments.parquet"
+        artifact_files["aspect_review_evidence"] = "aspect_review_evidence.parquet"
         logger.log(f"[s4] discovery_products={len(discovery_by_product)}")
 
         t0 = time.perf_counter()

@@ -584,3 +584,10 @@ _clean_clusters
 - что исправлено: `candidate_id = stable_id(review_id, lemma, start, end)`
 - что зафиксировано: smoke run `20260501_191353_traced`; `discovery_without_evidence=0`; `len(A)=len(B)=len(C)=895`
 - следующий шаг: пересчитать benchmark-метрики на новых traced artifacts и только потом выбирать final mode
+- цель этапа: sentiment_assignment_model_fix_v2
+- что проверяли: разделение review-aspect assignments и evidence fragments в full run
+- что получилось: теперь пишутся `aspect_review_assignments.parquet` и `aspect_review_evidence.parquet`
+- что не сработало: первая версия схемы раздула assignments до candidate-level (`24475` вместо `6224` уникальных review-aspect)
+- что зафиксировано: smoke run `20260501_234150_traced`; `A=459`, `B=459`, `C=459`, `D=895`; `discovery_without_evidence=0`
+- тесты: `tests/test_sentiment_benchmark_common.py` -> `5 passed`
+- следующий шаг: полный честный rerun A/B/C/D/D_weighted на новой схеме

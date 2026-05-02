@@ -2539,3 +2539,12 @@ Next: use traced artifacts for Р’РљР  analysis; do not change algorithms unless 
 - Проверка: smoke traced run `results/20260501_191353_traced` создал честные артефакты; `discovery_assignments_without_evidence = 0`; `len(A)=len(B)=len(C)=895`.
 - Тесты: `pytest tests/test_sentiment_benchmark_common.py -q --basetemp .pytest_tmp_manual` -> `4 passed`.
 - Следующий шаг: пересчитать benchmark A/B/C/D уже на новых traced artifacts и сравнивать mode-метрики только на одинаковом составе пар.
+
+## Результат этапа: sentiment_assignment_model_fix_v2
+- Цель: исправить ошибку схемы, где assignments раздувались до candidate-level вместо review-aspect level.
+- Гипотеза: если хранить отдельно `aspect_review_assignments` и `aspect_review_evidence`, то A/B/C будут иметь одинаковый честный размер, а D будет отличаться только числом evidence.
+- Изменения: `orchestrator.py` теперь пишет две таблицы: `aspect_review_assignments.parquet` и `aspect_review_evidence.parquet`; `benchmark/sentiment/common.py` загружает их раздельно.
+- Что исправлено: раньше full run давал `24475` assignments при `6224` уникальных review-aspect; теперь smoke run даёт `459` assignments и `459` уникальных review-aspect.
+- Проверка: `results/20260501_234150_traced` -> `A=459`, `B=459`, `C=459`, `D=895`, `discovery_without_evidence=0`.
+- Тесты: `pytest tests/test_sentiment_benchmark_common.py -q --basetemp .pytest_tmp_manual` -> `5 passed`.
+- Следующий шаг: полный traced run на всём датасете и честный rerun `A/B/C/D/D_weighted` уже на новой схеме.

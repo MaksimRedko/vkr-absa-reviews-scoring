@@ -501,16 +501,98 @@ def _build_discovery_evidence_rows(
     return evidence_rows
 
 
+def _resolve_assignment_metadata(
+    reviews_by_id: dict[str, Any],
+    review_id: str,
+    aspect_type: str,
+    aspect_id: str,
+    aspect_by_id_by_category: dict[str, dict[str, Any]],
+    clusters: dict[tuple[int, int], dict[str, Any]],
+    assignment_id: str,
+) -> dict[str, Any] | None:
+    review = reviews_by_id.get(review_id)
+    if review is None:
+        return None
+    if aspect_type == "vocab":
+        aspect = aspect_by_id_by_category[review.category_id].get(aspect_id)
+        aspect_name = aspect.canonical_name if aspect is not None else aspect_id
+        aspect_key = f"vocab::{aspect_id}"
+        cluster_id = None
+        gold_matches_json = "{}"
+    elif aspect_type == "discovery":
+        cluster_id = int(aspect_id)
+        cluster = clusters.get((int(review.nm_id), cluster_id), {})
+        aspect_name = str(cluster.get("medoid_phrase") or cluster_id)
+        aspect_key = f"discovery::{int(review.nm_id)}::{cluster_id}"
+        gold_matches_json = json.dumps(cluster.get("gold_matches", {}), ensure_ascii=False, sort_keys=True)
+    else:
+        raise ValueError(f"unsupported aspect_type: {aspect_type}")
+    return {
+        "assignment_id": assignment_id,
+        "review_id": review_id,
+        "nm_id": int(review.nm_id),
+        "category_id": str(review.category_id),
+        "aspect_key": aspect_key,
+        "aspect_name": str(aspect_name),
+        "aspect_source": aspect_type,
+        "cluster_id": cluster_id,
+        "review_text": str(review.text),
+        "gold_matches_json": gold_matches_json,
+    }
+
+
 def _build_assignment_rows_from_artifact(
     reviews_by_id: dict[str, Any],
-    candidates: pd.DataFrame,
     assignments: pd.DataFrame,
+    aspect_by_id_by_category: dict[str, dict[str, Any]],
+    clusters: dict[tuple[int, int], dict[str, Any]],
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    if assignments.empty:
+        return rows
+    ordered = assignments.sort_values(["review_id", "aspect_type", "aspect_id", "assignment_id"])
+    for row in ordered.itertuples(index=False):
+        payload = _resolve_assignment_metadata(
+            reviews_by_id,
+            str(row.review_id),
+            str(row.aspect_type),
+            str(row.aspect_id),
+            aspect_by_id_by_category,
+            clusters,
+            str(row.assignment_id),
+        )
+        if payload is not None:
+            rows.append(payload)
+    return rows
+
+
+def _empty_assignment_frame() -> pd.DataFrame:
+    return pd.DataFrame(
+        columns=[
+            "assignment_id",
+            "review_id",
+            "nm_id",
+            "category_id",
+            "aspect_key",
+            "aspect_name",
+            "aspect_source",
+            "cluster_id",
+            "review_text",
+            "gold_matches_json",
+        ]
+    )
+
+
+def _build_evidence_rows_from_artifact(
+    reviews_by_id: dict[str, Any],
+    candidates: pd.DataFrame,
+    evidence: pd.DataFrame,
     aspect_by_id_by_category: dict[str, dict[str, Any]],
     clusters: dict[tuple[int, int], dict[str, Any]],
     window_tokens: int,
 ) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    if assignments.empty or candidates.empty:
+    if evidence.empty or candidates.empty:
         return rows
     fragments = candidates[
         [
@@ -522,19 +604,27 @@ def _build_assignment_rows_from_artifact(
             "end_offset",
         ]
     ].copy()
-    join_columns = ["candidate_id", "review_id", "start_offset", "end_offset"]
-    if not set(join_columns).issubset(assignments.columns):
-        join_columns = ["candidate_id", "review_id"]
-    merged = assignments.merge(
+    merged = evidence.merge(
         fragments,
-        on=join_columns,
+        on=["candidate_id", "review_id", "start_offset", "end_offset"],
         how="inner",
     )
-    merged = merged.sort_values(["review_id", "aspect_type", "aspect_id", "start_offset", "candidate_id"])
+    merged = merged.sort_values(["review_id", "aspect_type", "aspect_id", "assignment_id", "start_offset", "candidate_id"])
     for row in merged.itertuples(index=False):
         review_id = str(row.review_id)
         review = reviews_by_id.get(review_id)
         if review is None:
+            continue
+        metadata = _resolve_assignment_metadata(
+            reviews_by_id,
+            review_id,
+            str(row.aspect_type),
+            str(row.aspect_id),
+            aspect_by_id_by_category,
+            clusters,
+            str(row.assignment_id),
+        )
+        if metadata is None:
             continue
         start_offset = int(row.start_offset)
         end_offset = int(row.end_offset)
@@ -554,49 +644,26 @@ def _build_assignment_rows_from_artifact(
             window_tokens,
             sentence_text,
         )
-        aspect_type = str(row.aspect_type)
-        aspect_id = str(row.aspect_id)
-        if aspect_type == "vocab":
-            aspect = aspect_by_id_by_category[review.category_id].get(aspect_id)
-            aspect_name = aspect.canonical_name if aspect is not None else aspect_id
-            aspect_key = f"vocab::{aspect_id}"
-            cluster_id = None
-            gold_matches_json = "{}"
-        elif aspect_type == "discovery":
-            cluster_id = int(aspect_id)
-            cluster = clusters.get((int(review.nm_id), cluster_id), {})
-            aspect_name = str(cluster.get("medoid_phrase") or cluster_id)
-            aspect_key = f"discovery::{int(review.nm_id)}::{cluster_id}"
-            gold_matches_json = json.dumps(cluster.get("gold_matches", {}), ensure_ascii=False, sort_keys=True)
-        else:
-            raise ValueError(f"unsupported aspect_type: {aspect_type}")
         rows.append(
             {
-                "assignment_id": str(row.assignment_id),
-                "review_id": review_id,
-                "nm_id": int(review.nm_id),
-                "category_id": str(review.category_id),
-                "aspect_key": aspect_key,
-                "aspect_name": str(aspect_name),
-                "aspect_source": aspect_type,
+                "evidence_id": str(row.evidence_id),
+                **metadata,
                 "candidate_id": str(row.candidate_id),
-                "cluster_id": cluster_id,
                 "evidence_text": str(row.text),
                 "evidence_lemma_text": str(row.text_lemmatized),
                 "sentence_text": sentence_text,
                 "window_text": window_text,
-                "review_text": str(review.text),
                 "start_offset": start_offset,
                 "end_offset": end_offset,
-                "gold_matches_json": gold_matches_json,
             }
         )
     return rows
 
 
-def _empty_assignment_frame() -> pd.DataFrame:
+def _empty_evidence_frame() -> pd.DataFrame:
     return pd.DataFrame(
         columns=[
+            "evidence_id",
             "assignment_id",
             "review_id",
             "nm_id",
@@ -604,16 +671,16 @@ def _empty_assignment_frame() -> pd.DataFrame:
             "aspect_key",
             "aspect_name",
             "aspect_source",
-            "candidate_id",
             "cluster_id",
+            "review_text",
+            "gold_matches_json",
+            "candidate_id",
             "evidence_text",
             "evidence_lemma_text",
             "sentence_text",
             "window_text",
-            "review_text",
             "start_offset",
             "end_offset",
-            "gold_matches_json",
         ]
     )
 
@@ -680,29 +747,49 @@ def load_benchmark_context(
     clusters = _load_clusters(run_dir)
 
     assignment_artifact_path = run_dir / "aspect_review_assignments.parquet"
-    if assignment_artifact_path.exists():
+    evidence_artifact_path = run_dir / "aspect_review_evidence.parquet"
+    if assignment_artifact_path.exists() and evidence_artifact_path.exists():
         raw_assignments = pd.read_parquet(assignment_artifact_path)
+        raw_evidence = pd.read_parquet(evidence_artifact_path)
         assignment_rows = _build_assignment_rows_from_artifact(
             reviews_by_id,
-            candidates,
             raw_assignments,
+            aspect_by_id_by_category,
+            clusters,
+        )
+        evidence_rows = _build_evidence_rows_from_artifact(
+            reviews_by_id,
+            candidates,
+            raw_evidence,
             aspect_by_id_by_category,
             clusters,
             window_tokens,
         )
         assignments = pd.DataFrame(assignment_rows) if assignment_rows else _empty_assignment_frame()
-        assignments["has_valid_offset"] = assignments["start_offset"].fillna(-1).astype(int) >= 0
-        assignments["start_sort"] = np.where(
-            assignments["has_valid_offset"],
-            assignments["start_offset"].fillna(0).astype(int),
+        evidence = pd.DataFrame(evidence_rows) if evidence_rows else _empty_evidence_frame()
+        evidence["has_valid_offset"] = evidence["start_offset"].fillna(-1).astype(int) >= 0
+        evidence["start_sort"] = np.where(
+            evidence["has_valid_offset"],
+            evidence["start_offset"].fillna(0).astype(int),
             10**9,
         )
-        assignments["evidence_len"] = assignments["evidence_text"].fillna("").astype(str).str.len()
-        assignments = assignments.sort_values(
-            ["review_id", "aspect_key", "start_sort", "evidence_len", "assignment_id"],
+        evidence["evidence_len"] = evidence["evidence_text"].fillna("").astype(str).str.len()
+        evidence = evidence.sort_values(
+            ["review_id", "aspect_key", "start_sort", "evidence_len", "evidence_id"],
             ascending=[True, True, True, False, True],
         ).reset_index(drop=True)
-        assert_shared_single_mode_lengths(assignments)
+        assignments = assignments.sort_values(
+            ["review_id", "aspect_key", "assignment_id"],
+            ascending=[True, True, True],
+        ).reset_index(drop=True)
+        single_evidence = select_single_evidence_rows(evidence)
+        counts = {
+            MODE_A: len(assignments),
+            MODE_B: len(single_evidence),
+            MODE_C: len(single_evidence),
+        }
+        if len(set(counts.values())) != 1:
+            raise AssertionError(f"A/B/C input size mismatch: {counts}")
         return BenchmarkContext(
             run_dir=run_dir,
             dataset_path=dataset,
@@ -712,7 +799,7 @@ def load_benchmark_context(
             term_to_aspects_by_category=term_to_aspects_by_category,
             aspect_by_id_by_category=aspect_by_id_by_category,
             assignments=assignments,
-            evidence=assignments.copy(),
+            evidence=evidence,
             discovery_assignment_count=int((raw_assignments["aspect_type"] == "discovery").sum()) if "aspect_type" in raw_assignments.columns else 0,
             discovery_assignments_without_evidence=0,
         )
@@ -816,8 +903,24 @@ def build_mode_input_frame(
     context: BenchmarkContext,
     mode_id: str,
 ) -> pd.DataFrame:
-    if "assignment_id" in context.assignments.columns and "sentence_text" in context.assignments.columns:
-        return _build_assignment_mode_frame(context.assignments, mode_id)
+    if "assignment_id" in context.assignments.columns and "evidence_id" in context.evidence.columns:
+        if mode_id == MODE_A:
+            return _build_assignment_mode_frame(context.assignments, mode_id)
+        if mode_id == MODE_B:
+            frame = select_single_evidence_rows(context.evidence)
+            frame["premise_text"] = frame["sentence_text"]
+            frame["premise_kind"] = "sentence"
+            return frame.reset_index(drop=True)
+        if mode_id == MODE_C:
+            frame = select_single_evidence_rows(context.evidence)
+            frame["premise_text"] = frame["window_text"]
+            frame["premise_kind"] = "window"
+            return frame.reset_index(drop=True)
+        if mode_id in {MODE_D, MODE_D_WEIGHTED}:
+            frame = context.evidence.copy()
+            frame["premise_text"] = frame["sentence_text"]
+            frame["premise_kind"] = "multi_sentence"
+            return frame.reset_index(drop=True)
 
     if mode_id == MODE_A:
         frame = context.assignments.copy()

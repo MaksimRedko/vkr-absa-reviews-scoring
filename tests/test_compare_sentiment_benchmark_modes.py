@@ -5,6 +5,10 @@ import pandas as pd
 from scripts import compare_sentiment_benchmark_modes as compare
 
 
+def test_mode_ids_include_weighted_mode() -> None:
+    assert "mode_d_multi_evidence_weighted_relevance" in compare.MODE_IDS
+
+
 def test_common_pair_keys_requires_presence_in_all_modes() -> None:
     frames = {
         "a": pd.DataFrame(
