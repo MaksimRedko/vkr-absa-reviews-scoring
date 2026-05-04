@@ -230,7 +230,8 @@ Run B1/B2 on hospitality first.
 - ????????? ???: ????????????? ???????/???? ?????? `ResidualExtractor` + ?????? encoder
 
 - цель этапа: discovery_step3_review_representation
-- что проверяли: review-level embedding только по esidual_phrases
+- что проверяли: review-level embedding только по 
+esidual_phrases
 - гипотеза: mean по phrase embeddings даст компактное представление отзыва для clustering
 - ограничения: без изменений vocabulary/matching/sentiment/clustering
 - файлы: src/discovery/representation.py, src/discovery/__init__.py, 	ests/test_representation.py
@@ -238,7 +239,8 @@ Run B1/B2 on hospitality first.
 - следующий шаг: реализовать batched flatten->encode->group pipeline и прогнать unit tests
 
 - цель этапа: discovery_step3_review_representation
-- что проверяли: review embedding только по esidual_phrases после шага residual extraction
+- что проверяли: review embedding только по 
+esidual_phrases после шага residual extraction
 - что получилось: добавлен ReviewRepresentation; flatten всех фраз -> один encoder.encode() -> mean per review -> L2 norm
 - что не сработало: проблем в логике не найдено; остался только не-блокирующий warning pytest cache permissions
 - что зафиксировано: отзывы без residual исключаются; batch shape (4,1024) на тестовом наборе; общий discovery test suite = 11 passed
@@ -254,7 +256,8 @@ Run B1/B2 on hospitality first.
 
 - цель этапа: discovery_step4_hdbscan_review_clustering
 - что проверяли: HDBSCAN на review embeddings после ReviewRepresentation
-- что получилось: добавлен ReviewClusterer; считаются eview_to_cluster, cluster_sizes, 
+- что получилось: добавлен ReviewClusterer; считаются 
+eview_to_cluster, cluster_sizes, 
 _clusters, 
 _noise, 
 oise_rate
@@ -295,7 +298,8 @@ _clean_clusters
 
 - цель этапа: discovery_step7_pipeline_wrapper
 - что проверяли: единый end-to-end wrapper поверх discovery stages
-- что получилось: добавлены DiscoveryReport и un_discovery; wrapper собирает summaries, evaluation, metadata
+- что получилось: добавлены DiscoveryReport и 
+un_discovery; wrapper собирает summaries, evaluation, metadata
 - что не сработало: проблем в orchestration не найдено; остался только не-блокирующий warning pytest cache permissions
 - что зафиксировано: smoke test pipeline проходит; metadata содержит model/date/hdbscan; общий discovery suite = 18 passed
 - следующий шаг: category-level runner / запуск на реальных review batches
@@ -638,3 +642,90 @@ _clean_clusters
 - got: identical hashes for `candidates`, `candidate_matches`, `aspect_review_assignments`, `nli_predictions`, `product_aggregates`
 - decision: keep `stage_cache.enabled = true` by default
 - next: future full reruns should reuse both `cache/pipeline_stages` and `cache/nli_global.sqlite3`
+
+
+- goal: manual_recalc_ui_v1
+- checked: separate root-level manual recalculation module on top of traced artifacts only
+- got: new `manual_recalc/` with Streamlit card UI, SQLite drafts, batch workflow, AI draft import, prompt copy, CSV/metrics export
+- got: review view = `full_text + gold + system + evidence + premise/hypothesis`
+- got: persisted tables = `system_decisions`, `gold_decisions`, `review_status`
+- got: manual metrics = `precision/recall/F1` + matched-pair `MAE` in strict/soft modes
+- verified: `py_compile` OK; smoke load on `results/20260502_171530_traced` -> `1659` reviews, evidence linked
+- fixed: duplicate `candidate_id` in traced candidates handled by dedupe in loader
+- decision: keep this logic isolated from main dashboard/pipeline
+- next: run first real annotation batch and polish prompt / workflow from usage
+
+
+- goal: manual_recalc_prompt_template_v2
+- checked: prompt-layer only for AI draft prefill
+- got: replaced template with stricter JSON schema + mapping/sentiment rules
+- got: explicit anti-overmapping rule for `????????`
+- fixed: no parser/UI/pipeline changes, only prompt wording
+- next: test next AI batch draft against the updated template
+- goal: manual_recalc_batch_progress_v1
+- checked: batch selector visibility for already annotated batches
+- got: added batch-level summary from review_status only
+- got: labels now show done/partial/new with done/total and draft count
+- got: current batch top metric now shows progress, not only size
+- did not change: storage schema, metrics logic, pipeline
+- verified: pytest test_manual_recalc_batch_progress -> 2 passed
+- verified: py_compile OK
+- real DB sample: batch_001 partial 23/25 draft 2; batch_006 new
+- fixed: annotated batches are now visible in sidebar
+- next: reopen Streamlit UI and verify readability on real annotation flow
+- goal: manual_recalc_next_batch_button_v1
+- checked: one-click batch switch in manual_recalc sidebar
+- got: added button `Следующий батч` under `Пачка`
+- got: click moves `batch_index` to next with wrap-around
+- got: `review_pointer` resets to first review of new batch
+- did not change: storage schema, metrics logic, pipeline
+- fixed: no need to open batch selectbox for sequential navigation
+- next: verify flow in active Streamlit session
+- goal: manual_recalc_batch_filter_and_selectbox_fix
+- checked: 24/25 after commit + status filter mismatch + batch selectbox double-click
+- got: review_status synced every run; invalidate init cache after commit; batch selectbox keyed + clamp
+- got: review dropdown keyed per batch_index; status_map keys str(); metric done in-filter vs global caption
+- fixed: stale session overwrote committed done; misleading global done denominator under active filter
+- goal: manual_recalc_prompt_copy_and_filter_fix_v2
+- checked: batch prompt copy still unstable; need single-review prompt + filter consistency
+- got: replaced JS clipboard path with download + text_area copy workflow for batch prompt
+- got: added single-review prompt export/copy block
+- got: fixed FP/FN helper lookups to use str(review_id) keys
+- verified: py_compile OK; pytest test_manual_recalc_batch_progress -> 2 passed
+- goal: manual_audit_recompute_v1
+- checked: manual DB consistency vs traced run 20260502_171530 and dataset_final.csv
+- got: new script `scripts/recompute_manual_audit_metrics.py`
+- got: saved reports in `manual_recalc/exports/manual_metrics_20260504_184647`
+- validation failed 4/8 rules
+- missing system rows: 261 across 49 review_ids
+- missing gold rows: 89 across 49 review_ids
+- FOUND without matched system id: 175; unknown system decisions: 7
+- manual detection: P_strict 0.5308, P_soft 0.5798, R 0.6343, F1_strict 0.5780, F1_soft 0.6058
+- manual sentiment TP-pair MAE 0.9833, acc@1 0.6197, wrong_polarity 0.1330
+- auto Track B: P/R/F1 0.5698/0.4545/0.4847, review MAE 0.9250
+- next: cite reports with explicit caveat about incomplete saved audit rows
+- goal: manual_audit_repair_v1
+- checked: 49 fully missing review audits, 175 FOUND without matched system id, 7 blank system decisions
+- got: script `scripts/repair_manual_audit_db.py`
+- got: `repair_batch` support in manual_recalc UI via `app_meta`
+- got: restored all 49 review rows in sqlite; fixed all 7 blank system decisions
+- got: auto-filled 175 FOUND matches; no downgrades needed
+- verified: pytest test_manual_recalc_batch_progress -> 3 passed
+- verified: py_compile OK for app/storage/repair script
+- verified: recompute export `manual_recalc/exports/manual_metrics_20260504_191713`
+- fixed: validation now passes 8/8; no missing rows; no unknown statuses
+- final: P_strict 0.5194, P_soft 0.5649, R 0.6371, F1_strict 0.5723, F1_soft 0.5989
+- final: TP-pair sentiment MAE 0.9771, acc@1 0.6232, wrong_polarity 0.1318
+- next: use repaired export for VKR; optional visual QA in `repair_batch`
+- goal: manual_vector_sentiment_v1
+- checked: fuzzy-vector sentiment eval on repaired manual TP pairs only
+- got: rating->vector interpolation for integer and fractional scores on [1..5]
+- got: saved `vector_sentiment_metrics.csv`, `vector_sentiment_by_category.csv`, `vector_sentiment_by_product.csv`, `vector_sentiment_summary.md`
+- got: figures in `vector_sentiment_figures/`
+- verified: `tests/test_recompute_manual_audit_metrics.py` -> `5 passed`; py_compile OK
+- overall: L1=0.8343, L2=0.5735, cosine=0.6719, dominant_acc=0.6563
+- overall: neutral_collapse=0.3082, polarity_flip=0.0596
+- source: `vocab` better than `discovery` on L1/cosine/dominant_acc
+- category: best `consumables`, worst `hospitality`
+- fixed: no pipeline/inference changes; evaluation layer only
+- next: use export `manual_recalc/exports/manual_metrics_20260504_194659`
