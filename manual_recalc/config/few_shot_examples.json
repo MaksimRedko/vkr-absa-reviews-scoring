@@ -1,0 +1,42 @@
+[
+  {
+    "review_id": "demo_001",
+    "full_text": "Катушка сломалась почти сразу, но доставка быстрая.",
+    "gold_aspects": {
+      "Катушка": 1.0,
+      "Доставка": 5.0
+    },
+    "system_aspect_decisions": [
+      {
+        "prediction_id": "demo_pred_1",
+        "system_aspect": "Катушка",
+        "manual_decision": "TP",
+        "mapped_gold_aspect": "Катушка",
+        "manual_sentiment_decision": "WRONG_POLARITY",
+        "comment": "Аспект найден верно, оценка системы завышена."
+      },
+      {
+        "prediction_id": "demo_pred_2",
+        "system_aspect": "Цена",
+        "manual_decision": "FP",
+        "mapped_gold_aspect": null,
+        "manual_sentiment_decision": "NOT_EVALUATED",
+        "comment": "Про цену в отзыве ничего нет."
+      }
+    ],
+    "gold_aspect_decisions": [
+      {
+        "gold_aspect": "Катушка",
+        "gold_rating": 1.0,
+        "status": "FOUND",
+        "matched_system_prediction_id": "demo_pred_1"
+      },
+      {
+        "gold_aspect": "Доставка",
+        "gold_rating": 5.0,
+        "status": "FN",
+        "matched_system_prediction_id": null
+      }
+    ]
+  }
+]
