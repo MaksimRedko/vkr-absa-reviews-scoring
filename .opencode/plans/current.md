@@ -2937,3 +2937,94 @@ Next: use traced artifacts for Ð?Ð?Ð  analysis; do not change algorithms unless 
   - values copied from `results/final_res_v1`, `benchmark/sentiment/mode_abcd_diagnostics/results/20260502_114842`, and `manual_recalc/exports/manual_metrics_20260504_191713`
 - Result:
   - handoff state is now centralized in `00_README_STATE.md`
+
+## Update 2026-05-05: sentiment_postprocess_calibration_v1
+
+- Goal: run isolated postprocessing experiment for sentiment rating calibration on saved artifacts only.
+- Baseline:
+  - traced/final current formula from 
+esults/20260502_171530_traced / 
+esults/final_res_v1
+  - repaired manual audit from manual_recalc/data/manual_recalc.sqlite3
+  - no rerun of extraction / matching / discovery / aggregation
+- Changed variable:
+  - only formula that maps saved NLI probabilities to rating 1..5
+  - separately, lightweight supervised calibrator on top of saved features with LOPO by 
+m_id
+- Hypothesis:
+  - current formula over-pulls ratings toward neutral 3
+  - alternative postprocessing can reduce pair-level MAE and neutral collapse without unsafe growth of wrong polarity / RMSE
+- Main metric:
+  - pair-level MAE
+- Guard metrics:
+  - Accuracy@1.0
+  - wrong_polarity_rate
+  - RMSE
+  - 
+eutral_collapse_rate
+- Secondary metric:
+  - product-level product_mae_simple_mean
+- Planned files:
+  - enchmark/sentiment_postprocess_calibration/README.md
+  - enchmark/sentiment_postprocess_calibration/formulas.py
+  - enchmark/sentiment_postprocess_calibration/build_dataset.py
+  - enchmark/sentiment_postprocess_calibration/metrics.py
+  - enchmark/sentiment_postprocess_calibration/run_formula_dryrun.py
+  - enchmark/sentiment_postprocess_calibration/run_supervised_calibrator_lopo.py
+  - enchmark/sentiment_postprocess_calibration/report.py
+- Validation rule:
+  - if saved artifacts do not contain required 
+eg_* probabilities, affected formulas must be skipped and reported explicitly
+- Next:
+  - inspect saved artifact schemas and cache recoverability
+  - build calibration dataset from manual matched TP pairs
+  - run dry formulas first, then supervised LOPO as separate experiment
+
+## Update 2026-05-05: sentiment_postprocess_calibration_v1_run
+
+- ??? ???????:
+  - ??????? ?????? ?????? `build_dataset -> run_formula_dryrun -> run_supervised_calibrator_lopo`.
+  - ????????? ????? ?????? ???????? ?? `premise_text_x/premise_text_y` (merge-????????).
+  - ???????????? `report.py` (summary/final report writers) ??? ????????? ??????? ??????.
+- ??? ??????????:
+  - ??????? run: `benchmark/sentiment_postprocess_calibration/results/20260505_081437`.
+  - Dry-run: ?????? ?? ????????? `F9_center_expansion_gamma1_6`, `MAE=0.8878` vs baseline `F0_current=0.9771`.
+  - Supervised LOPO: ?????? `HuberRegressor + with_review_rating`, `MAE=0.6750`, `Acc@1.0=0.7586`, `product_mae_n3=0.5602`.
+- ?????? ???? ?? ??????:
+  - ? traced ????????? ??? `neg_*` ???????????? (`neg_entailment/neutral/contradiction` ??? null), ??????? dual-??????? ?????????? ?????????? ? dry-run.
+- ??? ????????? ??????:
+  - ???? ????????/???????????? `neg_*` NLI ?????? ??? ???????? ????????? dual-??????,
+  - ???? ??????????? ??????? ??????? ??? `single-pos + supervised calibrator` ? ????????? ????????? holdout-sanity ?? ??????????.
+
+## Update 2026-05-05: sentiment_postprocess_negative_completion_v1
+
+- Goal: complete missing negative NLI probabilities for calibration only (no full pipeline).
+- Hypothesis: with fixed TP pairs and unchanged pos columns, dual formulas F2/F3/F4/F5/F6/F7/F8 become available.
+- Files changed:
+  - `benchmark/sentiment_postprocess_calibration/complete_negative_nli.py`
+  - `benchmark/sentiment_postprocess_calibration/run_formula_dryrun.py`
+- Done:
+  - generated `calibration_dataset_with_dual_nli.csv` from `calibration_dataset.csv` in run `20260505_081437`
+  - reran dry-run on new dataset via `--dataset-filename calibration_dataset_with_dual_nli.csv`
+- Validation:
+  - input rows = 2776, output rows = 2776
+  - duplicate `prediction_id` = 0
+  - nulls in `neg_entailment/neg_neutral/neg_contradiction` = 0/0/0
+  - `pos_entailment/pos_neutral/pos_contradiction` unchanged
+  - `prediction_id/review_id/premise_text` unchanged
+- Result:
+  - `nli_formula_dryrun_summary.md`: `available_formulas=25`, unavailable empty
+  - best formula = `F6_dual_logratio_T0_7`, `MAE=0.7537`
+
+## sentiment_postprocess_negative_only_recalc
+- goal: verify negative-only NLI completion and make dry-run/supervised recalc use the same dual dataset.
+- hypothesis: negative-only artifact is valid; current inconsistency is only in dataset selection for recalculation.
+- files: benchmark/sentiment_postprocess_calibration/complete_negative_nli.py, run_formula_dryrun.py, run_supervised_calibrator_lopo.py, report.py(if needed).
+- metric: dual features must be present in supervised summary; dry-run and supervised must read the same dual dataset.
+
+- done: built fresh run `benchmark/sentiment_postprocess_calibration/results/20260505_093500`.
+- done: completed negative-only NLI on saved review/aspect pairs -> `calibration_dataset_with_dual_nli.csv` (2776 rows, no nulls in neg_*).
+- done: patched dry-run and supervised scripts to auto-prefer dual dataset; patched negative runner to validate required columns instead of hardcoded row count.
+- result: dry-run now honestly uses dual data; best formula `F6_dual_logratio_T0_7` with MAE 0.7537 vs F0 0.9771, neutral_collapse 0.0237 vs 0.1162, but wrong_polarity 0.1491 vs 0.1318 and RMSE 1.3906 vs 1.3760.
+- result: supervised recalculation now uses neg_* features; best LOPO model `HuberRegressor + review_rating` MAE 0.6591, RMSE 1.0776, wrong_polarity 0.1081, neutral_collapse 0.0508.
+- next: interpret dual-formula safety vs diagnostic-only status; if needed, compare formulas without review_rating dependence.

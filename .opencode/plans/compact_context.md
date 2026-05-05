@@ -738,3 +738,32 @@ un_discovery; wrapper собирает summaries, evaluation, metadata
 - что не сработало: отдельный файл `deep research report` в репо не найден; в handoff помечен как внешний источник обзора аналогов
 - что зафиксировано: отрицательные ветки HDBSCAN, contextual HDBSCAN, localized sentiment внесены в handoff
 - следующий шаг: использовать `00_README_STATE.md` как опорный state-файл при написании ВКР
+
+- цель этапа: sentiment_postprocess_calibration_v1_run
+- что проверяли: влияние формулы постобработки на итоговую sentiment-оценку на сохранённых TP-парах
+- что получилось: полный run `benchmark/sentiment_postprocess_calibration/results/20260505_081437`
+- что получилось: dry-run best `F9_center_expansion_gamma1_6` -> MAE `0.8878` vs baseline `0.9771`
+- что получилось: supervised best `HuberRegressor + with_review_rating` -> MAE `0.6750`, Acc@1.0 `0.7586`
+- что не сработало: dual формулы не проверены полноценно, `neg_*` вероятности отсутствуют (all null)
+- что зафиксировано: build_dataset merge-fix для `premise_text`; `report.py` восстановлен для генерации summary
+- следующий шаг: либо восстановить `neg_*` в traced NLI, либо зафиксировать single-pos+supervised как рабочий постпроцесс
+
+- цель этапа: sentiment_postprocess_negative_completion_v1
+- что проверяли: изолированное дозаполнение `neg_*` на тех же 2776 TP строках без изменения pos/ID/text
+- что получилось: создан `calibration_dataset_with_dual_nli.csv` в `.../results/20260505_081437`
+- что получилось: инварианты пройдены (2776 строк, 0 дублей, 0 null в neg_*, pos_* unchanged, id/review/premise unchanged)
+- что получилось: dry-run на dual датасете выполнен, `available_formulas=25` (F2..F8 доступны)
+- что не сработало: ничего критичного; completion runtime ~8 мин на CPU
+- что зафиксировано: лучший dry-run `F6_dual_logratio_T0_7`, MAE `0.7537`
+- следующий шаг: при необходимости выбрать формулу-кандидат и сравнить guard-метрики vs baseline `F0_current`
+
+- goal: sentiment_postprocess negative-only completion + honest dual recalc
+- checked: saved TP review/aspect pairs, negative-only NLI fill, dry-run/supervised on same dual dataset
+- got: fresh run `20260505_093500`; dual csv has 2776 rows and full neg_* without nulls
+- got: dry-run best = F6_dual_logratio_T0_7, MAE 0.7537 vs F0 0.9771
+- got: neutral collapse dropped 0.1162 -> 0.0237
+- did not work: best dry-run raised wrong polarity 0.1318 -> 0.1491 and slightly worsened RMSE
+- fixed: supervised script now uses neg_* + derived dual features by default when dual csv exists
+- got: supervised best = Huber + review_rating, MAE 0.6591, RMSE 1.0776, wrong_polarity 0.1081
+- fixed: negative runner no longer hardcodes 2776 rows; validates required columns instead
+- next: treat dry-run dual formulas as diagnostic unless safe-criterion is satisfied
