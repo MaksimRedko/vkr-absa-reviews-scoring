@@ -729,3 +729,12 @@ un_discovery; wrapper собирает summaries, evaluation, metadata
 - category: best `consumables`, worst `hospitality`
 - fixed: no pipeline/inference changes; evaluation layer only
 - next: use export `manual_recalc/exports/manual_metrics_20260504_194659`
+- цель этапа: handoff_readme_state_v1
+- что проверяли: можно ли собрать один короткий handoff по финальному состоянию без новых прогонов
+- что получилось: создан `00_README_STATE.md` с `final_main = mode A / full review baseline`
+- что получилось: `B/C/D/D_weighted` отмечены как ablation-only, не как финал
+- что получилось: manual audit validation зафиксирован как clean, `0/8 failed`
+- что получилось: финальные manual metrics перенесены из `manual_metrics_20260504_191713`
+- что не сработало: отдельный файл `deep research report` в репо не найден; в handoff помечен как внешний источник обзора аналогов
+- что зафиксировано: отрицательные ветки HDBSCAN, contextual HDBSCAN, localized sentiment внесены в handoff
+- следующий шаг: использовать `00_README_STATE.md` как опорный state-файл при написании ВКР

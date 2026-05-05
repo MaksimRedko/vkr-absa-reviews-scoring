@@ -2916,3 +2916,24 @@ Next: use traced artifacts for Ð?Ð?Ð  analysis; do not change algorithms unless 
   - best L1 = `consumables 0.6714`
   - worst L1 = `hospitality 0.9038`
   - worst flip rate = `hospitality 0.0922`
+
+## Update 2026-05-05: handoff_readme_state_v1
+
+- Goal: assemble one short handoff state file before VKR writing.
+- Baseline: final state was spread across `README.md`, plan files, frozen runs, sentiment ablation reports, and manual audit exports.
+- Changed variable: documentation only. No pipeline, metrics, configs, or artifacts changed.
+- Hypothesis: a single `00_README_STATE.md` will reduce context loss and make the defended final state explicit.
+- Files changed:
+  - `00_README_STATE.md`
+  - `.opencode/plans/current.md`
+  - `.opencode/plans/compact_context.md`
+- Implemented:
+  - fixed `final_main = sentiment mode A / full review baseline`
+  - marked `B/C/D/D_weighted` as ablation-only
+  - recorded clean manual audit validation `0/8 failed`
+  - recorded final manual detection/sentiment metrics
+  - recorded negative/partial branches: localized sentiment, residual HDBSCAN, contextual HDBSCAN
+- Verification:
+  - values copied from `results/final_res_v1`, `benchmark/sentiment/mode_abcd_diagnostics/results/20260502_114842`, and `manual_recalc/exports/manual_metrics_20260504_191713`
+- Result:
+  - handoff state is now centralized in `00_README_STATE.md`
