@@ -1,0 +1,4 @@
+slice_type,slice_value,n_reviews,system_rows,gold_rows,tp,fp,fn,unclear,duplicate,out_of_scope,gold_unclear,manual_precision_strict,manual_precision_soft,manual_recall,manual_f1_strict,manual_f1_soft,notes
+overall,overall,1659,6224,4389,2776,2138,1581,431,879,0,26,0.5193638914873714,0.564916564916565,0.6371356437915997,0.5722531436817151,0.598856649768094,
+aspect_source,discovery,1638,4440,0,1665,1952,0,195,628,0,0,0.4367785939139559,0.46032623721316007,,,,FN has no aspect_source label; recall/F1 undefined for this slice.
+aspect_source,vocab,928,1784,0,1111,186,0,236,251,0,0,0.7247227658186562,0.856592135697764,,,,FN has no aspect_source label; recall/F1 undefined for this slice.

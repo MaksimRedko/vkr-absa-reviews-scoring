@@ -1,0 +1,59 @@
+run_name: traced_pipeline_refactor_v1
+gold_dataset_csv: data/dataset_final.csv
+core_vocab: src/vocabulary/universal_aspects_v1.yaml
+domain_vocab_dir: src/vocabulary/domain
+discovery_dir: benchmark/discovery/results/20260424_231742_v3
+output_dir: results
+
+models:
+  encoder: ai-forever/sbert_large_nlu_ru
+  nli: rubert-base-cased-nli-threeway
+  sentiment_engine_source: .opencode/artifacts/sentiment_search_20260425/sentiment_faad23a_v4_single_hypothesis.py
+
+seeds:
+  python: 42
+  numpy: 42
+  torch: 42
+  hdbscan: 42
+
+extraction:
+  ngram_range: [1, 2]
+  min_word_length: 3
+  dependency_filter_enabled: false
+
+matching:
+  matching_mode: lexical_only
+  cosine_fallback_enabled: false
+
+discovery:
+  reuse_frozen_v3: true
+  phrase_to_cluster_threshold: 0.5
+  discovery_to_gold_match_threshold: 0.65
+  discovery_phrase_filter_enabled: true
+  hdbscan_min_cluster_size: 5
+  hdbscan_min_samples: 3
+
+sentiment:
+  nli_temperature: 0.7
+  relevance_filter_threshold: 0.2
+  relevance_mode: p_ent_plus_p_contra_faad23a
+  hypothesis_template: "{aspect} -- это хорошо"
+  raw_formula: "5*P_entailment + 3*P_neutral + 1*P_contradiction"
+  negation_correction:
+    enabled: true
+    raw_rating_max: 2.0
+    review_rating_min: 4.0
+    negation_keywords: ["нет", "без", "не было", "отсутствует", "никакого"]
+
+aggregation:
+  shrinkage_method: ledoit_wolf
+  product_aggregation_min_reviews: 3
+
+sanity_reference:
+  sentiment_mae_review: 0.8466
+  sentiment_mae_round: 0.8005
+  product_mae_n3: 0.7841
+  detection_precision_track_a: 0.4767
+  detection_recall_track_a: 0.4198
+  detection_f1_track_a: 0.4279
+  inversion_rate: 0.0565

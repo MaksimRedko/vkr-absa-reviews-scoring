@@ -1,0 +1,55 @@
+section,dimension,value,count,rate
+gold_status,status,FOUND,2782,0.633857370699476
+gold_status,status,FN,1581,0.36021872863978127
+gold_status,status,UNCLEAR,26,0.005923900660742766
+sentiment_error_type,error_type,near_miss,1730,0.6231988472622478
+sentiment_error_type,error_type,too_low,410,0.14769452449567724
+sentiment_error_type,error_type,strong_wrong_polarity,229,0.082492795389049
+sentiment_error_type,error_type,too_high,200,0.07204610951008646
+sentiment_error_type,error_type,wrong_polarity,137,0.04935158501440922
+sentiment_error_type,error_type,large_too_low,50,0.018011527377521614
+sentiment_error_type,error_type,large_too_high,20,0.007204610951008645
+system_manual_decision,manual_decision,TP,2776,0.44601542416452444
+system_manual_decision,manual_decision,FP,2138,0.3435089974293059
+system_manual_decision,manual_decision,DUPLICATE,879,0.1412275064267352
+system_manual_decision,manual_decision,UNCLEAR,431,0.06924807197943444
+top_fn_gold_aspect,gold_aspect,Качество,102,
+top_fn_gold_aspect,gold_aspect,Упаковка,65,
+top_fn_gold_aspect,gold_aspect,Внешний вид,64,
+top_fn_gold_aspect,gold_aspect,Чистота,55,
+top_fn_gold_aspect,gold_aspect,Горки,51,
+top_fn_gold_aspect,gold_aspect,Термы,51,
+top_fn_gold_aspect,gold_aspect,Еда,49,
+top_fn_gold_aspect,gold_aspect,Аквапарк,45,
+top_fn_gold_aspect,gold_aspect,Цена,44,
+top_fn_gold_aspect,gold_aspect,Баня,39,
+top_fn_gold_aspect,gold_aspect,Часы,34,
+top_fn_gold_aspect,gold_aspect,Безопасность,33,
+top_fn_gold_aspect,gold_aspect,Соответствие,32,
+top_fn_gold_aspect,gold_aspect,Интерьер,28,
+top_fn_gold_aspect,gold_aspect,Расположение,28,
+top_fn_gold_aspect,gold_aspect,Удобство,27,
+top_fn_gold_aspect,gold_aspect,Сауна,25,
+top_fn_gold_aspect,gold_aspect,Комфорт,24,
+top_fn_gold_aspect,gold_aspect,Размер,23,
+top_fn_gold_aspect,gold_aspect,Навигация,22,
+top_fp_system_aspect,system_aspect,часов,141,
+top_fp_system_aspect,system_aspect,уважения,71,
+top_fp_system_aspect,system_aspect,обновлению,53,
+top_fp_system_aspect,system_aspect,дверные откосы,48,
+top_fp_system_aspect,system_aspect,ловушки гели,47,
+top_fp_system_aspect,system_aspect,шкафу,47,
+top_fp_system_aspect,system_aspect,тараканов,45,
+top_fp_system_aspect,system_aspect,бассейн,44,
+top_fp_system_aspect,system_aspect,изьян,43,
+top_fp_system_aspect,system_aspect,продавцу этой,43,
+top_fp_system_aspect,system_aspect,хрупкий товар,43,
+top_fp_system_aspect,system_aspect,восторге,42,
+top_fp_system_aspect,system_aspect,кошмар,42,
+top_fp_system_aspect,system_aspect,небольшой аэропорт,40,
+top_fp_system_aspect,system_aspect,обещаниями,40,
+top_fp_system_aspect,system_aspect,ситуации,38,
+top_fp_system_aspect,system_aspect,карты,36,
+top_fp_system_aspect,system_aspect,недоверие,36,
+top_fp_system_aspect,system_aspect,белый бисер,35,
+top_fp_system_aspect,system_aspect,момента при,34,

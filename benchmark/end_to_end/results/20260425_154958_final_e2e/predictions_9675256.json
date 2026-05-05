@@ -1,0 +1,4266 @@
+{
+  "nm_id": 9675256,
+  "category": "physical_goods",
+  "reviews": [
+    {
+      "review_id": "p0KD74ABjeZkdKc5oyXO",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "ZkPhI4EBIzqgZI3qMYt-",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.6536,
+          "polarity": -1.3464
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 2.3964,
+          "polarity": -0.6036,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.0739,
+          "polarity": -0.9261,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "88awWIEBT-hvrnNLuWYA",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.9253,
+          "polarity": 1.9253
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.7847,
+          "polarity": 1.7847
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 2.29,
+          "polarity": -0.71,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 4.7085,
+          "polarity": 1.7085,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Cq6y74IBKfYiBPKg5NWi",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9013,
+          "polarity": 1.9013
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 4.0307,
+          "polarity": 1.0307,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "plPrIoQBCjydpYzr1F2G",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "eSEWzIoBBgFQoSo0cFj7",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.1451,
+          "polarity": -0.8549,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.7831,
+          "polarity": -1.2169,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 2.5122,
+          "polarity": -0.4878,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Zc-o24oBnnhI58-2isLY",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 3.8597,
+          "polarity": 0.8597,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "8s7RnosBQVBsy5ZVMmQy",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.7869,
+          "polarity": 1.7869
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 3.8832,
+          "polarity": 0.8832
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.4508,
+          "polarity": -0.5492,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 4.4095,
+          "polarity": 1.4095,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "MynApYsBGgl8_25MdWPl",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.0459,
+          "polarity": -0.9541,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Y1Bk9YsBRacRZYaKiWj-",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.9148,
+          "polarity": -1.0852,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0094,
+          "polarity": -1.9906,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "tQq69osBI2GFApLnMsgk",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "KTwcJowB-uQDHp63NbH3",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "LPKOOIwBSe9L3QWI7v5D",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 2.4188,
+          "polarity": -0.5812
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.7371,
+          "polarity": -1.2629,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.5573,
+          "polarity": -1.4427,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "mTU3XowBwbGU35ygNg6M",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 3.3773,
+          "polarity": 0.3773,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "k36cYowB5PeT_zso2ARR",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 3.4094,
+          "polarity": 0.4094,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "tTBIaIwBJB_qp0aINMqg",
+      "rating": 2.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.0042,
+          "polarity": -1.9958,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.4027,
+          "polarity": -1.5973,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.0012,
+          "polarity": -1.9988,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "uarJgIwBWfgFV44z5zDz",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.2406,
+          "polarity": -0.7594,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "p1qxoYwBqc_1CWBPg6rO",
+      "rating": 2.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0577,
+          "polarity": -1.9423,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "zMFL44wBn_QROn1lpkI3",
+      "rating": 2.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.673,
+          "polarity": -0.327,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "Vruj5YwB5PeT_zsoxVSY",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.0046,
+          "polarity": -1.9954
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0031,
+          "polarity": -1.9969,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "Am7i6YwBNM5b5lCgx-Os",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "a5gR7owB-uQDHp63oz27",
+      "rating": 2.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "hsr--IwBRacRZYaKhtQM",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "iartDI0B-uQDHp63baHq",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.5172,
+          "polarity": -0.4828,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ZBS2Fo0BhH9mrcYd7jpw",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "6-E6I40BRacRZYaKCG3k",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.0606,
+          "polarity": -1.9394
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.1185,
+          "polarity": -1.8815,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "G21hI40BZT76w1xoUcjH",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 1.1033,
+          "polarity": -1.8967
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.4217,
+          "polarity": -1.5783,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.029,
+          "polarity": -1.971,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "l4g3LI0BQVBsy5ZVR5Q7",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.0388,
+          "polarity": -1.9612
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0088,
+          "polarity": -1.9912,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "HuYrMI0BRacRZYaKKMo4",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "sOKgMY0BGgl8_25M7fne",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "expectations",
+          "aspect": "Соответствие ожиданиям",
+          "rating": 1.0012,
+          "polarity": -1.9988
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 1.0277,
+          "polarity": -1.9723,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.003,
+          "polarity": -1.997,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0013,
+          "polarity": -1.9987,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "C-NSNI0BGgl8_25M3dnO",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "U739No0Bo8kheRYZ_mg3",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.3645,
+          "polarity": -1.6355
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.8594,
+          "polarity": -1.1406,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "wG35OI0BSe9L3QWI_L4i",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "M662UY0Bqc_1CWBPWBc_",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "hfIZVI0B5PeT_zsopxcY",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "YplzVY0Bps2jJUjOBtit",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 1.7906,
+          "polarity": -1.2094,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 4.2289,
+          "polarity": 1.2289,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Nv1dW40Bn_QROn1l9A72",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 3.4631,
+          "polarity": 0.4631
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "HqtDZY0BNM5b5lCg4RSP",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.0116,
+          "polarity": -1.9884,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0045,
+          "polarity": -1.9955,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "sN9JZY0BpaHl1LsbtUPR",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "5raebo0BwbGU35ygLndo",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.9397,
+          "polarity": -0.0603,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "EpLPeY0BZT76w1xo2fUN",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.1063,
+          "polarity": -1.8937,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.3955,
+          "polarity": -1.6045,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "dMH7fY0BI2GFApLnqa8X",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.2802,
+          "polarity": -1.7198
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.394,
+          "polarity": -0.606,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.6015,
+          "polarity": -1.3985,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "so-nh40BSe9L3QWIpCji",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "Es2knI0Bqc_1CWBPwDDQ",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.4952,
+          "polarity": -0.5048,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "rhDfnI0BGgl8_25MqDRp",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "_s1gto0BNM5b5lCgCBXc",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 1.7608,
+          "polarity": -1.2392
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 1.5499,
+          "polarity": -1.4501
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.599,
+          "polarity": -1.401,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "A1nxZ6Bp39RkPoFxVOKb",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "CW4Mdlyydq1MkofWOo7p",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "8a2DBZglwbULSiOqwrCm",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 2.5286,
+          "polarity": -0.4714,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 3.8265,
+          "polarity": 0.8265,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "XbqfGHvkpfjJlM4wV8qI",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "R6ydpQ0fM4TgceBVJ6Xo",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.9417,
+          "polarity": -1.0583,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 3.3683,
+          "polarity": 0.3683,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "9X3gj7Dxs21B9KbVQQzb",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.0087,
+          "polarity": -1.9913,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.0037,
+          "polarity": -1.9963,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0037,
+          "polarity": -1.9963,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "kPD1LKYCuaRLvpEzlhue",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 3.6985,
+          "polarity": 0.6985
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 3.5555,
+          "polarity": 0.5555
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 2.3482,
+          "polarity": -0.6518,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "nuQWVLz3WrD5O95K3KUj",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "Q2e1CGblLSY8doBgoibp",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.0136,
+          "polarity": -1.9864,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0327,
+          "polarity": -1.9673,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "pRC6DkvVnayfl2SliUq5",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 3.2087,
+          "polarity": 0.2087
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 2.1372,
+          "polarity": -0.8628,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "e7Yu9YFHTRi2nGfXxmuM",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.1563,
+          "polarity": -1.8437,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.6977,
+          "polarity": -1.3023,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "YL3jFudcplSqEwyb66No",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 4.5384,
+          "polarity": 1.5384
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "K4nqfU5LlnDJ5gB1LR78",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "ULYK0t813NGEXYfxeipY",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.5868,
+          "polarity": -1.4132
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 2.4083,
+          "polarity": -0.5917,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "T51OnTnNJ9Ll3mUZxXHc",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "91E7YNxBLFx5tort2gjt",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "UzcnvwBpsn1IRox9vSiq",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "6XbfJ7yAuRWQPWREmFHR",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.1164,
+          "polarity": -1.8836
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "m6vnNV1Q5KFd1VGN137w",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 2.189,
+          "polarity": -0.811
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.7358,
+          "polarity": -1.2642,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.6387,
+          "polarity": -1.3613,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.3149,
+          "polarity": -1.6851,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "mvyVnSRmK9kpfNdp6MsE",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.1632,
+          "polarity": 1.1632
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 3.6001,
+          "polarity": 0.6001
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 2.5863,
+          "polarity": -0.4137,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "KFU4LSuG32PHP0RCo2mL",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "nWfTz83PfGHJQZLhSW8r",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.3026,
+          "polarity": -0.6974,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "GLUNhdsLHYbE0fekFBDq",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "epbLlXx15U3w9dSYMtsu",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 3.3708,
+          "polarity": 0.3708
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.2956,
+          "polarity": -1.7044,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "DoHwHDX7PEDUKcCBn0Bq",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.8722,
+          "polarity": -0.1278,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "tG5bIN95N4EHrX0CcTEw",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "iFs6pUDHOHu527FuDAPJ",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.2537,
+          "polarity": -0.7463,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.933,
+          "polarity": -1.067,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "0yABaURByGkfHscgdZC8",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 2.6787,
+          "polarity": -0.3213
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.3705,
+          "polarity": -1.6295,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.3194,
+          "polarity": -1.6806,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "q0sJCjVSdOgaMJGMEer6",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0032,
+          "polarity": -1.9968,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ZeZRYCeftwlzfnpmW2yB",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "3f1oCLNrOgFyqh1HIPVW",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "ed3EZhp5GTidQPFprrDj",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "VuWT0efUd8rkzTkBc8Vy",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.6838,
+          "polarity": -0.3162,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.2192,
+          "polarity": -1.7808,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "XbL5zyDiW3brpgVl79hh",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 2.047,
+          "polarity": -0.953
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.0965,
+          "polarity": -1.9035
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 1.3684,
+          "polarity": -1.6316,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.4592,
+          "polarity": -1.5408,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "9BMuQxJSYcpdRc7inOsn",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.4066,
+          "polarity": -1.5934
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 1.8204,
+          "polarity": -1.1796
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.6309,
+          "polarity": -1.3691
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 3.0251,
+          "polarity": 0.0251,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.0385,
+          "polarity": -0.9615,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.2448,
+          "polarity": -0.7552,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.6614,
+          "polarity": -1.3386,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "o3HpSMR0F0uM4lMHXA50",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.3009,
+          "polarity": -1.6991,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 1.5669,
+          "polarity": -1.4331,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.0522,
+          "polarity": -1.9478,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "K3ti9quWBqGVmaYUdGya",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 2.7148,
+          "polarity": -0.2852
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.6987,
+          "polarity": -1.3013,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.8943,
+          "polarity": -1.1057,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "a0uT9jS0YVo26KRbORUI",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.5001,
+          "polarity": -1.4999,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.9678,
+          "polarity": -1.0322,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "UOWfXJraKU9GMdxsg6UZ",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 2.1347,
+          "polarity": -0.8653
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.0228,
+          "polarity": -1.9772,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 1.1549,
+          "polarity": -1.8451,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.276,
+          "polarity": -1.724,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.0214,
+          "polarity": -1.9786,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "1e8xGTCguJKBdVZYAoy4",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "rcdx63O3QdXCRNXlyYAZ",
+      "rating": 2.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "e46unF9ca0SjZBR1Lg1W",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.1007,
+          "polarity": -1.8993,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.0027,
+          "polarity": -1.9973,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "C7aYpmjg0oiK5LXRfhYv",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.8698,
+          "polarity": -0.1302,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ceolf10ometd9F0FMlkS",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "ssQdEsudUfyvOW7DqoyH",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.0701,
+          "polarity": -1.9299
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "0LYSnTQoxFNMq8wDkhmN",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "8rnDGaGWEhXDfbUXVqx2",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "VjxilaYNd8AZBbrsG0rj",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 3.845,
+          "polarity": 0.845
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.9535,
+          "polarity": -1.0465,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 3.6579,
+          "polarity": 0.6579,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "yAywFxo1a03Qw7Nur9Pt",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.7434,
+          "polarity": -1.2566
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "biG9xjnidsONAbkRAZca",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 2.4481,
+          "polarity": -0.5519
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 2.2712,
+          "polarity": -0.7288,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 4.7133,
+          "polarity": 1.7133,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.5585,
+          "polarity": -1.4415,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "PT6ufRUvHY3G2gOxV9Bc",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 1.1629,
+          "polarity": -1.8371
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.2519,
+          "polarity": -1.7481,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.2099,
+          "polarity": -1.7901,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "XYgdaNpbZbrRLriFeYxT",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.0446,
+          "polarity": -1.9554
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.2403,
+          "polarity": -1.7597,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 1.9168,
+          "polarity": -1.0832,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.0919,
+          "polarity": -1.9081,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "MbHdIIpaP2B1LFJwZBFr",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 2.0224,
+          "polarity": -0.9776
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 2.1496,
+          "polarity": -0.8504,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.2932,
+          "polarity": -1.7068,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "VdIxqTjAH2Obc4OmPhFO",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.1292,
+          "polarity": -1.8708
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.1628,
+          "polarity": -1.8372,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "gm8WH2BZIV6hBVgoBtAC",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.6567,
+          "polarity": -1.3433
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0825,
+          "polarity": -1.9175,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "mCw2TaE8AfPoa8a3IbAN",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.8668,
+          "polarity": -1.1332,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "qA8sdNKaqZ5dPFnJdmqg",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 4.9563,
+          "polarity": 1.9563,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "XQUX9kDeHMwd5Nk0h3nP",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.6051,
+          "polarity": -1.3949,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.6696,
+          "polarity": -0.3304,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 3.5682,
+          "polarity": 0.5682,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "Z5uqaVAqKKfP7HoW0aJg",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 2.8561,
+          "polarity": -0.1439
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "0lPMXT3UoGz6oruuEKp4",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "SsWx7O4HPmDQyzlyr5OT",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.0511,
+          "polarity": -1.9489
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.046,
+          "polarity": -1.954,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "3xgWsmiXXnOcfjt9AVQl",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 3.8236,
+          "polarity": 0.8236,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "f8RP6NEoIEeX2td0sxLp",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.7209,
+          "polarity": -1.2791
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.1651,
+          "polarity": -1.8349,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ugdleyKZ1XyWkJqJN0hj",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.1402,
+          "polarity": -0.8598,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "uWoBAaKB7ZjEftOHU3Lb",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 4.2815,
+          "polarity": 1.2815,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 4.3875,
+          "polarity": 1.3875,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "lDWpxvA0u8M7VVjNQUhL",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 3.6512,
+          "polarity": 0.6512,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "lqH7LXJ6kTfIAM570Flb",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "Yy6fL8m9IhiJ4sSYcPiV",
+      "rating": 2.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.6296,
+          "polarity": -0.3704,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "qv5uI5stTYeOZM7lRPXb",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 3.4773,
+          "polarity": 0.4773,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "IxQppJvgInf2Us7LegGM",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "KSeMcCfBXCvKtLPCooF4",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "sanceFJAVr9WL9HwCg8c",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.9684,
+          "polarity": -0.0316,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ta5Wu4xTWYkFz2N58nGL",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.3466,
+          "polarity": -1.6534
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.1695,
+          "polarity": -1.8305,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.1829,
+          "polarity": -1.8171,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.3027,
+          "polarity": -1.6973,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "yPSxMyQ8SFaiQWy1Gey4",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 1.2142,
+          "polarity": -1.7858
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.703,
+          "polarity": -0.297,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 2.6781,
+          "polarity": -0.3219,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "8B4Ztt274BfT8sxQD3jE",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "jdBAT829t66559hOF57h",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "9tgCDvq4auejDA8faDi4",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "iksVChJnGfCada4Yaktb",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "T1pKA5bQHyJc78J0wrZN",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "wViZziRNCc8C4AwCK0pa",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.4675,
+          "polarity": 1.4675
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 3.6808,
+          "polarity": 0.6808,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "HvIA2YjAsXfMNDemOYP9",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.1751,
+          "polarity": -0.8249,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "12eW7cj5fcjibpjOQMbT",
+      "rating": 2.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.2135,
+          "polarity": -0.7865,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.2218,
+          "polarity": -0.7782,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 3.4754,
+          "polarity": 0.4754,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "sqYN4MrPXKnulO8AArWN",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "rqJF5scALLJBoKKsnmRe",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.9286,
+          "polarity": 1.9286
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.5762,
+          "polarity": -1.4238,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "9LOkVXoyu1Di6en9qDkb",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.5376,
+          "polarity": -0.4624,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.2082,
+          "polarity": -0.7918,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "MKHXZBoSVTdUh1H42X8x",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 3.1082,
+          "polarity": 0.1082,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "500YtokNyprkXocu8x0i",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "YHsQ3eSkqCKZlhDAU4H6",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.402,
+          "polarity": 1.402
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 4.7922,
+          "polarity": 1.7922,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "waBoe5KZQpIZshCDd1Dc",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "4OF8PRAn1HMSJwhEr3U2",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "7gQcZUUt5AK5lEro1qHK",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "0WJMVQ6whCvFs1YtOfYx",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.3726,
+          "polarity": -1.6274
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "zIbYddcL85LVftqnpGAR",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.0204,
+          "polarity": -1.9796,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0093,
+          "polarity": -1.9907,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.0121,
+          "polarity": -1.9879,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "kw8YOpnQiEDvEjj6tflW",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.1194,
+          "polarity": -1.8806,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.1144,
+          "polarity": -1.8856,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "HfM7ZnLZIBPfVsH1am7o",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "lZO6GWE8a0lGXZ3U4Pdd",
+      "rating": 2.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.7576,
+          "polarity": -1.2424,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "VLVH1V2WHCLcEYutDgY8",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 1.0453,
+          "polarity": -1.9547
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 1.0064,
+          "polarity": -1.9936
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.0644,
+          "polarity": -1.9356,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0047,
+          "polarity": -1.9953,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.0123,
+          "polarity": -1.9877,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "L32aRlNwBN9HAEqBijTS",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 2.1729,
+          "polarity": -0.8271,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.4127,
+          "polarity": -1.5873,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "JFtnVvB9eRjw4aADTnpY",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 2.0636,
+          "polarity": -0.9364
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.1084,
+          "polarity": -1.8916,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "cmhnB3SXRdBPJGq6lZ0U",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.1301,
+          "polarity": -1.8699
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 1.1593,
+          "polarity": -1.8407
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.0753,
+          "polarity": -1.9247,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 1.2776,
+          "polarity": -1.7224,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.0367,
+          "polarity": -1.9633,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.1117,
+          "polarity": -1.8883,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.0252,
+          "polarity": -1.9748,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "S3TA9XQOt0X5Ip0ubgP5",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.072,
+          "polarity": -1.928
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.0567,
+          "polarity": -1.9433,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0505,
+          "polarity": -1.9495,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "F8BD8949mBBtKzp5NB62",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 2.7588,
+          "polarity": -0.2412
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.921,
+          "polarity": -1.079,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.514,
+          "polarity": -0.486,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.7937,
+          "polarity": -1.2063,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "BYSaAbmJL0kOg34qc1jz",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 1.2043,
+          "polarity": -1.7957
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 1.1475,
+          "polarity": -1.8525
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.1847,
+          "polarity": -1.8153
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 1.0251,
+          "polarity": -1.9749
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.0604,
+          "polarity": -1.9396
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.4433,
+          "polarity": -1.5567,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.1558,
+          "polarity": -1.8442,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.0534,
+          "polarity": -1.9466,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "1TJ1e3L2xT06knjkpxsw",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "7R6d81zEQouJRMVyqaq1",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.697,
+          "polarity": 1.697
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "IFlm25raq3RBaVnTNXH0",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 1.0348,
+          "polarity": -1.9652
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.0238,
+          "polarity": -1.9762
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.0233,
+          "polarity": -1.9767,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0121,
+          "polarity": -1.9879,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.0214,
+          "polarity": -1.9786,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ezISFjQoOc0WTMfMRqA6",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "EZ3_QSYaKGUVQepeDGIp",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 2.3956,
+          "polarity": -0.6044,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.276,
+          "polarity": -0.724,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.8104,
+          "polarity": -1.1896,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "VISjIQMzIntVRdO2HHPF",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.0935,
+          "polarity": -1.9065,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.2618,
+          "polarity": -1.7382,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.0959,
+          "polarity": -1.9041,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "4nq1J5pZDUIgq6ytW4qm",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 1.6464,
+          "polarity": -1.3536
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.338,
+          "polarity": -1.662,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 2.4736,
+          "polarity": -0.5264,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.1582,
+          "polarity": -0.8418,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.505,
+          "polarity": -1.495,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "MOeqGVndhUGZ2WbKQoib",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "JdUyZ2k6zzpTnsE5vazY",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 1.9768,
+          "polarity": -1.0232
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "WJOSBXsSQeonvPPHSN21",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 1.9768,
+          "polarity": -1.0232
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "fN8RsvBIcwXWfoJND65G",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 2.0441,
+          "polarity": -0.9559
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 2.4601,
+          "polarity": -0.5399
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.5225,
+          "polarity": -1.4775
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.2836,
+          "polarity": -0.7164,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.0064,
+          "polarity": -0.9936,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.3616,
+          "polarity": -1.6384,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "HKc7NihKpQvO6sRmUNDA",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.7495,
+          "polarity": -1.2505,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "pSPPbhHvAkwE1COtkKIP",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "TRlgZ6h2ENjthCHm3NWf",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "kMBgqBLjnzLAhI0xatA9",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.0061,
+          "polarity": 1.0061
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "yqVNsaSaqpxqfF5ExblJ",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 1.4468,
+          "polarity": -1.5532
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 1.3133,
+          "polarity": -1.6867
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.1595,
+          "polarity": -1.8405
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.3446,
+          "polarity": -1.6554,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0363,
+          "polarity": -1.9637,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.0913,
+          "polarity": -1.9087,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "jEUzkD59Xo8KMj8nPtUI",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.5486,
+          "polarity": -1.4514
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.0679,
+          "polarity": -1.9321,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.1576,
+          "polarity": -1.8424,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.0522,
+          "polarity": -1.9478,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "6qADblM4Z2RqjnzZzDyQ",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.0897,
+          "polarity": -1.9103,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.1411,
+          "polarity": -1.8589,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "bCflsXwZtbL7jSr5iLo0",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.1869,
+          "polarity": -1.8131
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.2187,
+          "polarity": -1.7813,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "89wy7gr43LnfqDxkODZL",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.8943,
+          "polarity": 1.8943
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 4.4784,
+          "polarity": 1.4784
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 1.5331,
+          "polarity": -1.4669,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 3.6702,
+          "polarity": 0.6702,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "WdPyTISYx0qxlheDBI3e",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "dLBOxaCSupVC4JoVkTB5",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 4.4292,
+          "polarity": 1.4292
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "7f6g1726rwYPB1oaxuM6",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "53C0DnqHPW3z6dMOLZ0q",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "vUnYmYXXjoJv2rEg18lE",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.2038,
+          "polarity": -1.7962
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.8042,
+          "polarity": -1.1958,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.8912,
+          "polarity": -1.1088,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.1874,
+          "polarity": -0.8126,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.235,
+          "polarity": -1.765,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "1EBqI1lfcvd9PkOHwvTY",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "yfzgkSZEhUQJL07aj3GX",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.429,
+          "polarity": -1.571,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.6742,
+          "polarity": -0.3258,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "4SemPskHS2hIXBq1BiPx",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.4299,
+          "polarity": -0.5701,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 2.2483,
+          "polarity": -0.7517,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "3Nhwzs0KWAbmpTf3W2B4",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 2.1393,
+          "polarity": -0.8607
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.1944,
+          "polarity": -1.8056,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 2.2613,
+          "polarity": -0.7387,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "mukZWh0mb3vfnXx6V7oI",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "0BHSXB9Khl3pmKOoiy02",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 3.5339,
+          "polarity": 0.5339
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 4.5607,
+          "polarity": 1.5607
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.6273,
+          "polarity": -1.3727
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.4092,
+          "polarity": -1.5908,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.5449,
+          "polarity": -0.4551,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "wNTvqW8qkUFsIC3RunkA",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.7154,
+          "polarity": 1.7154
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "i8cqewsRWNhvVposGsi1",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.2529,
+          "polarity": -1.7471
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.2662,
+          "polarity": -1.7338,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ezkQM4qTbqXKZHPg4z2T",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.6996,
+          "polarity": -1.3004,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "4ehdcymlqI9bCqmMdmf1",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "swkosZFcmVa9jiW7AEIV",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.5101,
+          "polarity": -1.4899
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 2.8432,
+          "polarity": -0.1568,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.1511,
+          "polarity": -0.8489,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 2.4612,
+          "polarity": -0.5388,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "th08w8q7YeQdiEL99ehR",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.1786,
+          "polarity": -1.8214,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.2071,
+          "polarity": -1.7929,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "kVxoGxHVSY55EMp2a451",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.0701,
+          "polarity": -1.9299
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "GUbF422Uwyj6FJKBwJkQ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "hgOF29KfsYnBvU817UP5",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 1.0504,
+          "polarity": -1.9496
+        },
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 1.0101,
+          "polarity": -1.9899
+        },
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 1.0183,
+          "polarity": -1.9817
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "кошмар",
+          "rating": 1.0286,
+          "polarity": -1.9714,
+          "gold_matches": {
+            "Стойкость": 0.738345205783844
+          }
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "обман покупателя",
+          "rating": 1.3613,
+          "polarity": -1.6387,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 1.0692,
+          "polarity": -1.9308,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 1.0256,
+          "polarity": -1.9744,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "MZhzNwmo5ULKmNEHFIpg",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "ozsMmqbTOUztZ2bQ9g74",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 4.7102,
+          "polarity": 1.7102,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "4ZtYz0Ns9g8a8qFnGxLc",
+      "rating": 2.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "изьян",
+          "rating": 2.1727,
+          "polarity": -0.8273,
+          "gold_matches": {
+            "Вес": 0.6889626979827881
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 2.7075,
+          "polarity": -0.2925,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "jwHnHtWug4SUMq8RiMOy",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "j5FSAOGGUyrWie23toDM",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "stp8PmOhHChgNaXuZtgi",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "7tX2YyMUPNPZud01UncC",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "Ajqa1axEj5QDVSpZ3jzu",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "SaCbaHcHhZ2FGPvYxR0v",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "colour",
+          "aspect": "Цвет",
+          "rating": 1.1393,
+          "polarity": -1.8607
+        },
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 1.2398,
+          "polarity": -1.7602
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 1.1653,
+          "polarity": -1.8347,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "gEBJ4MRtFcfbODXykXVC",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "белый бисер",
+          "rating": 2.5242,
+          "polarity": -0.4758,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "4PgYBXCL4XMtvQ23GCmR",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 4,
+          "medoid": "маркировки",
+          "rating": 3.9582,
+          "polarity": 0.9582,
+          "gold_matches": {
+            "Вид": 0.6775461435317993,
+            "Доставка": 0.6817572116851807,
+            "Качество": 0.7034353017807007,
+            "Размер": 0.7515413165092468,
+            "Скорость": 0.6776117086410522,
+            "Упаковка": 0.7533748149871826,
+            "Фактура": 0.7568160891532898,
+            "Форма": 0.7578403949737549,
+            "Цвет": 0.7429859638214111,
+            "Цена": 0.6830881834030151
+          }
+        }
+      ]
+    }
+  ],
+  "product_aggregated": {
+    "vocabulary": {
+      "Упаковка": 2.03,
+      "Цена": 3.38,
+      "Размер": 1.8,
+      "Качество": 2.45,
+      "Внешний вид": 2.72,
+      "Цвет": 2.66,
+      "Соответствие ожиданиям": 2.0,
+      "Доставка": 2.92,
+      "Расположение": 2.32,
+      "Чистота": 2.01
+    },
+    "discovery": {
+      "кошмар": 1.62,
+      "белый бисер": 1.84,
+      "обман покупателя": 2.11,
+      "маркировки": 2.18,
+      "изьян": 1.88
+    }
+  }
+}

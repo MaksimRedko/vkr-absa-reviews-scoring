@@ -1,0 +1,5615 @@
+{
+  "nm_id": 1504973191,
+  "category": "hospitality",
+  "reviews": [
+    {
+      "review_id": "ym_c59de42a475ceefe_0001",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "checkin_checkout",
+          "aspect": "Заселение и выезд",
+          "rating": 1.0628,
+          "raw_rating": 1.0628,
+          "polarity": -1.9372,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "reservation_booking",
+          "aspect": "Бронирование",
+          "rating": 1.1238,
+          "raw_rating": 1.1238,
+          "polarity": -1.8762,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 1.5253,
+          "raw_rating": 1.5253,
+          "polarity": -1.4747,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 1.0194,
+          "raw_rating": 1.0194,
+          "polarity": -1.9806,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 1.0128,
+          "raw_rating": 1.0128,
+          "polarity": -1.9872,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 1.1375,
+          "raw_rating": 1.1375,
+          "polarity": -1.8625,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 1.577,
+          "raw_rating": 1.577,
+          "polarity": -1.423,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 1.11,
+          "raw_rating": 1.11,
+          "polarity": -1.89,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0002",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9553,
+          "raw_rating": 4.9553,
+          "polarity": 1.9553,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.9406,
+          "raw_rating": 4.9406,
+          "polarity": 1.9406,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 3.5187,
+          "raw_rating": 3.5187,
+          "polarity": 0.5187,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 3.3855,
+          "raw_rating": 3.3855,
+          "polarity": 0.3855,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0003",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9958,
+          "raw_rating": 4.9958,
+          "polarity": 1.9958,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.8232,
+          "raw_rating": 4.8232,
+          "polarity": 1.8232,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 4.9563,
+          "raw_rating": 4.9563,
+          "polarity": 1.9563,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 4.1791,
+          "raw_rating": 4.1791,
+          "polarity": 1.1791,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0004",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.123,
+          "raw_rating": 4.123,
+          "polarity": 1.123,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 3.6893,
+          "raw_rating": 3.6893,
+          "polarity": 0.6893,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 3.6243,
+          "raw_rating": 3.6243,
+          "polarity": 0.6243,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0005",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "bathroom",
+          "aspect": "Ванная комната",
+          "rating": 1.1066,
+          "raw_rating": 1.1066,
+          "polarity": -1.8934,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 1.0056,
+          "raw_rating": 1.0056,
+          "polarity": -1.9944,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "overall_impression",
+          "aspect": "Общее впечатление",
+          "rating": 1.0171,
+          "raw_rating": 1.0171,
+          "polarity": -1.9829,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 1.1458,
+          "raw_rating": 1.1458,
+          "polarity": -1.8542,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 1.0554,
+          "raw_rating": 1.0554,
+          "polarity": -1.9446,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 1.1138,
+          "raw_rating": 1.1138,
+          "polarity": -1.8862,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 1.0211,
+          "raw_rating": 1.0211,
+          "polarity": -1.9789,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 1.0127,
+          "raw_rating": 1.0127,
+          "polarity": -1.9873,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 1.1009,
+          "raw_rating": 1.1009,
+          "polarity": -1.8991,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 1.081,
+          "raw_rating": 1.081,
+          "polarity": -1.919,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0006",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "atmosphere",
+          "aspect": "Атмосфера",
+          "rating": 4.7564,
+          "raw_rating": 4.7564,
+          "polarity": 1.7564,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.7694,
+          "raw_rating": 4.7694,
+          "polarity": 1.7694,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 3.6749,
+          "raw_rating": 3.6749,
+          "polarity": 0.6749,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0007",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.9342,
+          "raw_rating": 4.9342,
+          "polarity": 1.9342,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.9193,
+          "raw_rating": 4.9193,
+          "polarity": 1.9193,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 3.5578,
+          "raw_rating": 3.5578,
+          "polarity": 0.5578,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 4.1154,
+          "raw_rating": 4.1154,
+          "polarity": 1.1154,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0008",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.7352,
+          "raw_rating": 4.7352,
+          "polarity": 1.7352,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.5912,
+          "raw_rating": 4.5912,
+          "polarity": 1.5912,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 3.8669,
+          "raw_rating": 3.8669,
+          "polarity": 0.8669,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.1259,
+          "raw_rating": 4.1259,
+          "polarity": 1.1259,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 4.5321,
+          "raw_rating": 4.5321,
+          "polarity": 1.5321,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.7259,
+          "raw_rating": 4.7259,
+          "polarity": 1.7259,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 3.5745,
+          "raw_rating": 3.5745,
+          "polarity": 0.5745,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0009",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 4.8776,
+          "raw_rating": 4.8776,
+          "polarity": 1.8776,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.8684,
+          "raw_rating": 4.8684,
+          "polarity": 1.8684,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.9548,
+          "raw_rating": 4.9548,
+          "polarity": 1.9548,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0010",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "bathroom",
+          "aspect": "Ванная комната",
+          "rating": 1.8718,
+          "raw_rating": 1.8718,
+          "polarity": -1.1282,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "bed_sleep",
+          "aspect": "Кровать и сон",
+          "rating": 1.0757,
+          "raw_rating": 1.0757,
+          "polarity": -1.9243,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 1.003,
+          "raw_rating": 1.003,
+          "polarity": -1.997,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "overall_impression",
+          "aspect": "Общее впечатление",
+          "rating": 1.0189,
+          "raw_rating": 1.0189,
+          "polarity": -1.9811,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 1.0838,
+          "raw_rating": 1.0838,
+          "polarity": -1.9162,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 1.1431,
+          "raw_rating": 1.1431,
+          "polarity": -1.8569,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 1.0731,
+          "raw_rating": 1.0731,
+          "polarity": -1.9269,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 1.0148,
+          "raw_rating": 1.0148,
+          "polarity": -1.9852,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 1.2263,
+          "raw_rating": 1.2263,
+          "polarity": -1.7737,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 1.0892,
+          "raw_rating": 1.0892,
+          "polarity": -1.9108,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0011",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "bed_sleep",
+          "aspect": "Кровать и сон",
+          "rating": 1.0099,
+          "raw_rating": 1.0099,
+          "polarity": -1.9901,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "checkin_checkout",
+          "aspect": "Заселение и выезд",
+          "rating": 1.2039,
+          "raw_rating": 1.2039,
+          "polarity": -1.7961,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 1.0152,
+          "raw_rating": 1.0152,
+          "polarity": -1.9848,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 1.0286,
+          "raw_rating": 1.0286,
+          "polarity": -1.9714,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 1.0445,
+          "raw_rating": 1.0445,
+          "polarity": -1.9555,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 1.2787,
+          "raw_rating": 1.2787,
+          "polarity": -1.7213,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 1.0348,
+          "raw_rating": 1.0348,
+          "polarity": -1.9652,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 1.0659,
+          "raw_rating": 1.0659,
+          "polarity": -1.9341,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 1.1215,
+          "raw_rating": 1.1215,
+          "polarity": -1.8785,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 1.4591,
+          "raw_rating": 1.4591,
+          "polarity": -1.5409,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0012",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9676,
+          "raw_rating": 4.9676,
+          "polarity": 1.9676,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "checkin_checkout",
+          "aspect": "Заселение и выезд",
+          "rating": 4.3188,
+          "raw_rating": 4.3188,
+          "polarity": 1.3188,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "crowdedness",
+          "aspect": "Загруженность",
+          "rating": 4.6704,
+          "raw_rating": 4.6704,
+          "polarity": 1.6704,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.9884,
+          "raw_rating": 4.9884,
+          "polarity": 1.9884,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.4138,
+          "raw_rating": 4.4138,
+          "polarity": 1.4138,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.3501,
+          "raw_rating": 4.3501,
+          "polarity": 1.3501,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.9496,
+          "raw_rating": 4.9496,
+          "polarity": 1.9496,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.8956,
+          "raw_rating": 4.8956,
+          "polarity": 1.8956,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "value_for_money",
+          "aspect": "Соотношение цена-качество",
+          "rating": 4.15,
+          "raw_rating": 4.15,
+          "polarity": 1.15,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 2.6303,
+          "raw_rating": 2.6303,
+          "polarity": -0.3697,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 4.4805,
+          "raw_rating": 4.4805,
+          "polarity": 1.4805,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.982,
+          "raw_rating": 4.982,
+          "polarity": 1.982,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 4.4075,
+          "raw_rating": 4.4075,
+          "polarity": 1.4075,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 4.436,
+          "raw_rating": 4.436,
+          "polarity": 1.436,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0013",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 1.3816,
+          "raw_rating": 1.3816,
+          "polarity": -1.6184,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 2.8976,
+          "raw_rating": 2.8976,
+          "polarity": -0.1024,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 1.7578,
+          "raw_rating": 1.7578,
+          "polarity": -1.2422,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0014",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "bed_sleep",
+          "aspect": "Кровать и сон",
+          "rating": 4.2452,
+          "raw_rating": 4.2452,
+          "polarity": 1.2452,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9862,
+          "raw_rating": 4.9862,
+          "polarity": 1.9862,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.9744,
+          "raw_rating": 4.9744,
+          "polarity": 1.9744,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.9972,
+          "raw_rating": 4.9972,
+          "polarity": 1.9972,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 4.8823,
+          "raw_rating": 4.8823,
+          "polarity": 1.8823,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.9415,
+          "raw_rating": 4.9415,
+          "polarity": 1.9415,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 4.8417,
+          "raw_rating": 4.8417,
+          "polarity": 1.8417,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 4.677,
+          "raw_rating": 4.677,
+          "polarity": 1.677,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0015",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9749,
+          "raw_rating": 4.9749,
+          "polarity": 1.9749,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "overall_impression",
+          "aspect": "Общее впечатление",
+          "rating": 4.5314,
+          "raw_rating": 4.5314,
+          "polarity": 1.5314,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.6842,
+          "raw_rating": 4.6842,
+          "polarity": 1.6842,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 2.9126,
+          "raw_rating": 2.9126,
+          "polarity": -0.0874,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.9904,
+          "raw_rating": 4.9904,
+          "polarity": 1.9904,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 2.5763,
+          "raw_rating": 2.5763,
+          "polarity": -0.4237,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 2.7859,
+          "raw_rating": 2.7859,
+          "polarity": -0.2141,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0016",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "bathroom",
+          "aspect": "Ванная комната",
+          "rating": 4.5502,
+          "raw_rating": 4.5502,
+          "polarity": 1.5502,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "bed_sleep",
+          "aspect": "Кровать и сон",
+          "rating": 4.8239,
+          "raw_rating": 4.8239,
+          "polarity": 1.8239,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9909,
+          "raw_rating": 4.9909,
+          "polarity": 1.9909,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 4.8659,
+          "raw_rating": 4.8659,
+          "polarity": 1.8659,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.9863,
+          "raw_rating": 4.9863,
+          "polarity": 1.9863,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.9866,
+          "raw_rating": 4.9866,
+          "polarity": 1.9866,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.9816,
+          "raw_rating": 4.9816,
+          "polarity": 1.9816,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 3.9298,
+          "raw_rating": 3.9298,
+          "polarity": 0.9298,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 4.6902,
+          "raw_rating": 4.6902,
+          "polarity": 1.6902,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 4.9635,
+          "raw_rating": 4.9635,
+          "polarity": 1.9635,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.9672,
+          "raw_rating": 4.9672,
+          "polarity": 1.9672,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 4.6231,
+          "raw_rating": 4.6231,
+          "polarity": 1.6231,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 4.6124,
+          "raw_rating": 4.6124,
+          "polarity": 1.6124,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0017",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "overall_impression",
+          "aspect": "Общее впечатление",
+          "rating": 4.4648,
+          "raw_rating": 4.4648,
+          "polarity": 1.4648,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0018",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.4341,
+          "raw_rating": 4.4341,
+          "polarity": 1.4341,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.9511,
+          "raw_rating": 4.9511,
+          "polarity": 1.9511,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 1.3444,
+          "raw_rating": 1.3444,
+          "polarity": -1.6556,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 3.6145,
+          "raw_rating": 3.6145,
+          "polarity": 0.6145,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.1221,
+          "raw_rating": 4.1221,
+          "polarity": 1.1221,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.2436,
+          "raw_rating": 4.2436,
+          "polarity": 1.2436,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.8793,
+          "raw_rating": 4.8793,
+          "polarity": 1.8793,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 2.6605,
+          "raw_rating": 2.6605,
+          "polarity": -0.3395,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0019",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.8165,
+          "raw_rating": 4.8165,
+          "polarity": 1.8165,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 4.3222,
+          "raw_rating": 4.3222,
+          "polarity": 1.3222,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.5158,
+          "raw_rating": 4.5158,
+          "polarity": 1.5158,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 3.9051,
+          "raw_rating": 3.9051,
+          "polarity": 0.9051,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0020",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "assortment",
+          "aspect": "Ассортимент",
+          "rating": 4.9702,
+          "raw_rating": 4.9702,
+          "polarity": 1.9702,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "bed_sleep",
+          "aspect": "Кровать и сон",
+          "rating": 4.4166,
+          "raw_rating": 4.4166,
+          "polarity": 1.4166,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9135,
+          "raw_rating": 4.9135,
+          "polarity": 1.9135,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.9948,
+          "raw_rating": 4.9948,
+          "polarity": 1.9948,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 1.0918,
+          "raw_rating": 1.0918,
+          "polarity": -1.9082,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "safety",
+          "aspect": "Безопасность",
+          "rating": 4.9409,
+          "raw_rating": 4.9409,
+          "polarity": 1.9409,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.2381,
+          "raw_rating": 4.2381,
+          "polarity": 1.2381,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 2.6652,
+          "raw_rating": 2.6652,
+          "polarity": -0.3348,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 4.0443,
+          "raw_rating": 4.0443,
+          "polarity": 1.0443,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.9787,
+          "raw_rating": 4.9787,
+          "polarity": 1.9787,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 1.0052,
+          "raw_rating": 1.0052,
+          "polarity": -1.9948,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 3.1658,
+          "raw_rating": 3.1658,
+          "polarity": 0.1658,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0021",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "bathroom",
+          "aspect": "Ванная комната",
+          "rating": 3.411,
+          "raw_rating": 3.411,
+          "polarity": 0.411,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "bed_sleep",
+          "aspect": "Кровать и сон",
+          "rating": 1.1677,
+          "raw_rating": 1.1677,
+          "polarity": -1.8323,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.8809,
+          "raw_rating": 4.8809,
+          "polarity": 1.8809,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 3.6222,
+          "raw_rating": 3.6222,
+          "polarity": 0.6222,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 3.3046,
+          "raw_rating": 3.3046,
+          "polarity": 0.3046,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0022",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "checkin_checkout",
+          "aspect": "Заселение и выезд",
+          "rating": 2.7386,
+          "raw_rating": 2.7386,
+          "polarity": -0.2614,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 2.868,
+          "raw_rating": 2.868,
+          "polarity": -0.132,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "crowdedness",
+          "aspect": "Загруженность",
+          "rating": 3.6553,
+          "raw_rating": 3.6553,
+          "polarity": 0.6553,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 3.4778,
+          "raw_rating": 3.4778,
+          "polarity": 0.4778,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 3.7038,
+          "raw_rating": 3.7038,
+          "polarity": 0.7038,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 4.0067,
+          "raw_rating": 4.0067,
+          "polarity": 1.0067,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 3.7848,
+          "raw_rating": 3.7848,
+          "polarity": 0.7848,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 3.5224,
+          "raw_rating": 3.5224,
+          "polarity": 0.5224,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0023",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "assortment",
+          "aspect": "Ассортимент",
+          "rating": 1.0105,
+          "raw_rating": 1.0105,
+          "polarity": -1.9895,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.8893,
+          "raw_rating": 4.8893,
+          "polarity": 1.8893,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.9768,
+          "raw_rating": 4.9768,
+          "polarity": 1.9768,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.822,
+          "raw_rating": 4.822,
+          "polarity": 1.822,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 3.8958,
+          "raw_rating": 3.8958,
+          "polarity": 0.8958,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.9741,
+          "raw_rating": 4.9741,
+          "polarity": 1.9741,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0024",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "assortment",
+          "aspect": "Ассортимент",
+          "rating": 4.9489,
+          "raw_rating": 4.9489,
+          "polarity": 1.9489,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "bed_sleep",
+          "aspect": "Кровать и сон",
+          "rating": 1.6919,
+          "raw_rating": 1.6919,
+          "polarity": -1.3081,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9944,
+          "raw_rating": 4.9944,
+          "polarity": 1.9944,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 1.0703,
+          "raw_rating": 1.0703,
+          "polarity": -1.9297,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 3.8974,
+          "raw_rating": 3.8974,
+          "polarity": 0.8974,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 2.3347,
+          "raw_rating": 2.3347,
+          "polarity": -0.6653,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.3387,
+          "raw_rating": 4.3387,
+          "polarity": 1.3387,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 2.6355,
+          "raw_rating": 2.6355,
+          "polarity": -0.3645,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 4.1529,
+          "raw_rating": 4.1529,
+          "polarity": 1.1529,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0025",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "bed_sleep",
+          "aspect": "Кровать и сон",
+          "rating": 1.0024,
+          "raw_rating": 1.0024,
+          "polarity": -1.9976,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 1.0019,
+          "raw_rating": 1.0019,
+          "polarity": -1.9981,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 1.0213,
+          "raw_rating": 1.0213,
+          "polarity": -1.9787,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0026,
+          "raw_rating": 1.0026,
+          "polarity": -1.9974,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 1.0394,
+          "raw_rating": 1.0394,
+          "polarity": -1.9606,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 1.002,
+          "raw_rating": 1.002,
+          "polarity": -1.998,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 1.0069,
+          "raw_rating": 1.0069,
+          "polarity": -1.9931,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 1.0059,
+          "raw_rating": 1.0059,
+          "polarity": -1.9941,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 1.0123,
+          "raw_rating": 1.0123,
+          "polarity": -1.9877,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0026",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "assortment",
+          "aspect": "Ассортимент",
+          "rating": 4.983,
+          "raw_rating": 4.983,
+          "polarity": 1.983,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9882,
+          "raw_rating": 4.9882,
+          "polarity": 1.9882,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.9292,
+          "raw_rating": 4.9292,
+          "polarity": 1.9292,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.9943,
+          "raw_rating": 4.9943,
+          "polarity": 1.9943,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.9879,
+          "raw_rating": 4.9879,
+          "polarity": 1.9879,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 3.7766,
+          "raw_rating": 3.7766,
+          "polarity": 0.7766,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 4.9771,
+          "raw_rating": 4.9771,
+          "polarity": 1.9771,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0027",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "assortment",
+          "aspect": "Ассортимент",
+          "rating": 4.9922,
+          "raw_rating": 4.9922,
+          "polarity": 1.9922,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "atmosphere",
+          "aspect": "Атмосфера",
+          "rating": 4.8448,
+          "raw_rating": 4.8448,
+          "polarity": 1.8448,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9625,
+          "raw_rating": 4.9625,
+          "polarity": 1.9625,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.9642,
+          "raw_rating": 4.9642,
+          "polarity": 1.9642,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 4.0378,
+          "raw_rating": 4.0378,
+          "polarity": 1.0378,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.9411,
+          "raw_rating": 4.9411,
+          "polarity": 1.9411,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 3.551,
+          "raw_rating": 3.551,
+          "polarity": 0.551,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 3.7166,
+          "raw_rating": 3.7166,
+          "polarity": 0.7166,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0028",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "checkin_checkout",
+          "aspect": "Заселение и выезд",
+          "rating": 4.7506,
+          "raw_rating": 4.7506,
+          "polarity": 1.7506,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.9622,
+          "raw_rating": 4.9622,
+          "polarity": 1.9622,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.6566,
+          "raw_rating": 4.6566,
+          "polarity": 1.6566,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.1592,
+          "raw_rating": 4.1592,
+          "polarity": 1.1592,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "reservation_booking",
+          "aspect": "Бронирование",
+          "rating": 3.9032,
+          "raw_rating": 3.9032,
+          "polarity": 0.9032,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 3.4451,
+          "raw_rating": 3.4451,
+          "polarity": 0.4451,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "value_for_money",
+          "aspect": "Соотношение цена-качество",
+          "rating": 4.9872,
+          "raw_rating": 4.9872,
+          "polarity": 1.9872,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.946,
+          "raw_rating": 4.946,
+          "polarity": 1.946,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0029",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 3.9171,
+          "raw_rating": 3.9171,
+          "polarity": 0.9171,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "checkin_checkout",
+          "aspect": "Заселение и выезд",
+          "rating": 3.9086,
+          "raw_rating": 3.9086,
+          "polarity": 0.9086,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "crowdedness",
+          "aspect": "Загруженность",
+          "rating": 3.1115,
+          "raw_rating": 3.1115,
+          "polarity": 0.1115,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "functionality",
+          "aspect": "Функционал",
+          "rating": 3.204,
+          "raw_rating": 3.204,
+          "polarity": 0.204,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.99,
+          "raw_rating": 4.99,
+          "polarity": 1.99,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.6171,
+          "raw_rating": 4.6171,
+          "polarity": 1.6171,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 1.5111,
+          "raw_rating": 1.5111,
+          "polarity": -1.4889,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.3223,
+          "raw_rating": 4.3223,
+          "polarity": 1.3223,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.6748,
+          "raw_rating": 4.6748,
+          "polarity": 1.6748,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 3.1623,
+          "raw_rating": 3.1623,
+          "polarity": 0.1623,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0030",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.9211,
+          "raw_rating": 4.9211,
+          "polarity": 1.9211,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.986,
+          "raw_rating": 4.986,
+          "polarity": 1.986,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0031",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "assortment",
+          "aspect": "Ассортимент",
+          "rating": 4.994,
+          "raw_rating": 4.994,
+          "polarity": 1.994,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "bathroom",
+          "aspect": "Ванная комната",
+          "rating": 2.8307,
+          "raw_rating": 2.8307,
+          "polarity": -0.1693,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "bed_sleep",
+          "aspect": "Кровать и сон",
+          "rating": 1.629,
+          "raw_rating": 1.629,
+          "polarity": -1.371,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.954,
+          "raw_rating": 4.954,
+          "polarity": 1.954,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 4.9408,
+          "raw_rating": 4.9408,
+          "polarity": 1.9408,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.9908,
+          "raw_rating": 4.9908,
+          "polarity": 1.9908,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.992,
+          "raw_rating": 4.992,
+          "polarity": 1.992,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 3.5466,
+          "raw_rating": 3.5466,
+          "polarity": 0.5466,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 4.8853,
+          "raw_rating": 4.8853,
+          "polarity": 1.8853,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.9855,
+          "raw_rating": 4.9855,
+          "polarity": 1.9855,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 4.3143,
+          "raw_rating": 4.3143,
+          "polarity": 1.3143,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 4.7678,
+          "raw_rating": 4.7678,
+          "polarity": 1.7678,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0032",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 1.6781,
+          "raw_rating": 1.6781,
+          "polarity": -1.3219,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "checkin_checkout",
+          "aspect": "Заселение и выезд",
+          "rating": 1.1483,
+          "raw_rating": 1.1483,
+          "polarity": -1.8517,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 1.4313,
+          "raw_rating": 1.4313,
+          "polarity": -1.5687,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "crowdedness",
+          "aspect": "Загруженность",
+          "rating": 1.564,
+          "raw_rating": 1.564,
+          "polarity": -1.436,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "parking",
+          "aspect": "Парковка",
+          "rating": 1.607,
+          "raw_rating": 1.607,
+          "polarity": -1.393,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 3.1154,
+          "raw_rating": 3.1154,
+          "polarity": 0.1154,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 2.4181,
+          "raw_rating": 2.4181,
+          "polarity": -0.5819,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 1.887,
+          "raw_rating": 1.887,
+          "polarity": -1.113,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 2.0287,
+          "raw_rating": 2.0287,
+          "polarity": -0.9713,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 1.626,
+          "raw_rating": 1.626,
+          "polarity": -1.374,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 1.5092,
+          "raw_rating": 1.5092,
+          "polarity": -1.4908,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 1.7069,
+          "raw_rating": 1.7069,
+          "polarity": -1.2931,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0033",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 1.0025,
+          "raw_rating": 1.0025,
+          "polarity": -1.9975,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "expectations",
+          "aspect": "Соответствие ожиданиям",
+          "rating": 2.1298,
+          "raw_rating": 2.1298,
+          "polarity": -0.8702,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 2.1868,
+          "raw_rating": 2.1868,
+          "polarity": -0.8132,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 1.2284,
+          "raw_rating": 1.2284,
+          "polarity": -1.7716,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 2.6139,
+          "raw_rating": 2.6139,
+          "polarity": -0.3861,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 1.1433,
+          "raw_rating": 1.1433,
+          "polarity": -1.8567,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0034",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.892,
+          "raw_rating": 4.892,
+          "polarity": 1.892,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.7811,
+          "raw_rating": 4.7811,
+          "polarity": 1.7811,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 4.3235,
+          "raw_rating": 4.3235,
+          "polarity": 1.3235,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.6115,
+          "raw_rating": 4.6115,
+          "polarity": 1.6115,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 3.4233,
+          "raw_rating": 3.4233,
+          "polarity": 0.4233,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 4.274,
+          "raw_rating": 4.274,
+          "polarity": 1.274,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0035",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.2966,
+          "raw_rating": 4.2966,
+          "polarity": 1.2966,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 3.188,
+          "raw_rating": 3.188,
+          "polarity": 0.188,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 3.1831,
+          "raw_rating": 3.1831,
+          "polarity": 0.1831,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 1.2566,
+          "raw_rating": 1.2566,
+          "polarity": -1.7434,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.9703,
+          "raw_rating": 4.9703,
+          "polarity": 1.9703,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 3.6833,
+          "raw_rating": 3.6833,
+          "polarity": 0.6833,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 2.8383,
+          "raw_rating": 2.8383,
+          "polarity": -0.1617,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 1.5916,
+          "raw_rating": 1.5916,
+          "polarity": -1.4084,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 1.6596,
+          "raw_rating": 1.6596,
+          "polarity": -1.3404,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 2.5945,
+          "raw_rating": 2.5945,
+          "polarity": -0.4055,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0036",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 1.001,
+          "raw_rating": 1.001,
+          "polarity": -1.999,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 1.0015,
+          "raw_rating": 1.0015,
+          "polarity": -1.9985,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 1.0087,
+          "raw_rating": 1.0087,
+          "polarity": -1.9913,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0037",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "assortment",
+          "aspect": "Ассортимент",
+          "rating": 4.2305,
+          "raw_rating": 4.2305,
+          "polarity": 1.2305,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "atmosphere",
+          "aspect": "Атмосфера",
+          "rating": 4.4435,
+          "raw_rating": 4.4435,
+          "polarity": 1.4435,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "checkin_checkout",
+          "aspect": "Заселение и выезд",
+          "rating": 1.5918,
+          "raw_rating": 1.5918,
+          "polarity": -1.4082,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 3.8214,
+          "raw_rating": 3.8214,
+          "polarity": 0.8214,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 3.8702,
+          "raw_rating": 3.8702,
+          "polarity": 0.8702,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 4.116,
+          "raw_rating": 4.116,
+          "polarity": 1.116,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 3.9947,
+          "raw_rating": 3.9947,
+          "polarity": 0.9947,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 3.5016,
+          "raw_rating": 3.5016,
+          "polarity": 0.5016,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0038",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9747,
+          "raw_rating": 4.9747,
+          "polarity": 1.9747,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 1.3392,
+          "raw_rating": 1.3392,
+          "polarity": -1.6608,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.9969,
+          "raw_rating": 4.9969,
+          "polarity": 1.9969,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.9464,
+          "raw_rating": 4.9464,
+          "polarity": 1.9464,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.994,
+          "raw_rating": 4.994,
+          "polarity": 1.994,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 4.9227,
+          "raw_rating": 4.9227,
+          "polarity": 1.9227,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.9385,
+          "raw_rating": 4.9385,
+          "polarity": 1.9385,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 4.3332,
+          "raw_rating": 4.3332,
+          "polarity": 1.3332,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 4.8331,
+          "raw_rating": 4.8331,
+          "polarity": 1.8331,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0039",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "assortment",
+          "aspect": "Ассортимент",
+          "rating": 4.9159,
+          "raw_rating": 4.9159,
+          "polarity": 1.9159,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9879,
+          "raw_rating": 4.9879,
+          "polarity": 1.9879,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.9248,
+          "raw_rating": 4.9248,
+          "polarity": 1.9248,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "overall_impression",
+          "aspect": "Общее впечатление",
+          "rating": 3.5069,
+          "raw_rating": 3.5069,
+          "polarity": 0.5069,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 3.8664,
+          "raw_rating": 3.8664,
+          "polarity": 0.8664,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 3.6388,
+          "raw_rating": 3.6388,
+          "polarity": 0.6388,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 1.1941,
+          "raw_rating": 1.1941,
+          "polarity": -1.8059,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.8088,
+          "raw_rating": 4.8088,
+          "polarity": 1.8088,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 4.9484,
+          "raw_rating": 4.9484,
+          "polarity": 1.9484,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 2.8442,
+          "raw_rating": 2.8442,
+          "polarity": -0.1558,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0040",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9197,
+          "raw_rating": 4.9197,
+          "polarity": 1.9197,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.4271,
+          "raw_rating": 4.4271,
+          "polarity": 1.4271,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 1.0679,
+          "raw_rating": 1.0679,
+          "polarity": -1.9321,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0041",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "bathroom",
+          "aspect": "Ванная комната",
+          "rating": 2.3027,
+          "raw_rating": 2.3027,
+          "polarity": -0.6973,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "bed_sleep",
+          "aspect": "Кровать и сон",
+          "rating": 1.6909,
+          "raw_rating": 1.6909,
+          "polarity": -1.3091,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 1.1528,
+          "raw_rating": 1.1528,
+          "polarity": -1.8472,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 1.4818,
+          "raw_rating": 1.4818,
+          "polarity": -1.5182,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 4.4784,
+          "raw_rating": 4.4784,
+          "polarity": 1.4784,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0042",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.5609,
+          "raw_rating": 4.5609,
+          "polarity": 1.5609,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 4.2029,
+          "raw_rating": 4.2029,
+          "polarity": 1.2029,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0043",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "checkin_checkout",
+          "aspect": "Заселение и выезд",
+          "rating": 1.0933,
+          "raw_rating": 1.0933,
+          "polarity": -1.9067,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 1.1472,
+          "raw_rating": 1.1472,
+          "polarity": -1.8528,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 1.1202,
+          "raw_rating": 1.1202,
+          "polarity": -1.8798,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 1.4722,
+          "raw_rating": 1.4722,
+          "polarity": -1.5278,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 2.0429,
+          "raw_rating": 2.0429,
+          "polarity": -0.9571,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 1.0291,
+          "raw_rating": 1.0291,
+          "polarity": -1.9709,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 1.1578,
+          "raw_rating": 1.1578,
+          "polarity": -1.8422,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 1.4572,
+          "raw_rating": 1.4572,
+          "polarity": -1.5428,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 1.6856,
+          "raw_rating": 1.6856,
+          "polarity": -1.3144,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0044",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "assortment",
+          "aspect": "Ассортимент",
+          "rating": 3.1252,
+          "raw_rating": 3.1252,
+          "polarity": 0.1252,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 1.1208,
+          "raw_rating": 1.1208,
+          "polarity": -1.8792,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 3.2077,
+          "raw_rating": 3.2077,
+          "polarity": 0.2077,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 2.4433,
+          "raw_rating": 2.4433,
+          "polarity": -0.5567,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.8678,
+          "raw_rating": 4.8678,
+          "polarity": 1.8678,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 3.2773,
+          "raw_rating": 3.2773,
+          "polarity": 0.2773,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0045",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 3.862,
+          "raw_rating": 3.862,
+          "polarity": 0.862,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.974,
+          "raw_rating": 4.974,
+          "polarity": 1.974,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.9964,
+          "raw_rating": 4.9964,
+          "polarity": 1.9964,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.9711,
+          "raw_rating": 4.9711,
+          "polarity": 1.9711,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0046",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.8171,
+          "raw_rating": 4.8171,
+          "polarity": 1.8171,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.7072,
+          "raw_rating": 4.7072,
+          "polarity": 1.7072,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.166,
+          "raw_rating": 4.166,
+          "polarity": 1.166,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.0026,
+          "raw_rating": 4.0026,
+          "polarity": 1.0026,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 3.5469,
+          "raw_rating": 3.5469,
+          "polarity": 0.5469,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0047",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "bed_sleep",
+          "aspect": "Кровать и сон",
+          "rating": 2.7763,
+          "raw_rating": 2.7763,
+          "polarity": -0.2237,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "crowdedness",
+          "aspect": "Загруженность",
+          "rating": 4.783,
+          "raw_rating": 4.783,
+          "polarity": 1.783,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.2093,
+          "raw_rating": 4.2093,
+          "polarity": 1.2093,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.9148,
+          "raw_rating": 4.9148,
+          "polarity": 1.9148,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 3.856,
+          "raw_rating": 3.856,
+          "polarity": 0.856,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0048",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.6674,
+          "raw_rating": 4.6674,
+          "polarity": 1.6674,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.8714,
+          "raw_rating": 4.8714,
+          "polarity": 1.8714,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.9867,
+          "raw_rating": 4.9867,
+          "polarity": 1.9867,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.787,
+          "raw_rating": 4.787,
+          "polarity": 1.787,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.7695,
+          "raw_rating": 4.7695,
+          "polarity": 1.7695,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 4.8843,
+          "raw_rating": 4.8843,
+          "polarity": 1.8843,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0049",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 2.4736,
+          "raw_rating": 2.4736,
+          "polarity": -0.5264,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 1.4431,
+          "raw_rating": 1.4431,
+          "polarity": -1.5569,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 1.1137,
+          "raw_rating": 1.1137,
+          "polarity": -1.8863,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 1.7759,
+          "raw_rating": 1.7759,
+          "polarity": -1.2241,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 1.1468,
+          "raw_rating": 1.1468,
+          "polarity": -1.8532,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0050",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 1.0767,
+          "raw_rating": 1.0767,
+          "polarity": -1.9233,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 2.0025,
+          "raw_rating": 2.0025,
+          "polarity": -0.9975,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "диваном",
+          "rating": 2.2892,
+          "raw_rating": 2.2892,
+          "polarity": -0.7108,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 2.7172,
+          "raw_rating": 2.7172,
+          "polarity": -0.2828,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0051",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "bathroom",
+          "aspect": "Ванная комната",
+          "rating": 4.5219,
+          "raw_rating": 4.5219,
+          "polarity": 1.5219,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.5202,
+          "raw_rating": 4.5202,
+          "polarity": 1.5202,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "cleanliness",
+          "aspect": "Чистота",
+          "rating": 4.28,
+          "raw_rating": 4.28,
+          "polarity": 1.28,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.986,
+          "raw_rating": 4.986,
+          "polarity": 1.986,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.4828,
+          "raw_rating": 4.4828,
+          "polarity": 1.4828,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.8743,
+          "raw_rating": 4.8743,
+          "polarity": 1.8743,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.8993,
+          "raw_rating": 4.8993,
+          "polarity": 1.8993,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 4.287,
+          "raw_rating": 4.287,
+          "polarity": 1.287,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0052",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.9961,
+          "raw_rating": 4.9961,
+          "polarity": 1.9961,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 1.6972,
+          "raw_rating": 1.6972,
+          "polarity": -1.3028,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.9282,
+          "raw_rating": 4.9282,
+          "polarity": 1.9282,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.984,
+          "raw_rating": 4.984,
+          "polarity": 1.984,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 4.9693,
+          "raw_rating": 4.9693,
+          "polarity": 1.9693,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 2.207,
+          "raw_rating": 2.207,
+          "polarity": -0.793,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0053",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0054",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9533,
+          "raw_rating": 4.9533,
+          "polarity": 1.9533,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "location",
+          "aspect": "Расположение",
+          "rating": 4.9833,
+          "raw_rating": 4.9833,
+          "polarity": 1.9833,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.9496,
+          "raw_rating": 4.9496,
+          "polarity": 1.9496,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 4.9703,
+          "raw_rating": 4.9703,
+          "polarity": 1.9703,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.9791,
+          "raw_rating": 4.9791,
+          "polarity": 1.9791,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0055",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "bathroom",
+          "aspect": "Ванная комната",
+          "rating": 4.5992,
+          "raw_rating": 4.5992,
+          "polarity": 1.5992,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "breakfast_food",
+          "aspect": "Завтрак и питание",
+          "rating": 4.9768,
+          "raw_rating": 4.9768,
+          "polarity": 1.9768,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 4.2152,
+          "raw_rating": 4.2152,
+          "polarity": 1.2152,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 1.0834,
+          "raw_rating": 1.0834,
+          "polarity": -1.9166,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.871,
+          "raw_rating": 4.871,
+          "polarity": 1.871,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 1.9282,
+          "raw_rating": 1.9282,
+          "polarity": -1.0718,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0056",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "assortment",
+          "aspect": "Ассортимент",
+          "rating": 1.177,
+          "raw_rating": 1.177,
+          "polarity": -1.823,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "bed_sleep",
+          "aspect": "Кровать и сон",
+          "rating": 1.262,
+          "raw_rating": 1.262,
+          "polarity": -1.738,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "crowdedness",
+          "aspect": "Загруженность",
+          "rating": 1.0218,
+          "raw_rating": 1.0218,
+          "polarity": -1.9782,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "reservation_booking",
+          "aspect": "Бронирование",
+          "rating": 2.4177,
+          "raw_rating": 2.4177,
+          "polarity": -0.5823,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 2.1174,
+          "raw_rating": 2.1174,
+          "polarity": -0.8826,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 1.0035,
+          "raw_rating": 1.0035,
+          "polarity": -1.9965,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 1.0098,
+          "raw_rating": 1.0098,
+          "polarity": -1.9902,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 1.4645,
+          "raw_rating": 1.4645,
+          "polarity": -1.5355,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0057",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 3.8652,
+          "raw_rating": 3.8652,
+          "polarity": 0.8652,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        },
+        {
+          "aspect_id": "service",
+          "aspect": "Обслуживание",
+          "rating": 1.4205,
+          "raw_rating": 1.4205,
+          "polarity": -1.5795,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "постояльцев",
+          "rating": 1.3382,
+          "raw_rating": 1.3382,
+          "polarity": -1.6618,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "близость",
+          "rating": 4.497,
+          "raw_rating": 4.497,
+          "polarity": 1.497,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Атмосфера": 0.6986106634140015,
+            "Комфорт": 0.75121009349823,
+            "Обслуживание": 0.7056882381439209,
+            "Оснащение": 0.7350941896438599,
+            "Расположение": 0.7782444357872009,
+            "Состояние": 1.0,
+            "Цена": 0.6695936918258667
+          }
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 2.3365,
+          "raw_rating": 2.3365,
+          "polarity": -0.6635,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        },
+        {
+          "cluster_id": 4,
+          "medoid": "часов",
+          "rating": 3.1791,
+          "raw_rating": 3.1791,
+          "polarity": 0.1791,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ym_c59de42a475ceefe_0058",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "room",
+          "aspect": "Номер",
+          "rating": 1.2395,
+          "raw_rating": 1.2395,
+          "polarity": -1.7605,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": ""
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "окна",
+          "rating": 1.3611,
+          "raw_rating": 1.3611,
+          "polarity": -1.6389,
+          "negation_corrected": false,
+          "negation_pattern": "",
+          "negation_hit_lemma": "",
+          "gold_matches": {
+            "Архитектура": 0.7040435671806335,
+            "Безопасность": 0.6916539669036865,
+            "Белье": 0.8376432061195374,
+            "Бронирование": 0.6977449655532837,
+            "Вентиляция": 0.7433353662490845,
+            "Еда": 0.9999999403953552,
+            "Интерьер": 0.7863551378250122,
+            "Инфраструктура": 0.6897735595703125,
+            "Кровать": 0.748336672782898,
+            "Мебель": 0.9999998807907104,
+            "Номер": 0.7152907848358154,
+            "Освещение": 0.735062837600708,
+            "Парковка": 0.7539836168289185,
+            "Полотенца": 1.0000004768371582,
+            "Сантехника": 0.6525922417640686,
+            "Уборка": 0.7695363759994507,
+            "Фасад": 0.7966257333755493,
+            "Чистота": 0.6939841508865356
+          }
+        }
+      ]
+    }
+  ],
+  "product_aggregated": {
+    "vocabulary": {
+      "Заселение и выезд": 2.48,
+      "Бронирование": 2.61,
+      "Номер": 3.43,
+      "Обслуживание": 3.28,
+      "Завтрак и питание": 4.31,
+      "Расположение": 4.74,
+      "Ванная комната": 3.13,
+      "Чистота": 2.52,
+      "Общее впечатление": 2.92,
+      "Атмосфера": 4.26,
+      "Кровать и сон": 2.29,
+      "Загруженность": 3.12,
+      "Цена": 3.54,
+      "Качество": 3.78,
+      "Соотношение цена-качество": 4.05,
+      "Запах": 2.64,
+      "Ассортимент": 3.85,
+      "Безопасность": 3.97,
+      "Функционал": 3.1,
+      "Парковка": 2.3,
+      "Соответствие ожиданиям": 2.56,
+      "Материал": 3.09
+    },
+    "discovery": {
+      "постояльцев": 2.95,
+      "близость": 3.93,
+      "окна": 3.02,
+      "часов": 2.95,
+      "диваном": 2.31
+    }
+  }
+}

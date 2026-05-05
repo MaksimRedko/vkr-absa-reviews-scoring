@@ -1,0 +1,2111 @@
+{
+  "nm_id": 117808756,
+  "category": "physical_goods",
+  "reviews": [
+    {
+      "review_id": "0y-pGIMB65w5GC7jHew4",
+      "rating": 1.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 1.5758,
+          "polarity": -1.4242
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 1.2224,
+          "polarity": -1.7776,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 1.0292,
+          "polarity": -1.9708,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 1.169,
+          "polarity": -1.831,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 1.1765,
+          "polarity": -1.8235,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "NlI7cpGl9H3zjhSzdbOQ",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 1.1662,
+          "polarity": -1.8338,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 3.4885,
+          "polarity": 0.4885,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 2.5554,
+          "polarity": -0.4446,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 2.8562,
+          "polarity": -0.1438,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "DqXfgYQBeLZkh6kUZ-C3",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0056,
+          "polarity": -1.9944
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 3.3591,
+          "polarity": 0.3591,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 4.4586,
+          "polarity": 1.4586,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.1349,
+          "polarity": 1.1349,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "TbLB5YYBheedNkNuZbfG",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.8965,
+          "polarity": 1.8965
+        },
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 1.0446,
+          "polarity": -1.9554
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.8587,
+          "polarity": 1.8587,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 3.8229,
+          "polarity": 0.8229,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.9632,
+          "polarity": 1.9632,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "PZ5561tAwAWW9DNVPHtG",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 1.0122,
+          "polarity": -1.9878,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 1.0511,
+          "polarity": -1.9489,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 1.0447,
+          "polarity": -1.9553,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "PwbugZqk7dLs7X2aL3fh",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 4.9555,
+          "polarity": 1.9555,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.9343,
+          "polarity": 1.9343,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.0951,
+          "polarity": 1.0951,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ol4wQYMBwEHULCRVAi0D",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.2178,
+          "polarity": 1.2178
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.4902,
+          "polarity": 1.4902
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.7491,
+          "polarity": 1.7491,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 4.2752,
+          "polarity": 1.2752,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.9014,
+          "polarity": 1.9014,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 3.632,
+          "polarity": 0.632,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "tmvnMk1QZuaKQ22GmJ79",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 4.8141,
+          "polarity": 1.8141
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.8721,
+          "polarity": 1.8721,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.5441,
+          "polarity": 1.5441,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "q7nqbAyHLPRUE6S4J2Ie",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.7844,
+          "polarity": 1.7844,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 4.9685,
+          "polarity": 1.9685,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.9696,
+          "polarity": 1.9696,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "UkF3bS5aYIu51r80sMCm",
+      "rating": 4.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 1.4046,
+          "polarity": -1.5954
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 1.3948,
+          "polarity": -1.6052,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 1.1403,
+          "polarity": -1.8597,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 1.0394,
+          "polarity": -1.9606,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 2.0146,
+          "polarity": -0.9854,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "StngDIYBtPujtG5sVTeK",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9867,
+          "polarity": 1.9867
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.8309,
+          "polarity": 1.8309,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 4.9077,
+          "polarity": 1.9077,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 3.9081,
+          "polarity": 0.9081,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.8964,
+          "polarity": 1.8964,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "4FL_JoYBheedNkNug5NK",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.8146,
+          "polarity": 1.8146
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.7845,
+          "polarity": 1.7845,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 4.6253,
+          "polarity": 1.6253,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.9278,
+          "polarity": 1.9278,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Xzzwa4MBZoamDvELSg2b",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 3.6564,
+          "polarity": 0.6564,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.6931,
+          "polarity": 1.6931,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.4906,
+          "polarity": 1.4906,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "WXUq_YgBqd2abVcyetXm",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.6466,
+          "polarity": 1.6466
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 4.9306,
+          "polarity": 1.9306,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.8632,
+          "polarity": 1.8632,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.3599,
+          "polarity": 1.3599,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "pTXDTU5dnZj3K8Ncn5b0",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.2193,
+          "polarity": 1.2193,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 3.777,
+          "polarity": 0.777,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Kn5nh4kBuX2t2Z2-7-iu",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 2.6945,
+          "polarity": -0.3055
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.3668,
+          "polarity": 1.3668,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.1594,
+          "polarity": 1.1594,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "V269OYpxOuCWyZeofah9",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 4.2664,
+          "polarity": 1.2664,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 3.8303,
+          "polarity": 0.8303,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "uLFDileB0Hz1kpActlxj",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 4.3091,
+          "polarity": 1.3091,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 2.0213,
+          "polarity": -0.9787,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 2.4766,
+          "polarity": -0.5234,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Zj155oMBCjydpYzr4q_5",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 4.566,
+          "polarity": 1.566,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 3.6697,
+          "polarity": 0.6697,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 3.5117,
+          "polarity": 0.5117,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "FHZGLYYBBhsOOdMGGH7L",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "jkSYpYQB8Oe4CO0YZIRQ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "gdkMPVegEoPV1Cu8Waqr",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.5319,
+          "polarity": 1.5319
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.0932,
+          "polarity": 1.0932,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.8412,
+          "polarity": 1.8412,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "U9qq9IYBBhsOOdMGVjto",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.7151,
+          "polarity": 1.7151
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.2765,
+          "polarity": 1.2765,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.8352,
+          "polarity": 1.8352,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "tHQF6oUB5HDhYKpHgPtJ",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.1236,
+          "polarity": 1.1236
+        },
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.0854,
+          "polarity": 1.0854
+        },
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.9124,
+          "polarity": 1.9124
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.6809,
+          "polarity": 1.6809,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.3679,
+          "polarity": 1.3679,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "YMLvSIwBGgNwMUDve5_C",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.6244,
+          "polarity": 1.6244,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.9435,
+          "polarity": 1.9435,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "AnHZ7FwWcSbcPt6XeGMW",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "gq0f4mm3sGe3QUPgb2y5",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 3.5701,
+          "polarity": 0.5701,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 3.5506,
+          "polarity": 0.5506,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 3.8942,
+          "polarity": 0.8942,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "F93h-4oBnnhI58-2gyo8",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.3057,
+          "polarity": 1.3057,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.6873,
+          "polarity": 1.6873,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "RitVUoQBI2nds0aGxPLq",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 3.9514,
+          "polarity": 0.9514,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "EBVWVvSZXwfh9mmHhIwY",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.9561,
+          "polarity": 1.9561
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.9018,
+          "polarity": 1.9018,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.5501,
+          "polarity": 1.5501,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "_I7NxYUBQOOSTxXoNIuj",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 3.8286,
+          "polarity": 0.8286,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.8722,
+          "polarity": 1.8722,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.8284,
+          "polarity": 1.8284,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "Ncq21PKgan68ecFjl1QZ",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.6411,
+          "polarity": 1.6411
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.8952,
+          "polarity": 1.8952
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 4.9898,
+          "polarity": 1.9898,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.9561,
+          "polarity": 1.9561,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.7484,
+          "polarity": 1.7484,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "ydSFmnvYQchlxGrCSi5w",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9227,
+          "polarity": 1.9227
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.7106,
+          "polarity": 1.7106,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.9034,
+          "polarity": 1.9034,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.4782,
+          "polarity": 1.4782,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "wAaw-oQBBhsOOdMGOqp6",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 4.6585,
+          "polarity": 1.6585,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.2048,
+          "polarity": 1.2048,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 3.5169,
+          "polarity": 0.5169,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "b0NCNowBCHbHmjvYTG0N",
+      "rating": 2.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "smell",
+          "aspect": "Запах",
+          "rating": 3.4155,
+          "polarity": 0.4155
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "HkOWZzmFwUzFcjDWJiIE",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.145,
+          "polarity": 1.145
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 3.6681,
+          "polarity": 0.6681,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.5626,
+          "polarity": 1.5626,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.5336,
+          "polarity": 1.5336,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "GJ18x5SXR0CGGAtmNRgT",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.3462,
+          "polarity": 1.3462,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.9059,
+          "polarity": 1.9059,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "H8GmRosBqc_1CWBPjNd1",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.3498,
+          "polarity": 1.3498,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.3289,
+          "polarity": 1.3289,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "geI0RKQxBAPX9Ho0dRad",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.659,
+          "polarity": 1.659,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "bmfSdzXvmgTwemEjprAJ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 3.486,
+          "polarity": 0.486,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 3.9484,
+          "polarity": 0.9484,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "X7IJ37YsOfRLCc2zeXoa",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.2328,
+          "polarity": 1.2328,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "fmTTVgQLVJiAN8oYm13f",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "material",
+          "aspect": "Материал",
+          "rating": 4.6306,
+          "polarity": 1.6306
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 3.0884,
+          "polarity": 0.0884,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "puCQz4UBMJfQQSHDQkqD",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "-AwPC4UBBhsOOdMG3-YU",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.7039,
+          "polarity": 1.7039
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.9063,
+          "polarity": 1.9063,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.1274,
+          "polarity": 1.1274,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "quA1MIYBT-IFIyX_X0aH",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.7733,
+          "polarity": 1.7733,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.3451,
+          "polarity": 1.3451,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "_E3jGoYBheedNkNuROMP",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "size",
+          "aspect": "Размер",
+          "rating": 3.8418,
+          "polarity": 0.8418
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "IFk1FX2YiEkZC1Jp7qmg",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.9725,
+          "polarity": 1.9725,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "yb8Og4oBlM6cTg_RatrD",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 3.3933,
+          "polarity": 0.3933,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.7899,
+          "polarity": 1.7899,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.3822,
+          "polarity": 1.3822,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "feNM8vSx3zyFxYHY120i",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "hTH6vCsmmnxnI8wZ1kQe",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.8602,
+          "polarity": 1.8602,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "qhBhPKj29TVvQ0HCfNSC",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "kgsXa3nQ8NeJl2UImZ3b",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.6116,
+          "polarity": 1.6116,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 3.8418,
+          "polarity": 0.8418,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "nY6nQY0B5HYuAcv3yhEm",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "8ZVU_4oBfuChzMpwZQPw",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 3.8562,
+          "polarity": 0.8562,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.7109,
+          "polarity": 1.7109,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "S7FQgogBUYwa0QEfW-31",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.4711,
+          "polarity": 1.4711,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "7i977IoBBgFQoSo0PDGh",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.5535,
+          "polarity": 1.5535
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.0841,
+          "polarity": 1.0841,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "KshyY4gBWg4f_fchiCw4",
+      "rating": 1.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 1.0124,
+          "polarity": -1.9876,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "5WfPi4cB3ieoZoqxlGGW",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "packaging",
+          "aspect": "Упаковка",
+          "rating": 4.7056,
+          "polarity": 1.7056
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.4376,
+          "polarity": 1.4376,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "fWiWm4gBl47NwnZ1n7Jh",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.0573,
+          "polarity": 1.0573,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.9496,
+          "polarity": 1.9496,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.5544,
+          "polarity": 1.5544,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "S8p6y1a8d9xSM5XV9EvR",
+      "rating": 3.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.9829,
+          "polarity": 1.9829
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.6695,
+          "polarity": 1.6695,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 3.4662,
+          "polarity": 0.4662,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "k2meV4UBMBFuPskobNle",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "delivery",
+          "aspect": "Доставка",
+          "rating": 4.5344,
+          "polarity": 1.5344
+        },
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.626,
+          "polarity": 1.626
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 1,
+          "medoid": "литературы",
+          "rating": 4.9368,
+          "polarity": 1.9368,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.9211,
+          "polarity": 1.9211,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "ip8J14QBCjydpYzrzXQu",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.6877,
+          "polarity": 1.6877,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.8645,
+          "polarity": 1.8645,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "8zOqNfPdKXiWdatTO7G1",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.6107,
+          "polarity": 1.6107
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.4485,
+          "polarity": 1.4485,
+          "gold_matches": {}
+        },
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.7908,
+          "polarity": 1.7908,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "bnaNOk7OMM9EdJnLjplY",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.1113,
+          "polarity": 1.1113,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "NtV2WKBcP7zIc3d8Ddw4",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 3.51,
+          "polarity": 0.51
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 3.9839,
+          "polarity": 0.9839,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "K0lfezrilVX6L2Ui6qLJ",
+      "rating": 3.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 3.0114,
+          "polarity": 0.0114,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "e9NCsjDp2U6gRL8pWxta",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "appearance",
+          "aspect": "Внешний вид",
+          "rating": 4.7926,
+          "polarity": 1.7926
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.8136,
+          "polarity": 1.8136,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "a3xkmUswkLjafLYJ8Uui",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "WSvauoUBheedNkNu60bi",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "quality",
+          "aspect": "Качество",
+          "rating": 4.4322,
+          "polarity": 1.4322
+        }
+      ],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 4.5216,
+          "polarity": 1.5216,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "S3mgqhVlohC3WgHUyhNN",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 3.6322,
+          "polarity": 0.6322
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "iS9rv3hhgOPy6XWWheAa",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.8604,
+          "polarity": 1.8604,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "UBoCiQBFGe19qtJ9wCPW",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 3.967,
+          "polarity": 0.967,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "oRASRdwpsT0UpzUTs11F",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.8206,
+          "polarity": 1.8206,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "zRC7AhZzvbQA3g2ixaex",
+      "rating": 4.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 1.3967,
+          "polarity": -1.6033,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "3JoEjoUBfnpWqlBeTg6E",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 0,
+          "medoid": "идеальном состоянии",
+          "rating": 4.6972,
+          "polarity": 1.6972,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "xG3KDYkBCaW1RxrSyOUZ",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "2A72XYkBfuChzMpwEKu2",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "aB1UzezClljeD7nE3YJe",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.8813,
+          "polarity": 1.8813,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "fwlqUBoV4u30xV4UMG3N",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 3,
+          "medoid": "листы",
+          "rating": 3.3044,
+          "polarity": 0.3044,
+          "gold_matches": {
+            "Запах": 0.6877583265304565,
+            "Содержание": 0.7279126644134521,
+            "Текст": 1.0,
+            "Упаковка": 0.7755380868911743
+          }
+        }
+      ]
+    },
+    {
+      "review_id": "O3f3Mljp8mHjyPEMYPVe",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "LYDTsYUBxpMXtsmOQBhE",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "049nBOLGAiq0JAMqRF9C",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "ykFNyYcBqdFzcemq-lSe",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "GbVYJjcSLb3jNNVPlmP3",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": [
+        {
+          "cluster_id": 2,
+          "medoid": "книга прекрасная",
+          "rating": 4.3875,
+          "polarity": 1.3875,
+          "gold_matches": {}
+        }
+      ]
+    },
+    {
+      "review_id": "di4DT40BK9xQ7jEJM7th",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "gXus_YwB-8_Ojqck59mn",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "iBNNMIgBAtKOitoB0j_u",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "grnfNYYBMBFuPskom4oJ",
+      "rating": 5.0,
+      "vocabulary_aspects": [
+        {
+          "aspect_id": "price",
+          "aspect": "Цена",
+          "rating": 4.866,
+          "polarity": 1.866
+        }
+      ],
+      "discovery_aspects": []
+    },
+    {
+      "review_id": "n048rYMBZoamDvEL4ACq",
+      "rating": 5.0,
+      "vocabulary_aspects": [],
+      "discovery_aspects": []
+    }
+  ],
+  "product_aggregated": {
+    "vocabulary": {
+      "Качество": 4.37,
+      "Запах": 2.66,
+      "Доставка": 4.12,
+      "Упаковка": 3.73,
+      "Цена": 4.1,
+      "Материал": 3.82,
+      "Размер": 3.42,
+      "Внешний вид": 3.9
+    },
+    "discovery": {
+      "идеальном состоянии": 3.89,
+      "литературы": 3.89,
+      "книга прекрасная": 4.26,
+      "листы": 3.88
+    }
+  }
+}

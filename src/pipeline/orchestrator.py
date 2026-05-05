@@ -1,0 +1,703 @@
+from __future__ import annotations
+
+import argparse
+import json
+import shutil
+import subprocess
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+import pandas as pd
+import yaml
+from src.pipeline.reference import e2e
+from src.pipeline.stage_cache import StageCacheManager, hash_directory, hash_file, hash_jsonable
+from src.pipeline.stages import (
+    s1_extraction,
+    s2_encoding,
+    s3_vocab_matching,
+    s4_discovery,
+    s5_nli_sentiment,
+    s6_aggregation,
+)
+from src.pipeline.stages.common import apply_random_seeds, repo_root, stable_id
+from src.pipeline.tracing import ArtifactReader, ArtifactWriter
+
+ROOT = repo_root()
+
+
+def load_run_config(path: str | Path) -> dict[str, Any]:
+    config_path = Path(path)
+    if not config_path.is_absolute():
+        config_path = ROOT / config_path
+    return yaml.safe_load(config_path.read_text(encoding="utf-8"))
+
+
+def _resolve(path: str | Path) -> Path:
+    p = Path(path)
+    return p if p.is_absolute() else ROOT / p
+
+
+def _git_commit() -> str:
+    try:
+        return subprocess.check_output(
+            ["git", "rev-parse", "HEAD"],
+            cwd=ROOT,
+            text=True,
+            stderr=subprocess.DEVNULL,
+        ).strip()
+    except Exception:
+        return "unknown"
+
+
+def _hash_paths(paths: list[Path]) -> str:
+    payload = []
+    for path in paths:
+        resolved = path.resolve()
+        payload.append({"path": str(resolved), "sha256": hash_file(resolved)})
+    return hash_jsonable(payload)
+
+
+def _build_stage_cache(
+    config: dict[str, Any],
+) -> StageCacheManager:
+    stage_cfg = config.get("stage_cache", {})
+    return StageCacheManager(
+        root_dir=_resolve(stage_cfg.get("root_dir", "cache/pipeline_stages")),
+        enabled=bool(stage_cfg.get("enabled", False)),
+    )
+
+
+def _build_aspect_review_artifacts(
+    candidates: pd.DataFrame,
+    matches: pd.DataFrame,
+    discovery_candidate_bindings: pd.DataFrame,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    matched = matches[matches["matched_aspect_id"].notna()][["candidate_id", "matched_aspect_id"]].drop_duplicates().copy()
+    assignment_rows: list[dict[str, Any]] = []
+    evidence_rows: list[dict[str, Any]] = []
+    if not matched.empty:
+        merged = candidates[["candidate_id", "review_id", "start_offset", "end_offset"]].merge(
+            matched,
+            on="candidate_id",
+            how="inner",
+        )
+        for row in merged.itertuples(index=False):
+            aspect_id = str(row.matched_aspect_id)
+            assignment_id = stable_id(
+                row.review_id,
+                "vocab",
+                aspect_id,
+            )
+            assignment_rows.append(
+                {
+                    "assignment_id": assignment_id,
+                    "review_id": str(row.review_id),
+                    "aspect_id": aspect_id,
+                    "aspect_type": "vocab",
+                }
+            )
+            evidence_rows.append(
+                {
+                    "evidence_id": stable_id(
+                        row.review_id,
+                        "vocab",
+                        aspect_id,
+                        row.candidate_id,
+                        int(row.start_offset),
+                        int(row.end_offset),
+                    ),
+                    "assignment_id": assignment_id,
+                    "review_id": str(row.review_id),
+                    "aspect_id": aspect_id,
+                    "aspect_type": "vocab",
+                    "candidate_id": str(row.candidate_id),
+                    "start_offset": int(row.start_offset),
+                    "end_offset": int(row.end_offset),
+                }
+            )
+
+    if not discovery_candidate_bindings.empty:
+        deduped_bindings = discovery_candidate_bindings.drop_duplicates(
+            subset=["review_id", "candidate_id", "start_offset", "end_offset", "cluster_id"]
+        )
+        for row in deduped_bindings.itertuples(index=False):
+            cluster_id = str(int(row.cluster_id))
+            assignment_id = stable_id(
+                row.review_id,
+                "discovery",
+                cluster_id,
+            )
+            assignment_rows.append(
+                {
+                    "assignment_id": assignment_id,
+                    "review_id": str(row.review_id),
+                    "aspect_id": cluster_id,
+                    "aspect_type": "discovery",
+                }
+            )
+            evidence_rows.append(
+                {
+                    "evidence_id": stable_id(
+                        row.review_id,
+                        "discovery",
+                        cluster_id,
+                        row.candidate_id,
+                        int(row.start_offset),
+                        int(row.end_offset),
+                    ),
+                    "assignment_id": assignment_id,
+                    "review_id": str(row.review_id),
+                    "aspect_id": cluster_id,
+                    "aspect_type": "discovery",
+                    "candidate_id": str(row.candidate_id),
+                    "start_offset": int(row.start_offset),
+                    "end_offset": int(row.end_offset),
+                }
+            )
+
+    assignments = pd.DataFrame(
+        assignment_rows,
+        columns=[
+            "assignment_id",
+            "review_id",
+            "aspect_id",
+            "aspect_type",
+        ],
+    ).drop_duplicates(subset=["assignment_id"]).reset_index(drop=True)
+    evidence = pd.DataFrame(
+        evidence_rows,
+        columns=[
+            "evidence_id",
+            "assignment_id",
+            "review_id",
+            "aspect_id",
+            "aspect_type",
+            "candidate_id",
+            "start_offset",
+            "end_offset",
+        ],
+    ).drop_duplicates(subset=["evidence_id"]).reset_index(drop=True)
+    return assignments, evidence
+
+
+def _write_e2e_compatible_outputs(
+    *,
+    out_dir: Path,
+    reviews: list[Any],
+    term_to_aspects_by_category: dict[str, dict[str, set[str]]],
+    aspect_by_id_by_category: dict[str, dict[str, Any]],
+    discovery_by_product: dict[int, Any],
+    sentiment_by_pair: dict[tuple[str, str], dict[str, float]],
+    aggregated: dict[int, dict[str, Any]],
+    negation_stats: dict[str, Any],
+) -> dict[str, Any]:
+    ref = e2e()
+    review_a, aggregate_a, hard_a = ref._review_metric_rows(
+        reviews,
+        term_to_aspects_by_category,
+        discovery_by_product,
+        sentiment_by_pair,
+        include_discovery=False,
+    )
+    product_a, product_metrics_a = ref._product_metric_rows(
+        reviews,
+        term_to_aspects_by_category,
+        aspect_by_id_by_category,
+        discovery_by_product,
+        aggregated,
+        sentiment_by_pair,
+        include_discovery=False,
+    )
+    aggregate_a.update(product_metrics_a)
+
+    review_b, aggregate_b, hard_b = ref._review_metric_rows(
+        reviews,
+        term_to_aspects_by_category,
+        discovery_by_product,
+        sentiment_by_pair,
+        include_discovery=True,
+    )
+    product_b, product_metrics_b = ref._product_metric_rows(
+        reviews,
+        term_to_aspects_by_category,
+        aspect_by_id_by_category,
+        discovery_by_product,
+        aggregated,
+        sentiment_by_pair,
+        include_discovery=True,
+    )
+    aggregate_b.update(product_metrics_b)
+
+    _star_review_df, star_review_metrics, star_product_df, star_product_metrics = ref._star_metrics(reviews)
+
+    per_product_a = ref._per_product_metrics(reviews, review_a, product_a, hard_a)
+    per_product_b = ref._per_product_metrics(reviews, review_b, product_b, hard_b)
+    per_product_c_rows: list[dict[str, Any]] = []
+    review_count_by_product = {nm_id: len(items) for nm_id, items in ref._group_reviews(reviews).items()}
+    for (nm_id, category_id), group in star_product_df.groupby(["nm_id", "category_id"]):
+        n3 = group[group["n_reviews_with_aspect"] >= ref.PRODUCT_AGGREGATION_MIN_REVIEWS]
+        per_product_c_rows.append(
+            {
+                "nm_id": nm_id,
+                "category_id": category_id,
+                "n_reviews": review_count_by_product[int(nm_id)],
+                "product_mae_n3": float(n3["abs_error"].mean()) if not n3.empty else float("nan"),
+                "n_aspects_matched": int(len(group)),
+            }
+        )
+    per_product_c = pd.DataFrame(per_product_c_rows)
+    per_product_c["detection_precision"] = float("nan")
+    per_product_c["detection_recall"] = float("nan")
+    per_product_c["sentiment_mae_review"] = star_review_metrics["sentiment_mae_review"]
+    per_product_c["sentiment_mae_review_round"] = star_review_metrics["sentiment_mae_review_round"]
+
+    ref._write_track_csv(out_dir / "metrics_track_a_vocab_only.csv", per_product_a)
+    ref._write_track_csv(out_dir / "metrics_track_b_vocab_plus_discovery.csv", per_product_b)
+    ref._write_track_csv(out_dir / "metrics_track_c_star_baseline.csv", per_product_c)
+
+    per_aspect = pd.concat([product_b, star_product_df], ignore_index=True)
+    per_aspect.to_csv(out_dir / "per_aspect_breakdown.csv", index=False, encoding="utf-8")
+    hard_cases = pd.DataFrame(hard_b).sort_values(["abs_error", "review_id"], ascending=[False, True]).head(30)
+    hard_cases.to_csv(out_dir / "hard_cases.csv", index=False, encoding="utf-8")
+    negation_stats = ref._finalize_negation_stats(negation_stats, hard_b)
+
+    ref._write_predictions(
+        out_dir,
+        reviews,
+        aspect_by_id_by_category,
+        discovery_by_product,
+        sentiment_by_pair,
+        aggregated,
+    )
+    ref._write_summary(
+        out_dir,
+        aggregate_a,
+        aggregate_b,
+        star_review_metrics,
+        star_product_metrics,
+        per_product_a,
+        per_product_b,
+        hard_cases,
+        negation_stats,
+    )
+    return {
+        "track_a": aggregate_a,
+        "track_b": aggregate_b,
+        "track_c_review": star_review_metrics,
+        "track_c_product": star_product_metrics,
+        "negation_correction": negation_stats,
+    }
+
+
+def run_traced_pipeline(
+    *,
+    config_path: str | Path = "run_config.yaml",
+    limit_products: int = 0,
+) -> Path:
+    config = load_run_config(config_path)
+    apply_random_seeds(config.get("seeds", {}))
+
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    out_dir = _resolve(config.get("output_dir", "results")) / f"{timestamp}_traced"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    writer = ArtifactWriter(out_dir)
+    reader = ArtifactReader(out_dir)
+    stage_cache = _build_stage_cache(config)
+    logger = e2e().TeeLogger(out_dir / "run_console.log")
+    stage_times: dict[str, float] = {}
+    artifact_files: dict[str, str] = {}
+    stage_cache_summary: dict[str, Any] = {}
+    started = time.perf_counter()
+    stages_completed: list[str] = []
+
+    try:
+        logger.log(f"[start] traced_pipeline out_dir={out_dir}")
+        shutil.copy2(_resolve(config_path), out_dir / "run_config.yaml")
+
+        dataset_path = _resolve(config["gold_dataset_csv"])
+        core_vocab_path = _resolve(config["core_vocab"])
+        domain_vocab_dir = _resolve(config["domain_vocab_dir"])
+        discovery_dir = _resolve(config["discovery_dir"])
+        reviews = e2e()._load_reviews(dataset_path)
+        if limit_products:
+            keep = set(sorted({review.nm_id for review in reviews})[: int(limit_products)])
+            reviews = [review for review in reviews if review.nm_id in keep]
+            logger.log(f"[smoke] limit_products={limit_products} nm_ids={sorted(keep)}")
+        logger.log(f"[load] reviews={len(reviews)} products={len(set(r.nm_id for r in reviews))}")
+
+        categories = {review.category_id for review in reviews}
+        aspects_by_category, term_to_aspects_by_category, aspect_by_id_by_category = e2e()._build_hybrid_vocab(
+            core_vocab_path,
+            domain_vocab_dir,
+            categories,
+        )
+
+        s1_fingerprint_payload = {
+            "stage": "s1",
+            "dataset_path": str(dataset_path.resolve()),
+            "dataset_hash": hash_file(dataset_path),
+            "limit_products": int(limit_products),
+            "extraction": config.get("extraction", {}),
+            "code_hash": _hash_paths(
+                [
+                    ROOT / "src/pipeline/stages/s1_extraction.py",
+                    ROOT / "scripts/run_phase2_baseline_matching.py",
+                ]
+            ),
+        }
+        s1_fingerprint = stage_cache.fingerprint(s1_fingerprint_payload)
+        t0 = time.perf_counter()
+        if stage_cache.has("s1", s1_fingerprint):
+            stage_cache.restore_to_run_dir("s1", s1_fingerprint, out_dir)
+            candidates = reader.read_dataframe("candidates.parquet", sort_by=["review_id", "start_offset", "candidate_id"])
+            s1_extraction.apply_cached_results(reviews, candidates)
+            stage_cache_summary["s1"] = {"hit": True, "fingerprint": s1_fingerprint}
+            logger.log(f"[s1-cache] hit fingerprint={s1_fingerprint}")
+        else:
+            candidates = s1_extraction.run_stage(reviews, config)
+            writer.write_dataframe(
+                "candidates.parquet",
+                candidates[
+                    [
+                        "candidate_id",
+                        "review_id",
+                        "nm_id",
+                        "category_id",
+                        "text",
+                        "text_lemmatized",
+                        "start_offset",
+                        "end_offset",
+                        "source",
+                    ]
+                ],
+                sort_by=["review_id", "start_offset", "candidate_id"],
+            )
+            stage_cache.store_from_run_dir(
+                "s1",
+                s1_fingerprint,
+                out_dir,
+                ["candidates.parquet"],
+                inputs=s1_fingerprint_payload,
+            )
+            stage_cache_summary["s1"] = {"hit": False, "fingerprint": s1_fingerprint}
+            logger.log(f"[s1-cache] miss fingerprint={s1_fingerprint}")
+        stage_times["s1"] = time.perf_counter() - t0
+        stages_completed.append("s1")
+        artifact_files["candidates"] = "candidates.parquet"
+        logger.log(f"[s1] candidates={len(candidates)}")
+
+        s2_fingerprint_payload = {
+            "stage": "s2",
+            "candidates_hash": hash_file(out_dir / "candidates.parquet"),
+            "core_vocab_hash": hash_file(core_vocab_path),
+            "domain_vocab_hash": hash_directory(domain_vocab_dir),
+            "encoder_model": str(config.get("models", {}).get("encoder", "ai-forever/sbert_large_nlu_ru")),
+            "encoder_batch_size": int(config.get("discovery", {}).get("encoder_batch_size", 8)),
+            "code_hash": _hash_paths(
+                [
+                    ROOT / "src/pipeline/stages/s2_encoding.py",
+                    ROOT / "src/discovery/encoder.py",
+                ]
+            ),
+        }
+        s2_fingerprint = stage_cache.fingerprint(s2_fingerprint_payload)
+        t0 = time.perf_counter()
+        if stage_cache.has("s2", s2_fingerprint):
+            stage_cache.restore_to_run_dir("s2", s2_fingerprint, out_dir)
+            enc = s2_encoding.restore_stage(
+                candidates,
+                aspects_by_category,
+                config,
+                candidate_embeddings=reader.read_npy("embeddings_candidates.npy"),
+                candidate_index=reader.read_dataframe("embedding_index_candidates.csv", sort_by=["row_index"]),
+                vocab_embeddings=reader.read_npy("embeddings_vocab.npy"),
+                vocab_index=reader.read_dataframe("embedding_index_vocab.csv", sort_by=["row_index"]),
+                encoder=None,
+                cache={},
+            )
+            stage_cache_summary["s2"] = {"hit": True, "fingerprint": s2_fingerprint}
+            logger.log(f"[s2-cache] hit fingerprint={s2_fingerprint}")
+        else:
+            encoder = s2_encoding.build_encoder(config)
+            embedding_cache: dict[str, Any] = {}
+            enc = s2_encoding.run_stage(
+                candidates,
+                aspects_by_category,
+                config,
+                encoder=encoder,
+                cache=embedding_cache,
+            )
+            writer.write_npy("embeddings_candidates.npy", enc["candidate_embeddings"])
+            writer.write_csv("embedding_index_candidates.csv", enc["candidate_index"], sort_by=["row_index"])
+            writer.write_npy("embeddings_vocab.npy", enc["vocab_embeddings"])
+            writer.write_csv("embedding_index_vocab.csv", enc["vocab_index"], sort_by=["row_index"])
+            stage_cache.store_from_run_dir(
+                "s2",
+                s2_fingerprint,
+                out_dir,
+                [
+                    "embeddings_candidates.npy",
+                    "embedding_index_candidates.csv",
+                    "embeddings_vocab.npy",
+                    "embedding_index_vocab.csv",
+                ],
+                inputs=s2_fingerprint_payload,
+            )
+            stage_cache_summary["s2"] = {"hit": False, "fingerprint": s2_fingerprint}
+            logger.log(f"[s2-cache] miss fingerprint={s2_fingerprint}")
+        stage_times["s2"] = time.perf_counter() - t0
+        stages_completed.append("s2")
+        artifact_files.update(
+            {
+                "embeddings_candidates": "embeddings_candidates.npy",
+                "embedding_index_candidates": "embedding_index_candidates.csv",
+                "embeddings_vocab": "embeddings_vocab.npy",
+                "embedding_index_vocab": "embedding_index_vocab.csv",
+            }
+        )
+        logger.log(f"[s2] candidate_embeddings={enc['candidate_embeddings'].shape} vocab_embeddings={enc['vocab_embeddings'].shape}")
+
+        s3_fingerprint_payload = {
+            "stage": "s3",
+            "candidates_hash": hash_file(out_dir / "candidates.parquet"),
+            "candidate_embeddings_hash": hash_file(out_dir / "embeddings_candidates.npy"),
+            "candidate_index_hash": hash_file(out_dir / "embedding_index_candidates.csv"),
+            "vocab_embeddings_hash": hash_file(out_dir / "embeddings_vocab.npy"),
+            "vocab_index_hash": hash_file(out_dir / "embedding_index_vocab.csv"),
+            "matching": config.get("matching", {}),
+            "code_hash": _hash_paths(
+                [
+                    ROOT / "src/pipeline/stages/s3_vocab_matching.py",
+                    ROOT / "scripts/run_phase2_baseline_matching.py",
+                ]
+            ),
+        }
+        s3_fingerprint = stage_cache.fingerprint(s3_fingerprint_payload)
+        t0 = time.perf_counter()
+        if stage_cache.has("s3", s3_fingerprint):
+            stage_cache.restore_to_run_dir("s3", s3_fingerprint, out_dir)
+            matches = reader.read_dataframe("candidate_matches.parquet", sort_by=["candidate_id", "matched_aspect_id"])
+            s3_vocab_matching.apply_cached_results(reviews, candidates, matches, term_to_aspects_by_category)
+            stage_cache_summary["s3"] = {"hit": True, "fingerprint": s3_fingerprint}
+            logger.log(f"[s3-cache] hit fingerprint={s3_fingerprint}")
+        else:
+            matches = s3_vocab_matching.run_stage(
+                reviews,
+                candidates,
+                term_to_aspects_by_category,
+                enc["candidate_vectors_by_id"],
+                enc["aspect_vectors_by_category"],
+            )
+            writer.write_dataframe("candidate_matches.parquet", matches, sort_by=["candidate_id", "matched_aspect_id"])
+            stage_cache.store_from_run_dir(
+                "s3",
+                s3_fingerprint,
+                out_dir,
+                ["candidate_matches.parquet"],
+                inputs=s3_fingerprint_payload,
+            )
+            stage_cache_summary["s3"] = {"hit": False, "fingerprint": s3_fingerprint}
+            logger.log(f"[s3-cache] miss fingerprint={s3_fingerprint}")
+        stage_times["s3"] = time.perf_counter() - t0
+        stages_completed.append("s3")
+        artifact_files["candidate_matches"] = "candidate_matches.parquet"
+        logger.log(f"[s3] matches={len(matches)}")
+
+        s4_fingerprint_payload = {
+            "stage": "s4",
+            "candidates_hash": hash_file(out_dir / "candidates.parquet"),
+            "matches_hash": hash_file(out_dir / "candidate_matches.parquet"),
+            "discovery_dir_hash": hash_directory(discovery_dir),
+            "encoder_model": str(config.get("models", {}).get("encoder", "ai-forever/sbert_large_nlu_ru")),
+            "encoder_batch_size": int(config.get("discovery", {}).get("encoder_batch_size", 8)),
+            "phrase_to_cluster_threshold": float(config.get("discovery", {}).get("phrase_to_cluster_threshold", 0.5)),
+            "code_hash": _hash_paths(
+                [
+                    ROOT / "src/pipeline/stages/s4_discovery.py",
+                    ROOT / "src/discovery/encoder.py",
+                    ROOT / "benchmark/end_to_end/run_final_pipeline.py",
+                ]
+            ),
+        }
+        s4_fingerprint = stage_cache.fingerprint(s4_fingerprint_payload)
+        t0 = time.perf_counter()
+        if stage_cache.has("s4", s4_fingerprint):
+            stage_cache.restore_to_run_dir("s4", s4_fingerprint, out_dir)
+            cluster_payloads: dict[int, Any] = {}
+            centroid_arrays_by_product: dict[int, Any] = {}
+            for path in sorted(out_dir.glob("clusters_*.json")):
+                nm_id = int(path.stem.split("_", 1)[1])
+                cluster_payloads[nm_id] = reader.read_json(path.name)
+                centroid_arrays_by_product[nm_id] = reader.read_npy(f"cluster_centroids_{nm_id}.npy")
+            discovery_candidate_bindings = reader.read_dataframe(
+                "discovery_candidate_bindings.parquet",
+                sort_by=["review_id", "candidate_id", "start_offset", "end_offset", "cluster_id"],
+            )
+            discovery_by_product = s4_discovery.restore_discovery_by_product(cluster_payloads, centroid_arrays_by_product)
+            s4_discovery.apply_cached_results(reviews, discovery_candidate_bindings)
+            disc = {
+                "discovery_by_product": discovery_by_product,
+                "cluster_payloads": cluster_payloads,
+                "centroid_arrays": centroid_arrays_by_product,
+                "discovery_candidate_bindings": discovery_candidate_bindings,
+            }
+            stage_cache_summary["s4"] = {"hit": True, "fingerprint": s4_fingerprint}
+            logger.log(f"[s4-cache] hit fingerprint={s4_fingerprint}")
+        else:
+            if enc["encoder"] is None:
+                enc["encoder"] = s2_encoding.build_encoder(config)
+            disc = s4_discovery.run_stage(
+                reviews,
+                candidates,
+                matches,
+                discovery_dir,
+                enc["encoder"],
+                enc["cache"],
+                phrase_to_cluster_threshold=float(config.get("discovery", {}).get("phrase_to_cluster_threshold", 0.5)),
+            )
+            discovery_by_product = disc["discovery_by_product"]
+            for nm_id, payload in disc["cluster_payloads"].items():
+                writer.write_json(f"clusters_{nm_id}.json", payload)
+                writer.write_npy(f"cluster_centroids_{nm_id}.npy", disc["centroid_arrays"][nm_id])
+            writer.write_dataframe(
+                "discovery_candidate_bindings.parquet",
+                disc["discovery_candidate_bindings"],
+                sort_by=["review_id", "candidate_id", "start_offset", "end_offset", "cluster_id"],
+            )
+            assignments, assignment_evidence = _build_aspect_review_artifacts(
+                candidates,
+                matches,
+                disc["discovery_candidate_bindings"],
+            )
+            writer.write_dataframe(
+                "aspect_review_assignments.parquet",
+                assignments,
+                sort_by=["review_id", "aspect_type", "aspect_id", "assignment_id"],
+            )
+            writer.write_dataframe(
+                "aspect_review_evidence.parquet",
+                assignment_evidence,
+                sort_by=["review_id", "aspect_type", "aspect_id", "assignment_id", "start_offset", "end_offset", "candidate_id"],
+            )
+            s4_artifact_files = [
+                "discovery_candidate_bindings.parquet",
+                "aspect_review_assignments.parquet",
+                "aspect_review_evidence.parquet",
+            ]
+            for nm_id in sorted(disc["cluster_payloads"]):
+                s4_artifact_files.append(f"clusters_{nm_id}.json")
+                s4_artifact_files.append(f"cluster_centroids_{nm_id}.npy")
+            stage_cache.store_from_run_dir(
+                "s4",
+                s4_fingerprint,
+                out_dir,
+                s4_artifact_files,
+                inputs=s4_fingerprint_payload,
+            )
+            stage_cache_summary["s4"] = {"hit": False, "fingerprint": s4_fingerprint}
+            logger.log(f"[s4-cache] miss fingerprint={s4_fingerprint}")
+        discovery_by_product = disc["discovery_by_product"]
+        stage_times["s4"] = time.perf_counter() - t0
+        stages_completed.append("s4")
+        artifact_files["clusters"] = "clusters_<nm_id>.json"
+        artifact_files["cluster_centroids"] = "cluster_centroids_<nm_id>.npy"
+        artifact_files["discovery_candidate_bindings"] = "discovery_candidate_bindings.parquet"
+        artifact_files["aspect_review_assignments"] = "aspect_review_assignments.parquet"
+        artifact_files["aspect_review_evidence"] = "aspect_review_evidence.parquet"
+        logger.log(f"[s4] discovery_products={len(discovery_by_product)}")
+
+        t0 = time.perf_counter()
+        sent = s5_nli_sentiment.run_stage(
+            reviews,
+            aspect_by_id_by_category,
+            discovery_by_product,
+            logger=logger,
+            config=config,
+        )
+        stage_times["s5"] = time.perf_counter() - t0
+        stages_completed.append("s5")
+        artifact_files["nli_predictions"] = "nli_predictions.parquet"
+        writer.write_dataframe("nli_predictions.parquet", sent["nli_predictions"], sort_by=["review_id", "aspect_source", "aspect_name"])
+        logger.log(f"[s5] nli_predictions={len(sent['nli_predictions'])}")
+
+        t0 = time.perf_counter()
+        agg = s6_aggregation.run_stage(
+            reviews,
+            sent["sentiment_by_pair"],
+            aspect_by_id_by_category,
+            discovery_by_product,
+        )
+        stage_times["s6"] = time.perf_counter() - t0
+        stages_completed.append("s6")
+        artifact_files["product_aggregates"] = "product_aggregates.parquet"
+        writer.write_dataframe("product_aggregates.parquet", agg["product_aggregates"], sort_by=["nm_id", "aspect_source", "aspect_name"])
+        logger.log(f"[s6] product_aggregates={len(agg['product_aggregates'])}")
+
+        metrics_payload = _write_e2e_compatible_outputs(
+            out_dir=out_dir,
+            reviews=reviews,
+            term_to_aspects_by_category=term_to_aspects_by_category,
+            aspect_by_id_by_category=aspect_by_id_by_category,
+            discovery_by_product=discovery_by_product,
+            sentiment_by_pair=sent["sentiment_by_pair"],
+            aggregated=agg["aggregated"],
+            negation_stats=sent["negation_stats"],
+        )
+
+        summary_payload = {
+            "status": "OK",
+            "out_dir": str(out_dir),
+            "elapsed_sec": round(time.perf_counter() - started, 4),
+            **metrics_payload,
+            "nli_cache": sent.get("cache_stats", {}),
+            "stage_cache": stage_cache_summary,
+            "params": {
+                "config_path": str(_resolve(config_path)),
+                "matching_mode": config.get("matching", {}).get("matching_mode"),
+                "cosine_fallback_enabled": config.get("matching", {}).get("cosine_fallback_enabled"),
+                "discovery_phrase_to_cluster_threshold": config.get("discovery", {}).get("phrase_to_cluster_threshold"),
+                "sentiment_engine_source": config.get("models", {}).get("sentiment_engine_source"),
+            },
+        }
+        writer.write_json("run_summary.json", summary_payload)
+
+        manifest = {
+            "run_id": out_dir.name,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "git_commit": _git_commit(),
+            "config": config,
+            "model_versions": {
+                "encoder": config.get("models", {}).get("encoder"),
+                "nli": config.get("models", {}).get("nli"),
+            },
+            "n_reviews_processed": len(reviews),
+            "n_products": len({review.nm_id for review in reviews}),
+            "n_categories": len({review.category_id for review in reviews}),
+            "stages_completed": stages_completed,
+            "artifact_files": artifact_files,
+            "elapsed_seconds_per_stage": {key: round(value, 4) for key, value in stage_times.items()},
+            "metrics": metrics_payload,
+            "nli_cache": sent.get("cache_stats", {}),
+            "stage_cache": stage_cache_summary,
+        }
+        writer.write_json("MANIFEST.json", manifest)
+        logger.log(json.dumps(summary_payload, ensure_ascii=False, indent=2))
+        logger.log(f"[done] elapsed={time.perf_counter() - started:.1f}s")
+        return out_dir
+    finally:
+        logger.close()
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description="Run traced ABSA pipeline")
+    parser.add_argument("--config", default="run_config.yaml")
+    parser.add_argument("--limit-products", type=int, default=0)
+    args = parser.parse_args(argv)
+    out_dir = run_traced_pipeline(config_path=args.config, limit_products=args.limit_products)
+    print(out_dir)
+
+
+if __name__ == "__main__":
+    main()

@@ -28,6 +28,12 @@ from transformers import (
 from configs.configs import config
 from src.schemas.models import SentimentPair, SentimentResult
 from src.stages.contracts import SentimentStage
+from src.stages.nli_persistent_cache import (
+    CacheStats,
+    PersistentNliCache,
+    build_model_signature,
+    cached_pairs_from_strings,
+)
 
 try:
     from tqdm import tqdm
@@ -74,10 +80,12 @@ class SentimentEngine(SentimentStage):
         self._nli_cache_max = int(
             getattr(config.sentiment, "nli_pair_cache_max", 50000) or 0
         )
+        self._cache_stats = CacheStats()
 
         self.model: Optional[AutoModelForSequenceClassification] = None
         self._ort_session = None
         self._use_onnx = False
+        self._persistent_cache: Optional[PersistentNliCache] = None
 
         onnx_path_str = getattr(config.models, "nli_onnx_quantized_path", "") or ""
         onnx_path = Path(onnx_path_str) if onnx_path_str.strip() else None
@@ -129,6 +137,18 @@ class SentimentEngine(SentimentStage):
                 f"[SentimentEngine v5] PyTorch, dual-hypothesis, {self.num_labels} classes, "
                 f"ent_idx={self.ent_idx}, neu_idx={self.neu_idx}, contra_idx={self.contra_idx}, device={self.device}"
             )
+        model_signature = build_model_signature(
+            backend="onnx" if self._use_onnx else "pytorch",
+            model_path=str(config.models.nli_path),
+            tokenizer_path=str(config.models.nli_path),
+            id2label=self.id2label,
+            num_labels=self.num_labels,
+        )
+        self._persistent_cache = PersistentNliCache(
+            path=str(getattr(config.sentiment, "persistent_nli_cache_path", "./cache/nli_global.sqlite3")),
+            model_signature=model_signature,
+            enabled=bool(getattr(config.sentiment, "persistent_nli_cache_enabled", True)),
+        )
 
     @staticmethod
     def _label_indices(id2label: dict, num_labels: int) -> Tuple[int, int, int]:
@@ -182,33 +202,56 @@ class SentimentEngine(SentimentStage):
         if n == 0:
             return torch.zeros(0, self.num_labels)
 
-        if self._nli_cache_max <= 0:
-            return self._uncached_forward_logits_tensor(premises, hypotheses)
-
         keys = list(zip(premises, hypotheses))
         row_vecs: List[Optional[np.ndarray]] = [None] * n
         miss_idx: List[int] = []
 
         for i, key in enumerate(keys):
-            if key in self._nli_cache:
+            if self._nli_cache_max > 0 and key in self._nli_cache:
                 self._nli_cache.move_to_end(key)
                 row_vecs[i] = self._nli_cache[key]
+                self._cache_stats.memory_hits += 1
             else:
                 miss_idx.append(i)
 
+        if miss_idx and self._persistent_cache is not None:
+            miss_pairs = cached_pairs_from_strings(
+                [premises[i] for i in miss_idx],
+                [hypotheses[i] for i in miss_idx],
+            )
+            persistent_hits = self._persistent_cache.lookup_many(miss_pairs)
+            for local_idx, vec in persistent_hits.items():
+                orig_i = miss_idx[local_idx]
+                key = keys[orig_i]
+                if self._nli_cache_max > 0:
+                    self._nli_cache[key] = vec.copy()
+                    self._nli_cache.move_to_end(key)
+                    while len(self._nli_cache) > self._nli_cache_max:
+                        self._nli_cache.popitem(last=False)
+                row_vecs[orig_i] = vec
+                self._cache_stats.persistent_hits += 1
+            miss_idx = [i for i in miss_idx if row_vecs[i] is None]
+
+        self._cache_stats.misses += len(miss_idx)
         for start in range(0, len(miss_idx), self.batch_size):
             chunk_i = miss_idx[start : start + self.batch_size]
             sub_p = [premises[i] for i in chunk_i]
             sub_h = [hypotheses[i] for i in chunk_i]
             logits = self._uncached_forward_logits_tensor(sub_p, sub_h)
             mat = logits.detach().cpu().numpy().astype(np.float32)
+            if self._persistent_cache is not None and len(chunk_i) > 0:
+                self._cache_stats.writes += self._persistent_cache.store_many(
+                    cached_pairs_from_strings(sub_p, sub_h),
+                    mat,
+                )
             for row, orig_i in enumerate(chunk_i):
                 key = keys[orig_i]
                 vec = mat[row].copy()
-                self._nli_cache[key] = vec
-                self._nli_cache.move_to_end(key)
-                while len(self._nli_cache) > self._nli_cache_max:
-                    self._nli_cache.popitem(last=False)
+                if self._nli_cache_max > 0:
+                    self._nli_cache[key] = vec
+                    self._nli_cache.move_to_end(key)
+                    while len(self._nli_cache) > self._nli_cache_max:
+                        self._nli_cache.popitem(last=False)
                 row_vecs[orig_i] = vec
 
         vecs_np = [row_vecs[i] for i in range(n)]
@@ -336,6 +379,13 @@ class SentimentEngine(SentimentStage):
             )
 
         return results
+
+    def get_cache_stats(self) -> dict[str, int]:
+        stats = self._cache_stats.as_dict()
+        if self._persistent_cache is not None:
+            stats["persistent_rows"] = int(self._persistent_cache.count_rows())
+            stats["text_rows"] = int(self._persistent_cache.count_text_rows())
+        return stats
 
 
 if __name__ == "__main__":

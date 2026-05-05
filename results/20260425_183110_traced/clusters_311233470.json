@@ -1,0 +1,443 @@
+{
+  "nm_id": 311233470,
+  "category_id": "physical_goods",
+  "n_unmatched_candidates": null,
+  "n_clusters": 10,
+  "noise_rate": null,
+  "filter_applied": true,
+  "filter_report": {},
+  "clusters": [
+    {
+      "cluster_id": 0,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "конца",
+          1
+        ],
+        [
+          "момента при",
+          1
+        ],
+        [
+          "мэтч сразу",
+          1
+        ],
+        [
+          "одного момента",
+          1
+        ],
+        [
+          "шву после",
+          1
+        ]
+      ],
+      "medoid_phrase": "момента при",
+      "cohesion": null,
+      "matched_to_gold_aspect": null,
+      "is_novel": true,
+      "gold_matches": {}
+    },
+    {
+      "cluster_id": 1,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "праздник",
+          2
+        ],
+        [
+          "клуб",
+          1
+        ],
+        [
+          "мероприятие",
+          1
+        ],
+        [
+          "свидание",
+          1
+        ],
+        [
+          "театр",
+          1
+        ]
+      ],
+      "medoid_phrase": "мероприятие",
+      "cohesion": null,
+      "matched_to_gold_aspect": null,
+      "is_novel": true,
+      "gold_matches": {}
+    },
+    {
+      "cluster_id": 2,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "месте",
+          4
+        ],
+        [
+          "зоне",
+          1
+        ],
+        [
+          "кабинет",
+          1
+        ],
+        [
+          "офиса",
+          1
+        ],
+        [
+          "помещении",
+          1
+        ]
+      ],
+      "medoid_phrase": "помещении",
+      "cohesion": null,
+      "matched_to_gold_aspect": null,
+      "is_novel": true,
+      "gold_matches": {}
+    },
+    {
+      "cluster_id": 3,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "большинство товаров",
+          1
+        ],
+        [
+          "другого продавца",
+          1
+        ],
+        [
+          "другой товар",
+          1
+        ],
+        [
+          "каждый товар",
+          1
+        ],
+        [
+          "менеджера",
+          1
+        ],
+        [
+          "продавца возврат",
+          1
+        ],
+        [
+          "продавца такому",
+          1
+        ],
+        [
+          "продавцу который",
+          1
+        ],
+        [
+          "работник",
+          1
+        ],
+        [
+          "товар обратно",
+          1
+        ]
+      ],
+      "medoid_phrase": "продавца возврат",
+      "cohesion": null,
+      "matched_to_gold_aspect": "Логистика",
+      "is_novel": false,
+      "gold_matches": {
+        "Логистика": 0.6687256097793579,
+        "Продавец": 0.8276644945144653
+      }
+    },
+    {
+      "cluster_id": 4,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "верх",
+          3
+        ],
+        [
+          "полосами",
+          2
+        ],
+        [
+          "бокам",
+          1
+        ],
+        [
+          "весь верх",
+          1
+        ],
+        [
+          "волосами",
+          1
+        ],
+        [
+          "идеально низ",
+          1
+        ],
+        [
+          "низ",
+          1
+        ]
+      ],
+      "medoid_phrase": "верх",
+      "cohesion": null,
+      "matched_to_gold_aspect": null,
+      "is_novel": true,
+      "gold_matches": {}
+    },
+    {
+      "cluster_id": 5,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "тысяч",
+          5
+        ],
+        [
+          "минимум",
+          2
+        ],
+        [
+          "сумму",
+          2
+        ],
+        [
+          "вес",
+          1
+        ],
+        [
+          "кучу",
+          1
+        ],
+        [
+          "минимум тысячи",
+          1
+        ],
+        [
+          "попе все",
+          1
+        ],
+        [
+          "посадка все",
+          1
+        ],
+        [
+          "складок все",
+          1
+        ],
+        [
+          "сумму горло",
+          1
+        ]
+      ],
+      "medoid_phrase": "вес",
+      "cohesion": null,
+      "matched_to_gold_aspect": "Цена",
+      "is_novel": false,
+      "gold_matches": {
+        "Цена": 0.7634807229042053
+      }
+    },
+    {
+      "cluster_id": 6,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "колит",
+          1
+        ],
+        [
+          "крой",
+          1
+        ],
+        [
+          "мэтч",
+          1
+        ],
+        [
+          "образ",
+          1
+        ],
+        [
+          "фамон",
+          1
+        ],
+        [
+          "фргуре",
+          1
+        ]
+      ],
+      "medoid_phrase": "крой",
+      "cohesion": null,
+      "matched_to_gold_aspect": null,
+      "is_novel": true,
+      "gold_matches": {}
+    },
+    {
+      "cluster_id": 7,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "рост",
+          9
+        ],
+        [
+          "рост 150",
+          1
+        ],
+        [
+          "рост 159",
+          1
+        ],
+        [
+          "рост 165",
+          1
+        ],
+        [
+          "рост 166см",
+          1
+        ],
+        [
+          "рост 168",
+          1
+        ],
+        [
+          "рост 170",
+          1
+        ],
+        [
+          "рост 175",
+          1
+        ],
+        [
+          "рост 178",
+          1
+        ],
+        [
+          "фигуре хорошо",
+          1
+        ]
+      ],
+      "medoid_phrase": "рост 165",
+      "cohesion": null,
+      "matched_to_gold_aspect": "Качество",
+      "is_novel": false,
+      "gold_matches": {
+        "Качество": 0.6771440505981445,
+        "Состояние": 0.7161906957626343
+      }
+    },
+    {
+      "cluster_id": 8,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "платье",
+          89
+        ],
+        [
+          "фасон",
+          11
+        ],
+        [
+          "это платье",
+          8
+        ],
+        [
+          "шикарное платье",
+          3
+        ],
+        [
+          "девочки платье",
+          2
+        ],
+        [
+          "другое платье",
+          2
+        ],
+        [
+          "классное платье",
+          2
+        ],
+        [
+          "платье хорошее",
+          2
+        ],
+        [
+          "платье хорошо",
+          2
+        ],
+        [
+          "хорошее платье",
+          2
+        ]
+      ],
+      "medoid_phrase": "хорошее платье",
+      "cohesion": null,
+      "matched_to_gold_aspect": null,
+      "is_novel": true,
+      "gold_matches": {}
+    },
+    {
+      "cluster_id": 9,
+      "candidate_ids": [],
+      "top_phrases": [
+        [
+          "швы",
+          12
+        ],
+        [
+          "нитки",
+          9
+        ],
+        [
+          "плечи",
+          9
+        ],
+        [
+          "носки",
+          5
+        ],
+        [
+          "бедер",
+          4
+        ],
+        [
+          "бирка",
+          3
+        ],
+        [
+          "груди",
+          3
+        ],
+        [
+          "талию",
+          3
+        ],
+        [
+          "воротник",
+          2
+        ],
+        [
+          "руки",
+          2
+        ]
+      ],
+      "medoid_phrase": "плечи",
+      "cohesion": null,
+      "matched_to_gold_aspect": "Упаковка",
+      "is_novel": false,
+      "gold_matches": {
+        "Упаковка": 0.7378573417663574
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "detection_precision_track_a": 0.4766942777867863,
+  "detection_recall_track_a": 0.41975839143830057,
+  "detection_f1_track_a": 0.42785587000967257,
+  "sentiment_mae_review": 0.8466375650595329,
+  "sentiment_mae_round": 0.8005263157894735,
+  "inversion_rate": 0.056466302367941715,
+  "product_mae_n3": 0.7840990291262134,
+  "star_baseline_product_mae_n3": 0.5502970212765956,
+  "track_b_detection_precision": 0.5698024103529211,
+  "track_b_detection_recall": 0.4544891308086541,
+  "track_b_detection_f1": 0.4846919650103831
+}

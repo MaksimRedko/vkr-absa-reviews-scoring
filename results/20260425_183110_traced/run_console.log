@@ -1,0 +1,75 @@
+[start] traced_pipeline out_dir=D:\diploma\results\20260425_183110_traced
+[load] reviews=1762 products=16
+[s1] candidates=26657
+[s2] candidate_embeddings=(26657, 1024) vocab_embeddings=(137, 1024)
+[s3] matches=26798
+[s4] discovery_products=16
+[sentiment] pairs=6211 nli_calls=6211 T=0.7 relevance=P_ent+P_contra>=0.2
+[sentiment] kept=5363 skipped=848
+[negation] total_predictions=5363 eligible_low_high=549 corrections=31 inversion_rate=5.65%
+[s5] nli_predictions=6211
+[s6] product_aggregates=314
+{
+  "status": "OK",
+  "out_dir": "D:\\diploma\\results\\20260425_183110_traced",
+  "elapsed_sec": 2181.6583,
+  "track_a": {
+    "detection_precision": 0.4766942777867863,
+    "detection_recall": 0.41975839143830057,
+    "detection_f1": 0.42785587000967257,
+    "sentiment_mae_review": 0.8466375650595329,
+    "sentiment_mae_review_round": 0.8005263157894735,
+    "sentiment_mae_vocab_pairs": 0.8274340772166949,
+    "sentiment_mae_discovery_pairs": NaN,
+    "n_sentiment_review_matches": 665,
+    "n_discovery_sentiment_pairs": 0,
+    "product_mae_n3": 0.7840990291262134,
+    "n_aspects_matched": 132,
+    "n_aspects_matched_n3": 103
+  },
+  "track_b": {
+    "detection_precision": 0.5698024103529211,
+    "detection_recall": 0.4544891308086541,
+    "detection_f1": 0.4846919650103831,
+    "sentiment_mae_review": 0.925010996713382,
+    "sentiment_mae_review_round": 0.8856162650983368,
+    "sentiment_mae_vocab_pairs": 0.8274340772166949,
+    "sentiment_mae_discovery_pairs": 1.0686364181406223,
+    "n_sentiment_review_matches": 1004,
+    "n_discovery_sentiment_pairs": 1071,
+    "product_mae_n3": 0.9140458333333332,
+    "n_aspects_matched": 283,
+    "n_aspects_matched_n3": 192
+  },
+  "track_c_review": {
+    "sentiment_mae_review": 0.6397522804880962,
+    "sentiment_mae_review_round": 0.6397522804880962
+  },
+  "track_c_product": {
+    "product_mae_n3": 0.5502970212765956,
+    "n_aspects_matched": 375
+  },
+  "negation_correction": {
+    "total_predictions": 5363,
+    "eligible_low_high_predictions": 549,
+    "corrections_applied": 31,
+    "correction_rate": 0.005780346820809248,
+    "inversion_rate": 0.056466302367941715,
+    "per_category": {
+      "hospitality": 1,
+      "physical_goods": 28,
+      "services": 2
+    },
+    "avg_mae_before_correction": 0.9942610778443114,
+    "avg_mae_after_correction": 0.9563408183632734,
+    "mae_improvement": 0.03792025948103794
+  },
+  "params": {
+    "config_path": "D:\\diploma\\run_config.yaml",
+    "matching_mode": "lexical_only",
+    "cosine_fallback_enabled": false,
+    "discovery_phrase_to_cluster_threshold": 0.5,
+    "sentiment_engine_source": ".opencode/artifacts/sentiment_search_20260425/sentiment_faad23a_v4_single_hypothesis.py"
+  }
+}
+[done] elapsed=2181.7s

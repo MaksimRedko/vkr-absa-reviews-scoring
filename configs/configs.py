@@ -59,6 +59,45 @@ config = OmegaConf.create({
         "mdl_use_aicc_correction": False,
         "mdl_model_penalty_alpha": 1.0,
     },
+    "discovery_runner": {
+        "dataset_csv": "./data/dataset_final.csv",
+        "results_dir": "./benchmark/discovery/results",
+        "categories": [
+            "physical_goods",
+            "consumables",
+            "hospitality",
+            "services",
+        ],
+        "encoder_model": "ai-forever/sbert_large_nlu_ru",
+        "encoder_batch_size": 8,
+        "purity_threshold": 0.7,
+        "top_n_phrases_per_cluster": 20,
+        "hdbscan": {
+            "min_cluster_size": 15,
+            "min_samples": 5,
+            "metric": "euclidean",
+            "cluster_selection_method": "eom",
+        },
+    },
+    "discovery_per_product": {
+        "dataset_csv": "./data/dataset_final.csv",
+        "results_dir": "./benchmark/discovery/results",
+        "encoder_model": "ai-forever/sbert_large_nlu_ru",
+        "encoder_batch_size": 8,
+        "min_unique_phrases_to_cluster": 30,
+        "top_n_phrases_per_cluster": 10,
+        "purity_threshold": 0.7,
+        "hdbscan": {
+            "min_cluster_size": 5,
+            "min_samples": 3,
+            "metric": "euclidean",
+            "cluster_selection_method": "eom",
+        },
+    },
+    "stage_cache": {
+        "enabled": True,
+        "root_dir": "./cache/pipeline_stages",
+    },
     "sentiment": {
         # Baseline B: {aspect} = nli_label (якорь для medoid-кластеров)
         # Одна гипотеза (v4): используется только hypothesis_template_pos.
@@ -68,6 +107,8 @@ config = OmegaConf.create({
         # Потоки CPU для onnxruntime (только при nli_onnx_quantized_path)
         "ort_intra_op_num_threads": 4,
         "nli_pair_cache_max": 50000,  # LRU (premise, hypothesis) → logits в SentimentEngine
+        "persistent_nli_cache_enabled": True,
+        "persistent_nli_cache_path": "./cache/nli_global.sqlite3",
         "score_epsilon": 0.0001,
         "pairing_strategy": "review_provenance",
         # Review-level NLI (one pair per review/aspect) + post-NLI relevance filter
